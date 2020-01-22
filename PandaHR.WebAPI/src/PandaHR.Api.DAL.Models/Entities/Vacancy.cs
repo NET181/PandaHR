@@ -17,12 +17,16 @@ namespace PandaHR.Api.DAL.Models.Entities
 
         public Guid UserId { get; set; }
         public User User { get; set; }
+
         public Guid QualificationId { get; set; }
         public Qualification Qualification { get; set; }
-        public Guid CompanyId { get; set; }
+
+        public Guid? CompanyId { get; set; }
         public Company Company { get; set; }
-        public Guid CityId { get; set; }
+
+        public Guid? CityId { get; set; }
         public City City { get; set; }
+
         public ICollection<SkillRequirement> SkillRequirements { get; set; }
     }
 }
