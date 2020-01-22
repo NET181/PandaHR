@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PandaHR.Api.Common.Contracts\PandaHR.Api.Common.Contracts.csproj" />
+    <ProjectReference Include="..\PandaHR.Api.Common\PandaHR.Api.Common.csproj" />
+    <ProjectReference Include="..\PandaHR.Api.DAL.EF\PandaHR.Api.DAL.EF.csproj" />
+    <ProjectReference Include="..\PandaHR.Api.DAL.Models\PandaHR.Api.DAL.Models.csproj" />
+    <ProjectReference Include="..\PandaHR.Api.DAL\PandaHR.Api.DAL.csproj" />
+    <ProjectReference Include="..\PandaHR.Api.Services\PandaHR.Api.Services.csproj" />
+  </ItemGroup>
+
+</Project>

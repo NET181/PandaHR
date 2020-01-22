@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PandaHR.Api.Common.Contracts\PandaHR.Api.Common.Contracts.csproj" />
+    <ProjectReference Include="..\PandaHR.Api.Common\PandaHR.Api.Common.csproj" />
+    <ProjectReference Include="..\PandaHR.Api.DAL.Models\PandaHR.Api.DAL.Models.csproj" />
+    <ProjectReference Include="..\PandaHR.Api.DAL\PandaHR.Api.DAL.csproj" />
+  </ItemGroup>
+
+</Project>
