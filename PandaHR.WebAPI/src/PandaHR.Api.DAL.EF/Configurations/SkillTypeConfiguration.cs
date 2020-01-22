@@ -18,6 +18,12 @@ namespace PandaHR.Api.DAL.EF.Configurations
             builder.HasMany(k => k.KnowledgeLevels)
                    .WithOne(t => t.SkillType)
                    .HasForeignKey(t => t.SkillTypeId);
+
+            builder.HasData(
+                new SkillType { Name = "BackEnd", IsDeleted = false },
+                new SkillType { Name = "FrontEnd", IsDeleted = false },
+                new SkillType { Name = "FullStack", IsDeleted = false },
+                new SkillType { Name = "DataBase", IsDeleted = false });
         }
     }
 }

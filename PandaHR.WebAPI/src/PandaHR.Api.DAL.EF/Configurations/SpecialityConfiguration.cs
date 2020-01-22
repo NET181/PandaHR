@@ -14,6 +14,13 @@ namespace PandaHR.Api.DAL.EF.Configurations
             builder.HasMany(s => s.Educations)
                 .WithOne(e => e.Speciality)
                 .HasForeignKey(e => e.SpecialityId);
+
+            builder.HasData(
+                new Speciality { Name = "Software Engineering", IsDeleted = false },
+                new Speciality { Name = "System Analysis", IsDeleted = false },
+                new Speciality { Name = "Applied Math", IsDeleted = false },
+                new Speciality { Name = "Applied Physics", IsDeleted = false },
+                new Speciality { Name = "Computer Science", IsDeleted = false });
         }
     }
 }

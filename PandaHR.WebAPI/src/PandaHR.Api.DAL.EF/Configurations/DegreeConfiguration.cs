@@ -14,6 +14,12 @@ namespace PandaHR.Api.DAL.EF.Configurations
             builder.HasMany(d => d.Educations)
                 .WithOne(e => e.Degree)
                 .HasForeignKey(e => e.DegreeId);
+
+            builder.HasData(
+                new Degree { Name = "Specialist", IsDeleted = false },
+                new Degree { Name = "Barchelor", IsDeleted = false},
+                new Degree { Name = "Master", IsDeleted = false },
+                new Degree { Name = "Postgraduate", IsDeleted = false });
         }
     }
 }
