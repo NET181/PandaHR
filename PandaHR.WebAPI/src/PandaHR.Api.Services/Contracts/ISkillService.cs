@@ -8,6 +8,6 @@ namespace PandaHR.Api.Services.Contracts
 {
     public interface ISkillService
     {
-        Task<IEnumerable<Skill>> GetWhere(Expression<Func<Skill, bool>> condition);
+        Task<IEnumerable<Skill>> GetAllAsync();
     }
 }
