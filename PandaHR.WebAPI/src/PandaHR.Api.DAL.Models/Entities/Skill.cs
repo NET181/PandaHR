@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    public class Skill : BaseEntity, ISoftDeletable
+    public class Skill : ISoftDeletable
     {
         public Skill()
         {

@@ -17,7 +17,5 @@ namespace PandaHR.Api.DAL.Models.Entities
         
         public CV CV { get; set; }
         public Guid CVId { get; set; }
-
-        
     }
 }
