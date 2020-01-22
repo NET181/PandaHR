@@ -22,6 +22,13 @@ namespace PandaHR.Api.DAL.EF.Configurations
             builder.HasOne(t => t.SkillType)
                    .WithMany(k => k.KnowledgeLevels)
                    .HasForeignKey(t => t.SkillTypeId);
+
+            builder.HasData(
+                new Qualification { Name = "Beginer", Value = 1 },
+                new Qualification { Name = "Lower Intermidiate", Value = 2 },
+                new Qualification { Name = "Intermidiate", Value = 3 },
+                new Qualification { Name = "Upper Intermidiate", Value = 4 }
+            );
         }
     }
 }

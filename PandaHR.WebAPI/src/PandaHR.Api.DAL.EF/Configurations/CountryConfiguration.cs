@@ -14,6 +14,14 @@ namespace PandaHR.Api.DAL.EF.Configurations
             builder.HasMany(co => co.Cities)
                 .WithOne(ci => ci.Country)
                 .HasForeignKey(ci => ci.CountryId);
+
+            builder.HasData(
+                new Country { Name = "Ukraine" },
+                new Country { Name = "Russia" },
+                new Country { Name = "Georgia" },
+                new Country { Name = "Moldova" },
+                new Country { Name = "Belarus" }
+            );
         }
     }
 }
