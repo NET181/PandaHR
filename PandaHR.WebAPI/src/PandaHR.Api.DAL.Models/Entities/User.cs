@@ -4,7 +4,13 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    class User
+    public class User
     {
+        public User()
+        {
+            UserCompanies = new HashSet<UserCompany>();
+        }
+
+        public ICollection<UserCompany> UserCompanies;
     }
 }
