@@ -4,7 +4,9 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    class SkillRequirement
+    public class SkillRequirement
     {
+        public Vacancy Vacancy { get; set; }
+        public Guid VacancyId { get; set; }
     }
 }

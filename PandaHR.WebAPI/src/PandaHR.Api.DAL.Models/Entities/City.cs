@@ -4,7 +4,8 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    class City
+    public class City : BaseEntity
     {
+        public ICollection<Vacancy> Vacancies { get; set; }
     }
 }
