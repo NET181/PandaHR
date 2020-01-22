@@ -12,7 +12,7 @@ namespace PandaHR.Api.DAL.Models.Entities
             SkillKnowledges = new HashSet<SkillKnowledge>();
             SkillRequirements = new HashSet<SkillRequirement>();
         }
-
+      
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
 

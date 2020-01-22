@@ -8,7 +8,7 @@ namespace PandaHR.Api.DAL.Models.Entities
     {
         public Guid UserId { get; set; }
         public User User { get; set; }
-
+      
         public Guid CompanyId { get; set; }
         public Company Company { get; set; }
     }
