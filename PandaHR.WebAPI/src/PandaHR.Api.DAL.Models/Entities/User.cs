@@ -4,9 +4,12 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    public class User : BaseEntity
+    public class User
     {
-        public ICollection<Vacancy> Vacancies { get; set; }
-        public ICollection<CV> CVs { get; set; }
-    }
+        public User()
+        {
+            UserCompanies = new HashSet<UserCompany>();
+        }
+
+        public ICollection<UserCompany> UserCompanies;
 }

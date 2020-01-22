@@ -4,7 +4,15 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    class Country
+    public class Country : BaseEntity
     {
+        public Country()
+        {
+            Cities = new HashSet<City>();
+        }
+
+        public string Name { get; set; }
+
+        public ICollection<City> Cities { get; set; }
     }
 }
