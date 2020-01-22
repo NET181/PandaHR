@@ -19,8 +19,8 @@ namespace PandaHR.Api.DAL.EF.Context
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            //Database.EnsureDeleted();
-            Database.EnsureCreated();
+            Database.EnsureDeleted();
+            //Database.EnsureCreated();
         }
 
         #region DbSets
@@ -51,12 +51,16 @@ namespace PandaHR.Api.DAL.EF.Context
             foreach (var type in modelBuilder.Model.GetEntityTypes())
             {
                 if (typeof(ISoftDeletable).IsAssignableFrom(type.ClrType))
+                {
                     modelBuilder.SetSoftDeleteFilter(type.ClrType);
+                 
+                    //modelBuilder.Entity<>(.
+                }
             }
 
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.ApplyConfiguration<City>(new CityConfiguration())
                 .ApplyConfiguration<CompanyCity>(new CompanyCityConfiguration())
                 .ApplyConfiguration<Company>(new CompanyConfiguration())

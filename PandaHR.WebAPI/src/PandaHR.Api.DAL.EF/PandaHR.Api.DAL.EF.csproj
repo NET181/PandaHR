@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PandaHR.Api.Common\PandaHR.Api.Common.csproj" />
     <ProjectReference Include="..\PandaHR.Api.DAL.Models\PandaHR.Api.DAL.Models.csproj" />
   </ItemGroup>
 

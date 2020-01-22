@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
+using PandaHR.Api.DAL.EF;
 using PandaHR.Api.DAL.EF.Context;
 using PandaHR.Api.DAL.Repositories.Contracts;
 using PandaHR.Api.DAL.Repositories.Implementation;
@@ -18,6 +20,8 @@ namespace PandaHR.Api.DependencyResolver
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connection));
+
+            services.AddScoped<IDataInitializer, EFDataInitializer>();
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EFRepositoryAsync<>));
             services.AddScoped<ISkillRepository, SkillRepository>();

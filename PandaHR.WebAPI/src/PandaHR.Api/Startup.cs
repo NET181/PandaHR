@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DependencyResolver;
 
 namespace PandaHR.Api
@@ -33,11 +34,12 @@ namespace PandaHR.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDataInitializer dataInitializer)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                dataInitializer.Seed();
             }
 
             app.UseHttpsRedirection();

@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PandaHR.Api.Common.Contracts\PandaHR.Api.Common.Contracts.csproj" />
     <ProjectReference Include="..\PandaHR.Api.Common\PandaHR.Api.Common.csproj" />
     <ProjectReference Include="..\PandaHR.Api.DependencyResolver\PandaHR.Api.DependencyResolver.csproj" />
     <ProjectReference Include="..\PandaHR.Api.Services\PandaHR.Api.Services.csproj" />

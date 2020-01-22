@@ -408,10 +408,18 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<float>("Value")
-                        .HasColumnType("real");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SkillTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SkillTypeId");
 
                     b.ToTable("KnowledgeLevels");
                 });
@@ -425,8 +433,11 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<float>("Value")
-                        .HasColumnType("real");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -787,6 +798,15 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.HasOne("PandaHR.Api.DAL.Models.Entities.CV", "CV")
                         .WithMany("JobExperiences")
                         .HasForeignKey("CVId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.KnowledgeLevel", b =>
+                {
+                    b.HasOne("PandaHR.Api.DAL.Models.Entities.SkillType", "SkillType")
+                        .WithMany("KnowledgeLevels")
+                        .HasForeignKey("SkillTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
