@@ -56,6 +56,7 @@ namespace PandaHR.Api.DAL.EF.Context
 
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.ApplyConfiguration<City>(new CityConfiguration())
                 .ApplyConfiguration<CompanyCity>(new CompanyCityConfiguration())
                 .ApplyConfiguration<Company>(new CompanyConfiguration())
@@ -73,13 +74,6 @@ namespace PandaHR.Api.DAL.EF.Context
                 .ApplyConfiguration<UserCompany>(new UserCompanyConfiguration())
                 .ApplyConfiguration<User>(new UserConfiguration())
                 .ApplyConfiguration<Vacancy>(new VacancyConfiguration());
-        }
-
-        public void AddItems()
-        {
-            Country country = new Country() { Name = "Ukraine" };
-            this.Add<Country>(country);
-            this.SaveChanges();
         }
 
         public override int SaveChanges()

@@ -13,5 +13,6 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
         {
             _context = context;
         }
+
     }
 }
