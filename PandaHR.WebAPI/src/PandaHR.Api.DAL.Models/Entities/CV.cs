@@ -4,7 +4,10 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    class CV
+    public class CV
     {
+        public Guid UserId { get; set; }
+        public User User { get; set; }
+
     }
 }
