@@ -4,7 +4,16 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    class Degree
+    public class Degree : BaseEntity, ISoftDeletable
     {
+        public Degree()
+        {
+            Educations = new HashSet<Education>();
+        }
+
+        public string Name { get; set; }
+        public bool IsDeleted { get; set; }
+
+        public ICollection<Education> Educations;       
     }
 }

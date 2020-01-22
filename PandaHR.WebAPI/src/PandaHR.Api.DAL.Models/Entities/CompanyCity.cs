@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    class CompanyCity
+    public class CompanyCity
     {
     }
 }
