@@ -4,7 +4,8 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    class SkillType
+    public class SkillType: BaseEntity
     {
+        public string Name { get; set; }
     }
 }
