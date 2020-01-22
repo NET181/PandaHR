@@ -14,7 +14,7 @@ namespace PandaHR.Api.DAL.Models.Entities
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
 
-        public ICollection<Education> Educations;
+        public ICollection<Education> Educations { get; set; }
 
     }
 }

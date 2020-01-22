@@ -21,9 +21,9 @@ namespace PandaHR.Api.DAL.Models.Entities
         public City City { get; set; }
         public bool IsDeleted { get; set; }
 
-        public ICollection<Education> Educations;
-        public ICollection<CV> CVs;
-        public ICollection<Vacancy> Vacancies;
-        public ICollection<UserCompany> UserCompanies;
+        public ICollection<Education> Educations { get; set; }
+        public ICollection<CV> CVs { get; set; }
+        public ICollection<Vacancy> Vacancies { get; set; }
+        public ICollection<UserCompany> UserCompanies { get; set; }
     }
 }
