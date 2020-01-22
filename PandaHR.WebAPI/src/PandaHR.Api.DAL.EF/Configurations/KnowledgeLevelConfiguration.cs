@@ -18,6 +18,10 @@ namespace PandaHR.Api.DAL.EF.Configurations
             builder.HasMany(r => r.SkillRequirements)
                    .WithOne(k => k.KnowledgeLevel)
                    .HasForeignKey(k => k.KnowledgeLevelId);
+
+            builder.HasOne(t => t.SkillType)
+                   .WithMany(k => k.KnowledgeLevels)
+                   .HasForeignKey(t => t.SkillTypeId);
         }
     }
 }
