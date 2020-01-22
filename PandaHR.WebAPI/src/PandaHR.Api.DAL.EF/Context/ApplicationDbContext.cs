@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using PandaHR.Api.DAL.EF.Configurations;
 using PandaHR.Api.DAL.Models;
+using PandaHR.Api.DAL.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +20,29 @@ namespace PandaHR.Api.DAL.EF.Context
             : base(options)
         {
             //Database.EnsureDeleted();
-            //Database.EnsureCreated();
+            Database.EnsureCreated();
         }
 
         #region DbSets
 
-
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<CompanyCity> CompanyCities { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<CV> CVs { get; set; }
+        public DbSet<Degree> Degrees { get; set; }
+        public DbSet<Education> Educations { get; set; }
+        public DbSet<JobExperience> JobExperiences { get; set; }
+        public DbSet<KnowledgeLevel> KnowledgeLevels { get; set; }
+        public DbSet<Qualification> Qualifications { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+        public DbSet<SkillKnowledge> SkillKnowledges { get; set; }
+        public DbSet<SkillRequirement> SkillRequirements { get; set; }
+        public DbSet<SkillType> SkillTypes { get; set; }
+        public DbSet<Speciality> Specialities { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserCompany> UserCompanies { get; set; }
+        public DbSet<Vacancy> Vacancies { get; set; }
 
         #endregion
 
@@ -36,6 +55,31 @@ namespace PandaHR.Api.DAL.EF.Context
             }
 
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration<City>(new CityConfiguration())
+                .ApplyConfiguration<CompanyCity>(new CompanyCityConfiguration())
+                .ApplyConfiguration<Company>(new CompanyConfiguration())
+                .ApplyConfiguration<CV>(new CVConfiguration())
+                .ApplyConfiguration<Degree>(new DegreeConfiguration())
+                .ApplyConfiguration<Education>(new EducationConfiguration())
+                .ApplyConfiguration<JobExperience>(new JobExperienceConfiguration())
+                .ApplyConfiguration<KnowledgeLevel>(new KnowledgeLevelConfiguration())
+                .ApplyConfiguration<Qualification>(new QualificationConfiguration())
+                .ApplyConfiguration<Skill>(new SkillConfiguration())
+                .ApplyConfiguration<SkillKnowledge>(new SkillKnowledgeConfiguration())
+                .ApplyConfiguration<SkillRequirement>(new SkillRequirementConfiguration())
+                .ApplyConfiguration<SkillType>(new SkillTypeConfiguration())
+                .ApplyConfiguration<Speciality>(new SpecialityConfiguration())
+                .ApplyConfiguration<UserCompany>(new UserCompanyConfiguration())
+                .ApplyConfiguration<User>(new UserConfiguration())
+                .ApplyConfiguration<Vacancy>(new VacancyConfiguration());
+        }
+
+        public void AddItems()
+        {
+            Country country = new Country() { Name = "Ukraine" };
+            this.Add<Country>(country);
+            this.SaveChanges();
         }
 
         public override int SaveChanges()

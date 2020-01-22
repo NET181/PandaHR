@@ -24,38 +24,39 @@ namespace PandaHR.Api.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            
             return new string[] { "value1", "value2" };
         }
 
         // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            try
-            {
-                var skills = await _skillService.GetWhere(s => s.Id == id);
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> Get(int id)
+        //{
+        //    try
+        //    {
+        //        var skills = await _skillService.GetWhere(s => s.Id == id);
 
-                if (skills == null)
-                {
-                    //_logger.LogError("skills with the id sent from client doesn't exist");
-                    return BadRequest("Owner object is null");
-                }
+        //        if (skills == null)
+        //        {
+        //            //_logger.LogError("skills with the id sent from client doesn't exist");
+        //            return BadRequest("Owner object is null");
+        //        }
 
-                /* 
-                 * if (!ModelState.IsValid)
-                {
-                     // _logger.LogError("Invalid skills object sent from client.");
-                     return BadRequest("Invalid model object");
-                }
-                */
-                return Ok(skills);
-            }
-            catch (Exception ex)
-            {
-                //_logger.LogError($"Something went wrong inside UpdateOwner action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
-            }
-        }
+        //        /* 
+        //         * if (!ModelState.IsValid)
+        //        {
+        //             // _logger.LogError("Invalid skills object sent from client.");
+        //             return BadRequest("Invalid model object");
+        //        }
+        //        */
+        //        return Ok(skills);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //_logger.LogError($"Something went wrong inside UpdateOwner action: {ex.Message}");
+        //        return StatusCode(500, "Internal server error");
+        //    }
+        //}
 
         // POST api/<controller>
         [HttpPost]

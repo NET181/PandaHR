@@ -22,7 +22,7 @@ namespace PandaHR.Api.Controllers
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
-            IdentityUser
+           // IdentityUser
         }
 
         [HttpGet]
