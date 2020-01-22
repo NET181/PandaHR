@@ -12,5 +12,4 @@ namespace PandaHR.Api.DAL.Models.Entities
         }
 
         public ICollection<UserCompany> UserCompanies;
-    }
 }

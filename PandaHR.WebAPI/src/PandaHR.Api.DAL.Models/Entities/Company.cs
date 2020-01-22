@@ -10,6 +10,7 @@ namespace PandaHR.Api.DAL.Models.Entities
         {
             CompanyCities = new HashSet<CompanyCity>();
             UserCompanies = new HashSet<UserCompany>();
+            Vacancies = new HashSet<Vacancy>();
         }
 
         public string Name { get; set; }
@@ -17,5 +18,6 @@ namespace PandaHR.Api.DAL.Models.Entities
 
         public ICollection<CompanyCity> CompanyCities { get; set; }
         public ICollection<UserCompany> UserCompanies { get; set; }
+        public ICollection<Vacancy> Vacancies { get; set; }
     }
 }
