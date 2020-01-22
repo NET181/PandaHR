@@ -13,7 +13,8 @@ namespace PandaHR.Api.DAL.Models.Entities
         }
 
         public bool IsDeleted { get; set; }
-        public float Value { get; set; }
+        public string Name { get; set; }
+        public int Value { get; set; }
 
         public ICollection<CV> CVs { get; set; }
         public ICollection<Vacancy> Vacancies { get; set; }
