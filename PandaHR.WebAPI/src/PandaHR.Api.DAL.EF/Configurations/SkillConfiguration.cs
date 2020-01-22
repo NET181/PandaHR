@@ -11,13 +11,21 @@ namespace PandaHR.Api.DAL.EF.Configurations
     {
         public void Configure(EntityTypeBuilder<Skill> builder)
         {
-            builder.HasKey(s => s.Id);
+            builder.HasOne(s => s.RootSkill)
+                   .WithMany(su => su.SubSkills)
+                   .HasForeignKey(s => s.RootSkillId);
 
-            builder.HasMany(s => s.Skills)
-                .WithOne();
+            builder.HasMany(k => k.SkillKnowledges)
+                   .WithOne(s => s.Skill)   
+                   .HasForeignKey(s => s.SkillId);
 
-            //builder.HasOne(s => s.Parent)
-                
+            builder.HasOne(t => t.SkillType)
+                   .WithMany(s => s.Skills)
+                   .HasForeignKey(t => t.SkillTypeId);
+
+            builder.HasMany(r => r.SkillRequirements)
+                   .WithOne(s => s.Skill)
+                   .HasForeignKey(s => s.SkillId);
         }
     }
 }

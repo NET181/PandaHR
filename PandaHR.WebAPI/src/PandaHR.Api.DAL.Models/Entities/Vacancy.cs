@@ -23,7 +23,6 @@ namespace PandaHR.Api.DAL.Models.Entities
         public Company Company { get; set; }
         public Guid CityId { get; set; }
         public City City { get; set; }
-
         public ICollection<SkillRequirement> SkillRequirements { get; set; }
     }
 }

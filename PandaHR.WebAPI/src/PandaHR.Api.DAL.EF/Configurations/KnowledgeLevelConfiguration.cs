@@ -11,7 +11,13 @@ namespace PandaHR.Api.DAL.EF.Configurations
     {
         public void Configure(EntityTypeBuilder<KnowledgeLevel> builder)
         {
-            builder.HasKey(k => k.Id);
+            builder.HasMany(k => k.SkillKnowledges)
+                   .WithOne(l => l.KnowledgeLevel)
+                   .HasForeignKey(l => l.KnowledgeLevelId);
+
+            builder.HasMany(r => r.SkillRequirements)
+                   .WithOne(k => k.KnowledgeLevel)
+                   .HasForeignKey(k => k.KnowledgeLevelId);
         }
     }
 }

@@ -11,7 +11,9 @@ namespace PandaHR.Api.DAL.EF.Configurations
     {
         public void Configure(EntityTypeBuilder<SkillType> builder)
         {
-            builder.HasKey(s => s.Id);
+            builder.HasMany(s => s.Skills)
+                   .WithOne(t => t.SkillType)
+                   .HasForeignKey(s => s.SkillTypeId);
         }
     }
 }
