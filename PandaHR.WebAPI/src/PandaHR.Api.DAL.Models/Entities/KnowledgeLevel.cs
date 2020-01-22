@@ -4,7 +4,8 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    class KnowledgeLevel
+    public class KnowledgeLevel : BaseEntity
     {
+        public float Value { get; set; }
     }
 }
