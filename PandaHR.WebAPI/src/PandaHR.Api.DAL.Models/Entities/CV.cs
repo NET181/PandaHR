@@ -4,7 +4,8 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    class CV
+    public class CV
     {
+        public ICollection<SkillKnowledge> SkillKnowledges { get; set; }
     }
 }
