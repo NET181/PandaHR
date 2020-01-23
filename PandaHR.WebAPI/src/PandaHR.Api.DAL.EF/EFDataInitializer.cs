@@ -22,6 +22,9 @@ namespace PandaHR.Api.DAL.EF
             //_context.Database.EnsureDeleted();
             //_context.Database.EnsureCreated();
             //TODO - run methods
+            //AddUser();
+            //AddVacancy();
+            
         }
 
         private void AddCV()

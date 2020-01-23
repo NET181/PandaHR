@@ -16,11 +16,20 @@ namespace PandaHR.Api.DAL.EF.Configurations
                 .HasForeignKey(ci => ci.CountryId);
 
             builder.HasData(
-                new Country { Name = "Ukraine" },
-                new Country { Name = "Russia" },
-                new Country { Name = "Georgia" },
-                new Country { Name = "Moldova" },
-                new Country { Name = "Belarus" }
+                new Country { Name = "Ukraine", 
+                    Id = new Guid("6F9619FF-8B86-D011-B42D-00CF4FC964FF") },
+                new Country { Name = "Russia",
+                    Id = new Guid("7F9619FF-8B86-D011-B42D-00CF4FC964FF")
+                },
+                new Country { Name = "Georgia",
+                    Id = new Guid("8F9619FF-8B86-D011-B42D-00CF4FC964FF")
+                },
+                new Country { Name = "Moldova",
+                    Id = new Guid("9F9619FF-8B86-D011-B42D-00CF4FC964FF")
+                },
+                new Country { Name = "Belarus",
+                    Id = new Guid("0F9619FF-8B86-D011-B42D-00CF4FC964FF")
+                }
             );
         }
     }
