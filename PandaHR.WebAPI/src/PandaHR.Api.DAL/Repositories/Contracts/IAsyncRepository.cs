@@ -13,6 +13,11 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
         Task Add(T entity);
         Task Update(T entity);
         Task Remove(T entity);
+        Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null,
+                                                  Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+                                                  Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+                                                  bool disableTracking = true,
+                                                  bool ignoreQueryFilters = false);
         Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate);
         Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null,
                                           Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,

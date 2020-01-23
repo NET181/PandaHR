@@ -27,7 +27,6 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             await _context.Set<T>().AddAsync(entity);
             await _context.SaveChangesAsync();
         }
-
         public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
