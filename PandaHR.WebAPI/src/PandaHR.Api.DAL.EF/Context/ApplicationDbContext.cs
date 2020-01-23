@@ -61,20 +61,21 @@ namespace PandaHR.Api.DAL.EF.Context
             base.OnModelCreating(modelBuilder);
 
             //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            modelBuilder.ApplyConfiguration<City>(new CityConfiguration())
+            modelBuilder.ApplyConfiguration<Country>(new CountryConfiguration())
+                .ApplyConfiguration<City>(new CityConfiguration())
                 .ApplyConfiguration<CompanyCity>(new CompanyCityConfiguration())
                 .ApplyConfiguration<Company>(new CompanyConfiguration())
                 .ApplyConfiguration<CV>(new CVConfiguration())
                 .ApplyConfiguration<Degree>(new DegreeConfiguration())
                 .ApplyConfiguration<Education>(new EducationConfiguration())
                 .ApplyConfiguration<JobExperience>(new JobExperienceConfiguration())
-                .ApplyConfiguration<KnowledgeLevel>(new KnowledgeLevelConfiguration())
                 .ApplyConfiguration<Qualification>(new QualificationConfiguration())
                 .ApplyConfiguration<Skill>(new SkillConfiguration())
                 .ApplyConfiguration<SkillKnowledge>(new SkillKnowledgeConfiguration())
                 .ApplyConfiguration<SkillRequirement>(new SkillRequirementConfiguration())
                 .ApplyConfiguration<SkillType>(new SkillTypeConfiguration())
                 .ApplyConfiguration<Speciality>(new SpecialityConfiguration())
+                .ApplyConfiguration<KnowledgeLevel>(new KnowledgeLevelConfiguration())
                 .ApplyConfiguration<UserCompany>(new UserCompanyConfiguration())
                 .ApplyConfiguration<User>(new UserConfiguration())
                 .ApplyConfiguration<Vacancy>(new VacancyConfiguration());
