@@ -1,4 +1,5 @@
-﻿using PandaHR.Api.Common.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.EF.Context;
 using PandaHR.Api.DAL.Models.Entities;
 using System;
@@ -92,27 +93,26 @@ namespace PandaHR.Api.DAL.EF
 
         private void AddSkillKnowledge()
         {
-            var skillId = _context.Skills.FirstOrDefault().Id;
-            var knowledgeLevelId = _context.KnowledgeLevels.ToArray();
-            var cvId = _context.CVs.FirstOrDefault().Id;
+            var skillId = _context.Skills.AsNoTracking().ToArray();
+            var knowledgeLevelId = _context.KnowledgeLevels.AsNoTracking().ToArray();
+            var cv = _context.CVs.AsNoTracking().FirstOrDefault();
 
             var skillKnowledges = new SkillKnowledge[]
             {
-                new SkillKnowledge { SkillId = skillId, KnowledgeLevelId = knowledgeLevelId[0].Id, CVId = cvId,
+                new SkillKnowledge { SkillId = skillId[0].Id, KnowledgeLevelId = knowledgeLevelId[0].Id, CVId = cv.Id,
                 ExperienceMonths = 15},
-                new SkillKnowledge { SkillId = skillId, KnowledgeLevelId = knowledgeLevelId[1].Id, CVId = cvId,
+                new SkillKnowledge { SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[1].Id, CVId = cv.Id,
                 ExperienceMonths = 0},
-                new SkillKnowledge { SkillId = skillId, KnowledgeLevelId = knowledgeLevelId[2].Id, CVId = cvId,
+                new SkillKnowledge { SkillId = skillId[2].Id, KnowledgeLevelId = knowledgeLevelId[2].Id, CVId = cv.Id,
                 ExperienceMonths = 3}
             };
-
             _context.SkillKnowledges.AddRange(skillKnowledges);
             _context.SaveChanges();
         }
 
         private void AddUser()
         {
-            var cityId = _context.Skills.FirstOrDefault().Id;
+            var cityId = _context.Cities.FirstOrDefault().Id;
 
             var users = new User[]
             {
@@ -129,7 +129,7 @@ namespace PandaHR.Api.DAL.EF
 
         private void AddUserCompany()
         {
-            var companyId = _context.Skills.FirstOrDefault().Id;
+            var companyId = _context.Companies.FirstOrDefault().Id;
             var users = _context.Users.ToArray();
 
             foreach (var user in users)
@@ -166,8 +166,8 @@ namespace PandaHR.Api.DAL.EF
                 new CompanyCity{CompanyId = companies[0].Id, CityId = cities[0].Id},
                 new CompanyCity{CompanyId = companies[1].Id, CityId = cities[1].Id},
                 new CompanyCity{CompanyId = companies[2].Id, CityId = cities[2].Id},
-                new CompanyCity{CompanyId = companies[3].Id, CityId = cities[3].Id},
-                new CompanyCity{CompanyId = companies[4].Id, CityId = cities[4].Id},
+                new CompanyCity{CompanyId = companies[3].Id, CityId = cities[2].Id},
+                new CompanyCity{CompanyId = companies[4].Id, CityId = cities[1].Id},
             };
 
             _context.CompanyCities.AddRange(companyCities);
@@ -222,7 +222,7 @@ namespace PandaHR.Api.DAL.EF
                 SkillId = skills[1].Id, KnowledgeLevelId = knowledgeLevels[2].Id, VacancyId = vacancies[2].Id},
 
                 new SkillRequirement{Weight = 70, ExperienceMonths = 15, IsDeleted = false,
-                SkillId = skills[2].Id, KnowledgeLevelId = knowledgeLevels[2].Id, VacancyId = vacancies[3].Id}
+                SkillId = skills[2].Id, KnowledgeLevelId = knowledgeLevels[2].Id, VacancyId = vacancies[0].Id}
             };
 
             _context.SkillRequirements.AddRange(skillRequirements);
