@@ -15,16 +15,16 @@ jobs:
             - dotnet-packages-v1-{{ checksum "circleci-demo-windows.csproj" }}
       - run:
           name: "Install project dependencies"
-          command: dotnet.exe restore
+          command: dotnet.exe restore ./PandaHR.WebAPI/PandaHR.Api.sln
       - save_cache:
           paths:
             - C:\Users\circleci\.nuget\packages
           key: dotnet-packages-v1-{{ checksum "circleci-demo-windows.csproj" }}
       - run:
           name: "Run Build step"
-          command: dotnet.exe publish -c Release -r win10-x64
+          command: dotnet.exe publish ./PandaHR.WebAPI/PandaHR.Api.sln -c Release -r win10-x64
       - run:
           name: "Test the executable"
-          command: .\bin\Release\netcoreapp2.1\win10-x64\publish\circleci-demo-windows.exe
+          command: .\bin\Release\netcoreapp3.1\win10-x64\publish\circleci-demo-windows.exe
       - store_artifacts:
-          path: .\bin\Release\netcoreapp2.1\win10-x64\publish\circleci-demo-windows.exe
+          path: .\bin\Release\netcoreapp3.1\win10-x64\publish\circleci-demo-windows.exe
