@@ -4,8 +4,6 @@ using PandaHR.Api.DAL.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Linq;
 
 namespace PandaHR.Api.DAL.EF
 {
@@ -22,10 +20,17 @@ namespace PandaHR.Api.DAL.EF
         {
             //_context.Database.EnsureDeleted();
             //_context.Database.EnsureCreated();
-            //TODO - run methods
-            //AddUser();
-            //AddVacancy();
-            
+            AddCompanies();
+            AddCompanyCities();
+            AddUser();
+            AddUserCompany();
+            AddCV();
+            AddEducations();
+            AddJobExperience();
+            AddVacancy();
+            AddSkills();
+            AddSkillKnowledge();
+            AddSkillRequirements();
         }
 
         private void AddCV()
@@ -40,7 +45,6 @@ namespace PandaHR.Api.DAL.EF
                 new CV{ Summary = "Im better than better", UserId = userId, QualificationId = qualificationId},
                 new CV{ Summary = "Im the best", UserId = userId, QualificationId = qualificationId},
                 new CV{ Summary = "Im so clever boy", UserId = userId, QualificationId = qualificationId},
-
             };
 
             _context.CVs.AddRange(cv);
@@ -257,7 +261,5 @@ namespace PandaHR.Api.DAL.EF
             _context.Educations.AddRange(educations);
             _context.SaveChanges();
         }
-
-
     }
 }
