@@ -15,3 +15,5 @@ jobs:
         dotnet-version: 3.0.100
     - name: Build with dotnet
       run: dotnet build ./PandaHR.WebAPI/PandaHR.Api.sln --configuration Release
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v1.1
