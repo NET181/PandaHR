@@ -9,5 +9,6 @@ namespace PandaHR.Api.DAL
     {
         ISkillRepository Skills { get; }
         ICompanyRepository Companies { get; }
+        IUserRepository Users { get; }
     }
 }
