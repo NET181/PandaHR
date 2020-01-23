@@ -8,18 +8,20 @@ namespace PandaHR.Api.DAL
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ISkillRepository _skillRepository;
+        private readonly ICompanyRepository _companyRepository;
+        private readonly IUserRepository _userRepository;
 
-        public UnitOfWork(ISkillRepository skillRepository)
+        public UnitOfWork(ISkillRepository skillRepository, ICompanyRepository companyRepository, IUserRepository userRepository)
         {
             _skillRepository = skillRepository;
+            _companyRepository = companyRepository;
+            _userRepository = userRepository;
         }
 
-        public ISkillRepository Skills
-        {
-            get
-            {
-                return _skillRepository;
-            }
-        }
+        public ISkillRepository Skills => _skillRepository;
+
+        public ICompanyRepository Companies => _companyRepository;
+
+        public IUserRepository Users => _userRepository;
     }
 }
