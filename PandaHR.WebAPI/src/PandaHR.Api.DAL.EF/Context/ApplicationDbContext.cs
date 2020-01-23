@@ -20,7 +20,7 @@ namespace PandaHR.Api.DAL.EF.Context
             : base(options)
         {
             //Database.EnsureDeleted();
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         #region DbSets

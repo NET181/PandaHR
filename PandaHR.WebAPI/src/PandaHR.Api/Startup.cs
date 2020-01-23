@@ -30,7 +30,14 @@ namespace PandaHR.Api
         {
             services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddCors();
+            services.AddMvc(option => option.EnableEndpointRouting = false)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
+            services.AddOpenApiDocument(document =>
+            {
+                document.DocumentName = "v1";
+            });
             services.RegisterDependencies(Configuration);
         }
 
@@ -48,6 +55,9 @@ namespace PandaHR.Api
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseEndpoints(endpoints =>
             {
