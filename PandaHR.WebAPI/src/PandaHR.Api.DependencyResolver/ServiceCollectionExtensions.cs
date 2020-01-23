@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PandaHR.Api.Common;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.EF;
@@ -24,13 +25,20 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<IDataInitializer, EFDataInitializer>();
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EFRepositoryAsync<>));
+
             services.AddScoped<ISkillRepository, SkillRepository>();
+            services.AddScoped<IVacancyRepository, VacancyRepository>();
+            services.AddScoped<ICVRepository, CVRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
 
             services.AddScoped<ISkillService, SkillService>();
-
+            services.AddScoped<ICVService, CVService>();
+            services.AddScoped<IVacancyService, VacancyService>();
+            services.AddScoped<ICompanyService, CompanyService>();
+            services.AddScoper<IUserService, UserService>();
+          
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-            services.AddSingleton<PandaHR.Api.Common.Contracts.IMapper, PandaHR.Api.Common.PandaHRAutoMapper>();
+            services.AddSingleton<IMapper, PandaHRAutoMapper>();
         }
     }
 }

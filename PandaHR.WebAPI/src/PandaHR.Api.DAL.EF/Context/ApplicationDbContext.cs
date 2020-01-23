@@ -19,8 +19,6 @@ namespace PandaHR.Api.DAL.EF.Context
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
         }
 
         #region DbSets
