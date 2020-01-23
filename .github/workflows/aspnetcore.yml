@@ -16,6 +16,6 @@ jobs:
     - name: Build with dotnet
       run: dotnet build ./PandaHR.WebAPI/PandaHR.Api.sln --configuration Release
     - name: Run test
-      run: dotnet tests ./PandaHR.WebAPI/tests/PandaHR.Api.UnitTests/PandaHR.Api.UnitTests.csproj --configuration Release
+      run: dotnet test ./PandaHR.WebAPI/tests/PandaHR.Api.UnitTests/PandaHR.Api.UnitTests.csproj --configuration Release
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v1.1
