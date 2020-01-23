@@ -19,8 +19,8 @@ namespace PandaHR.Api.DAL.EF
 
         public void Seed()
         {
-            //_context.Database.EnsureDeleted();
-            //_context.Database.EnsureCreated();
+            _context.Database.EnsureDeleted();
+            _context.Database.EnsureCreated();
             AddCompanies();
             AddCompanyCities();
             AddUser();

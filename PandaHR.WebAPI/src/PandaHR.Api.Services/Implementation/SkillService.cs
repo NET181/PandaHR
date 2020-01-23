@@ -5,6 +5,7 @@ using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -23,7 +24,7 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<IEnumerable<Skill>> GetAllAsync()
         {
-            var skills = await _uow.Skills.GetAllAsync(
+            var skills = await _uow.Skills.GetAllAsync(predicate: s => s.RootSkill == null,
                 include: s => s
                     .Include(k => k.SkillKnowledges)
                         .ThenInclude(s => s.KnowledgeLevel)

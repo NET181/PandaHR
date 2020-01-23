@@ -47,53 +47,5 @@ namespace PandaHR.Api.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-
-        //     GET api/<controller>/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            try
-            {
-                var skills = await _skillService.GetAllAsync();
-
-                if (skills == null)
-                {
-                    //_logger.LogError("skills with the id sent from client doesn't exist");
-                    return BadRequest("Owner object is null");
-                }
-
-                /* 
-            * if (!ModelState.IsValid)
-               {
-                     // _logger.LogError("Invalid skills object sent from client.");
-                       return BadRequest("Invalid model object");
-              }
-                   */
-                return Ok(skills);
-            }
-            catch (Exception ex)
-            {
-                //_logger.LogError($"Something went wrong inside UpdateOwner action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
-            }
-        }
-
-        // POST api/<controller>
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
