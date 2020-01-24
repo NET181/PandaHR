@@ -12,8 +12,8 @@ namespace PandaHR.Api.DAL.EF.Configurations
         public void Configure(EntityTypeBuilder<City> builder)
         {
             builder.HasOne(ci => ci.Country)
-                .WithMany(co => co.Cities)
-                .HasForeignKey(ci => ci.CountryId);
+                   .WithMany(co => co.Cities)
+                   .HasForeignKey(ci => ci.CountryId);
         }
     }
 }

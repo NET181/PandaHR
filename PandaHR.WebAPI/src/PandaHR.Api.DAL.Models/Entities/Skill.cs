@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    public class Skill : BaseEntity
+    public class Skill : BaseEntity, ISoftDeletable
     {
         public Skill()
         {
@@ -12,7 +12,8 @@ namespace PandaHR.Api.DAL.Models.Entities
             SkillKnowledges = new HashSet<SkillKnowledge>();
             SkillRequirements = new HashSet<SkillRequirement>();
         }
-      
+
+        public bool IsDeleted { get; set; }
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
 
