@@ -8,5 +8,9 @@ namespace PandaHR.Api.DAL
     public interface IUnitOfWork
     {
         ISkillRepository Skills { get; }
+        IVacancyRepository Vacancies{ get; }
+        ICVRepository CVs { get; }
+        ICompanyRepository Companies { get; }
+        IUserRepository Users { get; }
     }
 }

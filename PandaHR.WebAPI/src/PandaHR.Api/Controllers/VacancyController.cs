@@ -1,30 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PandaHR.Api.Services.Contracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using PandaHR.Api.Services.Contracts;
 
 namespace PandaHR.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class SkillController : Controller
+    [ApiController]
+    public class VacancyController : ControllerBase
     {
-        private readonly ISkillService _skillService;
+        private readonly IVacancyService _vacancyService;
 
-        public SkillController(ISkillService skillService)
+        public VacancyController(IVacancyService vacancyService)
         {
-            _skillService = skillService;
+            _vacancyService = vacancyService;
         }
 
-        // GET: api/<controller>
+        // GET: api/Vacancy
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             try
             {
-                var skills = await _skillService.GetAllAsync();
+                var skills = await _vacancyService.GetAllAsync();
 
                 if (skills == null)
                 {
