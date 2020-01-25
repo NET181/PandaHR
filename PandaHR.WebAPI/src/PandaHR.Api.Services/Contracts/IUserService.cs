@@ -9,5 +9,9 @@ namespace PandaHR.Api.Services.Contracts
     public interface IUserService
     {
         Task<IEnumerable<User>> GetAllAsync();
+        //IEnumerable<Education> GetEducations();
+        //IEnumerable<SkillKnowledge> GetSkills();
+
+        //User GetFullInformation();
     }
 }

@@ -24,19 +24,24 @@ namespace PandaHR.Api.DependencyResolver
 
             services.AddScoped<IDataInitializer, EFDataInitializer>();
 
-            services.AddScoped(typeof(IAsyncRepository<>), typeof(EFRepositoryAsync<>));
+            //services.AddScoped(typeof(IAsyncRepository<>), typeof(EFRepositoryAsync<>));
+            services.AddScoped(typeof(IAsyncRepositoryGeneric<>), typeof(EFGenericRepositoryAsync<>));
 
             services.AddScoped<ISkillRepository, SkillRepository>();
             services.AddScoped<ICVRepository, CVRepository>();
             services.AddScoped<IVacancyRepository, VacancyRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<ICityRepository, CityRepository>();
 
             services.AddScoped<ISkillService, SkillService>();
             services.AddScoped<ICVService, CVService>();
             services.AddScoped<IVacancyService, VacancyService>();
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<ICityService, CityService>();
           
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<IMapper, PandaHRAutoMapper>();

@@ -12,5 +12,7 @@ namespace PandaHR.Api.DAL
         ICVRepository CVs { get; }
         ICompanyRepository Companies { get; }
         IUserRepository Users { get; }
+        ICountryRepository Countries { get; }
+        ICityRepository Cities { get; }
     }
 }

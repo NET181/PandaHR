@@ -12,18 +12,24 @@ namespace PandaHR.Api.DAL
         private readonly ISkillRepository _skillRepository;
         private readonly IVacancyRepository _vacancyRepository;
         private readonly ICVRepository _cvRepository;
+        private readonly ICountryRepository _countryRepository;
+        private readonly ICityRepository _cityRepository;
 
         public UnitOfWork(IVacancyRepository vacancyRepository, 
             ICVRepository cvRepository, 
             ISkillRepository skillRepository, 
             ICompanyRepository companyRepository, 
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            ICountryRepository countryRepository,
+            ICityRepository cityRepository)
         {
             _skillRepository = skillRepository;
             _companyRepository = companyRepository;
             _userRepository = userRepository;
             _vacancyRepository = vacancyRepository;
             _cvRepository = cvRepository;
+            _countryRepository = countryRepository;
+            _cityRepository = cityRepository;
         }
 
         public ISkillRepository Skills
@@ -53,5 +59,9 @@ namespace PandaHR.Api.DAL
         public ICompanyRepository Companies => _companyRepository;
 
         public IUserRepository Users => _userRepository;
+
+        public ICityRepository Cities => _cityRepository;
+
+        public ICountryRepository Countries => _countryRepository;
     }
 }

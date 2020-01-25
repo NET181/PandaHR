@@ -4,12 +4,11 @@ using PandaHR.Api.DAL.Repositories.Contracts;
 
 namespace PandaHR.Api.DAL.Repositories.Implementation
 {
-    public class UserRepository : EFRepositoryAsync<User>, IUserRepository
+    public class CityRepository : EFGenericRepositoryAsync<City>, ICityRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public UserRepository(ApplicationDbContext context) :
-            base(context)
+        public CityRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }
