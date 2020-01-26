@@ -68,10 +68,10 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             return await _context.Set<T>().Where(predicate).ToListAsync();
         }
 
-        public Task Remove(T entity)
+        public async Task<int> Remove(T entity)
         {
             _context.Set<T>().Remove(entity);
-            return _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
 
         public Task Update(T entity)

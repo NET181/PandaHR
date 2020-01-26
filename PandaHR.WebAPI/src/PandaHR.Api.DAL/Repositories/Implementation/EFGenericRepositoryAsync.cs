@@ -17,7 +17,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
 
         public async Task<T> GetByIdAsync(Guid id, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, bool ignoreQueryFilters = false)
         {
-            var query = _dbSet.First(t => t.Id == id) as IQueryable<T>;
+            var query = _dbSet.Where(t => t.Id == id);
 
             if (include != null)
             {
@@ -29,7 +29,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
                 query = query.IgnoreQueryFilters();
             }
 
-            return await query.FirstAsync();
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface ICountryService
+    public interface ICountryService : ICRUDservice<Country>
     {
-        Task<IEnumerable<Country>> GetAllAsync();
-        Task<Country> GetById(Guid countryId);
+    	
     }
 }

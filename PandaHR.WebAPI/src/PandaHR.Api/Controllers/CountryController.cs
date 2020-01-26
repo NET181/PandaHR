@@ -15,15 +15,20 @@ namespace PandaHR.Api.Controllers
     {
         private readonly ICountryService _countryService;
 
+        public CountryController(ICountryService countryService)
+        {
+            _countryService = countryService;
+        }
+
         // GET: api/Country
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             return Ok(_countryService.GetAllAsync());
         }
 
         // GET: api/Country/5
-        [HttpGet("{id}"/*, Name = "Get"*/)]
+        [HttpGet("{id}")]
         public IActionResult Get(Guid id)
         {
             Country country = _countryService.GetById(id).Result;
@@ -39,21 +44,27 @@ namespace PandaHR.Api.Controllers
 
         // POST: api/Country
         [HttpPost]
-        public void Post(Country value)
+        public async Task<IActionResult> Post([FromBody]Country value)
         {
-            
+            await _countryService.Add(value);
+            return Ok();
         }
 
         // PUT: api/Country/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(Guid id, [FromBody]Country value)
         {
+            value.Id = id;
+            await _countryService.Update(value);
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
+            await _countryService.Remove(id);
+            return Ok();
         }
     }
 }
