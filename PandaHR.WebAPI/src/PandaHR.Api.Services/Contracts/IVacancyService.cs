@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface IVacancyService
+    public interface IVacancyService : IAsyncCrudService<Vacancy>
     {
-        Task<IEnumerable<Vacancy>> GetAllAsync();
-        Task<Vacancy> GetByIdAsync(Guid id);
-        Task AddAsync(Vacancy skillRequirement);
-        Task UpdateAsync(Vacancy skillRequirement);
-        Task RemoveAsync(Guid id);
     }
 }

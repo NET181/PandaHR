@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface IQualificationService
+    public interface IQualificationService : IAsyncCrudService<Qualification>
     {
-        Task<IEnumerable<Qualification>> GetAllAsync();
-        Task<Qualification> GetByIdAsync(Guid id);
-        Task AddAsync(Qualification qualification);
-        Task UpdateAsync(Qualification qualification);
-        Task RemoveAsync(Guid id);
     }
 }

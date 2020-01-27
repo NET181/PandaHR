@@ -23,6 +23,17 @@ namespace PandaHR.Api.Services.Implementation
             await _uow.Qualifications.Add(qualification);
         }
 
+        public async Task RemoveAsync(Guid id)
+        {
+            var qualification = await GetByIdAsync(id);
+            await RemoveAsync(qualification);
+        }
+
+        public async Task RemoveAsync(Qualification qualification)
+        {
+            await _uow.Qualifications.Remove(qualification);
+        }
+
         public async Task<IEnumerable<Qualification>> GetAllAsync()
         {
             return await _uow.Qualifications.GetAllAsync();
@@ -30,24 +41,12 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<Qualification> GetByIdAsync(Guid id)
         {
-            return (await _uow.Qualifications.GetWhere(s => s.Id == id)).FirstOrDefault();
-        }
-
-        public async Task RemoveAsync(Guid id)
-        {
-            var qualification = (await _uow.Qualifications.GetWhere(s => s.Id == id)).FirstOrDefault();
-            if (qualification != null)
-            {
-                await _uow.Qualifications.Remove(qualification);
-            }
+            return await _uow.Qualifications.GetFirstOrDefaultAsync(d => d.Id == id);
         }
 
         public async Task UpdateAsync(Qualification qualification)
         {
-            if (qualification != null)
-            {
-                await _uow.Qualifications.Update(qualification);
-            }
+            await _uow.Qualifications.Update(qualification);
         }
     }
 }

@@ -23,6 +23,17 @@ namespace PandaHR.Api.Services.Implementation
             await _uow.SkillRequirements.Add(skillRequirement);
         }
 
+        public async Task RemoveAsync(Guid id)
+        {
+            var skillRequirement = await GetByIdAsync(id);
+            await RemoveAsync(skillRequirement);
+        }
+
+        public async Task RemoveAsync(SkillRequirement skillRequirement)
+        {
+            await _uow.SkillRequirements.Remove(skillRequirement);
+        }
+
         public async Task<IEnumerable<SkillRequirement>> GetAllAsync()
         {
             return await _uow.SkillRequirements.GetAllAsync();
@@ -30,24 +41,12 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<SkillRequirement> GetByIdAsync(Guid id)
         {
-            return (await _uow.SkillRequirements.GetWhere(s => s.Id == id)).FirstOrDefault();
-        }
-
-        public async Task RemoveAsync(Guid id)
-        {
-            var skillRequirement = (await _uow.SkillRequirements.GetWhere(s => s.Id == id)).FirstOrDefault();
-            if(skillRequirement != null)
-            {
-                await _uow.SkillRequirements.Remove(skillRequirement);
-            }
+            return await _uow.SkillRequirements.GetFirstOrDefaultAsync(d => d.Id == id);
         }
 
         public async Task UpdateAsync(SkillRequirement skillRequirement)
         {
-            if (skillRequirement != null)
-            {
-                await _uow.SkillRequirements.Update(skillRequirement);
-            }
+            await _uow.SkillRequirements.Update(skillRequirement);
         }
     }
 }
