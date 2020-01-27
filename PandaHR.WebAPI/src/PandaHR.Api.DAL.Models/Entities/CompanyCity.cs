@@ -4,8 +4,9 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    public class CompanyCity
+    public class CompanyCity : ISoftDeletable
     {
+        public bool IsDeleted { get; set; }
         public Guid CompanyId { get; set; }
         public Company Company { get; set; }
 
