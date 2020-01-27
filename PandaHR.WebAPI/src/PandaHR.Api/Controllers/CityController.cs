@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.DAL.Models.Entities;
 
 namespace PandaHR.Api.Controllers
 {
@@ -11,36 +13,58 @@ namespace PandaHR.Api.Controllers
     [ApiController]
     public class CityController : ControllerBase
     {
-        //// GET: api/City
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        private readonly ICityService _cityService;
 
-        //// GET: api/City/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        public CityController(ICityService cityService)
+        {
+            _cityService = cityService;
+        }
 
-        //// POST: api/City
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
+        // GET: api/Country
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(await _cityService.GetAllAsync());
+        }
 
-        //// PUT: api/City/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        // GET: api/Country/5
+        [HttpGet("{id}")]
+        public IActionResult Get(Guid id)
+        {
+            City city = _cityService.GetById(id).Result;
+            if (city != null)
+            {
+                return Ok(city);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
 
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        // POST: api/Country
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody]City value)
+        {
+            await _cityService.Add(value);
+            return Ok();
+        }
+
+        // PUT: api/Country/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(Guid id, [FromBody]City value)
+        {
+            value.Id = id;
+            await _cityService.Update(value);
+            return Ok();
+        }
+
+        // DELETE: api/ApiWithActions/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _cityService.Remove(id);
+            return Ok();
+        }
     }
 }

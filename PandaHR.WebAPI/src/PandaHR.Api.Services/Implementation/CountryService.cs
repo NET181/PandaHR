@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System;
 
 namespace PandaHR.Api.Services.Implementation
 {
@@ -19,15 +21,13 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<IEnumerable<Country>> GetAllAsync()
         {
             return await _uow.Countries
-                  .GetAllAsync(include: c => c
-                      .Include(s => s.Cities));
+                  .GetAllAsync(include: c => c.Include(s => s.Cities));
         }
 
-        public async Task<Country> GetById(Guid countryId)
+        public async Task<Country> GetById(Guid countryId, Func<IQueryable<Country>, IIncludableQueryable<Country, object>> include = null)
         {
             return await _uow.Countries.
-                GetByIdAsync(countryId
-               /* include: c => c.Include(s => s.Cities)*/);
+                GetByIdAsync(countryId, c => c.Include(s => s.Cities));
         }
 
         public async Task Add(Country country)

@@ -24,7 +24,7 @@ namespace PandaHR.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(_countryService.GetAllAsync());
+            return Ok(await _countryService.GetAllAsync());
         }
 
         // GET: api/Country/5
