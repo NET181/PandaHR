@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface ICompanyService : ICRUDService<Company>
+    public interface ICompanyService
     {
         Task<IEnumerable<Company>> GetAllAsync();
     }

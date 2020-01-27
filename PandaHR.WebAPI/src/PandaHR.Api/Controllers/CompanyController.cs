@@ -20,80 +20,10 @@ namespace PandaHR.Api.Controllers
             _companyService = companyService;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Company>> Create(Company company)
-        {
-            if (ModelState.IsValid)
-            {
-                await _companyService.Add(company);
-
-                return Ok(company);
-            }
-            else
-            {
-                return ValidationProblem();
-            }
-        }
-
         [HttpGet]
         public async Task<IEnumerable<Company>> Get()
         {
             return await _companyService.GetAllAsync();
-        }
-
-        [HttpPut]
-        public async Task<ActionResult<Company>> Update(Company company)
-        {
-            if (company == null)
-            {
-                return BadRequest("owner object is null");
-            }
-
-            bool doesExist = _companyService.GetById(company.Id).Result != null;
-
-            if (!doesExist)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                await _companyService.Update(company);
-
-                return Ok(company);
-            }
-            else
-            {
-                return ValidationProblem();
-            }
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Company>> Delete(Guid Id)
-        {
-            Company deletedCompany = await _companyService.GetById(Id);
-
-            if (deletedCompany == null)
-            {
-                return NotFound(Id);
-            }
-
-            await _companyService.Remove(deletedCompany);
-
-            return Ok(Id);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Company>> GetById(Guid Id)
-        {
-            Company givenCompany = await _companyService.GetById(Id);
-
-            if (givenCompany == null)
-            {
-                return NotFound(Id);
-            }
-
-            return new ObjectResult(givenCompany);
         }
     }
 }
