@@ -12,6 +12,7 @@ namespace PandaHR.Api.Services.Contracts
 {
     public interface ICRUDService<T>
     {
+         Task Add(T entity);
          Task<IEnumerable<T>> GetAllAsync();
          Task<T> GetById(Guid Id);
          Task Remove(T dto);

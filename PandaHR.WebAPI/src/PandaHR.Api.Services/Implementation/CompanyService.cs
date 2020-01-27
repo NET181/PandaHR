@@ -69,5 +69,10 @@ namespace PandaHR.Api.Services.Implementation
         {
             return await _uow.Companies.GetById(Id);
         }
+
+        public async Task Add(Company company)
+        {
+            await _uow.Companies.Add(company);
+        }
     }
 }
