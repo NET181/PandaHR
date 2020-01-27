@@ -80,5 +80,10 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             _context.Entry(entity).State = EntityState.Modified;
             return _context.SaveChangesAsync();
         }
+		
+		public async Task GetById(Guid Id)
+		{
+			return await _context.FindAsync(Id);
+		}
     }
 }
