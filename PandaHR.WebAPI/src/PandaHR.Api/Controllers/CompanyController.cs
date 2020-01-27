@@ -23,16 +23,16 @@ namespace PandaHR.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Company>> Create(Company company)
         {
-            if (ModelState.IsValid)
-            {
-                await _companyService.Add(company);
+            //if (ModelState.IsValid)
+            //{
+            await _companyService.Add(company);
 
-                return Ok(company);
-            }
-            else
-            {
-                return ValidationProblem();
-            }
+            return Ok(company);
+            //}
+            //else
+            //{
+            //    return ValidationProblem();
+            //}
         }
 
         [HttpGet]
@@ -56,44 +56,76 @@ namespace PandaHR.Api.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                await _companyService.Update(company);
+            //if (ModelState.IsValid)
+            //{
+            await _companyService.Update(company);
 
-                return Ok(company);
-            }
-            else
-            {
-                return ValidationProblem();
-            }
+            return Ok(company);
+            //}
+            //else
+            //{
+            //    return ValidationProblem();
+            //}
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Company>> Delete(Guid Id)
+        public async Task<ActionResult<Company>> Delete(Guid id)
         {
-            Company deletedCompany = await _companyService.GetById(Id);
+            Company deletedCompany = await _companyService.GetById(id);
 
             if (deletedCompany == null)
             {
-                return NotFound(Id);
+                return NotFound(id);
             }
 
             await _companyService.Remove(deletedCompany);
 
-            return Ok(Id);
+            return Ok(id);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Company>> GetById(Guid Id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Company>> GetById(Guid id)
         {
-            Company givenCompany = await _companyService.GetById(Id);
+            Company givenCompany = await _companyService.GetById(id);
 
             if (givenCompany == null)
             {
-                return NotFound(Id);
+                return NotFound(id);
             }
 
             return new ObjectResult(givenCompany);
+        }
+
+        [HttpDelete("Users")]
+        public async Task<ActionResult<UserCompany>> RemoveUserFromCompany(UserCompany userCompany)
+        {
+            await _companyService.RemoveUserFromCompany(userCompany);
+
+            return Ok(userCompany);
+        }
+
+        [HttpDelete("Cities")]
+        public async Task<ActionResult<CompanyCity>> RemoveCompanyFromCities(CompanyCity companyCity)
+        {
+            await _companyService.RemoveCompanyFromCity(companyCity);
+
+            return Ok(companyCity);
+        }
+
+        [HttpPost("Users")]
+        public async Task<ActionResult<UserCompany>> AddUserToCompany(UserCompany userCompany)
+        {
+            await _companyService.AddUserInCompany(userCompany);
+
+            return Ok(userCompany);
+        }
+
+        [HttpPost("Cities")]
+        public async Task<ActionResult<CompanyCity>> AddCompanyToCity(CompanyCity companyCity)
+        {
+            await _companyService.AddCompanyInCity(companyCity);
+
+            return Ok(companyCity);
         }
     }
 }

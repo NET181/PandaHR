@@ -74,5 +74,25 @@ namespace PandaHR.Api.Services.Implementation
         {
             await _uow.Companies.Add(company);
         }
+
+        public async Task RemoveUserFromCompany(UserCompany userCompany)
+        {
+            await _uow.CompanyUsers.Remove(userCompany);
+        }
+
+        public async Task AddUserInCompany(UserCompany userCompany)
+        {
+            await _uow.CompanyUsers.Add(userCompany);
+        }
+
+        public async Task AddCompanyInCity(CompanyCity companyCity)
+        {
+            await _uow.CityCompanies.Add(companyCity);
+        }
+
+        public async Task RemoveCompanyFromCity(CompanyCity companyCity)
+        {
+            await _uow.CityCompanies.Remove(companyCity);
+        } 
     }
 }
