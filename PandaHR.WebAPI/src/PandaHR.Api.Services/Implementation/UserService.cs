@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +20,11 @@ namespace PandaHR.Api.Services.Implementation
             _uow = uow;
         }
 
+        public Task Add(User entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<User>> GetAllAsync()
         {
             var users = await _uow.Users.GetAllAsync(include: source => source
@@ -30,6 +37,31 @@ namespace PandaHR.Api.Services.Implementation
             .Include(v => v.Vacancies));
 
             return users;
+        }
+
+        public Task<User> GetById(Guid id, Func<IQueryable<User>, IIncludableQueryable<User, object>> include = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Education> GetEducations()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<SkillKnowledge> GetSkills()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Remove(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Update(User entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }
