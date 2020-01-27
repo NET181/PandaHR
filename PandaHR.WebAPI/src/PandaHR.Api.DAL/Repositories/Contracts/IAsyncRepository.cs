@@ -19,5 +19,6 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
                                                   bool disableTracking = true,
                                                   bool ignoreQueryFilters = false);
         Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate);
+        Task<T> GetById(Guid Id);
     }
 }
