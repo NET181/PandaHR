@@ -19,8 +19,9 @@ namespace PandaHR.Api.Controllers
             _skillTypeService = skillTypeService;
         }
 
+        // GET: api/SkillType
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAllAsync()
         {
             try
             {
@@ -28,17 +29,10 @@ namespace PandaHR.Api.Controllers
 
                 if (KnowledgeLevels == null)
                 {
-                    //_logger.LogError("skills with the id sent from client doesn't exist");
+
                     return BadRequest("Owner object is null");
                 }
 
-                /* 
-            * if (!ModelState.IsValid)
-               {
-                     // _logger.LogError("Invalid skills object sent from client.");
-                       return BadRequest("Invalid model object");
-              }
-                   */
                 return Ok(KnowledgeLevels);
             }
             catch (Exception ex)
@@ -48,24 +42,37 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-        public async Task<IActionResult> GetById(object id)
+        // GET: api/SkillType/5    
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByIdAsync(object id)
         {
             try
             {
-              var skillType = await _skillTypeService.GetById(id);
+                var skillType = await _skillTypeService.GetById(id);
 
-                return StatusCode(200, skillType);
+                if (skillType != null)
+                {
+                    return StatusCode(200, skillType);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
             catch
             {
+                //todo log ex
                 return StatusCode(500, "Internal server error");
             }
         }
 
-        public async Task<IActionResult> Update(SkillType skillType)
+        // PUT: api/SkillType/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync(object id, SkillType skillType)
         {
             try
             {
+                skillType.Id = (Guid)id;
                 await _skillTypeService.Update(skillType);
 
                 return StatusCode(200);
@@ -76,7 +83,9 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-        public async Task<IActionResult> Add(SkillType skillType)
+        // POST: api/SkillType
+        [HttpPost]
+        public async Task<IActionResult> AddAsync(SkillType skillType)
         {
             try
             {
@@ -90,7 +99,9 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-        public async Task<IActionResult> Remove(SkillType skillType)
+        // DELETE: api/SkillType/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveAsync(SkillType skillType)
         {
             try
             {

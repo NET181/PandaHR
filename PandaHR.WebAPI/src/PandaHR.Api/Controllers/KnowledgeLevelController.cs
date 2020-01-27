@@ -19,8 +19,9 @@ namespace PandaHR.Api.Controllers
             _knowledgeLevelService = knowledgeLevelService;
         }
 
+        // GET: api/KnowledgeLevel
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAllAsync()
         {
             try
             {
@@ -32,13 +33,6 @@ namespace PandaHR.Api.Controllers
                     return BadRequest("Owner object is null");
                 }
 
-                /* 
-            * if (!ModelState.IsValid)
-               {
-                     // _logger.LogError("Invalid skills object sent from client.");
-                       return BadRequest("Invalid model object");
-              }
-                   */
                 return Ok(KnowledgeLevels);
             }
             catch (Exception ex)
@@ -48,13 +42,22 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-        public async Task<IActionResult> GetById(object id)
+        // GET: api/KnowledgeLevel/5    
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByIdAsync(object id)
         {
             try
             {
                 var knowledgeLevel = await _knowledgeLevelService.GetById(id);
 
-                return StatusCode(200, knowledgeLevel);
+                if (knowledgeLevel != null)
+                {
+                    return StatusCode(200, knowledgeLevel);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
             catch
             {
@@ -62,10 +65,13 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-        public async Task<IActionResult> Update(KnowledgeLevel knowledgeLevel)
+        // PUT: api/KnowledgeLeve/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync(object id, KnowledgeLevel knowledgeLevel)
         {
             try
             {
+                knowledgeLevel.Id = (Guid)id;
                 await _knowledgeLevelService.Update(knowledgeLevel);
 
                 return StatusCode(200);
@@ -76,6 +82,8 @@ namespace PandaHR.Api.Controllers
             }
         }
 
+        // POST: api/KnowledgeLevel
+        [HttpPost]
         public async Task<IActionResult> Add(KnowledgeLevel knowledgeLevel)
         {
             try
@@ -90,6 +98,8 @@ namespace PandaHR.Api.Controllers
             }
         }
 
+        // DELETE: api/KnowledgeLevel/5
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(KnowledgeLevel knowledgeLevel)
         {
             try
