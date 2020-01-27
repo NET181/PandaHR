@@ -21,10 +21,10 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             _dbSet = _context.Set<T>();
         }
 
-        public async Task Add(T entity)
+        public async Task<int> Add(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
         public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
@@ -74,7 +74,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             return await _context.SaveChangesAsync();
         }
 
-        public Task Update(T entity)
+        public Task<int> Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
             return _context.SaveChangesAsync();

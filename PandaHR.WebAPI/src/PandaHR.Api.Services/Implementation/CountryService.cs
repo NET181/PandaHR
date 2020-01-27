@@ -37,15 +37,13 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<bool> Update(Country coutnry)
         {
-            await _uow.Countries.Update(coutnry);
-            return true;
+            return await _uow.Countries.Update(coutnry) == 1;
         }
 
         public async Task<bool> Remove(Guid id)
         {
             var country = await _uow.Countries.GetByIdAsync(id);
-            await _uow.Countries.Remove(country);
-            return true;
+            return await _uow.Countries.Remove(country) == 1;
         }
     }
 }

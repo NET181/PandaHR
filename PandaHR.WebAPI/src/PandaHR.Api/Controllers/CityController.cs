@@ -55,16 +55,28 @@ namespace PandaHR.Api.Controllers
         public async Task<IActionResult> Put(Guid id, [FromBody]City value)
         {
             value.Id = id;
-            await _cityService.Update(value);
-            return Ok();
+            if (await _cityService.Update(value))
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _cityService.Remove(id);
-            return Ok();
+            if (await _cityService.Remove(id))
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }
