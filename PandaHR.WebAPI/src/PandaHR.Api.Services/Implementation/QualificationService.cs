@@ -1,5 +1,6 @@
 ﻿using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Implementation
 {
-    public class QualificationService
+    public class QualificationService : IQualificationService
     {
         private readonly IUnitOfWork _uow;
 
