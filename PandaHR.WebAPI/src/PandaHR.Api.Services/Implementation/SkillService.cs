@@ -35,5 +35,33 @@ namespace PandaHR.Api.Services.Implementation
 
             return skills;
         }
+
+        public async Task<Skill> GetById(Guid id)
+        {
+            var skill = await _uow.Skills.GetByIdAsync(id, include: s => s
+             .Include(k => k.SkillKnowledges)
+                        .ThenInclude(s => s.KnowledgeLevel)
+                    .Include(k => k.SkillType)
+                    .Include(k => k.SkillRequirements)
+                        .ThenInclude(s => s.Vacancy)
+                    .Include(k => k.SubSkills));
+
+            return skill;
+        }
+
+        public async Task Add(Skill skill)
+        {
+            await _uow.Skills.Add(skill);
+        }
+
+        public async Task Update(Skill skill)
+        {
+            await _uow.Skills.Update(skill);
+        }
+
+        public async Task Remove(Skill skill)
+        {
+            await _uow.Skills.Remove(skill);
+        }
     }
 }

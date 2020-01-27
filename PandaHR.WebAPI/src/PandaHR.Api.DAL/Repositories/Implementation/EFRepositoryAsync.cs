@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using PandaHR.Api.DAL.EF.Context;
+using PandaHR.Api.DAL.Models;
 using PandaHR.Api.DAL.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PandaHR.Api.DAL.Repositories.Implementation
 {
-    public class EFRepositoryAsync<T> : IAsyncRepository<T> where T : class
+    public class EFRepositoryAsync<T> : IAsyncRepository<T> where T : class, IBaseEntity
     {
         private readonly ApplicationDbContext _context;
         protected readonly DbSet<T> _dbSet;
@@ -62,6 +63,24 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             {
                 return await query.ToListAsync();
             }
+        }
+
+        public async Task<T> GetByIdAsync(Guid id, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+                            bool ignoreQueryFilters = false)
+        {
+            var query = _dbSet.Where(t => t.Id == id);
+
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            if (ignoreQueryFilters)
+            {
+                query = query.IgnoreQueryFilters();
+            }
+
+            return await query.FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate)
