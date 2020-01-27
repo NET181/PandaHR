@@ -31,13 +31,19 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<IVacancyRepository, VacancyRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IDegreeRepository, DegreeRepository>();
+            services.AddScoped<IEducationRepository, EducationRepository>();
+            services.AddScoped<ISpecialityRepository, SpecialityRepository>();
 
             services.AddScoped<ISkillService, SkillService>();
             services.AddScoped<ICVService, CVService>();
             services.AddScoped<IVacancyService, VacancyService>();
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IUserService, UserService>();
-          
+            services.AddScoped<IDegreeService, DegreeService>();
+            services.AddScoped<IEducationService, EducationService>();
+            services.AddScoped<ISpecialityService, SpecialityService>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<IMapper, PandaHRAutoMapper>();
         }
