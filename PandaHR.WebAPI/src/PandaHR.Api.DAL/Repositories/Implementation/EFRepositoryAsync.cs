@@ -81,9 +81,9 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             return _context.SaveChangesAsync();
         }
 		
-		public async Task GetById(Guid Id)
+		public async Task<T> GetById(Guid Id)
 		{
-			return await _context.FindAsync(Id);
+			return await _context.Set<T>().FindAsync(Id);
 		}
     }
 }
