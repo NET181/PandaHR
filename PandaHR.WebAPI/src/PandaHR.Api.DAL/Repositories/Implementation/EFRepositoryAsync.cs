@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PandaHR.Api.DAL.Repositories.Implementation
 {
-    public class EFRepositoryAsync<T> : IAsyncRepository<T> where T : class, IBaseEntity
+    public class EFRepositoryAsync<T> : IAsyncRepository<T> where T : class
     {
         private readonly ApplicationDbContext _context;
         protected readonly DbSet<T> _dbSet;
@@ -65,14 +65,26 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             }
         }
 
-        public async Task<T> GetByIdAsync(Guid id, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
-                            bool ignoreQueryFilters = false)
+        public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+            bool disableTracking = true, bool ignoreQueryFilters = false)
         {
-            var query = _dbSet.Where(t => t.Id == id);
+            IQueryable<T> query = _dbSet;
+
+            if (disableTracking)
+            {
+                query = query.AsNoTracking();
+            }
 
             if (include != null)
             {
                 query = include(query);
+            }
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
             }
 
             if (ignoreQueryFilters)
@@ -80,7 +92,14 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
                 query = query.IgnoreQueryFilters();
             }
 
-            return await query.FirstOrDefaultAsync();
+            if (orderBy != null)
+            {
+                return await orderBy(query).FirstOrDefaultAsync();
+            }
+            else
+            {
+                return await query.FirstOrDefaultAsync();
+            }
         }
 
         public async Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate)
