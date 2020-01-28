@@ -8,6 +8,6 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
 {
     public interface IJobExperienceRepository: IAsyncRepository<JobExperience>
     {
-        Task<JobExperience> GetById(Guid id);
+
     }
 }

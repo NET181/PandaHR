@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface IQualificationService : IAsyncCrudService<Qualification>
+    public interface IQualificationService : IAsyncService<Qualification>
     {
     }
 }

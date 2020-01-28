@@ -8,6 +8,6 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
 {
     public interface ICVRepository : IAsyncRepository<CV>
     {
-        Task<CV> GetById(Guid id); 
+
     }
 }
