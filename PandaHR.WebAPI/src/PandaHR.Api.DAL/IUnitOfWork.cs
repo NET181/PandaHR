@@ -11,6 +11,7 @@ namespace PandaHR.Api.DAL
         IVacancyRepository Vacancies{ get; }
         ICVRepository CVs { get; }
         ICompanyRepository Companies { get; }
+        IJobExperienceRepository JobExperiences { get; }
         IUserRepository Users { get; }
         IEducationRepository Educations { get; }
         IDegreeRepository Degrees { get; }

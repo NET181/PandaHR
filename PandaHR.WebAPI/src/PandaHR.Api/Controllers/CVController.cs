@@ -11,40 +11,37 @@ namespace PandaHR.Api.Controllers
     [ApiController]
     public class CVController : Controller
     {
-        private readonly ICVService _cVService;
+        private readonly ICVService _cvService;
 
-        public CVController(ICVService cVService)
+        public CVController(ICVService cvService)
         {
-            _cVService = cVService;
+            _cvService = cvService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<CV> Get(Guid cvId)
         {
-            try
-            {
-                var skills = await _cVService.GetAllAsync();
+            var jobExperience = await _cvService.GetById(cvId);
 
-                if (skills == null)
-                {
-                    //_logger.LogError("skills with the id sent from client doesn't exist");
-                    return BadRequest("Owner object is null");
-                }
+            return jobExperience;
+        }
 
-                /* 
-            * if (!ModelState.IsValid)
-               {
-                     // _logger.LogError("Invalid skills object sent from client.");
-                       return BadRequest("Invalid model object");
-              }
-                   */
-                return Ok(skills);
-            }
-            catch (Exception ex)
-            {
-                //_logger.LogError($"Something went wrong inside UpdateOwner action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
-            }
+        [HttpDelete]
+        public void Remove(CV cv)
+        {
+            _cvService.Remove(cv);
+        }
+
+        [HttpPut]
+        public void Update(CV cv)
+        {
+            _cvService.Update(cv);
+        }
+
+        [HttpPost]
+        public void Add(CV cv)
+        {
+            _cvService.Add(cv);
         }
     }
 }
