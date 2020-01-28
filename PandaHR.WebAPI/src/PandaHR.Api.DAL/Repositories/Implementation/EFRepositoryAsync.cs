@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using PandaHR.Api.DAL.EF.Context;
+using PandaHR.Api.DAL.Models;
 using PandaHR.Api.DAL.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             await _context.Set<T>().AddAsync(entity);
             await _context.SaveChangesAsync();
         }
+
         public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
@@ -61,6 +63,79 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             else
             {
                 return await query.ToListAsync();
+            }
+        }
+        public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+            bool disableTracking = true, bool ignoreQueryFilters = false)
+        {
+            IQueryable<T> query = _dbSet;
+
+            if (disableTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            if (ignoreQueryFilters)
+            {
+                query = query.IgnoreQueryFilters();
+            }
+
+            if (orderBy != null)
+            {
+                return await orderBy(query).FirstOrDefaultAsync();
+            }
+            else
+            {
+                return await query.FirstOrDefaultAsync();
+            }
+        }
+
+        public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+            bool disableTracking = true, bool ignoreQueryFilters = false)
+        {
+            IQueryable<T> query = _dbSet;
+
+            if (disableTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            if (ignoreQueryFilters)
+            {
+                query = query.IgnoreQueryFilters();
+            }
+
+            if (orderBy != null)
+            {
+                return await orderBy(query).FirstOrDefaultAsync();
+            }
+            else
+            {
+                return await query.FirstOrDefaultAsync();
             }
         }
 
@@ -116,6 +191,11 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
         {
             _context.Entry(entity).State = EntityState.Modified;
             return _context.SaveChangesAsync();
+        }
+
+        public async Task<T> GetById(params object[] keyValues)
+        {
+           return await _dbSet.FindAsync(keyValues);
         }
     }
 }
