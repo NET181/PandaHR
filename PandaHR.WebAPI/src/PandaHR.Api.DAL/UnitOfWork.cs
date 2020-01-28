@@ -13,6 +13,7 @@ namespace PandaHR.Api.DAL
         private readonly IVacancyRepository _vacancyRepository;
         private readonly ICVRepository _cvRepository;
         private readonly IJobExperienceRepository _jobExperienceRepository;
+        private readonly IKnowledgeLevelRepository _knowledgeLevelRepository;
 
 
         public UnitOfWork(IVacancyRepository vacancyRepository, 
@@ -21,6 +22,8 @@ namespace PandaHR.Api.DAL
             ICompanyRepository companyRepository, 
             IUserRepository userRepository,
             IJobExperienceRepository jobExperienceRepository)
+            IUserRepository userRepository
+            ,IKnowledgeLevelRepository knowledgeLevelRepository)
         {
             _skillRepository = skillRepository;
             _companyRepository = companyRepository;
@@ -28,6 +31,15 @@ namespace PandaHR.Api.DAL
             _vacancyRepository = vacancyRepository;
             _cvRepository = cvRepository;
             _jobExperienceRepository = jobExperienceRepository;
+            _knowledgeLevelRepository = knowledgeLevelRepository;
+        }
+
+        public IKnowledgeLevelRepository KnowledgeLevels
+        {
+            get
+            {
+                return _knowledgeLevelRepository;
+            }
         }
 
         public ISkillRepository Skills
