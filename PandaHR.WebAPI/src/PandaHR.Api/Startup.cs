@@ -49,15 +49,18 @@ namespace PandaHR.Api
                 app.UseDeveloperExceptionPage();
                 dataInitializer.Seed();
             }
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthorization();
 
             app.UseOpenApi();
-            app.UseSwaggerUi3();
+            app.UseSwaggerUi3(cfg=>
+            {
+                cfg.CustomStylesheetPath = "/css/swaggercustom.css";
+            });
 
             app.UseEndpoints(endpoints =>
             {
