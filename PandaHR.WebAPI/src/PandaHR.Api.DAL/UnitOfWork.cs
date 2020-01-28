@@ -19,14 +19,7 @@ namespace PandaHR.Api.DAL
         private readonly IDegreeRepository _degreeRepository;
         private readonly ISpecialityRepository _specialityRepository;
         private readonly IEducationRepository _educationRepository;
-        private readonly IKnowledgeLevelRepository _knowledgeLevelRepository;
-        
-        public UnitOfWork(IVacancyRepository vacancyRepository,
-            ICVRepository cvRepository,
-            ISkillRepository skillRepository,
-            ICompanyRepository companyRepository,
-            IUserRepository userRepository,
-            )
+        private readonly ISkillTypeRepository _skillTypeRepository;
         
         public UnitOfWork(IVacancyRepository vacancyRepository, 
             ICVRepository cvRepository, 
@@ -39,8 +32,10 @@ namespace PandaHR.Api.DAL
             IEducationRepository educationRepository,
             IUserRepository userRepository,
             IQualificationRepository qualificationRepository,
-            ISkillRequirementRepository skillRequirementRepository)
+            ISkillRequirementRepository skillRequirementRepository,
+            ISkillTypeRepository skillTypeRepository)
         {
+            _skillTypeRepository = skillTypeRepository;
             _skillRepository = skillRepository;
             _companyRepository = companyRepository;
             _userRepository = userRepository;
@@ -112,5 +107,7 @@ namespace PandaHR.Api.DAL
         public IDegreeRepository Degrees => _degreeRepository;
 
         public ISpecialityRepository Specialities => _specialityRepository;
+
+        public ISkillTypeRepository SkillTypes => _skillTypeRepository;
     }
 }
