@@ -23,13 +23,10 @@ namespace PandaHR.Api.DAL
         private readonly IEducationRepository _educationRepository;
         private readonly ISkillTypeRepository _skillTypeRepository;
         
-        public UnitOfWork(IVacancyRepository vacancyRepository, 
-            ICVRepository cvRepository, 
-            ISkillRepository skillRepository, 
-            ICompanyRepository companyRepository, 
-            IUserRepository userRepository,
-            IUserCompanyRepository userCompanyRepository,
-            ICompanyCityRepository companyCityRepository,
+        UnitOfWork(IVacancyRepository vacancyRepository,
+            ICVRepository cvRepository,
+            ISkillRepository skillRepository,
+            ICompanyRepository companyRepository,
             IJobExperienceRepository jobExperienceRepository,
             IKnowledgeLevelRepository knowledgeLevelRepository,
             IDegreeRepository degreeRepository,
@@ -108,14 +105,44 @@ namespace PandaHR.Api.DAL
                 return _skillRequirementRepository;
             }
         }
-        public IJobExperienceRepository JobExperiences => _jobExperienceRepository;
+        public IJobExperienceRepository JobExperiences
+        {
+            get
+            {
+                return _jobExperienceRepository;
+            }
+        }
 
-        public IEducationRepository Educations => _educationRepository;
+        public IEducationRepository Educations
+        {
+            get
+            {
+                return _educationRepository;
+            }
+        }
 
-        public IDegreeRepository Degrees => _degreeRepository;
+        public IDegreeRepository Degrees
+        {
+            get
+            {
+                return _degreeRepository;
+            }
+        }
 
-        public ISpecialityRepository Specialities => _specialityRepository;
+        public ISpecialityRepository Specialities
+        {
+            get
+            {
+                return _specialityRepository;
+            }
+        }
 
-        public ISkillTypeRepository SkillTypes => _skillTypeRepository;
+        public ISkillTypeRepository SkillTypes
+        {
+            get
+            {
+                return _skillTypeRepository;
+            }
+        }
     }
 }
