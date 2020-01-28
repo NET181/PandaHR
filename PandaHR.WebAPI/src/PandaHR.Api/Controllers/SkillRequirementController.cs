@@ -11,35 +11,35 @@ namespace PandaHR.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VacancyController : ControllerBase
+    public class SkillRequirementController : ControllerBase
     {
-        private readonly IVacancyService _vacancyService;
+        private readonly ISkillRequirementService _skillRequirementService;
 
-        public VacancyController(IVacancyService vacancyService)
+        public SkillRequirementController(ISkillRequirementService skillRequirementService)
         {
-            _vacancyService = vacancyService;
+            _skillRequirementService = skillRequirementService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var skills = await _vacancyService.GetAllAsync();
+            var skills = await _skillRequirementService.GetAllAsync();
 
             return Ok(skills);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Vacancy vacancy)
+        public async Task<IActionResult> Post(SkillRequirement skillRequirement)
         {
-            await _vacancyService.AddAsync(vacancy);
+            await _skillRequirementService.AddAsync(skillRequirement);
 
             return Ok();
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(Guid id, Vacancy vacancy)
+        public async Task<IActionResult> Put(Guid id, SkillRequirement skillRequirement)
         {
-            await _vacancyService.UpdateAsync(vacancy);
+            await _skillRequirementService.UpdateAsync(skillRequirement);
 
             return Ok();
         }
@@ -47,7 +47,7 @@ namespace PandaHR.Api.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _vacancyService.RemoveAsync(id);
+            await _skillRequirementService.RemoveAsync(id);
 
             return Ok();
         }

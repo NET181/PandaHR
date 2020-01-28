@@ -11,35 +11,35 @@ namespace PandaHR.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VacancyController : ControllerBase
+    public class QualificationController : ControllerBase
     {
-        private readonly IVacancyService _vacancyService;
+        private readonly IQualificationService _qualificationService;
 
-        public VacancyController(IVacancyService vacancyService)
+        public QualificationController(IQualificationService qualificationService)
         {
-            _vacancyService = vacancyService;
+            _qualificationService = qualificationService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var skills = await _vacancyService.GetAllAsync();
+            var skills = await _qualificationService.GetAllAsync();
 
             return Ok(skills);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Vacancy vacancy)
+        public async Task<IActionResult> Post(Qualification qualification)
         {
-            await _vacancyService.AddAsync(vacancy);
+            await _qualificationService.AddAsync(qualification);
 
             return Ok();
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(Guid id, Vacancy vacancy)
+        public async Task<IActionResult> Put(Guid id, Qualification qualification)
         {
-            await _vacancyService.UpdateAsync(vacancy);
+            await _qualificationService.UpdateAsync(qualification);
 
             return Ok();
         }
@@ -47,7 +47,7 @@ namespace PandaHR.Api.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _vacancyService.RemoveAsync(id);
+            await _qualificationService.RemoveAsync(id);
 
             return Ok();
         }

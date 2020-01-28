@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    public class SkillRequirement : ISoftDeletable
+    public class SkillRequirement : BaseEntity, ISoftDeletable
     {
         public float Weight { get; set; }
         public int ExperienceMonths { get; set; }
