@@ -1,11 +1,9 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Linq.Expressions;
@@ -56,12 +54,12 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task RemoveAsync(Company company)
         {
-            await _uow.Companies.RemoveAsync(company);
+            await _uow.Companies.Remove(company);
         }
 
         public async Task UpdateAsync(Company company) 
         {
-            await _uow.Companies.UpdateAsync(company);
+            await _uow.Companies.Update(company);
         }
 
         public async Task<Company> GetByIdAsync(Guid Id)
@@ -71,27 +69,27 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task AddAsync(Company company)
         {
-            await _uow.Companies.AddAsync(company);
+            await _uow.Companies.Add(company);
         }
 
         public async Task RemoveUserFromCompanyAsync(UserCompany userCompany)
         {
-            await _uow.CompanyUsers.RemoveAsync(userCompany);
+            await _uow.UserCompanies.Remove(userCompany);
         }
 
         public async Task AddUserToCompanyAsync(UserCompany userCompany)
         {
-            await _uow.CompanyUsers.AddAsync(userCompany);
+            await _uow.UserCompanies.Add(userCompany);
         }
 
         public async Task AddCompanyToCityAsync(CompanyCity companyCity)
         {
-            await _uow.CityCompanies.AddAsync(companyCity);
+            await _uow.CompanyCities.Add(companyCity);
         }
 
         public async Task RemoveCompanyFromCityAsync(CompanyCity companyCity)
         {
-            await _uow.CityCompanies.RemoveAsync(companyCity);
+            await _uow.CompanyCities.Remove(companyCity);
         }
 
         public async Task RemoveAsync(Guid id)

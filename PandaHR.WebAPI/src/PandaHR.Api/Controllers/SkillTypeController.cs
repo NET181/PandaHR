@@ -2,8 +2,6 @@
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Controllers
@@ -44,7 +42,7 @@ namespace PandaHR.Api.Controllers
 
         // GET: api/SkillType/5    
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync(object id)
+        public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             try
             {
@@ -68,11 +66,11 @@ namespace PandaHR.Api.Controllers
 
         // PUT: api/SkillType/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(object id, SkillType skillType)
+        public async Task<IActionResult> UpdateAsync(Guid id, SkillType skillType)
         {
             try
             {
-                skillType.Id = (Guid)id;
+                skillType.Id = id;
                 await _skillTypeService.Update(skillType);
 
                 return StatusCode(200);

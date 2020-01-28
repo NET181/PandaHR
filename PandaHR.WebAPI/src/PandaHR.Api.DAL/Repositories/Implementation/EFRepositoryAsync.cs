@@ -1,13 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using PandaHR.Api.DAL.EF.Context;
-using PandaHR.Api.DAL.Models;
 using PandaHR.Api.DAL.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.DAL.Repositories.Implementation
@@ -49,7 +47,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             {
                 query = query.IgnoreQueryFilters();
             }
-
+            if (orderBy != null)
             {
                 return await orderBy(query).ToListAsync();
             }
@@ -59,18 +57,13 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             }
         }
 
-        public async Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate)
-        {
-            return await _context.Set<T>().Where(predicate).ToListAsync();
-        }
-
-        public Task RemoveAsync(T entity)
+        public Task Remove(T entity)
         {
             _context.Set<T>().Remove(entity);
             return _context.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(T entity)
+        public Task Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
             return _context.SaveChangesAsync();
@@ -116,6 +109,11 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             {
                 return await query.FirstOrDefaultAsync();
             }
+        }
+
+        public Task Add(T entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

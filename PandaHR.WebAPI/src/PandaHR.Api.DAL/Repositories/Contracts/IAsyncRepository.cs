@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.DAL.Repositories.Contracts
@@ -25,9 +24,8 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
                                        Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
                                        bool disableTracking = true,
                                        bool ignoreQueryFilters = false);
-        Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate);
 
-        Task<T> GetById(params object[] keyValues);
+        Task<T> GetByIdAsync(Guid id);
 
         //Task InsertAsync(params T[] entities) => _dbSet.AddRangeAsync(entities);
     }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PandaHR.Api.DAL.Models
+﻿namespace PandaHR.Api.DAL.Models
 {
     public interface ISoftDeletable
     {

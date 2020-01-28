@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
@@ -14,22 +14,38 @@ namespace PandaHR.Api.Services.Implementation
         {
             _uow = uow;
         }
-        public void Add(JobExperience jobExperience)
+
+        public Task AddAsync(JobExperience entity)
         {
-            _uow.JobExperiences.Add(jobExperience);
+            throw new NotImplementedException();
         }
 
-        public async Task<JobExperience> GetById(Guid id)
+        public Task<IEnumerable<JobExperience>> GetAllAsync()
         {
-            return await _uow.JobExperiences.GetById(id);
+            throw new NotImplementedException();
         }
 
-        public void Remove(JobExperience jobExperience)
+        public Task<JobExperience> GetByIdAsync(Guid id)
         {
-            _uow.JobExperiences.Remove(jobExperience);
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveAsync(JobExperience entity)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(JobExperience jobExperience)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(JobExperience entity)
         {
             throw new NotImplementedException();
         }

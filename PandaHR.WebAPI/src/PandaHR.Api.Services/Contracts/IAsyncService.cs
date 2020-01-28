@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface IAsyncCrudService<T> where T : class
+    public interface IAsyncService<T> where T : class
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetByIdAsync(Guid id);

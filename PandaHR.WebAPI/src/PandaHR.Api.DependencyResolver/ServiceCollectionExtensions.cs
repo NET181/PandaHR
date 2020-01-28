@@ -35,11 +35,14 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ICompanyCityRepository, CompanyCityRepository>();
             services.AddScoped<IQualificationRepository, QualificationRepository>();
             services.AddScoped<ISkillRequirementRepository, SkillRequirementRepository>();
+            services.AddScoped<ISkillTypeRepository, SkillTypeRepository>();
             services.AddScoped<IJobExperienceRepository, JobExperienceRepository>();
             services.AddScoped<IDegreeRepository, DegreeRepository>();
             services.AddScoped<IEducationRepository, EducationRepository>();
             services.AddScoped<ISpecialityRepository, SpecialityRepository>();
             services.AddScoped<IKnowledgeLevelRepository, KnowledgeLevelRepository>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<ISkillService, SkillService>();
             services.AddScoped<ICVService, CVService>();
@@ -52,10 +55,10 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<IDegreeService, DegreeService>();
             services.AddScoped<IEducationService, EducationService>();
             services.AddScoped<ISpecialityService, SpecialityService>();
-          
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-          
-            services.AddSingleton<IMapper, PandaHRAutoMapper>();
+            services.AddScoped<IKnowledgeLevelService, KnowledgeLevelService>();
+            services.AddScoped<ISkillTypeService, SkillTypeService>();
+
+            services.AddScoped<IMapper, PandaHRAutoMapper>();
         }
     }
 }

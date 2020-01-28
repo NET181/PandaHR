@@ -1,7 +1,6 @@
 ﻿using PandaHR.Api.DAL.Models.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Contracts
@@ -16,6 +15,6 @@ namespace PandaHR.Api.Services.Contracts
 
         Task Remove(SkillType knowledgeLevel);
 
-        Task<SkillType> GetById(object id);
+        Task<SkillType> GetById(Guid id);
     }
 }

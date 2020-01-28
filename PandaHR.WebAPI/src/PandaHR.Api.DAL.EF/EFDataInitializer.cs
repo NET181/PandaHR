@@ -29,6 +29,7 @@ namespace PandaHR.Api.DAL.EF
             AddEducations();
             AddJobExperience();
             AddVacancy();
+            AddSkillTypes();
             AddSkills();
             AddSkillKnowledge();
             AddSkillRequirements();
@@ -261,5 +262,16 @@ namespace PandaHR.Api.DAL.EF
             _context.Educations.AddRange(educations);
             _context.SaveChanges();
         }
+        private void AddSkillTypes()
+        {
+            List<SkillType> skillTypes = new List<SkillType>()
+            {
+                new SkillType {Name = "BackEnd", IsDeleted = false}
+            };
+
+            _context.SkillTypes.AddRange(skillTypes);
+            _context.SaveChanges();
+        }
     }
 }
+

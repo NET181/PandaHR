@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
@@ -22,7 +19,7 @@ namespace PandaHR.Api.Controllers
         [HttpGet]
         public async Task<JobExperience> Get(Guid jobExperienceId)
         {
-            var jobExperience = await _jobExperienceService.GetById(jobExperienceId);
+            var jobExperience = await _jobExperienceService.GetByIdAsync(jobExperienceId);
 
             return jobExperience;
         }
@@ -30,19 +27,19 @@ namespace PandaHR.Api.Controllers
         [HttpDelete]
         public void Remove(JobExperience jobExperience)
         {
-            _jobExperienceService.Remove(jobExperience);
+            _jobExperienceService.RemoveAsync(jobExperience);
         }
 
         [HttpPut]
         public void Update(JobExperience jobExperience)
         {
-            _jobExperienceService.Update(jobExperience);
+            _jobExperienceService.UpdateAsync(jobExperience);
         }
 
         [HttpPost]
         public void Add(JobExperience jobExperience)
         {
-            _jobExperienceService.Add(jobExperience);
+            _jobExperienceService.AddAsync(jobExperience);
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using PandaHR.Api.Services.Contracts;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using PandaHR.Api.DAL.Models.Entities;
 
@@ -44,7 +42,7 @@ namespace PandaHR.Api.Controllers
 
         // GET: api/KnowledgeLevel/5    
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync(object id)
+        public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             try
             {
@@ -67,11 +65,11 @@ namespace PandaHR.Api.Controllers
 
         // PUT: api/KnowledgeLeve/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(object id, KnowledgeLevel knowledgeLevel)
+        public async Task<IActionResult> UpdateAsync(Guid id, KnowledgeLevel knowledgeLevel)
         {
             try
             {
-                knowledgeLevel.Id = (Guid)id;
+                knowledgeLevel.Id = id;
                 await _knowledgeLevelService.Update(knowledgeLevel);
 
                 return StatusCode(200);

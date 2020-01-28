@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
- public class Company: BaseEntity, ISoftDeletable
+    public class Company: BaseEntity, ISoftDeletable
     {
         public Company()
         {

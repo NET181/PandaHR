@@ -2,7 +2,6 @@
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Controllers
@@ -21,7 +20,7 @@ namespace PandaHR.Api.Controllers
         [HttpGet]
         public async Task<CV> Get(Guid cvId)
         {
-            var jobExperience = await _cvService.GetById(cvId);
+            var jobExperience = await _cvService.GetByIdAsync(cvId);
 
             return jobExperience;
         }
@@ -29,19 +28,19 @@ namespace PandaHR.Api.Controllers
         [HttpDelete]
         public void Remove(CV cv)
         {
-            _cvService.Remove(cv);
+            _cvService.RemoveAsync(cv);
         }
 
         [HttpPut]
         public void Update(CV cv)
         {
-            _cvService.Update(cv);
+            _cvService.UpdateAsync(cv);
         }
 
         [HttpPost]
         public void Add(CV cv)
         {
-            _cvService.Add(cv);
+            _cvService.AddAsync(cv);
         }
     }
 }

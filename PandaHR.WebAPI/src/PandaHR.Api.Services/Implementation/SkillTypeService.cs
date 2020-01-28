@@ -4,7 +4,6 @@ using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Implementation
@@ -42,9 +41,9 @@ namespace PandaHR.Api.Services.Implementation
             await _uow.SkillTypes.Remove(skillType);
         }
 
-        public async Task<SkillType> GetById(object id)
+        public async Task<SkillType> GetById(Guid id)
         {
-            return await _uow.SkillTypes.GetById(id);
+            return await _uow.SkillTypes.GetByIdAsync(id);
         }
     }
 }

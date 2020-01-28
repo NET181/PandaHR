@@ -4,7 +4,6 @@ using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Implementation
@@ -43,9 +42,9 @@ namespace PandaHR.Api.Services.Implementation
             await _uow.KnowledgeLevels.Remove(knowledgeLevel);
         }
 
-        public async Task<KnowledgeLevel> GetById(object id)
+        public async Task<KnowledgeLevel> GetById(Guid id)
         {
-            return await _uow.KnowledgeLevels.GetById(id);
+            return await _uow.KnowledgeLevels.GetByIdAsync(id);
         }
     }
 }

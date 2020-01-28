@@ -1,7 +1,4 @@
 ﻿using PandaHR.Api.DAL.Repositories.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PandaHR.Api.DAL
 {
@@ -13,8 +10,8 @@ namespace PandaHR.Api.DAL
         ICompanyRepository Companies { get; }
         IJobExperienceRepository JobExperiences { get; }
         IUserRepository Users { get; }
-        ICompanyCityRepository CityCompanies { get; }
-        IUserCompanyRepository CompanyUsers { get; }
+        ICompanyCityRepository CompanyCities { get; }
+        IUserCompanyRepository UserCompanies { get; }
         IQualificationRepository Qualifications { get; }
         ISkillRequirementRepository SkillRequirements { get; }
         IEducationRepository Educations { get; }

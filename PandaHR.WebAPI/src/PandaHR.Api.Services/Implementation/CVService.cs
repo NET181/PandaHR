@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PandaHR.Api.DAL;
+﻿using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Implementation
@@ -18,26 +16,34 @@ namespace PandaHR.Api.Services.Implementation
             _uow = uow;
         }
 
-        public void Add(CV cv)
+        public Task AddAsync(CV entity)
         {
-            _uow.CVs.Add(cv);
+            throw new NotImplementedException();
         }
 
-        public async Task<CV> GetById(Guid id)
+        public Task<IEnumerable<CV>> GetAllAsync()
         {
-            var cv = await _uow.CVs.GetById(id);
-
-            return cv;
+            throw new NotImplementedException();
         }
 
-        public void Remove(CV cv)
+        public Task<CV> GetByIdAsync(Guid id)
         {
-            _uow.CVs.Remove(cv);
+            throw new NotImplementedException();
         }
 
-        public void Update(CV cv)
+        public Task RemoveAsync(Guid id)
         {
-            _uow.CVs.Update(cv);
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveAsync(CV entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(CV entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }
