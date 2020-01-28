@@ -94,5 +94,8 @@ namespace PandaHR.Api.Services.Implementation
         {
             await _uow.CityCompanies.Remove(companyCity);
         } 
+		//TO DO 
+		//normal naming 
+		//DTOs
     }
 }
