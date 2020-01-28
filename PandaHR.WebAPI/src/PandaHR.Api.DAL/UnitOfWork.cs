@@ -12,6 +12,8 @@ namespace PandaHR.Api.DAL
         private readonly ISkillRepository _skillRepository;
         private readonly IVacancyRepository _vacancyRepository;
         private readonly ICVRepository _cvRepository;
+        private readonly IUserCompanyRepository _userCompanyRepository;
+        private readonly ICompanyCityRepository _companyCityRepository;
         private readonly IQualificationRepository _qualificationRepository;
         private readonly ISkillRequirementRepository _skillRequirementRepository;
         private readonly IJobExperienceRepository _jobExperienceRepository;
@@ -21,10 +23,10 @@ namespace PandaHR.Api.DAL
         private readonly IEducationRepository _educationRepository;
         private readonly ISkillTypeRepository _skillTypeRepository;
         
-        public UnitOfWork(IVacancyRepository vacancyRepository, 
-            ICVRepository cvRepository, 
-            ISkillRepository skillRepository, 
-            ICompanyRepository companyRepository, 
+        UnitOfWork(IVacancyRepository vacancyRepository,
+            ICVRepository cvRepository,
+            ISkillRepository skillRepository,
+            ICompanyRepository companyRepository,
             IJobExperienceRepository jobExperienceRepository,
             IKnowledgeLevelRepository knowledgeLevelRepository,
             IDegreeRepository degreeRepository,
@@ -41,6 +43,7 @@ namespace PandaHR.Api.DAL
             _userRepository = userRepository;
             _vacancyRepository = vacancyRepository;
             _cvRepository = cvRepository;
+            _companyCityRepository = companyCityRepository;
             _qualificationRepository = qualificationRepository;
             _skillRequirementRepository = skillRequirementRepository;
             _jobExperienceRepository = jobExperienceRepository;
@@ -84,7 +87,9 @@ namespace PandaHR.Api.DAL
 
         public ICompanyRepository Companies => _companyRepository;
         public IUserRepository Users => _userRepository;
+        public ICompanyCityRepository CityCompanies => _companyCityRepository;
 
+        public IUserCompanyRepository CompanyUsers => _userCompanyRepository;
         public IQualificationRepository Qualifications
         {
             get
@@ -100,14 +105,44 @@ namespace PandaHR.Api.DAL
                 return _skillRequirementRepository;
             }
         }
-        public IJobExperienceRepository JobExperiences => _jobExperienceRepository;
+        public IJobExperienceRepository JobExperiences
+        {
+            get
+            {
+                return _jobExperienceRepository;
+            }
+        }
 
-        public IEducationRepository Educations => _educationRepository;
+        public IEducationRepository Educations
+        {
+            get
+            {
+                return _educationRepository;
+            }
+        }
 
-        public IDegreeRepository Degrees => _degreeRepository;
+        public IDegreeRepository Degrees
+        {
+            get
+            {
+                return _degreeRepository;
+            }
+        }
 
-        public ISpecialityRepository Specialities => _specialityRepository;
+        public ISpecialityRepository Specialities
+        {
+            get
+            {
+                return _specialityRepository;
+            }
+        }
 
-        public ISkillTypeRepository SkillTypes => _skillTypeRepository;
+        public ISkillTypeRepository SkillTypes
+        {
+            get
+            {
+                return _skillTypeRepository;
+            }
+        }
     }
 }
