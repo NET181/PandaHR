@@ -24,5 +24,9 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
                                        bool disableTracking = true,
                                        bool ignoreQueryFilters = false);
         Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate);
+
+        Task<T> GetById(params object[] keyValues);
+
+        //Task InsertAsync(params T[] entities) => _dbSet.AddRangeAsync(entities);
     }
 }
