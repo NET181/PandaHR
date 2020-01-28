@@ -1,7 +1,11 @@
-﻿.swagger-ui .opblock-body pre.microlight{
+﻿.swagger-ui .opblock-body pre.microlight {
     background-color: #ffffff;
 }
 
+.swagger-ui .opblock-body pre.microlight {
+    color: #555 !important;
+}
+
 .swagger-ui .opblock-body pre.microlight span {
-    color: #555!important;
+    color: #555 !important;
 }
