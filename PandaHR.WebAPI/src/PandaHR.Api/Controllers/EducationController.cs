@@ -50,6 +50,7 @@ namespace PandaHR.Api.Controllers
         public async Task<IActionResult> PostAsync([FromBody]Education value)
         {
             await _educationService.AddAsync(value);
+
             return Ok();
         }
 
@@ -59,6 +60,7 @@ namespace PandaHR.Api.Controllers
         {
             value.Id = id;
             await _educationService.UpdateAsync(value);
+
             return Ok();
         }
 
@@ -67,6 +69,7 @@ namespace PandaHR.Api.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             await _educationService.RemoveAsync(id);
+
             return Ok();
         }
     }
