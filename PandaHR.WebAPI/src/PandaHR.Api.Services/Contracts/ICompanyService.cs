@@ -7,17 +7,12 @@ using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface ICompanyService
+    public interface ICompanyService : IAsyncService<Company>
     {
-        public Task<IEnumerable<Company>> GetAllAsync();
-        public Task<IEnumerable<Company>> GetWhere(Expression<Func<Company, bool>> predicate);
-        public Task Remove(Company company);
-        public Task Update(Company company);
-        public Task<Company> GetById(Guid Id);
-        public Task Add(Company company);
-        public Task RemoveUserFromCompany(UserCompany userCompany);
-        public Task AddUserInCompany(UserCompany userCompany);
-        public Task AddCompanyInCity(CompanyCity companyCity);
-        public Task RemoveCompanyFromCity(CompanyCity companyCity);
+        public Task<IEnumerable<Company>> GetWhereAsync(Expression<Func<Company, bool>> predicate);
+        public Task RemoveUserFromCompanyAsync(UserCompany userCompany);
+        public Task AddUserToCompanyAsync(UserCompany userCompany);
+        public Task AddCompanyToCityAsync(CompanyCity companyCity);
+        public Task RemoveCompanyFromCityAsync(CompanyCity companyCity);
     }
 }

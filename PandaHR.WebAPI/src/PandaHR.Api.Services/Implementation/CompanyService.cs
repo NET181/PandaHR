@@ -37,7 +37,7 @@ namespace PandaHR.Api.Services.Implementation
             return companies;
         }
 
-        public async Task<IEnumerable<Company>> GetWhere(Expression<Func<Company, bool>> predicate)
+        public async Task<IEnumerable<Company>> GetWhereAsync(Expression<Func<Company, bool>> predicate)
         {
             var companies = await _uow.Companies.GetAllAsync(include: source => source
             .Include(v=> v.Vacancies)
@@ -54,48 +54,52 @@ namespace PandaHR.Api.Services.Implementation
             return companies;
         }
 
-        public async Task Remove(Company company)
+        public async Task RemoveAsync(Company company)
         {
-            //удалять будем только хрень, которую по ошибке добавили и без каких-либо связей
-            await _uow.Companies.Remove(company);
+            await _uow.Companies.RemoveAsync(company);
         }
 
-        public async Task Update(Company company) 
+        public async Task UpdateAsync(Company company) 
         {
-            await _uow.Companies.Update(company);
+            await _uow.Companies.UpdateAsync(company);
         }
 
-        public async Task<Company> GetById(Guid Id)
+        public async Task<Company> GetByIdAsync(Guid Id)
         {
-            return await _uow.Companies.GetById(Id);
+            return await _uow.Companies.GetFirstOrDefaultAsync(c => c.Id == Id);
         }
 
-        public async Task Add(Company company)
+        public async Task AddAsync(Company company)
         {
-            await _uow.Companies.Add(company);
+            await _uow.Companies.AddAsync(company);
         }
 
-        public async Task RemoveUserFromCompany(UserCompany userCompany)
+        public async Task RemoveUserFromCompanyAsync(UserCompany userCompany)
         {
-            await _uow.CompanyUsers.Remove(userCompany);
+            await _uow.CompanyUsers.RemoveAsync(userCompany);
         }
 
-        public async Task AddUserInCompany(UserCompany userCompany)
+        public async Task AddUserToCompanyAsync(UserCompany userCompany)
         {
-            await _uow.CompanyUsers.Add(userCompany);
+            await _uow.CompanyUsers.AddAsync(userCompany);
         }
 
-        public async Task AddCompanyInCity(CompanyCity companyCity)
+        public async Task AddCompanyToCityAsync(CompanyCity companyCity)
         {
-            await _uow.CityCompanies.Add(companyCity);
+            await _uow.CityCompanies.AddAsync(companyCity);
         }
 
-        public async Task RemoveCompanyFromCity(CompanyCity companyCity)
+        public async Task RemoveCompanyFromCityAsync(CompanyCity companyCity)
         {
-            await _uow.CityCompanies.Remove(companyCity);
-        } 
-		//TO DO 
-		//normal naming 
-		//DTOs
+            await _uow.CityCompanies.RemoveAsync(companyCity);
+        }
+
+        public async Task RemoveAsync(Guid id)
+        {
+            var companyToRemove = await _uow.Companies.GetFirstOrDefaultAsync(c => c.Id == id);
+            await RemoveAsync(companyToRemove);
+        }
+        //TO DO
+        //DTOs
     }
 }

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PandaHR.Api.Controllers
 {
@@ -21,11 +19,11 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Company>> Create(Company company)
+        public async Task<ActionResult<Company>> CreateAsync(Company company)
         {
             //if (ModelState.IsValid)
             //{
-            await _companyService.Add(company);
+            await _companyService.AddAsync(company);
 
             return Ok(company);
             //}
@@ -36,20 +34,20 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Company>> Get()
+        public async Task<IEnumerable<Company>> GetAsync()
         {
             return await _companyService.GetAllAsync();
         }
 
         [HttpPut]
-        public async Task<ActionResult<Company>> Update(Company company)
+        public async Task<ActionResult<Company>> UpdateAsync(Company company)
         {
             if (company == null)
             {
                 return BadRequest("owner object is null");
             }
 
-            bool doesExist = _companyService.GetById(company.Id).Result != null;
+            bool doesExist = _companyService.GetByIdAsync(company.Id).Result != null;
 
             if (!doesExist)
             {
@@ -58,7 +56,7 @@ namespace PandaHR.Api.Controllers
 
             //if (ModelState.IsValid)
             //{
-            await _companyService.Update(company);
+            await _companyService.UpdateAsync(company);
 
             return Ok(company);
             //}
@@ -69,24 +67,17 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Company>> Delete(Guid id)
+        public async Task<ActionResult<Company>> DeleteAsync(Guid id)
         {
-            Company deletedCompany = await _companyService.GetById(id);
-
-            if (deletedCompany == null)
-            {
-                return NotFound(id);
-            }
-
-            await _companyService.Remove(deletedCompany);
+            await _companyService.RemoveAsync(id);
 
             return Ok(id);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Company>> GetById(Guid id)
+        public async Task<ActionResult<Company>> GetByIdAsync(Guid id)
         {
-            Company givenCompany = await _companyService.GetById(id);
+            Company givenCompany = await _companyService.GetByIdAsync(id);
 
             if (givenCompany == null)
             {
@@ -96,36 +87,38 @@ namespace PandaHR.Api.Controllers
             return new ObjectResult(givenCompany);
         }
 
-        [HttpDelete("Users")]
-        public async Task<ActionResult<UserCompany>> RemoveUserFromCompany(UserCompany userCompany)
+        #region uncompleted code
+        [HttpDelete("Users")] //[HttpDelete("Users/{companyId}/{userId}")]
+        public async Task<ActionResult<UserCompany>> RemoveUserFromCompanyAsync(UserCompany userCompany)
         {
-            await _companyService.RemoveUserFromCompany(userCompany);
+            await _companyService.RemoveUserFromCompanyAsync(userCompany);
 
             return Ok(userCompany);
         }
 
         [HttpDelete("Cities")]
-        public async Task<ActionResult<CompanyCity>> RemoveCompanyFromCities(CompanyCity companyCity)
+        public async Task<ActionResult<CompanyCity>> RemoveCompanyFromCitiesAsync(CompanyCity companyCity)
         {
-            await _companyService.RemoveCompanyFromCity(companyCity);
+            await _companyService.RemoveCompanyFromCityAsync(companyCity);
 
             return Ok(companyCity);
         }
 
         [HttpPost("Users")]
-        public async Task<ActionResult<UserCompany>> AddUserToCompany(UserCompany userCompany)
+        public async Task<ActionResult<UserCompany>> AddUserToCompanyAsync(UserCompany userCompany)
         {
-            await _companyService.AddUserInCompany(userCompany);
+            await _companyService.AddUserToCompanyAsync(userCompany);
 
             return Ok(userCompany);
         }
 
         [HttpPost("Cities")]
-        public async Task<ActionResult<CompanyCity>> AddCompanyToCity(CompanyCity companyCity)
+        public async Task<ActionResult<CompanyCity>> AddCompanyToCityAsync(CompanyCity companyCity)
         {
-            await _companyService.AddCompanyInCity(companyCity);
+            await _companyService.AddCompanyToCityAsync(companyCity);
 
             return Ok(companyCity);
         }
+        #endregion
     }
 }

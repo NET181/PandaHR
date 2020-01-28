@@ -10,16 +10,20 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
 {
     public interface IAsyncRepository<T> where T : class
     {
-        Task Add(T entity);
-        Task Update(T entity);
-        Task Remove(T entity);
+        Task AddAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task RemoveAsync(T entity);
         Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null,
                                                   Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
                                                   Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
                                                   bool disableTracking = true,
                                                   bool ignoreQueryFilters = false);
+        Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate = null,
+                                Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+                                Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+                                bool disableTracking = true,
+                                bool ignoreQueryFilters = false);
         Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate);
-		Task<T> GetById(Guid Id);
-		
+        
     }
 }
