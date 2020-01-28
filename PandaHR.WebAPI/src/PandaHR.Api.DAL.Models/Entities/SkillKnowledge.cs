@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    public class SkillKnowledge : ISoftDeletable
+    public class SkillKnowledge : BaseEntity, ISoftDeletable
     {
         public int ExperienceMonths { get; set; }
         public bool IsDeleted { get; set; }

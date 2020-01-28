@@ -8,6 +8,9 @@ namespace PandaHR.Api.Services.Contracts
 {
     public interface ICVService
     {
-        Task<IEnumerable<CV>> GetAllAsync();
+        void Add(CV cv);
+        void Remove(CV cv);
+        void Update(CV cv);
+        Task<CV> GetById(Guid id);
     }
 }

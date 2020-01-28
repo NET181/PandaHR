@@ -18,16 +18,26 @@ namespace PandaHR.Api.Services.Implementation
             _uow = uow;
         }
 
-        public async Task<IEnumerable<CV>> GetAllAsync()
+        public void Add(CV cv)
         {
-            var cvs = await _uow.CVs
-                  .GetAllAsync(include: v => v
-                      .Include(s => s.JobExperiences)
-                      .Include(s => s.Qualification)
-                      .Include(s => s.SkillKnowledges)
-                      .Include(s => s.User));
+            _uow.CVs.Add(cv);
+        }
 
-            return cvs;
+        public async Task<CV> GetById(Guid id)
+        {
+            var cv = await _uow.CVs.GetById(id);
+
+            return cv;
+        }
+
+        public void Remove(CV cv)
+        {
+            _uow.CVs.Remove(cv);
+        }
+
+        public void Update(CV cv)
+        {
+            _uow.CVs.Update(cv);
         }
     }
 }

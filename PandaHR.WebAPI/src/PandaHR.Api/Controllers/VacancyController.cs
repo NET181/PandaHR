@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 
 namespace PandaHR.Api.Controllers
@@ -19,34 +20,36 @@ namespace PandaHR.Api.Controllers
             _vacancyService = vacancyService;
         }
 
-        // GET: api/Vacancy
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            try
-            {
-                var skills = await _vacancyService.GetAllAsync();
+            var skills = await _vacancyService.GetAllAsync();
 
-                if (skills == null)
-                {
-                    //_logger.LogError("skills with the id sent from client doesn't exist");
-                    return BadRequest("Owner object is null");
-                }
+            return Ok(skills);
+        }
 
-                /* 
-            * if (!ModelState.IsValid)
-               {
-                     // _logger.LogError("Invalid skills object sent from client.");
-                       return BadRequest("Invalid model object");
-              }
-                   */
-                return Ok(skills);
-            }
-            catch (Exception ex)
-            {
-                //_logger.LogError($"Something went wrong inside UpdateOwner action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
-            }
+        [HttpPost]
+        public async Task<IActionResult> Post(Vacancy vacancy)
+        {
+            await _vacancyService.AddAsync(vacancy);
+
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put(Guid id, Vacancy vacancy)
+        {
+            await _vacancyService.UpdateAsync(vacancy);
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _vacancyService.RemoveAsync(id);
+
+            return Ok();
         }
     }
 }

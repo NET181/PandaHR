@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PandaHR.Api.Common;
@@ -33,15 +33,28 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserCompanyRepository, UserCompanyRepository>();
             services.AddScoped<ICompanyCityRepository, CompanyCityRepository>();
+            services.AddScoped<IQualificationRepository, QualificationRepository>();
+            services.AddScoped<ISkillRequirementRepository, SkillRequirementRepository>();
+            services.AddScoped<IJobExperienceRepository, JobExperienceRepository>();
+            services.AddScoped<IDegreeRepository, DegreeRepository>();
+            services.AddScoped<IEducationRepository, EducationRepository>();
+            services.AddScoped<ISpecialityRepository, SpecialityRepository>();
+            services.AddScoped<IKnowledgeLevelRepository, KnowledgeLevelRepository>();
 
             services.AddScoped<ISkillService, SkillService>();
             services.AddScoped<ICVService, CVService>();
             services.AddScoped<IVacancyService, VacancyService>();
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IUserService, UserService>();
-   
+            services.AddScoped<ISkillRequirementService, SkillRequirementService>();
+            services.AddScoped<IQualificationService, QualificationService>();
+            services.AddScoped<IJobExperienceService, JobExperienceService>();
+            services.AddScoped<IDegreeService, DegreeService>();
+            services.AddScoped<IEducationService, EducationService>();
+            services.AddScoped<ISpecialityService, SpecialityService>();
           
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+          
             services.AddSingleton<IMapper, PandaHRAutoMapper>();
         }
     }

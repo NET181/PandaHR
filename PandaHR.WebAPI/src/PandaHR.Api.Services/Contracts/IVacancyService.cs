@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface IVacancyService
+    public interface IVacancyService : IAsyncCrudService<Vacancy>
     {
-        Task<IEnumerable<Vacancy>> GetAllAsync();
     }
 }
