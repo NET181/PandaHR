@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface ISkillService
+    public interface ISkillService : IAsyncService<Skill>
     {
-        Task<IEnumerable<Skill>> GetAllAsync();
+       
     }
 }
