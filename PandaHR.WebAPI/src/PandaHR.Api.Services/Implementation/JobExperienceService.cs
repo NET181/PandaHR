@@ -15,39 +15,35 @@ namespace PandaHR.Api.Services.Implementation
             _uow = uow;
         }
 
-        public Task AddAsync(JobExperience entity)
+        public async Task AddAsync(JobExperience entity)
         {
-            throw new NotImplementedException();
+            await _uow.JobExperiences.Add(entity);
         }
 
-        public Task<IEnumerable<JobExperience>> GetAllAsync()
+        public async Task<IEnumerable<JobExperience>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _uow.JobExperiences.GetAllAsync();
         }
 
-        public Task<JobExperience> GetByIdAsync(Guid id)
+        public async Task<JobExperience> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _uow.JobExperiences.GetByIdAsync(id);
         }
 
-        public Task RemoveAsync(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var jobExperience = await GetByIdAsync(id);
+            await RemoveAsync(jobExperience);
         }
 
-        public Task RemoveAsync(JobExperience entity)
+        public async Task RemoveAsync(JobExperience entity)
         {
-            throw new NotImplementedException();
+            await _uow.JobExperiences.Remove(entity);
         }
 
-        public void Update(JobExperience jobExperience)
+        public async Task UpdateAsync(JobExperience entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(JobExperience entity)
-        {
-            throw new NotImplementedException();
+            await _uow.JobExperiences.Update(entity);
         }
     }
 }
