@@ -25,6 +25,7 @@ namespace PandaHR.Api.DAL.EF
             AddCompanyCities();
             AddUser();
             AddUserCompany();
+            AddTechnologies();
             AddCV();
             AddEducations();
             AddJobExperience();
@@ -33,21 +34,21 @@ namespace PandaHR.Api.DAL.EF
             AddSkills();
             AddSkillKnowledge();
             AddSkillRequirements();
-            AddTechnologies();
         }
 
         private void AddCV()
         {
             var userId = _context.Users.FirstOrDefault().Id;
             var qualificationId = _context.Qualifications.FirstOrDefault().Id;
+            var technologyId = _context.Technologies.FirstOrDefault().Id;
 
             var cv = new List<CV>()
             {
-                new CV{ Summary = "Im very good", UserId = userId, QualificationId = qualificationId},
-                new CV{ Summary = "Im better than good", UserId = userId, QualificationId = qualificationId},
-                new CV{ Summary = "Im better than better", UserId = userId, QualificationId = qualificationId},
-                new CV{ Summary = "Im the best", UserId = userId, QualificationId = qualificationId},
-                new CV{ Summary = "Im so clever boy", UserId = userId, QualificationId = qualificationId},
+                new CV{ TechnologyId = technologyId, Summary = "Im very good", UserId = userId, QualificationId = qualificationId},
+                new CV{ TechnologyId = technologyId, Summary = "Im better than good", UserId = userId, QualificationId = qualificationId},
+                new CV{ TechnologyId = technologyId, Summary = "Im better than better", UserId = userId, QualificationId = qualificationId},
+                new CV{ TechnologyId = technologyId, Summary = "Im the best", UserId = userId, QualificationId = qualificationId},
+                new CV{ TechnologyId = technologyId, Summary = "Im so clever boy", UserId = userId, QualificationId = qualificationId},
             };
 
             _context.CVs.AddRange(cv);
@@ -60,14 +61,15 @@ namespace PandaHR.Api.DAL.EF
             var companyId = _context.Companies.FirstOrDefault().Id;
             var userId = _context.Users.FirstOrDefault().Id;
             var qualificationId = _context.Qualifications.FirstOrDefault().Id;
+            var technologyId = _context.Technologies.FirstOrDefault().Id;
 
             var vacancies = new Vacancy[]
             {
-                new Vacancy{ CityId = cityId, CompanyId = companyId, Description = "Best vacancy ever!",
+                new Vacancy{ TechnologyId = technologyId, CityId = cityId, CompanyId = companyId, Description = "Best vacancy ever!",
                     UserId = userId, QualificationId = qualificationId},
-                new Vacancy{ CityId = cityId, CompanyId = companyId, Description = "Even better vacancy than the previous!",
+                new Vacancy{ TechnologyId = technologyId, CityId = cityId, CompanyId = companyId, Description = "Even better vacancy than the previous!",
                     UserId = userId, QualificationId = qualificationId},
-                new Vacancy{ CityId = cityId, CompanyId = companyId, Description = "Vacancy for C# developer",
+                new Vacancy{ TechnologyId = technologyId, CityId = cityId, CompanyId = companyId, Description = "Vacancy for C# developer",
                     UserId = userId, QualificationId = qualificationId}
             };
 
@@ -216,7 +218,8 @@ namespace PandaHR.Api.DAL.EF
                     Id = new Guid("f43f4b05-6cb1-4c72-9ebb-1fe5fd1fc62e"),
                     Name = "Back-end",
                     IsDeleted = false,
-                    Parent = null
+                    Parent = null,
+                    ParentId = null
                  },
                  new Technology()
                  {
@@ -224,6 +227,7 @@ namespace PandaHR.Api.DAL.EF
                     Name = "Front-end",
                     IsDeleted = false,
                     Parent = null,
+                    ParentId = null
                  }
             };
 

@@ -16,7 +16,7 @@ namespace PandaHR.Api.DAL.Models.Entities
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
 
-        public Guid ParentId { get; set; }
+        public Guid? ParentId { get; set; }
         public Technology Parent { get; set; }
 
         public ICollection<Technology> SubTechnologies { get; set; }

@@ -10,7 +10,7 @@ using PandaHR.Api.DAL.EF.Context;
 namespace PandaHR.Api.DAL.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200129172328_initial")]
+    [Migration("20200129190749_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -840,7 +840,7 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ParentId")
+                    b.Property<Guid?>("ParentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -1212,8 +1212,7 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.HasOne("PandaHR.Api.DAL.Models.Entities.Technology", "Parent")
                         .WithMany("SubTechnologies")
                         .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.TechnologySkill", b =>

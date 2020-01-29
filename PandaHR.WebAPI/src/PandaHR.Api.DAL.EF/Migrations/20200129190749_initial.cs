@@ -161,7 +161,7 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    ParentId = table.Column<Guid>(nullable: false)
+                    ParentId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
