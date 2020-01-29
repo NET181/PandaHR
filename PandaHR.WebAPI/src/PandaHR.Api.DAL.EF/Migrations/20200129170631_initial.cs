@@ -87,6 +87,20 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Experiences",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Value = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Experiences", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "KnowledgeLevels",
                 columns: table => new
                 {
@@ -138,6 +152,25 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Specialities", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Technologies",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    ParentId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Technologies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Technologies_Technologies_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Technologies",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -379,6 +412,31 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TechnologySkills",
+                columns: table => new
+                {
+                    TechnologyId = table.Column<Guid>(nullable: false),
+                    SkillId = table.Column<Guid>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TechnologySkills", x => new { x.TechnologyId, x.SkillId });
+                    table.ForeignKey(
+                        name: "FK_TechnologySkills_Skills_SkillId",
+                        column: x => x.SkillId,
+                        principalTable: "Skills",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TechnologySkills_Technologies_TechnologyId",
+                        column: x => x.TechnologyId,
+                        principalTable: "Technologies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CVs",
                 columns: table => new
                 {
@@ -387,7 +445,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     Summary = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
-                    QualificationId = table.Column<Guid>(nullable: false)
+                    QualificationId = table.Column<Guid>(nullable: false),
+                    TechnologyId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -396,6 +455,12 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         name: "FK_CVs_Qualifications_QualificationId",
                         column: x => x.QualificationId,
                         principalTable: "Qualifications",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CVs_Technologies_TechnologyId",
+                        column: x => x.TechnologyId,
+                        principalTable: "Technologies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -478,7 +543,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     UserId = table.Column<Guid>(nullable: false),
                     QualificationId = table.Column<Guid>(nullable: false),
                     CompanyId = table.Column<Guid>(nullable: true),
-                    CityId = table.Column<Guid>(nullable: true)
+                    CityId = table.Column<Guid>(nullable: true),
+                    TechnologyId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -499,6 +565,12 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         name: "FK_Vacancies_Qualifications_QualificationId",
                         column: x => x.QualificationId,
                         principalTable: "Qualifications",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Vacancies_Technologies_TechnologyId",
+                        column: x => x.TechnologyId,
+                        principalTable: "Technologies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -540,9 +612,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     SkillId = table.Column<Guid>(nullable: false),
                     CVId = table.Column<Guid>(nullable: false),
                     Id = table.Column<Guid>(nullable: false),
-                    ExperienceMonths = table.Column<int>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    KnowledgeLevelId = table.Column<Guid>(nullable: false)
+                    KnowledgeLevelId = table.Column<Guid>(nullable: false),
+                    ExperienceId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -551,6 +623,12 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         name: "FK_SkillKnowledges_CVs_CVId",
                         column: x => x.CVId,
                         principalTable: "CVs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SkillKnowledges_Experiences_ExperienceId",
+                        column: x => x.ExperienceId,
+                        principalTable: "Experiences",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -574,13 +652,19 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     VacancyId = table.Column<Guid>(nullable: false),
                     Id = table.Column<Guid>(nullable: false),
                     Weight = table.Column<float>(nullable: false),
-                    ExperienceMonths = table.Column<int>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    KnowledgeLevelId = table.Column<Guid>(nullable: false)
+                    KnowledgeLevelId = table.Column<Guid>(nullable: false),
+                    ExperienceId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SkillRequirements", x => new { x.SkillId, x.VacancyId });
+                    table.ForeignKey(
+                        name: "FK_SkillRequirements_Experiences_ExperienceId",
+                        column: x => x.ExperienceId,
+                        principalTable: "Experiences",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SkillRequirements_KnowledgeLevels_KnowledgeLevelId",
                         column: x => x.KnowledgeLevelId,
@@ -624,14 +708,25 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Experiences",
+                columns: new[] { "Id", "IsDeleted", "Name", "Value" },
+                values: new object[,]
+                {
+                    { new Guid("8b4bc763-1e35-4b07-adc9-e9a7f01dad06"), false, "1+ year", 3 },
+                    { new Guid("fbdf0376-ccd8-44f0-85b0-0609d4f25b0e"), false, "2+ year", 4 },
+                    { new Guid("561d468e-a93b-4e6b-a576-52b3d7bbf32a"), false, "0-6", 1 },
+                    { new Guid("0e6ab8cc-66e2-4fa4-95fc-25aa0f2eff90"), false, "6-12", 2 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "KnowledgeLevels",
                 columns: new[] { "Id", "IsDeleted", "Name", "Value" },
                 values: new object[,]
                 {
-                    { new Guid("9b9be3ca-9c11-4afe-9c5f-225bbf192e81"), false, "Upper Intermidiate", 4 },
-                    { new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31"), false, "Intermidiate", 3 },
+                    { new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e81"), false, "Beginer", 1 },
                     { new Guid("32832ec4-968b-4619-b8cb-af4e65c52a37"), false, "Lower Intermidiate", 2 },
-                    { new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e81"), false, "Beginer", 1 }
+                    { new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31"), false, "Intermidiate", 3 },
+                    { new Guid("9b9be3ca-9c11-4afe-9c5f-225bbf192e81"), false, "Upper Intermidiate", 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -650,10 +745,10 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 columns: new[] { "Id", "IsDeleted", "Name" },
                 values: new object[,]
                 {
+                    { new Guid("2b82ca8b-1047-4830-83d5-e1e716b4407f"), false, "Applied Physics" },
                     { new Guid("f98a7083-825c-496a-9112-ecd375a17dcb"), false, "Software Engineering" },
                     { new Guid("3cceb22e-d32f-4a29-9c49-651b258c088d"), false, "System Analysis" },
                     { new Guid("0d59cea4-85f5-4107-9d0f-8fecbe6a1933"), false, "Applied Math" },
-                    { new Guid("2b82ca8b-1047-4830-83d5-e1e716b4407f"), false, "Applied Physics" },
                     { new Guid("3a4d31f3-c8ab-4f09-8fde-684af2890d69"), false, "Computer Science" }
                 });
 
@@ -727,6 +822,11 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 column: "QualificationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CVs_TechnologyId",
+                table: "CVs",
+                column: "TechnologyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CVs_UserId",
                 table: "CVs",
                 column: "UserId");
@@ -752,6 +852,11 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 column: "CVId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SkillKnowledges_ExperienceId",
+                table: "SkillKnowledges",
+                column: "ExperienceId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SkillKnowledges_KnowledgeLevelId",
                 table: "SkillKnowledges",
                 column: "KnowledgeLevelId");
@@ -765,6 +870,11 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 name: "IX_SkillKnowledgeType_KnowledgeLevelId",
                 table: "SkillKnowledgeType",
                 column: "KnowledgeLevelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SkillRequirements_ExperienceId",
+                table: "SkillRequirements",
+                column: "ExperienceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SkillRequirements_KnowledgeLevelId",
@@ -785,6 +895,16 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 name: "IX_Skills_SkillTypeId",
                 table: "Skills",
                 column: "SkillTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Technologies_ParentId",
+                table: "Technologies",
+                column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TechnologySkills_SkillId",
+                table: "TechnologySkills",
+                column: "SkillId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserCompanies_CompanyId",
@@ -810,6 +930,11 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 name: "IX_Vacancies_QualificationId",
                 table: "Vacancies",
                 column: "QualificationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vacancies_TechnologyId",
+                table: "Vacancies",
+                column: "TechnologyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vacancies_UserId",
@@ -853,6 +978,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 name: "SkillRequirements");
 
             migrationBuilder.DropTable(
+                name: "TechnologySkills");
+
+            migrationBuilder.DropTable(
                 name: "UserCompanies");
 
             migrationBuilder.DropTable(
@@ -871,16 +999,16 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 name: "CVs");
 
             migrationBuilder.DropTable(
-                name: "KnowledgeLevels");
+                name: "Experiences");
 
             migrationBuilder.DropTable(
-                name: "Skills");
+                name: "KnowledgeLevels");
 
             migrationBuilder.DropTable(
                 name: "Vacancies");
 
             migrationBuilder.DropTable(
-                name: "SkillTypes");
+                name: "Skills");
 
             migrationBuilder.DropTable(
                 name: "Companies");
@@ -889,7 +1017,13 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 name: "Qualifications");
 
             migrationBuilder.DropTable(
+                name: "Technologies");
+
+            migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "SkillTypes");
 
             migrationBuilder.DropTable(
                 name: "Cities");
