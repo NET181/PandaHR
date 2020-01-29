@@ -36,9 +36,9 @@ namespace PandaHR.Api.Services.Implementation
             return users;
         }
 
-        public Task<User> GetByIdAsync(Guid id)
+        public async Task<User> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _uow.Users.GetByIdAsync(id);
         }
 
         public async Task RemoveAsync(Guid id)
