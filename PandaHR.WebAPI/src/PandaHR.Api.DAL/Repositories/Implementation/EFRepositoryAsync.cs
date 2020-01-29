@@ -111,9 +111,10 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             }
         }
 
-        public Task Add(T entity)
+        public async Task Add(T entity)
         {
-            throw new NotImplementedException();
+            await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }

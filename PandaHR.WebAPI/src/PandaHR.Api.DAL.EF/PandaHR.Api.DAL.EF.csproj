@@ -5,10 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200122130619_Initial.cs" />
-    <Compile Remove="Migrations\20200122130619_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20200129115025_created-Experience-and-Technology.cs" />
-    <Compile Remove="Migrations\20200129115025_created-Experience-and-Technology.Designer.cs" />
+    <Compile Remove="Migrations\20200129170353_initial1.cs" />
+    <Compile Remove="Migrations\20200129170353_initial1.Designer.cs" />
+    <Compile Remove="Migrations\20200129170631_initial.cs" />
+    <Compile Remove="Migrations\20200129170631_initial.Designer.cs" />
+    <Compile Remove="Migrations\20200129172328_initial.cs" />
+    <Compile Remove="Migrations\20200129172328_initial.Designer.cs" />
+    <Compile Remove="Migrations\20200129190048_added-null-to-technology.cs" />
+    <Compile Remove="Migrations\20200129190048_added-null-to-technology.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

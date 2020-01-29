@@ -233,12 +233,17 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<string>("Summary")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("TechnologyId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("QualificationId");
+
+                    b.HasIndex("TechnologyId");
 
                     b.HasIndex("UserId");
 
@@ -458,6 +463,56 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.ToTable("Educations");
                 });
 
+            modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.Experience", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Experiences");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("561d468e-a93b-4e6b-a576-52b3d7bbf32a"),
+                            IsDeleted = false,
+                            Name = "0-6",
+                            Value = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("0e6ab8cc-66e2-4fa4-95fc-25aa0f2eff90"),
+                            IsDeleted = false,
+                            Name = "6-12",
+                            Value = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("8b4bc763-1e35-4b07-adc9-e9a7f01dad06"),
+                            IsDeleted = false,
+                            Name = "1+ year",
+                            Value = 3
+                        },
+                        new
+                        {
+                            Id = new Guid("fbdf0376-ccd8-44f0-85b0-0609d4f25b0e"),
+                            IsDeleted = false,
+                            Name = "2+ year",
+                            Value = 4
+                        });
+                });
+
             modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.JobExperience", b =>
                 {
                     b.Property<Guid>("Id")
@@ -627,8 +682,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<Guid>("SkillId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ExperienceMonths")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ExperienceId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -640,6 +695,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CVId", "SkillId");
+
+                    b.HasIndex("ExperienceId");
 
                     b.HasIndex("KnowledgeLevelId");
 
@@ -677,8 +734,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<Guid>("VacancyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ExperienceMonths")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ExperienceId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -693,6 +750,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("SkillId", "VacancyId");
+
+                    b.HasIndex("ExperienceId");
 
                     b.HasIndex("KnowledgeLevelId");
 
@@ -765,6 +824,46 @@ namespace PandaHR.Api.DAL.EF.Migrations
                             IsDeleted = false,
                             Name = "Computer Science"
                         });
+                });
+
+            modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.Technology", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Technologies");
+                });
+
+            modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.TechnologySkill", b =>
+                {
+                    b.Property<Guid>("TechnologyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SkillId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("TechnologyId", "SkillId");
+
+                    b.HasIndex("SkillId");
+
+                    b.ToTable("TechnologySkills");
                 });
 
             modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.User", b =>
@@ -876,6 +975,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<Guid>("QualificationId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("TechnologyId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
@@ -886,6 +988,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("QualificationId");
+
+                    b.HasIndex("TechnologyId");
 
                     b.HasIndex("UserId");
 
@@ -948,6 +1052,12 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.HasOne("PandaHR.Api.DAL.Models.Entities.Qualification", "Qualification")
                         .WithMany("CVs")
                         .HasForeignKey("QualificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PandaHR.Api.DAL.Models.Entities.Technology", "Technology")
+                        .WithMany("CVs")
+                        .HasForeignKey("TechnologyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1034,6 +1144,12 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PandaHR.Api.DAL.Models.Entities.Experience", "Experience")
+                        .WithMany("SkillKnowledges")
+                        .HasForeignKey("ExperienceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("PandaHR.Api.DAL.Models.Entities.KnowledgeLevel", "KnowledgeLevel")
                         .WithMany("SkillKnowledges")
                         .HasForeignKey("KnowledgeLevelId")
@@ -1064,6 +1180,12 @@ namespace PandaHR.Api.DAL.EF.Migrations
 
             modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.SkillRequirement", b =>
                 {
+                    b.HasOne("PandaHR.Api.DAL.Models.Entities.Experience", "Experience")
+                        .WithMany("SkillRequirements")
+                        .HasForeignKey("ExperienceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("PandaHR.Api.DAL.Models.Entities.KnowledgeLevel", "KnowledgeLevel")
                         .WithMany("SkillRequirements")
                         .HasForeignKey("KnowledgeLevelId")
@@ -1079,6 +1201,29 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.HasOne("PandaHR.Api.DAL.Models.Entities.Vacancy", "Vacancy")
                         .WithMany("SkillRequirements")
                         .HasForeignKey("VacancyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.Technology", b =>
+                {
+                    b.HasOne("PandaHR.Api.DAL.Models.Entities.Technology", "Parent")
+                        .WithMany("SubTechnologies")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.NoAction);
+                });
+
+            modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.TechnologySkill", b =>
+                {
+                    b.HasOne("PandaHR.Api.DAL.Models.Entities.Skill", "Skill")
+                        .WithMany("TechnologySkills")
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PandaHR.Api.DAL.Models.Entities.Technology", "Technology")
+                        .WithMany("TechnologySkills")
+                        .HasForeignKey("TechnologyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1120,6 +1265,12 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.HasOne("PandaHR.Api.DAL.Models.Entities.Qualification", "Qualification")
                         .WithMany("Vacancies")
                         .HasForeignKey("QualificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PandaHR.Api.DAL.Models.Entities.Technology", "Technology")
+                        .WithMany("Vacancies")
+                        .HasForeignKey("TechnologyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

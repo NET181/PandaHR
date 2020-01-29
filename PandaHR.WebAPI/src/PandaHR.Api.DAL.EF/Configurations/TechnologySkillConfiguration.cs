@@ -20,12 +20,6 @@ namespace PandaHR.Api.DAL.EF.Configurations
             builder.HasOne(s => s.Skill)
                 .WithMany(s => s.TechnologySkills)
                 .HasForeignKey(s => s.SkillId);
-
-            builder.HasData(
-                new TechnologySkill()
-                {
-                    SkillId = new Guid()
-                });
         }
     }
 }
