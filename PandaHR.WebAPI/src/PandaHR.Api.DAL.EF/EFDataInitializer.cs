@@ -25,15 +25,15 @@ namespace PandaHR.Api.DAL.EF
             AddCompanyCities();
             AddUser();
             AddUserCompany();
-            AddCV();
+            //AddCV();
             AddEducations();
-            AddJobExperience();
-            AddVacancy();
+            //AddJobExperience();
+            //AddVacancy();
             AddSkillTypes();
             AddSkills();
-            AddSkillKnowledge();
-            AddSkillRequirements();
-            AddTechnologies();
+            //AddSkillKnowledge();
+            //AddSkillRequirements();
+            //AddTechnologies();
         }
 
         private void AddCV()

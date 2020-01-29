@@ -75,7 +75,7 @@ namespace PandaHR.Api.DAL.EF.Context
                 .ApplyConfiguration<UserCompany>(new UserCompanyConfiguration())
                 .ApplyConfiguration<User>(new UserConfiguration())
                 .ApplyConfiguration<Vacancy>(new VacancyConfiguration())
-                .ApplyConfiguration<Experience>(new ExperienceConfiguration());                
+                .ApplyConfiguration<Experience>(new ExperienceConfiguration())             
                 .ApplyConfiguration<Technology>(new TechnologyConfiguration())
                 .ApplyConfiguration<TechnologySkill>(new TechnologySkillConfiguration());
         }

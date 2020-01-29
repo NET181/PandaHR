@@ -24,9 +24,6 @@ namespace PandaHR.Api.DAL.Models.Entities
         public Guid TechnologyId { get; set; }
         public Technology Technology { get; set; }
 
-        public Guid VacancyId { get; set; }
-        public Vacancy Vacancy { get; set; }
-
         public ICollection<JobExperience> JobExperiences { get; set; }
         public ICollection<SkillKnowledge> SkillKnowledges { get; set; }
     }

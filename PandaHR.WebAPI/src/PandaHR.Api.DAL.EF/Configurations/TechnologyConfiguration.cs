@@ -25,19 +25,6 @@ namespace PandaHR.Api.DAL.EF.Configurations
                 .WithMany(t => t.SubTechnologies)
                 .HasForeignKey(t => t.ParentId)
                 .OnDelete(DeleteBehavior.NoAction);
-
-            builder.HasData(
-                new Technology()
-                {
-                    Id = new Guid("f43f4b05-6cb1-4c72-9ebb-1fe5fd1fc62e"),
-                    Name = "Back-end"
-                },
-                new Technology()
-                {
-                    Id = new Guid("c3c0583c-a662-421a-8013-ba05ded4a279"),
-                    Name = "Front-end"
-                }
-                );
         }
     }
 }

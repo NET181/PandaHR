@@ -46,7 +46,7 @@ namespace PandaHR.Api.Controllers
         {
             try
             {
-                var skillType = await _skillTypeService.GetById(id);
+                var skillType = await _skillTypeService.GetByIdAsync(id);
 
                 if (skillType != null)
                 {
@@ -71,7 +71,7 @@ namespace PandaHR.Api.Controllers
             try
             {
                 skillType.Id = id;
-                await _skillTypeService.Update(skillType);
+                await _skillTypeService.UpdateAsync(skillType);
 
                 return StatusCode(200);
             }
@@ -87,7 +87,7 @@ namespace PandaHR.Api.Controllers
         {
             try
             {
-                await _skillTypeService.Add(skillType);
+                await _skillTypeService.AddAsync(skillType);
 
                 return StatusCode(200);
             }
@@ -103,7 +103,7 @@ namespace PandaHR.Api.Controllers
         {
             try
             {
-                await _skillTypeService.Remove(skillType);
+                await _skillTypeService.RemoveAsync(skillType);
 
                 return StatusCode(200);
             }
