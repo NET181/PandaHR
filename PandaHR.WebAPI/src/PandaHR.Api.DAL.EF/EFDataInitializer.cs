@@ -33,6 +33,7 @@ namespace PandaHR.Api.DAL.EF
             AddSkills();
             AddSkillKnowledge();
             AddSkillRequirements();
+            AddTechnologies();
         }
 
         private void AddCV()
@@ -202,6 +203,30 @@ namespace PandaHR.Api.DAL.EF
             };
 
             _context.Skills.AddRange(skills);
+            _context.SaveChanges();
+        }
+
+        private void AddTechnologies()
+        {
+            var technologies = new Technology[]
+            {
+                 new Technology()
+                 {
+                    Id = new Guid("f43f4b05-6cb1-4c72-9ebb-1fe5fd1fc62e"),
+                    Name = "Back-end",
+                    IsDeleted = false,
+                    Parent = null
+                 },
+                 new Technology()
+                 {
+                    Id = new Guid("c3c0583c-a662-421a-8013-ba05ded4a279"),
+                    Name = "Front-end",
+                    IsDeleted = false,
+                    Parent = null,
+                 }
+            };
+
+            _context.Technologies.AddRange(technologies);
             _context.SaveChanges();
         }
 
