@@ -59,7 +59,6 @@ namespace PandaHR.Api.Controllers
             {
                 return StatusCode(500, "Internal server error");
             }
-            
         }
 
         [HttpPost]
@@ -75,7 +74,6 @@ namespace PandaHR.Api.Controllers
             {
                 return StatusCode(500, "Internal server error");
             }
-            
         }
     }
 }
