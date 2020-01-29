@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PandaHR.Api.DAL.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PandaHR.Api.DAL.EF.Configurations
 {
@@ -22,6 +19,10 @@ namespace PandaHR.Api.DAL.EF.Configurations
             builder.HasOne(q => q.Qualification)
                    .WithMany(cv => cv.CVs)
                    .HasForeignKey(q => q.QualificationId);
+
+            builder.HasOne(q => q.Technology)
+                .WithMany(q => q.CVs)
+                .HasForeignKey(q => q.TechnologyId);
 
             builder.HasOne(u => u.User)
                    .WithMany(cv => cv.CVs)

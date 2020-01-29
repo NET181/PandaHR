@@ -1,8 +1,4 @@
-﻿using PandaHR.Api.DAL.EF.Context;
-using PandaHR.Api.DAL.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using PandaHR.Api.DAL.Models.Entities;
 
 namespace PandaHR.Api.DAL.Repositories.Contracts
 {

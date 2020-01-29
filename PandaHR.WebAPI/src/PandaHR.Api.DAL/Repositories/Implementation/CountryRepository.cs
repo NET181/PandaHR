@@ -4,7 +4,7 @@ using PandaHR.Api.DAL.Repositories.Contracts;
 
 namespace PandaHR.Api.DAL.Repositories.Implementation
 {
-    public class CountryRepository : EFGenericRepositoryAsync<Country>, ICountryRepository
+    public class CountryRepository : EFRepositoryAsync<Country>, ICountryRepository
     {
         private readonly ApplicationDbContext _context;
 

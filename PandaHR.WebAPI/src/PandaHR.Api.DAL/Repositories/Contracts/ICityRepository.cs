@@ -2,7 +2,7 @@
 
 namespace PandaHR.Api.DAL.Repositories.Contracts
 {
-    public interface ICityRepository: IAsyncRepositoryGeneric<City>
+    public interface ICityRepository: IAsyncRepository<City>
     {
     }
 }

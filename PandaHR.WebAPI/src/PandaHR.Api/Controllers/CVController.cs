@@ -2,7 +2,6 @@
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Controllers
@@ -11,40 +10,72 @@ namespace PandaHR.Api.Controllers
     [ApiController]
     public class CVController : Controller
     {
-        private readonly ICVService _cVService;
+        private readonly ICVService _cvService;
 
-        public CVController(ICVService cVService)
+        public CVController(ICVService cvService)
         {
-            _cVService = cVService;
+            _cvService = cvService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            CV cv = await _cvService.GetByIdAsync(id);
+
+            if (cv != null)
+            {
+                return Ok(cv);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Remove(Guid id)
         {
             try
             {
-                var skills = await _cVService.GetAllAsync();
+                await _cvService.RemoveAsync(id);
 
-                if (skills == null)
-                {
-                    //_logger.LogError("skills with the id sent from client doesn't exist");
-                    return BadRequest("Owner object is null");
-                }
-
-                /* 
-            * if (!ModelState.IsValid)
-               {
-                     // _logger.LogError("Invalid skills object sent from client.");
-                       return BadRequest("Invalid model object");
-              }
-                   */
-                return Ok(skills);
+                return StatusCode(200);
             }
-            catch (Exception ex)
+            catch
             {
-                //_logger.LogError($"Something went wrong inside UpdateOwner action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(CV cv)
+        {
+            try
+            {
+                await _cvService.UpdateAsync(cv);
+
+                return StatusCode(200);
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(CV cv)
+        {
+            try
+            {
+                await _cvService.AddAsync(cv);
+
+                return StatusCode(200);
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+    
     }
 }

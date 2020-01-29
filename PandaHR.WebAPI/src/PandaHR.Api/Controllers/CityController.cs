@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
@@ -29,9 +26,9 @@ namespace PandaHR.Api.Controllers
 
         // GET: api/Country/5
         [HttpGet("{id}")]
-        public IActionResult Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            City city = _cityService.GetById(id).Result;
+            City city = await _cityService.GetByIdAsync(id);
             if (city != null)
             {
                 return Ok(city);
@@ -46,7 +43,7 @@ namespace PandaHR.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]City value)
         {
-            await _cityService.Add(value);
+            await _cityService.AddAsync(value);
             return Ok();
         }
 
@@ -55,28 +52,16 @@ namespace PandaHR.Api.Controllers
         public async Task<IActionResult> Put(Guid id, [FromBody]City value)
         {
             value.Id = id;
-            if (await _cityService.Update(value))
-            {
-                return Ok();
-            }
-            else
-            {
-                return NotFound();
-            }
+            await _cityService.UpdateAsync(value);
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            if (await _cityService.Remove(id))
-            {
-                return Ok();
-            }
-            else
-            {
-                return NotFound();
-            }
+            await _cityService.RemoveAsync(id);
+            return Ok();
         }
     }
 }

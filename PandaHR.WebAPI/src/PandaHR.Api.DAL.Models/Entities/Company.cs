@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    public class Company: BaseEntity
+    public class Company: BaseEntity, ISoftDeletable
     {
         public Company()
         {
@@ -13,6 +11,7 @@ namespace PandaHR.Api.DAL.Models.Entities
             Vacancies = new HashSet<Vacancy>();
         }
 
+        public bool IsDeleted { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 

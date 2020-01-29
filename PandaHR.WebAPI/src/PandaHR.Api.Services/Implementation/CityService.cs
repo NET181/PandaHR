@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore.Query;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.DAL;
@@ -23,28 +21,31 @@ namespace PandaHR.Api.Services.Implementation
             return await _uow.Cities.GetAllAsync();
         }
 
-        public async Task<City> GetById(Guid cityId, Func<IQueryable<City>, IIncludableQueryable<City, object>> include = null)
+        public async Task<City> GetByIdAsync(Guid cityId)
         {
             return await _uow.Cities.
                 GetByIdAsync(cityId);
         }
 
-        public async Task Add(City city)
+        public async Task AddAsync(City city)
         {
             await _uow.Cities.Add(city);
         }
 
-        public async Task<bool> Update(City city)
+        public async Task UpdateAsync(City city)
         {
             await _uow.Cities.Update(city);
-            return true;
         }
 
-        public async Task<bool> Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
             var city = await _uow.Cities.GetByIdAsync(id);
             await _uow.Cities.Remove(city);
-            return true;
+        }
+
+        public async Task RemoveAsync(City city)
+        {
+            await _uow.Cities.Remove(city);
         }
     }
 }

@@ -1,24 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Implementation
 {
-    public class SkillService : ISkillService
+    public class SkillService : IAsyncService<Skill>, ISkillService
     {
-        private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
 
-        public SkillService(IMapper mapper, IUnitOfWork uow)
+        public SkillService(IUnitOfWork uow)
         {
-            _mapper = mapper;
             _uow = uow;
         }
 
@@ -34,6 +29,32 @@ namespace PandaHR.Api.Services.Implementation
                     .Include(k => k.SubSkills));
 
             return skills;
+        }
+
+        public async Task<Skill> GetByIdAsync(Guid id)
+        {
+            return await _uow.Skills.GetFirstOrDefaultAsync(d => d.Id == id);
+        }
+
+        public async Task AddAsync(Skill skill)
+        {
+            await _uow.Skills.Add(skill);
+        }
+
+        public async Task UpdateAsync(Skill skill)
+        {
+            await _uow.Skills.Update(skill);
+        }
+
+        public async Task RemoveAsync(Skill skill)
+        {
+            await _uow.Skills.Remove(skill);
+        }
+
+        public async Task RemoveAsync(Guid id)
+        {
+            var skill = await GetByIdAsync(id);
+            await RemoveAsync(skill);
         }
     }
 }

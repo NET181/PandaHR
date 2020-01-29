@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PandaHR.Api.DAL.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PandaHR.Api.DAL.EF.Configurations
 {
@@ -23,6 +20,10 @@ namespace PandaHR.Api.DAL.EF.Configurations
             builder.HasOne(t => t.SkillType)
                    .WithMany(s => s.Skills)
                    .HasForeignKey(t => t.SkillTypeId);
+
+            builder.HasMany(t => t.TechnologySkills)
+                .WithOne(t => t.Skill)
+                .HasForeignKey(t => t.SkillId);
 
             builder.HasMany(r => r.SkillRequirements)
                    .WithOne(s => s.Skill)
