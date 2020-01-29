@@ -17,30 +17,65 @@ namespace PandaHR.Api.Controllers
             _cvService = cvService;
         }
 
-        [HttpGet]
-        public async Task<CV> Get(Guid cvId)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(Guid id)
         {
-            var jobExperience = await _cvService.GetByIdAsync(cvId);
+            CV cv = await _cvService.GetByIdAsync(id);
 
-            return jobExperience;
+            if (cv != null)
+            {
+                return Ok(cv);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
-        [HttpDelete]
-        public void Remove(CV cv)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Remove(Guid id)
         {
-            _cvService.RemoveAsync(cv);
+            try
+            {
+                await _cvService.RemoveAsync(id);
+
+                return StatusCode(200);
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPut]
-        public void Update(CV cv)
+        public async Task<IActionResult> Update(CV cv)
         {
-            _cvService.UpdateAsync(cv);
+            try
+            {
+                await _cvService.UpdateAsync(cv);
+
+                return StatusCode(200);
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost]
-        public void Add(CV cv)
+        public async Task<IActionResult> Add(CV cv)
         {
-            _cvService.AddAsync(cv);
+            try
+            {
+                await _cvService.AddAsync(cv);
+
+                return StatusCode(200);
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
+    }
     }
 }
