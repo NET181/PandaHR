@@ -23,7 +23,7 @@ namespace PandaHR.Api.DAL.EF.Configurations
                     Name = "0-6",
                     Value = 1,
                     IsDeleted = false,
-                    Id = new Guid("561d468e-a93b - 4e6b - a576 - 52b3d7bbf32a")
+                    Id = new Guid("561d468e-a93b-4e6b-a576-52b3d7bbf32a")
                 },
                 new Experience
                 {
