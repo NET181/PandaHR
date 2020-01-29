@@ -16,34 +16,35 @@ namespace PandaHR.Api.Services.Implementation
             _uow = uow;
         }
 
-        public Task AddAsync(CV entity)
+        public async Task AddAsync(CV entity)
         {
-            throw new NotImplementedException();
+            await _uow.CVs.Add(entity);
         }
 
-        public Task<IEnumerable<CV>> GetAllAsync()
+        public async Task<IEnumerable<CV>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _uow.CVs.GetAllAsync();
         }
 
-        public Task<CV> GetByIdAsync(Guid id)
+        public async Task<CV> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _uow.CVs.GetByIdAsync(id);
         }
 
-        public Task RemoveAsync(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var jobExperience = await GetByIdAsync(id);
+            await RemoveAsync(jobExperience);
         }
 
-        public Task RemoveAsync(CV entity)
+        public async Task RemoveAsync(CV entity)
         {
-            throw new NotImplementedException();
+            await _uow.CVs.Remove(entity);
         }
 
-        public Task UpdateAsync(CV entity)
+        public async Task UpdateAsync(CV entity)
         {
-            throw new NotImplementedException();
+            await _uow.CVs.Update(entity);
         }
     }
 }
