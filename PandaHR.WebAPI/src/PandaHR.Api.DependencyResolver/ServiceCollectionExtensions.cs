@@ -41,6 +41,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<IEducationRepository, EducationRepository>();
             services.AddScoped<ISpecialityRepository, SpecialityRepository>();
             services.AddScoped<IKnowledgeLevelRepository, KnowledgeLevelRepository>();
+            services.AddScoped<IExperienceRepository, ExperienceRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

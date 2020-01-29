@@ -97,15 +97,16 @@ namespace PandaHR.Api.DAL.EF
             var skillId = _context.Skills.AsNoTracking().ToArray();
             var knowledgeLevelId = _context.KnowledgeLevels.AsNoTracking().ToArray();
             var cv = _context.CVs.AsNoTracking().FirstOrDefault();
+            var experience = _context.Experiences.AsNoTracking().ToArray();
 
             var skillKnowledges = new SkillKnowledge[]
             {
                 new SkillKnowledge { SkillId = skillId[0].Id, KnowledgeLevelId = knowledgeLevelId[0].Id, CVId = cv.Id,
-                ExperienceMonths = 15},
+                ExperienceId = experience[0].Id},
                 new SkillKnowledge { SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[1].Id, CVId = cv.Id,
-                ExperienceMonths = 0},
+                ExperienceId = experience[1].Id},
                 new SkillKnowledge { SkillId = skillId[2].Id, KnowledgeLevelId = knowledgeLevelId[2].Id, CVId = cv.Id,
-                ExperienceMonths = 3}
+                ExperienceId = experience[2].Id}
             };
             _context.SkillKnowledges.AddRange(skillKnowledges);
             _context.SaveChanges();
@@ -210,19 +211,20 @@ namespace PandaHR.Api.DAL.EF
             var skills = _context.Skills.ToArray();
             var knowledgeLevels = _context.KnowledgeLevels.ToArray();
             var vacancies = _context.Vacancies.ToArray();
+            var experience = _context.Experiences.AsNoTracking().ToArray();
 
             var skillRequirements = new SkillRequirement[]
             {
-                new SkillRequirement{Weight = 25, ExperienceMonths = 12, IsDeleted = false,
+                new SkillRequirement{Weight = 25, ExperienceId = experience[0].Id, IsDeleted = false,
                 SkillId = skills[0].Id, KnowledgeLevelId = knowledgeLevels[0].Id, VacancyId = vacancies[0].Id},
 
-                new SkillRequirement{Weight = 59, ExperienceMonths = 18, IsDeleted = false,
+                new SkillRequirement{Weight = 59, ExperienceId = experience[1].Id, IsDeleted = false,
                 SkillId = skills[0].Id, KnowledgeLevelId = knowledgeLevels[1].Id, VacancyId = vacancies[1].Id},
 
-                new SkillRequirement{Weight = 80, ExperienceMonths = 24, IsDeleted = false,
+                new SkillRequirement{Weight = 80, ExperienceId = experience[2].Id, IsDeleted = false,
                 SkillId = skills[1].Id, KnowledgeLevelId = knowledgeLevels[2].Id, VacancyId = vacancies[2].Id},
 
-                new SkillRequirement{Weight = 70, ExperienceMonths = 15, IsDeleted = false,
+                new SkillRequirement{Weight = 70, ExperienceId = experience[3].Id, IsDeleted = false,
                 SkillId = skills[2].Id, KnowledgeLevelId = knowledgeLevels[2].Id, VacancyId = vacancies[0].Id}
             };
 

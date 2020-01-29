@@ -37,6 +37,7 @@ namespace PandaHR.Api.DAL.EF.Context
         public DbSet<User> Users { get; set; }
         public DbSet<UserCompany> UserCompanies { get; set; }
         public DbSet<Vacancy> Vacancies { get; set; }
+        public DbSet<Experience> Experiences { get; set; }
 
         #endregion
 
@@ -73,7 +74,8 @@ namespace PandaHR.Api.DAL.EF.Context
                 .ApplyConfiguration<SkillKnowledgeType>(new SkillKnowledgeTypeConfiguration())
                 .ApplyConfiguration<UserCompany>(new UserCompanyConfiguration())
                 .ApplyConfiguration<User>(new UserConfiguration())
-                .ApplyConfiguration<Vacancy>(new VacancyConfiguration());
+                .ApplyConfiguration<Vacancy>(new VacancyConfiguration())
+                .ApplyConfiguration<Experience>(new ExperienceConfiguration());                
         }
 
         public override int SaveChanges()
