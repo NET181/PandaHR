@@ -10,6 +10,7 @@ using PandaHR.Api.DAL.Repositories.Contracts;
 using PandaHR.Api.DAL.Repositories.Implementation;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Implementation;
+using PandaHR.Api.ElasticSearch;
 
 namespace PandaHR.Api.DependencyResolver
 {
@@ -45,6 +46,8 @@ namespace PandaHR.Api.DependencyResolver
           
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<IMapper, PandaHRAutoMapper>();
+
+            services.AddElasticsearch(configuration);
         }
     }
 }

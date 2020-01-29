@@ -22,7 +22,7 @@ namespace PandaHR.Api.Services.Implementation
 
         public Task Add(User entity)
         {
-            throw new NotImplementedException();
+            return _uow.Users.Add(entity);
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()
@@ -39,9 +39,19 @@ namespace PandaHR.Api.Services.Implementation
             return users;
         }
 
-        public Task<User> GetById(Guid id, Func<IQueryable<User>, IIncludableQueryable<User, object>> include = null)
+        public async Task<User> GetById(Guid id, Func<IQueryable<User>, IIncludableQueryable<User, object>> include = null)
         {
-            throw new NotImplementedException();
+            var user = await _uow.Users.GetAllAsync(include: source => source
+            .Include(c => c.City)
+            .Include(e => e.Educations)
+                .ThenInclude(d => d.Degree)
+            .Include(e => e.Educations)
+                .ThenInclude(d => d.Speciality)
+            .Include(cv => cv.CVs)
+            .Include(v => v.Vacancies),
+            predicate: u => u.Id == id
+            ).Fir ;
+            return user;
         }
 
         public IEnumerable<Education> GetEducations()

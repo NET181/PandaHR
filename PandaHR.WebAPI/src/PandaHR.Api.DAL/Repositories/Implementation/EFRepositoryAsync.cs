@@ -21,14 +21,15 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             _dbSet = _context.Set<T>();
         }
 
-        public async Task<int> Add(T entity)
+        public async Task Add(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
-            return await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
         public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+            Expression<Func<T, object>> selectWhat = null,
             bool disableTracking = true, bool ignoreQueryFilters = false)
         {
             IQueryable<T> query = _dbSet;
@@ -46,6 +47,11 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             if (predicate != null)
             {
                 query = query.Where(predicate);
+            }
+
+            if (selectWhat != null)
+            {
+                query = query.Select(selectWhat);
             }
 
             if (ignoreQueryFilters)
@@ -74,7 +80,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             return await _context.SaveChangesAsync();
         }
 
-        public Task<int> Update(T entity)
+        public Task Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
             return _context.SaveChangesAsync();
