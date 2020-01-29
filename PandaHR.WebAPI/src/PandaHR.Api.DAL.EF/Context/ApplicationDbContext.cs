@@ -37,6 +37,8 @@ namespace PandaHR.Api.DAL.EF.Context
         public DbSet<User> Users { get; set; }
         public DbSet<UserCompany> UserCompanies { get; set; }
         public DbSet<Vacancy> Vacancies { get; set; }
+        public DbSet<Technology> Technologies { get; set; }
+        public DbSet<TechnologySkill> TechnologySkills { get; set; }
 
         #endregion
 
@@ -47,8 +49,6 @@ namespace PandaHR.Api.DAL.EF.Context
                 if (typeof(ISoftDeletable).IsAssignableFrom(type.ClrType))
                 {
                     modelBuilder.SetSoftDeleteFilter(type.ClrType);
-                 
-                    //modelBuilder.Entity<>(.
                 }
             }
 
@@ -73,7 +73,9 @@ namespace PandaHR.Api.DAL.EF.Context
                 .ApplyConfiguration<SkillKnowledgeType>(new SkillKnowledgeTypeConfiguration())
                 .ApplyConfiguration<UserCompany>(new UserCompanyConfiguration())
                 .ApplyConfiguration<User>(new UserConfiguration())
-                .ApplyConfiguration<Vacancy>(new VacancyConfiguration());
+                .ApplyConfiguration<Vacancy>(new VacancyConfiguration())
+                .ApplyConfiguration<Technology>(new TechnologyConfiguration())
+                .ApplyConfiguration<TechnologySkill>(new TechnologySkillConfiguration());
         }
 
         public override int SaveChanges()
