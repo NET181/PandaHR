@@ -1,12 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Implementation
@@ -20,9 +17,9 @@ namespace PandaHR.Api.Services.Implementation
             _uow = uow;
         }
 
-        public Task Add(User entity)
+        public async Task AddAsync(User entity)
         {
-            return _uow.Users.Add(entity);
+            await _uow.Users.Add(entity);
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()
@@ -39,39 +36,25 @@ namespace PandaHR.Api.Services.Implementation
             return users;
         }
 
-        public async Task<User> GetById(Guid id, Func<IQueryable<User>, IIncludableQueryable<User, object>> include = null)
+        public async Task<User> GetByIdAsync(Guid id)
         {
-            var user = await _uow.Users.GetAllAsync(include: source => source
-            .Include(c => c.City)
-            .Include(e => e.Educations)
-                .ThenInclude(d => d.Degree)
-            .Include(e => e.Educations)
-                .ThenInclude(d => d.Speciality)
-            .Include(cv => cv.CVs)
-            .Include(v => v.Vacancies),
-            predicate: u => u.Id == id
-            ).Fir ;
-            return user;
+            return await _uow.Users.GetByIdAsync(id);
         }
 
-        public IEnumerable<Education> GetEducations()
+        public async Task RemoveAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var city = await _uow.Users.GetByIdAsync(id);
+            await _uow.Users.Remove(city);
         }
 
-        public IEnumerable<SkillKnowledge> GetSkills()
+        public async Task RemoveAsync(User user)
         {
-            throw new NotImplementedException();
+            await _uow.Users.Remove(user);
         }
 
-        public Task<bool> Remove(Guid id)
+        public async Task UpdateAsync(User entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> Update(User entity)
-        {
-            throw new NotImplementedException();
+            await _uow.Users.Update(entity);
         }
     }
 }

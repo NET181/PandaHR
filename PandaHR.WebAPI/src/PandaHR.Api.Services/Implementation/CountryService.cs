@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
@@ -24,28 +22,30 @@ namespace PandaHR.Api.Services.Implementation
                   .GetAllAsync(include: c => c.Include(s => s.Cities));
         }
 
-        public async Task<Country> GetById(Guid countryId, Func<IQueryable<Country>, IIncludableQueryable<Country, object>> include = null)
+        public async Task<Country> GetByIdAsync(Guid countryId)
         {
-            return await _uow.Countries.
-                GetByIdAsync(countryId, c => c.Include(s => s.Cities));
+            return await _uow.Countries.GetByIdAsync(countryId);
         }
 
-        public async Task Add(Country country)
+        public async Task AddAsync(Country country)
         {
             await _uow.Countries.Add(country);
         }
 
-        public async Task<bool> Update(Country coutnry)
+        public async Task UpdateAsync(Country coutnry)
         {
             await _uow.Countries.Update(coutnry);
-            return true;
         }
 
-        public async Task<bool> Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
             var country = await _uow.Countries.GetByIdAsync(id);
             await _uow.Countries.Remove(country);
-            return true;
+        }
+
+        public async Task RemoveAsync(Country country)
+        {
+            await _uow.Countries.Remove(country);
         }
     }
 }

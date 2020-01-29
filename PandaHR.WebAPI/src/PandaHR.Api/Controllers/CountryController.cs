@@ -28,9 +28,9 @@ namespace PandaHR.Api.Controllers
 
         // GET: api/Country/5
         [HttpGet("{id}")]
-        public IActionResult Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            Country country = _countryService.GetById(id).Result;
+            Country country = await _countryService.GetByIdAsync(id);
             if (country != null)
             {
                 return Ok(country);
@@ -45,7 +45,7 @@ namespace PandaHR.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]Country value)
         {
-            await _countryService.Add(value);
+            await _countryService.AddAsync(value);
             return Ok();
         }
 
@@ -54,28 +54,16 @@ namespace PandaHR.Api.Controllers
         public async Task<IActionResult> Put(Guid id, [FromBody]Country value)
         {
             value.Id = id;
-            if (await _countryService.Update(value))
-            {
-                return Ok();
-            }
-            else
-            {
-                return NotFound();
-            }
+            await _countryService.UpdateAsync(value);
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            if (await _countryService.Remove(id))
-            {
-                return Ok();
-            }
-            else
-            {
-                return NotFound();
-            }
+            await _countryService.RemoveAsync(id);
+            return Ok();
         }
     }
 }

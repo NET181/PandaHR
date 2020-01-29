@@ -25,10 +25,12 @@ namespace PandaHR.Api.DAL.EF
             AddCompanyCities();
             AddUser();
             AddUserCompany();
+            AddTechnologies();
             AddCV();
             AddEducations();
             AddJobExperience();
             AddVacancy();
+            AddSkillTypes();
             AddSkills();
             AddSkillKnowledge();
             AddSkillRequirements();
@@ -38,14 +40,15 @@ namespace PandaHR.Api.DAL.EF
         {
             var userId = _context.Users.FirstOrDefault().Id;
             var qualificationId = _context.Qualifications.FirstOrDefault().Id;
+            var technologyId = _context.Technologies.FirstOrDefault().Id;
 
             var cv = new List<CV>()
             {
-                new CV{ Summary = "Im very good", UserId = userId, QualificationId = qualificationId},
-                new CV{ Summary = "Im better than good", UserId = userId, QualificationId = qualificationId},
-                new CV{ Summary = "Im better than better", UserId = userId, QualificationId = qualificationId},
-                new CV{ Summary = "Im the best", UserId = userId, QualificationId = qualificationId},
-                new CV{ Summary = "Im so clever boy", UserId = userId, QualificationId = qualificationId},
+                new CV{ TechnologyId = technologyId, Summary = "Im very good", UserId = userId, QualificationId = qualificationId},
+                new CV{ TechnologyId = technologyId, Summary = "Im better than good", UserId = userId, QualificationId = qualificationId},
+                new CV{ TechnologyId = technologyId, Summary = "Im better than better", UserId = userId, QualificationId = qualificationId},
+                new CV{ TechnologyId = technologyId, Summary = "Im the best", UserId = userId, QualificationId = qualificationId},
+                new CV{ TechnologyId = technologyId, Summary = "Im so clever boy", UserId = userId, QualificationId = qualificationId},
             };
 
             _context.CVs.AddRange(cv);
@@ -58,14 +61,15 @@ namespace PandaHR.Api.DAL.EF
             var companyId = _context.Companies.FirstOrDefault().Id;
             var userId = _context.Users.FirstOrDefault().Id;
             var qualificationId = _context.Qualifications.FirstOrDefault().Id;
+            var technologyId = _context.Technologies.FirstOrDefault().Id;
 
             var vacancies = new Vacancy[]
             {
-                new Vacancy{ CityId = cityId, CompanyId = companyId, Description = "Best vacancy ever!",
+                new Vacancy{ TechnologyId = technologyId, CityId = cityId, CompanyId = companyId, Description = "Best vacancy ever!",
                     UserId = userId, QualificationId = qualificationId},
-                new Vacancy{ CityId = cityId, CompanyId = companyId, Description = "Even better vacancy than the previous!",
+                new Vacancy{ TechnologyId = technologyId, CityId = cityId, CompanyId = companyId, Description = "Even better vacancy than the previous!",
                     UserId = userId, QualificationId = qualificationId},
-                new Vacancy{ CityId = cityId, CompanyId = companyId, Description = "Vacancy for C# developer",
+                new Vacancy{ TechnologyId = technologyId, CityId = cityId, CompanyId = companyId, Description = "Vacancy for C# developer",
                     UserId = userId, QualificationId = qualificationId}
             };
 
@@ -96,15 +100,16 @@ namespace PandaHR.Api.DAL.EF
             var skillId = _context.Skills.AsNoTracking().ToArray();
             var knowledgeLevelId = _context.KnowledgeLevels.AsNoTracking().ToArray();
             var cv = _context.CVs.AsNoTracking().FirstOrDefault();
+            var experience = _context.Experiences.AsNoTracking().ToArray();
 
             var skillKnowledges = new SkillKnowledge[]
             {
                 new SkillKnowledge { SkillId = skillId[0].Id, KnowledgeLevelId = knowledgeLevelId[0].Id, CVId = cv.Id,
-                ExperienceMonths = 15},
+                ExperienceId = experience[0].Id},
                 new SkillKnowledge { SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[1].Id, CVId = cv.Id,
-                ExperienceMonths = 0},
+                ExperienceId = experience[1].Id},
                 new SkillKnowledge { SkillId = skillId[2].Id, KnowledgeLevelId = knowledgeLevelId[2].Id, CVId = cv.Id,
-                ExperienceMonths = 3}
+                ExperienceId = experience[2].Id}
             };
             _context.SkillKnowledges.AddRange(skillKnowledges);
             _context.SaveChanges();
@@ -204,24 +209,51 @@ namespace PandaHR.Api.DAL.EF
             _context.SaveChanges();
         }
 
+        private void AddTechnologies()
+        {
+            var technologies = new Technology[]
+            {
+                 new Technology()
+                 {
+                    Id = new Guid("f43f4b05-6cb1-4c72-9ebb-1fe5fd1fc62e"),
+                    Name = "Back-end",
+                    IsDeleted = false,
+                    Parent = null,
+                    ParentId = null
+                 },
+                 new Technology()
+                 {
+                    Id = new Guid("c3c0583c-a662-421a-8013-ba05ded4a279"),
+                    Name = "Front-end",
+                    IsDeleted = false,
+                    Parent = null,
+                    ParentId = null
+                 }
+            };
+
+            _context.Technologies.AddRange(technologies);
+            _context.SaveChanges();
+        }
+
         private void AddSkillRequirements()
         {
             var skills = _context.Skills.ToArray();
             var knowledgeLevels = _context.KnowledgeLevels.ToArray();
             var vacancies = _context.Vacancies.ToArray();
+            var experience = _context.Experiences.AsNoTracking().ToArray();
 
             var skillRequirements = new SkillRequirement[]
             {
-                new SkillRequirement{Weight = 25, ExperienceMonths = 12, IsDeleted = false,
+                new SkillRequirement{Weight = 25, ExperienceId = experience[0].Id, IsDeleted = false,
                 SkillId = skills[0].Id, KnowledgeLevelId = knowledgeLevels[0].Id, VacancyId = vacancies[0].Id},
 
-                new SkillRequirement{Weight = 59, ExperienceMonths = 18, IsDeleted = false,
+                new SkillRequirement{Weight = 59, ExperienceId = experience[1].Id, IsDeleted = false,
                 SkillId = skills[0].Id, KnowledgeLevelId = knowledgeLevels[1].Id, VacancyId = vacancies[1].Id},
 
-                new SkillRequirement{Weight = 80, ExperienceMonths = 24, IsDeleted = false,
+                new SkillRequirement{Weight = 80, ExperienceId = experience[2].Id, IsDeleted = false,
                 SkillId = skills[1].Id, KnowledgeLevelId = knowledgeLevels[2].Id, VacancyId = vacancies[2].Id},
 
-                new SkillRequirement{Weight = 70, ExperienceMonths = 15, IsDeleted = false,
+                new SkillRequirement{Weight = 70, ExperienceId = experience[3].Id, IsDeleted = false,
                 SkillId = skills[2].Id, KnowledgeLevelId = knowledgeLevels[2].Id, VacancyId = vacancies[0].Id}
             };
 
@@ -261,5 +293,16 @@ namespace PandaHR.Api.DAL.EF
             _context.Educations.AddRange(educations);
             _context.SaveChanges();
         }
+        private void AddSkillTypes()
+        {
+            List<SkillType> skillTypes = new List<SkillType>()
+            {
+                new SkillType {Name = "BackEnd", IsDeleted = false}
+            };
+
+            _context.SkillTypes.AddRange(skillTypes);
+            _context.SaveChanges();
+        }
     }
 }
+

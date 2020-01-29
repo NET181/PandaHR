@@ -1,7 +1,4 @@
 ﻿using PandaHR.Api.DAL.Repositories.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PandaHR.Api.DAL
 {
@@ -12,24 +9,65 @@ namespace PandaHR.Api.DAL
         private readonly ISkillRepository _skillRepository;
         private readonly IVacancyRepository _vacancyRepository;
         private readonly ICVRepository _cvRepository;
-        private readonly ICountryRepository _countryRepository;
+        private readonly IUserCompanyRepository _userCompanyRepository;
+        private readonly ICompanyCityRepository _companyCityRepository;
+        private readonly IQualificationRepository _qualificationRepository;
+        private readonly ISkillRequirementRepository _skillRequirementRepository;
+        private readonly IJobExperienceRepository _jobExperienceRepository;
+        private readonly IKnowledgeLevelRepository _knowledgeLevelRepository;
+        private readonly IDegreeRepository _degreeRepository;
+        private readonly ISpecialityRepository _specialityRepository;
+        private readonly IEducationRepository _educationRepository;
+        private readonly ISkillTypeRepository _skillTypeRepository;
+        private readonly IExperienceRepository _experienceRepository;
         private readonly ICityRepository _cityRepository;
-
-        public UnitOfWork(IVacancyRepository vacancyRepository, 
-            ICVRepository cvRepository, 
-            ISkillRepository skillRepository, 
-            ICompanyRepository companyRepository, 
+        private readonly ICountryRepository _countryRepository;
+        
+        public UnitOfWork(IVacancyRepository vacancyRepository,
+            ICVRepository cvRepository,
+            ISkillRepository skillRepository,
+            ICompanyRepository companyRepository,
+            ICompanyCityRepository companyCityRepository,
+            IJobExperienceRepository jobExperienceRepository,
+            IKnowledgeLevelRepository knowledgeLevelRepository,
+            IDegreeRepository degreeRepository,
+            ISpecialityRepository specialityRepository,
+            IEducationRepository educationRepository,
             IUserRepository userRepository,
-            ICountryRepository countryRepository,
-            ICityRepository cityRepository)
+            IQualificationRepository qualificationRepository,
+            ISkillRequirementRepository skillRequirementRepository,
+            ISkillTypeRepository skillTypeRepository,
+            IUserCompanyRepository userCompanyRepository,
+            IExperienceRepository experienceRepository,
+            ICityRepository cityRepository,
+            ICountryRepository countryRepository)
         {
+            _skillTypeRepository = skillTypeRepository;
             _skillRepository = skillRepository;
             _companyRepository = companyRepository;
             _userRepository = userRepository;
             _vacancyRepository = vacancyRepository;
             _cvRepository = cvRepository;
-            _countryRepository = countryRepository;
+            _companyCityRepository = companyCityRepository;
+            _qualificationRepository = qualificationRepository;
+            _skillRequirementRepository = skillRequirementRepository;
+            _jobExperienceRepository = jobExperienceRepository;
+            _degreeRepository = degreeRepository;
+            _specialityRepository = specialityRepository;
+            _educationRepository = educationRepository;
+            _knowledgeLevelRepository = knowledgeLevelRepository;
+            _userCompanyRepository = userCompanyRepository;
+            _experienceRepository = experienceRepository;
             _cityRepository = cityRepository;
+            _countryRepository = countryRepository;
+        }
+
+        public IKnowledgeLevelRepository KnowledgeLevels
+        {
+            get
+            {
+                return _knowledgeLevelRepository;
+            }
         }
 
         public ISkillRepository Skills
@@ -56,12 +94,116 @@ namespace PandaHR.Api.DAL
             }
         }
 
-        public ICompanyRepository Companies => _companyRepository;
+        public ICompanyRepository Companies
+        {
+            get
+            {
+                return _companyRepository;
+            }
+        }
 
-        public IUserRepository Users => _userRepository;
+        public IUserRepository Users
+        {
+            get
+            {
+                return _userRepository;
+            }
+        }
 
-        public ICityRepository Cities => _cityRepository;
+        public ICompanyCityRepository CompanyCities
+        {
+            get
+            {
+                return _companyCityRepository;
+            }
+        }
 
-        public ICountryRepository Countries => _countryRepository;
+        public IUserCompanyRepository UserCompanies
+        {
+            get
+            {
+                return _userCompanyRepository;
+            }
+        }
+
+        public IQualificationRepository Qualifications
+        {
+            get
+            {
+                return _qualificationRepository;
+            }
+        }
+
+        public ISkillRequirementRepository SkillRequirements
+        {
+            get
+            {
+                return _skillRequirementRepository;
+            }
+        }
+        public IJobExperienceRepository JobExperiences
+        {
+            get
+            {
+                return _jobExperienceRepository;
+            }
+        }
+
+        public IEducationRepository Educations
+        {
+            get
+            {
+                return _educationRepository;
+            }
+        }
+
+        public IDegreeRepository Degrees
+        {
+            get
+            {
+                return _degreeRepository;
+            }
+        }
+
+        public ISpecialityRepository Specialities
+        {
+            get
+            {
+                return _specialityRepository;
+            }
+        }
+
+        public ISkillTypeRepository SkillTypes
+        {
+            get
+            {
+                return _skillTypeRepository;
+            }
+        }
+
+        public IExperienceRepository Experiences
+        {
+            get
+            {
+                return _experienceRepository;
+            }
+        }
+
+       
+        public ICityRepository Cities
+        {
+            get
+            {
+                return _cityRepository;
+            }
+        }
+
+        public ICountryRepository Countries
+        {
+            get
+            {
+                return _countryRepository;
+            }
+        }
     }
 }

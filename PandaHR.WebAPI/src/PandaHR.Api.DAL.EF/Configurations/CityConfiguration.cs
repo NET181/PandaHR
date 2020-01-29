@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PandaHR.Api.DAL.EF.Context;
 using PandaHR.Api.DAL.Models.Entities;
 using System;
 

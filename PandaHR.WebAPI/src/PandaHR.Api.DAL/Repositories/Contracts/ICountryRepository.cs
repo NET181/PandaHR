@@ -2,7 +2,7 @@
 
 namespace PandaHR.Api.DAL.Repositories.Contracts
 {
-    public interface ICountryRepository : IAsyncRepositoryGeneric<Country>
+    public interface ICountryRepository : IAsyncRepository<Country>
     {
     }
 }

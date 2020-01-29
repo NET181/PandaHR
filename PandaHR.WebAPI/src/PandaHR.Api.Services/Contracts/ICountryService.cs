@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface ICountryService : ICRUDservice<Country>
+    public interface ICountryService : IAsyncService<Country>
     {
     	
     }

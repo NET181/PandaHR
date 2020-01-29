@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PandaHR.Api.DAL;
+﻿using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Implementation
@@ -18,16 +16,35 @@ namespace PandaHR.Api.Services.Implementation
             _uow = uow;
         }
 
+        public async Task AddAsync(Vacancy entity)
+        {
+            await _uow.Vacancies.Add(entity);
+        }
+
+        public async Task RemoveAsync(Guid id)
+        {
+            var vacancy = await GetByIdAsync(id);
+            await RemoveAsync(vacancy);
+        }
+
+        public async Task RemoveAsync(Vacancy vacancy)
+        {
+            await _uow.Vacancies.Remove(vacancy);
+        }
+
         public async Task<IEnumerable<Vacancy>> GetAllAsync()
         {
-            var vacancies = await _uow.Vacancies
-                .GetAllAsync(include: v => v
-                    .Include(s => s.Company)
-                    .Include(s => s.Qualification)
-                    .Include(s => s.SkillRequirements)
-                    .Include(s => s.User));
+            return await _uow.Vacancies.GetAllAsync();
+        }
 
-            return vacancies;
+        public async Task<Vacancy> GetByIdAsync(Guid id)
+        {
+            return await _uow.Vacancies.GetFirstOrDefaultAsync(d => d.Id == id);
+        }
+
+        public async Task UpdateAsync(Vacancy vacancy)
+        {
+            await _uow.Vacancies.Update(vacancy);
         }
     }
 }

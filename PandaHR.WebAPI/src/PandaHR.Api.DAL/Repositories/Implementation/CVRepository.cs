@@ -18,7 +18,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             _context = context;
         }
 
-        public async Task<CV> GetByIdAsync(Guid id)
+        public async Task<CV> GetById(Guid id)
         {
             var jobExperience = await _context.CVs.Where(j => j.Id == id).FirstAsync();
             return jobExperience;
