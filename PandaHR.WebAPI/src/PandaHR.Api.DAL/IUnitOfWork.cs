@@ -19,5 +19,6 @@ namespace PandaHR.Api.DAL
         ISpecialityRepository Specialities { get; }
         IKnowledgeLevelRepository KnowledgeLevels { get; }
         ISkillTypeRepository SkillTypes { get; }
+        IExperienceRepository Experiences { get; }
     }
 }
