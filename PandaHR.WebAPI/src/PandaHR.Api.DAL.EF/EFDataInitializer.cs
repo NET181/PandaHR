@@ -345,10 +345,11 @@ namespace PandaHR.Api.DAL.EF
             var skilltype = _context.SkillTypes.FirstOrDefault();
             var knowledgeType = _context.KnowledgeLevels.Take(4).ToArray();
 
-            skilltype.SkillKnowledgeTypes = knowledgeType.Select(kn => new SkillKnowledgeType()
+            skilltype.SkillKnowledgeTypes = knowledgeType.Select((kn, index) => new SkillKnowledgeType()
             {
                 SkillTypeId = skilltype.Id,
-                KnowledgeLevelId = kn.Id
+                KnowledgeLevelId = kn.Id,
+                Value = index
             }).ToList();
 
             _context.SaveChanges();
