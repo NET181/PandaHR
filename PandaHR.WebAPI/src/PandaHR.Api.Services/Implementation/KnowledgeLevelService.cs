@@ -27,24 +27,30 @@ namespace PandaHR.Api.Services.Implementation
             return knowledgeLevels;
         }
 
-        public async Task Add(KnowledgeLevel knowledgeLevel)
+        public async Task AddAsync(KnowledgeLevel entity)
         {
-            await _uow.KnowledgeLevels.Add(knowledgeLevel);
+            await _uow.KnowledgeLevels.Add(entity);
         }
 
-        public async Task Update(KnowledgeLevel knowledgeLevel)
+        public async Task RemoveAsync(Guid id)
         {
-            await _uow.KnowledgeLevels.Update(knowledgeLevel);
+            var knowledgeLevel = await GetByIdAsync(id);
+            await RemoveAsync(knowledgeLevel);
         }
 
-        public async Task Remove(KnowledgeLevel knowledgeLevel)
+        public async Task RemoveAsync(KnowledgeLevel entity)
         {
-            await _uow.KnowledgeLevels.Remove(knowledgeLevel);
+            await _uow.KnowledgeLevels.Remove(entity);
         }
 
-        public async Task<KnowledgeLevel> GetById(Guid id)
+        public async Task<KnowledgeLevel> GetByIdAsync(Guid id)
         {
-            return await _uow.KnowledgeLevels.GetByIdAsync(id);
+            return await _uow.KnowledgeLevels.GetFirstOrDefaultAsync(d => d.Id == id);
+        }
+
+        public async Task UpdateAsync(KnowledgeLevel entity)
+        {
+            await _uow.KnowledgeLevels.Update(entity);
         }
     }
 }

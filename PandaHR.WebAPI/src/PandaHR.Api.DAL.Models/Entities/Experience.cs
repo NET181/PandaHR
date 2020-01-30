@@ -1,22 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    public class KnowledgeLevel : BaseEntity , ISoftDeletable
+    public class Experience : BaseEntity, ISoftDeletable
     {
-        public KnowledgeLevel()
+        public Experience()
         {
             SkillRequirements = new HashSet<SkillRequirement>();
             SkillKnowledges = new HashSet<SkillKnowledge>();
-            SkillKnowledgeTypes = new HashSet<SkillKnowledgeType>();
         }
-
-        public bool IsDeleted { get; set; }
         public string Name { get; set; }
+        public int Value { get; set; }
+        public bool IsDeleted { get; set; }
 
-        public ICollection<SkillKnowledgeType> SkillKnowledgeTypes { get; set; }
         public ICollection<SkillRequirement> SkillRequirements { get; set; }
         public ICollection<SkillKnowledge> SkillKnowledges { get; set; }
-       
     }
 }

@@ -26,6 +26,9 @@ namespace PandaHR.Api.DAL.Models.Entities
         public Guid? CityId { get; set; }
         public City City { get; set; }
 
+        public Guid TechnologyId { get; set; }
+        public Technology Technology { get; set; }
+
         public ICollection<SkillRequirement> SkillRequirements { get; set; }
     }
 }

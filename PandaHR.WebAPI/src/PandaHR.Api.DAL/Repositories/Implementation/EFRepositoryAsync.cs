@@ -68,11 +68,11 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             _context.Entry(entity).State = EntityState.Modified;
             return _context.SaveChangesAsync();
         }
-		
-		public async Task<T> GetByIdAsync(Guid Id)
-		{
-			return await _context.Set<T>().FindAsync(Id);
-		}
+
+        public async Task<T> GetByIdAsync(Guid Id)
+        {
+            return await _context.Set<T>().FindAsync(Id);
+        }
 
         public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate = null,
                   Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
@@ -111,9 +111,10 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             }
         }
 
-        public Task Add(T entity)
+        public async Task Add(T entity)
         {
-            throw new NotImplementedException();
+            await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -46,7 +46,7 @@ namespace PandaHR.Api.Controllers
         {
             try
             {
-                var knowledgeLevel = await _knowledgeLevelService.GetById(id);
+                var knowledgeLevel = await _knowledgeLevelService.GetByIdAsync(id);
 
                 if (knowledgeLevel != null)
                 {
@@ -70,7 +70,7 @@ namespace PandaHR.Api.Controllers
             try
             {
                 knowledgeLevel.Id = id;
-                await _knowledgeLevelService.Update(knowledgeLevel);
+                await _knowledgeLevelService.UpdateAsync(knowledgeLevel);
 
                 return StatusCode(200);
             }
@@ -86,7 +86,7 @@ namespace PandaHR.Api.Controllers
         {
             try
             {
-                await _knowledgeLevelService.Add(knowledgeLevel);
+                await _knowledgeLevelService.AddAsync(knowledgeLevel);
 
                 return StatusCode(200);
             }
@@ -102,7 +102,7 @@ namespace PandaHR.Api.Controllers
         {
             try
             {
-                await _knowledgeLevelService.Remove(knowledgeLevel);
+                await _knowledgeLevelService.RemoveAsync(knowledgeLevel);
 
                 return StatusCode(200);
             }

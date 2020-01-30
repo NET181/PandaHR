@@ -10,6 +10,8 @@ namespace PandaHR.Api.DAL
         ICompanyRepository Companies { get; }
         IJobExperienceRepository JobExperiences { get; }
         IUserRepository Users { get; }
+        ICountryRepository Countries { get; }
+        ICityRepository Cities { get; }
         ICompanyCityRepository CompanyCities { get; }
         IUserCompanyRepository UserCompanies { get; }
         IQualificationRepository Qualifications { get; }
@@ -19,5 +21,6 @@ namespace PandaHR.Api.DAL
         ISpecialityRepository Specialities { get; }
         IKnowledgeLevelRepository KnowledgeLevels { get; }
         ISkillTypeRepository SkillTypes { get; }
+        IExperienceRepository Experiences { get; }
     }
 }

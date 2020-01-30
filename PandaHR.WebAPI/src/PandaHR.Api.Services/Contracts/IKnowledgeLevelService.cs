@@ -5,16 +5,7 @@ using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface IKnowledgeLevelService
+    public interface IKnowledgeLevelService : IAsyncService<KnowledgeLevel>
     {
-        Task<IEnumerable<KnowledgeLevel>> GetAllAsync();
-
-        Task Add(KnowledgeLevel knowledgeLevel);
-
-        Task Update(KnowledgeLevel knowledgeLevel);
-
-        Task Remove(KnowledgeLevel knowledgeLevel);
-
-        Task<KnowledgeLevel> GetById(Guid id);
     }
 }

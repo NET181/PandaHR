@@ -19,6 +19,9 @@ namespace PandaHR.Api.DAL
         private readonly ISpecialityRepository _specialityRepository;
         private readonly IEducationRepository _educationRepository;
         private readonly ISkillTypeRepository _skillTypeRepository;
+        private readonly IExperienceRepository _experienceRepository;
+        private readonly ICityRepository _cityRepository;
+        private readonly ICountryRepository _countryRepository;
         
         public UnitOfWork(IVacancyRepository vacancyRepository,
             ICVRepository cvRepository,
@@ -34,7 +37,10 @@ namespace PandaHR.Api.DAL
             IQualificationRepository qualificationRepository,
             ISkillRequirementRepository skillRequirementRepository,
             ISkillTypeRepository skillTypeRepository,
-            IUserCompanyRepository userCompanyRepository)
+            IUserCompanyRepository userCompanyRepository,
+            IExperienceRepository experienceRepository,
+            ICityRepository cityRepository,
+            ICountryRepository countryRepository)
         {
             _skillTypeRepository = skillTypeRepository;
             _skillRepository = skillRepository;
@@ -51,6 +57,9 @@ namespace PandaHR.Api.DAL
             _educationRepository = educationRepository;
             _knowledgeLevelRepository = knowledgeLevelRepository;
             _userCompanyRepository = userCompanyRepository;
+            _experienceRepository = experienceRepository;
+            _cityRepository = cityRepository;
+            _countryRepository = countryRepository;
         }
 
         public IKnowledgeLevelRepository KnowledgeLevels
@@ -172,5 +181,29 @@ namespace PandaHR.Api.DAL
             }
         }
 
+        public IExperienceRepository Experiences
+        {
+            get
+            {
+                return _experienceRepository;
+            }
+        }
+
+       
+        public ICityRepository Cities
+        {
+            get
+            {
+                return _cityRepository;
+            }
+        }
+
+        public ICountryRepository Countries
+        {
+            get
+            {
+                return _countryRepository;
+            }
+        }
     }
 }
