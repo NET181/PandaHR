@@ -16,64 +16,30 @@ namespace PandaHR.Api.Controllers
             _jobExperienceService = jobExperienceService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        [HttpGet]
+        public async Task<JobExperience> Get(Guid jobExperienceId)
         {
-            var jobExperience = await _jobExperienceService.GetByIdAsync(id);
+            var jobExperience = await _jobExperienceService.GetByIdAsync(jobExperienceId);
 
-            if(jobExperience != null)
-            {
-                return Ok(jobExperience);
-            }
-            else
-            {
-                return NotFound();
-            }
+            return jobExperience;
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Remove(Guid id)
+        [HttpDelete]
+        public void Remove(JobExperience jobExperience)
         {
-            try
-            {
-                await _jobExperienceService.RemoveAsync(id);
-
-                return StatusCode(200);
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            _jobExperienceService.RemoveAsync(jobExperience);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(JobExperience jobExperience)
+        public void Update(JobExperience jobExperience)
         {
-            try
-            {
-                await _jobExperienceService.UpdateAsync(jobExperience);
-
-                return StatusCode(200);
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            _jobExperienceService.UpdateAsync(jobExperience);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(JobExperience jobExperience)
+        public void Add(JobExperience jobExperience)
         {
-            try
-            {
-                await _jobExperienceService.AddAsync(jobExperience);
-
-                return StatusCode(200);
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            _jobExperienceService.AddAsync(jobExperience);
         }
     }
 }

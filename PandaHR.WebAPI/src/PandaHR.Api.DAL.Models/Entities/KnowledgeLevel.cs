@@ -12,7 +12,11 @@ namespace PandaHR.Api.DAL.Models.Entities
         }
 
         public bool IsDeleted { get; set; }
+        public int Value { get; set; }
         public string Name { get; set; }
+
+        //public SkillType SkillType { get; set; }
+        //public Guid SkillTypeId { get; set; }
 
         public ICollection<SkillKnowledgeType> SkillKnowledgeTypes { get; set; }
         public ICollection<SkillRequirement> SkillRequirements { get; set; }
