@@ -26,6 +26,7 @@ namespace PandaHR.Api.DAL.EF
             AddUser();
             AddUserCompany();
             AddTechnologies();
+            
             AddCV();
             AddEducations();
             AddJobExperience();
@@ -34,6 +35,8 @@ namespace PandaHR.Api.DAL.EF
             AddSkills();
             AddSkillKnowledge();
             AddSkillRequirements();
+            AddTechnologySkills();
+
         }
 
         private void AddCV()
@@ -211,6 +214,15 @@ namespace PandaHR.Api.DAL.EF
 
         private void AddTechnologies()
         {
+            var parentTechnology = new Technology()
+            {
+                Id = new Guid("a43f4b05-6cb1-4c72-9ebb-1fe5fd1fc62e"),
+                Name = "Fullstack",
+                IsDeleted = false,
+                ParentId = null
+            };
+            _context.Technologies.Add(parentTechnology);
+
             var technologies = new Technology[]
             {
                  new Technology()
@@ -218,20 +230,42 @@ namespace PandaHR.Api.DAL.EF
                     Id = new Guid("f43f4b05-6cb1-4c72-9ebb-1fe5fd1fc62e"),
                     Name = "Back-end",
                     IsDeleted = false,
-                    Parent = null,
-                    ParentId = null
+                    ParentId = parentTechnology.Id
                  },
                  new Technology()
                  {
                     Id = new Guid("c3c0583c-a662-421a-8013-ba05ded4a279"),
                     Name = "Front-end",
                     IsDeleted = false,
-                    Parent = null,
-                    ParentId = null
+                    ParentId = parentTechnology.Id
                  }
             };
 
             _context.Technologies.AddRange(technologies);
+            _context.SaveChanges();
+        }
+
+        private void AddTechnologySkills()
+        {
+            var skills = _context.Skills.ToArray();
+
+            var technologySkills = new TechnologySkill[]
+            {
+                 new TechnologySkill()
+                 {
+                    TechnologyId = new Guid("f43f4b05-6cb1-4c72-9ebb-1fe5fd1fc62e"),
+                    SkillId = skills[0].Id,
+                    IsDeleted = false
+                 },
+                 new TechnologySkill()
+                 {
+                    TechnologyId = new Guid("c3c0583c-a662-421a-8013-ba05ded4a279"),
+                    SkillId = skills[1].Id,
+                    IsDeleted = false
+                 }
+            };
+
+            _context.TechnologySkills.AddRange(technologySkills);
             _context.SaveChanges();
         }
 
@@ -297,7 +331,10 @@ namespace PandaHR.Api.DAL.EF
         {
             List<SkillType> skillTypes = new List<SkillType>()
             {
-                new SkillType {Name = "BackEnd", IsDeleted = false}
+                new SkillType {Name = "BackEnd", IsDeleted = false},
+                new SkillType {Name = "FrontEnd", IsDeleted = false},
+                new SkillType {Name = "FullStack", IsDeleted = false},
+                new SkillType {Name = "DB designer", IsDeleted = false}
             };
 
             _context.SkillTypes.AddRange(skillTypes);
