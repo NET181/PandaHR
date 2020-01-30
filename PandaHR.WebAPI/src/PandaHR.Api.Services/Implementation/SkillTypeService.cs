@@ -26,30 +26,24 @@ namespace PandaHR.Api.Services.Implementation
             return skillTypes;
         }
 
-        public async Task AddAsync(SkillType entity)
+        public async Task Add(SkillType skillType)
         {
-            await _uow.SkillTypes.Add(entity);
+            await _uow.SkillTypes.Add(skillType);
         }
 
-        public async Task RemoveAsync(Guid id)
+        public async Task Update(SkillType skillType)
         {
-            var skillType = await GetByIdAsync(id);
-            await RemoveAsync(skillType);
+            await _uow.SkillTypes.Update(skillType);
         }
 
-        public async Task RemoveAsync(SkillType entity)
+        public async Task Remove(SkillType skillType)
         {
-            await _uow.SkillTypes.Remove(entity);
+            await _uow.SkillTypes.Remove(skillType);
         }
 
-        public async Task<SkillType> GetByIdAsync(Guid id)
+        public async Task<SkillType> GetById(Guid id)
         {
-            return await _uow.SkillTypes.GetFirstOrDefaultAsync(d => d.Id == id);
-        }
-
-        public async Task UpdateAsync(SkillType entity)
-        {
-            await _uow.SkillTypes.Update(entity);
+            return await _uow.SkillTypes.GetByIdAsync(id);
         }
     }
 }

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.DAL.EF.Configurations;
 using PandaHR.Api.DAL.Models;
@@ -37,9 +37,6 @@ namespace PandaHR.Api.DAL.EF.Context
         public DbSet<User> Users { get; set; }
         public DbSet<UserCompany> UserCompanies { get; set; }
         public DbSet<Vacancy> Vacancies { get; set; }
-        public DbSet<Experience> Experiences { get; set; }
-        public DbSet<Technology> Technologies { get; set; }
-        public DbSet<TechnologySkill> TechnologySkills { get; set; }
 
         #endregion
 
@@ -50,6 +47,8 @@ namespace PandaHR.Api.DAL.EF.Context
                 if (typeof(ISoftDeletable).IsAssignableFrom(type.ClrType))
                 {
                     modelBuilder.SetSoftDeleteFilter(type.ClrType);
+                 
+                    //modelBuilder.Entity<>(.
                 }
             }
 
@@ -74,10 +73,7 @@ namespace PandaHR.Api.DAL.EF.Context
                 .ApplyConfiguration<SkillKnowledgeType>(new SkillKnowledgeTypeConfiguration())
                 .ApplyConfiguration<UserCompany>(new UserCompanyConfiguration())
                 .ApplyConfiguration<User>(new UserConfiguration())
-                .ApplyConfiguration<Vacancy>(new VacancyConfiguration())
-                .ApplyConfiguration<Experience>(new ExperienceConfiguration())                
-                .ApplyConfiguration<Technology>(new TechnologyConfiguration())
-                .ApplyConfiguration<TechnologySkill>(new TechnologySkillConfiguration());
+                .ApplyConfiguration<Vacancy>(new VacancyConfiguration());
         }
 
         public override int SaveChanges()

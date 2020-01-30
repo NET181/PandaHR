@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface IUserService : IAsyncService<User>
+    public interface IUserService
     {
-      
+        Task<IEnumerable<User>> GetAllAsync();
     }
 }

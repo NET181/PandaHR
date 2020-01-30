@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
@@ -17,11 +16,6 @@ namespace PandaHR.Api.Services.Implementation
             _uow = uow;
         }
 
-        public async Task AddAsync(User entity)
-        {
-            await _uow.Users.Add(entity);
-        }
-
         public async Task<IEnumerable<User>> GetAllAsync()
         {
             var users = await _uow.Users.GetAllAsync(include: source => source
@@ -34,27 +28,6 @@ namespace PandaHR.Api.Services.Implementation
             .Include(v => v.Vacancies));
 
             return users;
-        }
-
-        public async Task<User> GetByIdAsync(Guid id)
-        {
-            return await _uow.Users.GetByIdAsync(id);
-        }
-
-        public async Task RemoveAsync(Guid id)
-        {
-            var city = await _uow.Users.GetByIdAsync(id);
-            await _uow.Users.Remove(city);
-        }
-
-        public async Task RemoveAsync(User user)
-        {
-            await _uow.Users.Remove(user);
-        }
-
-        public async Task UpdateAsync(User entity)
-        {
-            await _uow.Users.Update(entity);
         }
     }
 }

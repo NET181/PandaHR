@@ -19,10 +19,6 @@ namespace PandaHR.Api.DAL.EF.Configurations
                    .HasForeignKey(s => s.SkillId)
                    .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasOne(e => e.Experience)
-                   .WithMany(sk => sk.SkillRequirements)
-                   .HasForeignKey(e => e.ExperienceId);
-
             builder.HasOne(v => v.Vacancy)
                    .WithMany(r => r.SkillRequirements)
                    .HasForeignKey(v => v.VacancyId);
