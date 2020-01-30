@@ -26,7 +26,6 @@ namespace PandaHR.Api.DAL.EF
             AddUser();
             AddUserCompany();
             AddTechnologies();
-            
             AddCV();
             AddEducations();
             AddJobExperience();
@@ -36,7 +35,7 @@ namespace PandaHR.Api.DAL.EF
             AddSkillKnowledge();
             AddSkillRequirements();
             AddTechnologySkills();
-
+            AddSkillKnowledgeTypes();
         }
 
         private void AddCV()
@@ -338,6 +337,20 @@ namespace PandaHR.Api.DAL.EF
             };
 
             _context.SkillTypes.AddRange(skillTypes);
+            _context.SaveChanges();
+        }
+
+        private void AddSkillKnowledgeTypes()
+        {
+            var skilltype = _context.SkillTypes.FirstOrDefault();
+            var knowledgeType = _context.KnowledgeLevels.Take(4).ToArray();
+
+            skilltype.SkillKnowledgeTypes = knowledgeType.Select(kn => new SkillKnowledgeType()
+            {
+                SkillTypeId = skilltype.Id,
+                KnowledgeLevelId = kn.Id
+            }).ToList();
+
             _context.SaveChanges();
         }
     }
