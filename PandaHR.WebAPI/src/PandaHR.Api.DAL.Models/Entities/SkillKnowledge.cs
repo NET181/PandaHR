@@ -2,7 +2,7 @@
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    public class SkillKnowledge : BaseEntity, ISoftDeletable
+    public class SkillKnowledge : ISoftDeletable
     {
         public bool IsDeleted { get; set; }
 
