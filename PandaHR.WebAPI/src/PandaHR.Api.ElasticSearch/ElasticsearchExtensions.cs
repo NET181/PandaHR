@@ -18,10 +18,14 @@ namespace PandaHR.Api.ElasticSearch
                 .DefaultIndex(defaultIndex)
                 .DefaultMappingFor<CV>(m => m
                     .Ignore(cv => cv.IsDeleted)
-                    .PropertyName(p => p.Id, "id")
+                    .PropertyName(p => p.Summary, "summary")
                 );
 
+            
             var client = new ElasticClient(settings);
+            //var createIndexResponse = client.Indices.Create("Vacancyindex", c => c
+            //    .Map<CV>(m => m.AutoMap())
+            //);
 
             services.AddSingleton<IElasticClient>(client);
         }

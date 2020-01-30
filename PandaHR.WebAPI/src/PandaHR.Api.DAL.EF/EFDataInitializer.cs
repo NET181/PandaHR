@@ -19,21 +19,21 @@ namespace PandaHR.Api.DAL.EF
 
         public void Seed()
         {
-            _context.Database.EnsureDeleted();
-            _context.Database.EnsureCreated();
-            AddCompanies();
-            AddCompanyCities();
-            AddUser();
-            AddUserCompany();
-            AddTechnologies();
-            AddCV();
-            AddEducations();
-            AddJobExperience();
-            AddVacancy();
-            AddSkillTypes();
-            AddSkills();
-            AddSkillKnowledge();
-            AddSkillRequirements();
+            //_context.Database.EnsureDeleted();
+            //_context.Database.EnsureCreated();
+            //AddCompanies();
+            //AddCompanyCities();
+            //AddUser();
+            //AddUserCompany();
+            //AddTechnologies();
+            //AddCV();
+            //AddEducations();
+            //AddJobExperience();
+            //AddVacancy();
+            //AddSkillTypes();
+            //AddSkills();
+            //AddSkillKnowledge();
+            //AddSkillRequirements();
         }
 
         private void AddCV()
