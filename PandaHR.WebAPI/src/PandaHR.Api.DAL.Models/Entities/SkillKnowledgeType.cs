@@ -4,7 +4,7 @@ namespace PandaHR.Api.DAL.Models.Entities
 {
     public class SkillKnowledgeType : ISoftDeletable
     {
-        public string Name { get; set; }
+        public int Value { get; set; }
         public bool IsDeleted { get; set; }
 
         public Guid SkillTypeId { get; set; }
