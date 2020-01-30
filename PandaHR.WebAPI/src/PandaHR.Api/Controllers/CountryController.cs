@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
@@ -9,30 +10,30 @@ namespace PandaHR.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class CountryController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly ICountryService _countryService;
 
-        public UserController(IUserService userService)
+        public CountryController(ICountryService countryService)
         {
-            _userService = userService;
+            _countryService = countryService;
         }
 
+        // GET: api/Country
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var users = await _userService.GetAllAsync();
-            return Ok(users);
+            return Ok(await _countryService.GetAllAsync());
         }
 
         // GET: api/Country/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            User user = await _userService.GetByIdAsync(id);
-            if (user != null)
+            Country country = await _countryService.GetByIdAsync(id);
+            if (country != null)
             {
-                return Ok(user);
+                return Ok(country);
             }
             else
             {
@@ -42,18 +43,18 @@ namespace PandaHR.Api.Controllers
 
         // POST: api/Country
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]User value)
+        public async Task<IActionResult> Post([FromBody]Country value)
         {
-            await _userService.AddAsync(value);
+            await _countryService.AddAsync(value);
             return Ok();
         }
 
         // PUT: api/Country/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody]User value)
+        public async Task<IActionResult> Put(Guid id, [FromBody]Country value)
         {
             value.Id = id;
-            await _userService.UpdateAsync(value);
+            await _countryService.UpdateAsync(value);
             return Ok();
         }
 
@@ -61,7 +62,7 @@ namespace PandaHR.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _userService.RemoveAsync(id);
+            await _countryService.RemoveAsync(id);
             return Ok();
         }
     }

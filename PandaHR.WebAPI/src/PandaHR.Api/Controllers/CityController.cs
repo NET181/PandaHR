@@ -1,38 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.DAL.Models.Entities;
 
 namespace PandaHR.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class CityController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly ICityService _cityService;
 
-        public UserController(IUserService userService)
+        public CityController(ICityService cityService)
         {
-            _userService = userService;
+            _cityService = cityService;
         }
 
+        // GET: api/Country
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var users = await _userService.GetAllAsync();
-            return Ok(users);
+            return Ok(await _cityService.GetAllAsync());
         }
 
         // GET: api/Country/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            User user = await _userService.GetByIdAsync(id);
-            if (user != null)
+            City city = await _cityService.GetByIdAsync(id);
+            if (city != null)
             {
-                return Ok(user);
+                return Ok(city);
             }
             else
             {
@@ -42,18 +41,18 @@ namespace PandaHR.Api.Controllers
 
         // POST: api/Country
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]User value)
+        public async Task<IActionResult> Post([FromBody]City value)
         {
-            await _userService.AddAsync(value);
+            await _cityService.AddAsync(value);
             return Ok();
         }
 
         // PUT: api/Country/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody]User value)
+        public async Task<IActionResult> Put(Guid id, [FromBody]City value)
         {
             value.Id = id;
-            await _userService.UpdateAsync(value);
+            await _cityService.UpdateAsync(value);
             return Ok();
         }
 
@@ -61,7 +60,7 @@ namespace PandaHR.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _userService.RemoveAsync(id);
+            await _cityService.RemoveAsync(id);
             return Ok();
         }
     }
