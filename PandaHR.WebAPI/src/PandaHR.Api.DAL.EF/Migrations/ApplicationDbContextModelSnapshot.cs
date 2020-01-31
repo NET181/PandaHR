@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PandaHR.Api.DAL.EF.Context;
 
 namespace PandaHR.Api.DAL.EF.Migrations
@@ -235,7 +236,7 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<Guid>("TechnologyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -558,9 +559,6 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("KnowledgeLevels");
@@ -570,29 +568,25 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         {
                             Id = new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e81"),
                             IsDeleted = false,
-                            Name = "Beginer",
-                            Value = 1
+                            Name = "Beginer"
                         },
                         new
                         {
                             Id = new Guid("32832ec4-968b-4619-b8cb-af4e65c52a37"),
                             IsDeleted = false,
-                            Name = "Lower Intermidiate",
-                            Value = 2
+                            Name = "Lower Intermidiate"
                         },
                         new
                         {
                             Id = new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31"),
                             IsDeleted = false,
-                            Name = "Intermidiate",
-                            Value = 3
+                            Name = "Intermidiate"
                         },
                         new
                         {
                             Id = new Guid("9b9be3ca-9c11-4afe-9c5f-225bbf192e81"),
                             IsDeleted = false,
-                            Name = "Upper Intermidiate",
-                            Value = 4
+                            Name = "Upper Intermidiate"
                         });
                 });
 
@@ -684,9 +678,6 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<Guid>("ExperienceId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -715,8 +706,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
 
                     b.HasKey("SkillTypeId", "KnowledgeLevelId");
 
@@ -734,9 +725,6 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ExperienceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
@@ -1062,9 +1050,7 @@ namespace PandaHR.Api.DAL.EF.Migrations
 
                     b.HasOne("PandaHR.Api.DAL.Models.Entities.User", "User")
                         .WithMany("CVs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.City", b =>

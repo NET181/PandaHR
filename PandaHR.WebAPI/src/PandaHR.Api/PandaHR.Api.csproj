@@ -23,8 +23,5 @@
     <ProjectReference Include="..\PandaHR.Api.DependencyResolver\PandaHR.Api.DependencyResolver.csproj" />
     <ProjectReference Include="..\PandaHR.Api.Services\PandaHR.Api.Services.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\CV\" />
-  </ItemGroup>
 
 </Project>

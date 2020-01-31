@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PandaHR.Api.DAL.DTO.Experience
+namespace PandaHR.Api.DAL.DTOs.Experience
 {
     public class ExperienceDTO
     {

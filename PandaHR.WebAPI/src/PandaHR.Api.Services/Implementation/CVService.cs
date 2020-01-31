@@ -1,24 +1,38 @@
-﻿using PandaHR.Api.DAL;
+﻿using PandaHR.Api.Common.Contracts;
+using PandaHR.Api.DAL;
+using PandaHR.Api.DAL.DTOs.CV;
+using PandaHR.Api.DAL.DTOs.SkillKnowledge;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.CV;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Implementation
 {
     public class CVService : ICVService
     {
+        private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
 
-        public CVService(IUnitOfWork uow)
+        public CVService(IMapper mapper, IUnitOfWork uow)
         {
+            _mapper = mapper;
             _uow = uow;
         }
 
-        public async Task AddAsync(CV entity)
+        public async Task AddAsync(CVServiceModel cvServiceModel)
         {
-            await _uow.CVs.Add(entity);
+            CVDTO cv = _mapper.Map<CVServiceModel, CVDTO>(cvServiceModel);
+
+            //var tasks = new List<Task> { skill, experience, knowledgeLevel };
+            //Task.WhenAll(tasks);
+
+
+            await _uow.CVs.AddAsync(cv);
         }
 
         public async Task<IEnumerable<CV>> GetAllAsync()

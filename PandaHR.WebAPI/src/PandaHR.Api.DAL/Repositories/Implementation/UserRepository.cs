@@ -25,6 +25,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
                 .Where(u => u.Id == id)
                 .Select(u => new UserDTO()
             {
+                Id = u.Id,
                 FirstName = u.FirstName,
                 SecondName = u.SecondName,
                 Email = u.Email,
