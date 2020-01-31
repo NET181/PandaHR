@@ -1,8 +1,12 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Common.Contracts;
+using PandaHR.Api.Models.Qualification;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.Qualification;
+using PandaHR.Api.DAL.Models.Entities;
+using System;
 
 namespace PandaHR.Api.Controllers
 {
@@ -11,18 +15,22 @@ namespace PandaHR.Api.Controllers
     public class QualificationController : ControllerBase
     {
         private readonly IQualificationService _qualificationService;
+        private readonly IMapper _mapper;
 
-        public QualificationController(IQualificationService qualificationService)
+        public QualificationController(IQualificationService qualificationService, IMapper mapper)
         {
             _qualificationService = qualificationService;
+            _mapper = mapper;
         }
 
+        // GET: api/Qualification
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IEnumerable<QualificationResponceModel>> GetAllQualifications()
         {
-            var skills = await _qualificationService.GetAllAsync();
+            var serviceModels = await _qualificationService.GetAllQualificationsAsync();
 
-            return Ok(skills);
+            return _mapper
+               .Map<IEnumerable<QualificationServiceModel>, IEnumerable<QualificationResponceModel>>(serviceModels);
         }
 
         [HttpPost]
