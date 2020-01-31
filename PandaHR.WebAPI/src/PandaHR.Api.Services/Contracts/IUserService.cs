@@ -1,4 +1,5 @@
 ﻿using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Services.Models.Company;
 using PandaHR.Api.Services.Models.User;
 using System;
 using System.Collections.Generic;
@@ -9,5 +10,7 @@ namespace PandaHR.Api.Services.Contracts
     public interface IUserService : IAsyncService<User>
     {
         Task<UserServiceModel> GetUserInfo(Guid id);
+
+        Task<ICollection<CompanyNameServiceModel>> GetUserCompanies(Guid userId);
     }
 }

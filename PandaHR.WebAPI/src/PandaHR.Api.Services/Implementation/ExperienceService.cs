@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
-using PandaHR.Api.DAL.DTO.Experience;
+using PandaHR.Api.DAL.DTOs.Experience;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.Experience;
 
@@ -21,9 +21,9 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<IEnumerable<ExperienceServiceModel>> GetAllAsync()
         {
-            var dto = await _uow.Experiences.GetExperienceDTOsAsync();
+            var serviceModels = await _uow.Experiences.GetExperienceDTOsAsync();
 
-            return _mapper.Map<ICollection<ExperienceDTO>, ICollection<ExperienceServiceModel>>(dto);
+            return _mapper.Map<ICollection<ExperienceDTO>, ICollection<ExperienceServiceModel>>(serviceModels);
         }
     }
 }

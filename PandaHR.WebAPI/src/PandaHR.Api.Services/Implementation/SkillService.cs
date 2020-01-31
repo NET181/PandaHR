@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
+using PandaHR.Api.DAL.DTOs.Skill;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.Skill;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,10 +14,12 @@ namespace PandaHR.Api.Services.Implementation
     public class SkillService : IAsyncService<Skill>, ISkillService
     {
         private readonly IUnitOfWork _uow;
+        private readonly IMapper _mapper;
 
-        public SkillService(IUnitOfWork uow)
+        public SkillService(IUnitOfWork uow, IMapper mapper)
         {
             _uow = uow;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<Skill>> GetAllAsync()
@@ -55,6 +60,13 @@ namespace PandaHR.Api.Services.Implementation
         {
             var skill = await GetByIdAsync(id);
             await RemoveAsync(skill);
+        }
+
+        public async Task<ICollection<SkillNameServiceModel>> GetSkillNames()
+        {
+            var serviceModels = await _uow.Skills.GetSkillNameDTOsAsync();
+
+            return _mapper.Map<ICollection<SkillNameDTO>, ICollection<SkillNameServiceModel>>(serviceModels);
         }
     }
 }

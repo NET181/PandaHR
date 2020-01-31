@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Models.Skill;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.Skill;
 
 namespace PandaHR.Api.Controllers
 {
@@ -11,10 +15,12 @@ namespace PandaHR.Api.Controllers
     public class SkillController : Controller
     {
         private readonly ISkillService _skillService;
+        private readonly IMapper _mapper;
 
-        public SkillController(ISkillService skillService)
+        public SkillController(ISkillService skillService, IMapper mapper)
         {
             _skillService = skillService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -28,6 +34,23 @@ namespace PandaHR.Api.Controllers
             }
 
             return Ok(skills);
+        }
+
+        // GET: api/skills/names
+        [HttpGet("names")]
+        public async Task<IActionResult> GetSkillNames()
+        {
+            var skillNamesServiceModels = await _skillService.GetSkillNames();
+            var responseModels = _mapper
+                .Map<ICollection<SkillNameServiceModel>, ICollection<SkillNameResponseModel>>(skillNamesServiceModels);
+            if (responseModels != null)
+            {
+                return Ok(responseModels);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet("{id}")]
