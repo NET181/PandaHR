@@ -18,5 +18,7 @@ namespace PandaHR.Api.Models.CV
         public UserCreationServiceModel User { get; set; }
         public ICollection<EducationWithDetailsServiceModel> Educations { get; set; }
         public bool IsActive { get; set; } = false;
+        public Guid TechnologyId { get; set; }
+        public Guid QualificationId { get; set; }
     }
 }

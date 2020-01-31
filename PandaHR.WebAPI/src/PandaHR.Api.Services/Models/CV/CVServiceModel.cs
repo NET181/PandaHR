@@ -17,5 +17,7 @@ namespace PandaHR.Api.Services.Models.CV
         public ICollection<SkillKnowledgeServiceModel> SkillKnowledges { get; set; }
         public ICollection<JobExperienceServiceModel> JobExperiences { get; set; }
         public bool IsActive { get; set; } = false;
+        public Guid TechnologyId { get; set; }
+        public Guid QualificationId { get; set; }
     }
 }

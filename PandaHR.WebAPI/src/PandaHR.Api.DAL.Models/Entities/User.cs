@@ -16,7 +16,7 @@ namespace PandaHR.Api.DAL.Models.Entities
 
         public string FirstName { get; set; }
         public string SecondName { get; set; }
-        public Guid CityId { get; set; }
+        public Guid? CityId { get; set; }
         public City City { get; set; }
         public bool IsDeleted { get; set; }
 
