@@ -5,15 +5,20 @@ using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using PandaHR.Api.Services.Models.User;
+using PandaHR.Api.DAL.DTOs.User;
+using PandaHR.Api.Common.Contracts;
 
 namespace PandaHR.Api.Services.Implementation
 {
     public class UserService : IUserService
     {
+        private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
 
-        public UserService(IUnitOfWork uow)
+        public UserService(IMapper mapper, IUnitOfWork uow)
         {
+            _mapper = mapper;
             _uow = uow;
         }
 
@@ -39,6 +44,14 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<User> GetByIdAsync(Guid id)
         {
             return await _uow.Users.GetByIdAsync(id);
+        }
+
+        public async Task<UserServiceModel> GetUserInfo(Guid id)
+        {
+            UserDTO userDTO = await _uow.Users.GetUserInfo(id);
+            UserServiceModel userServiceModel = _mapper.Map<UserDTO, UserServiceModel>(userDTO);
+
+            return userServiceModel;
         }
 
         public async Task RemoveAsync(Guid id)

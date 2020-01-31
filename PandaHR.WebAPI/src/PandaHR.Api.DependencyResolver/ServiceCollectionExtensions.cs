@@ -62,8 +62,8 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ISkillTypeService, SkillTypeService>();
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ICityService, CityService>();
+            services.AddScoped<IExperienceService, ExperienceService>();
 
-            services.AddScoped<IMapper, PandaHRAutoMapper>();
             services.AddSingleton<IMapper, PandaHRAutoMapper>();
         }
     }
