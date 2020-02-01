@@ -2,11 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace PandaHR.Api.Services.ScoreAlghorythm
 {
-    class ScoreAlghorythm
+    public class ScoreAlghorythm : IScoreAlghorythm
     {
         private const int PERCENT_DIVIDER = 100;
 
@@ -21,11 +20,11 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 , languageKnowledgeScaleStep, middleWeight);
         }
 
-        public List<KeyValuePair<int, CV>> GetCVsRaiting(Vacancy vacancy, List<CV> cVs
+        public List<IdAndRaiting> GetCVsRaiting(Vacancy vacancy, IEnumerable<CV> cVs
             , int languageKnowledgeScaleStep, int hardKnowledgeScaleStep
             , int softKnowledgeScaleStep, int qualificationScaleStep)
         {
-            List<KeyValuePair<int, CV>> cvsByRaiting = new List<KeyValuePair<int, CV>>();
+            List<IdAndRaiting> cvsByRaiting = new List<IdAndRaiting>();
             int middleWeight = FindMiddleWeight(vacancy.SkillRequests);
             var splitedSkills = SplitSkills(vacancy.SkillRequests, middleWeight);
             int raiting;
@@ -35,20 +34,24 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 raiting = CountRaiting(splitedSkills, cV, vacancy, softKnowledgeScaleStep
                     , hardKnowledgeScaleStep, qualificationScaleStep
                     , languageKnowledgeScaleStep, middleWeight);
-                cvsByRaiting.Add(new KeyValuePair<int, CV>(raiting, cV));
+                cvsByRaiting.Add(new IdAndRaiting()
+                {
+                    Id = cV.Id,
+                    Raiting = raiting
+                });
 
                 splitedSkills.ClearCV();
             }
-            cvsByRaiting = cvsByRaiting.OrderByDescending(x => x.Key).ToList();
+            cvsByRaiting = cvsByRaiting.OrderByDescending(x => x.Raiting).ToList();
 
             return cvsByRaiting;
         }
 
-        public List<KeyValuePair<int, Vacancy>> GetVacancysRaiting(List<Vacancy> vacancys, CV cV
+        public List<IdAndRaiting> GetVacancysRaiting(IEnumerable<Vacancy> vacancys, CV cV
             , int languageKnowledgeScaleStep, int hardKnowledgeScaleStep
             , int softKnowledgeScaleStep, int qualificationScaleStep)
         {
-            List<KeyValuePair<int, Vacancy>> vacancysByRaiting = new List<KeyValuePair<int, Vacancy>>();
+            List<IdAndRaiting> vacancysByRaiting = new List<IdAndRaiting>();
             int middleWeight;
             SplitedSkills splitedSkills;
             int raiting;
@@ -61,11 +64,15 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 raiting = CountRaiting(splitedSkills, cV, vacancy, softKnowledgeScaleStep
                     , hardKnowledgeScaleStep, qualificationScaleStep
                     , languageKnowledgeScaleStep, middleWeight);
-                vacancysByRaiting.Add(new KeyValuePair<int, Vacancy>(raiting, vacancy));
+                vacancysByRaiting.Add(new IdAndRaiting()
+                {
+                    Raiting = raiting,
+                    Id = vacancy.Id
+                });
 
                 splitedSkills = new SplitedSkills();
             }
-            vacancysByRaiting = vacancysByRaiting.OrderByDescending(x => x.Key).ToList();
+            vacancysByRaiting = vacancysByRaiting.OrderByDescending(x => x.Raiting).ToList();
 
             return vacancysByRaiting;
         }
@@ -375,7 +382,9 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             if (!stoped)
             {
                 splitedSkills.MainSkills.Add(new SrSk()
-                { Sr = splitedSkills.HardSkills[splitedSkills.HardSkills.Count - 1].Sr });
+                {
+                    Sr = splitedSkills.HardSkills[splitedSkills.HardSkills.Count - 1].Sr
+                });
                 buf.Remove(buf.Last());
             }
 

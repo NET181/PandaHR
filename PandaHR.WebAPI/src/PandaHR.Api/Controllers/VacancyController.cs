@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.ScoreAlghorythm;
 
 namespace PandaHR.Api.Controllers
 {
@@ -11,19 +12,33 @@ namespace PandaHR.Api.Controllers
     public class VacancyController : ControllerBase
     {
         private readonly IVacancyService _vacancyService;
+        private readonly IScoreCounter _scoreCounter;
 
-        public VacancyController(IVacancyService vacancyService)
+        public VacancyController(IVacancyService vacancyService, IScoreCounter scoreCounter)
         {
             _vacancyService = vacancyService;
+            _scoreCounter = scoreCounter;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(int i)
         {
-            var skills = await _vacancyService.GetAllAsync();
 
-            return Ok(skills);
+            var some = await _scoreCounter.GetCVsByVacancy(null);
+
+            string a = "";
+            foreach (var item in some)
+            {
+                a += $"{item.Raiting}  ";
+            }
+            return Ok();
         }
+        //public async Task<IActionResult> Get()
+        //{
+        //    var skills = await _vacancyService.GetAllAsync();
+
+        //    return Ok(skills);
+        //}
 
         [HttpPost]
         public async Task<IActionResult> Post(Vacancy vacancy)
@@ -40,6 +55,8 @@ namespace PandaHR.Api.Controllers
 
             return Ok();
         }
+
+       
 
         [HttpDelete]
         public async Task<IActionResult> Delete(Guid id)

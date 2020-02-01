@@ -32,9 +32,11 @@ namespace PandaHR.Api.DAL.EF
             AddVacancy();
             AddSkillTypes();
             AddSkills();
+            AddKnowledgeLevel();
             AddSkillKnowledge();
             AddSkillRequirements();
             AddTechnologySkills();
+
             AddSkillKnowledgeTypes();
         }
 
@@ -330,27 +332,57 @@ namespace PandaHR.Api.DAL.EF
         {
             List<SkillType> skillTypes = new List<SkillType>()
             {
-                new SkillType {Name = "BackEnd", IsDeleted = false},
-                new SkillType {Name = "FrontEnd", IsDeleted = false},
-                new SkillType {Name = "FullStack", IsDeleted = false},
-                new SkillType {Name = "DB designer", IsDeleted = false}
+                new SkillType {Name = "HardSkill", IsDeleted = false, Value = 2},
+                new SkillType {Name = "SoftSkill", IsDeleted = false, Value = 1},
+                new SkillType {Name = "LanguageSkill", IsDeleted = false, Value = 3},
             };
 
             _context.SkillTypes.AddRange(skillTypes);
             _context.SaveChanges();
         }
 
+        private void AddKnowledgeLevel()
+        {
+            List<KnowledgeLevel> knowledgeLevels = new List<KnowledgeLevel>()
+            {
+                new KnowledgeLevel {Name = "BeginnerLow", IsDeleted = false},
+                new KnowledgeLevel {Name = "Beginner", IsDeleted = false},
+                new KnowledgeLevel {Name = "BeginnerStrong", IsDeleted = false},
+                new KnowledgeLevel {Name = "ElementaryLow", IsDeleted = false},
+                new KnowledgeLevel {Name = "Elementary", IsDeleted = false},
+                new KnowledgeLevel {Name = "ElementaryStrong", IsDeleted = false},
+                new KnowledgeLevel {Name = "Pre–IntermediateLow", IsDeleted = false},
+                new KnowledgeLevel {Name = "Pre–Intermediate", IsDeleted = false},
+                new KnowledgeLevel {Name = "Pre–IntermediateStrong", IsDeleted = false},
+                new KnowledgeLevel {Name = "IntermediateLow", IsDeleted = false},
+                new KnowledgeLevel {Name = "Intermediate", IsDeleted = false},
+                new KnowledgeLevel {Name = "IntermediateStrong", IsDeleted = false},
+                new KnowledgeLevel {Name = "Upper–IntermediateLow", IsDeleted = false},
+                new KnowledgeLevel {Name = "Upper–Intermediate", IsDeleted = false},
+                new KnowledgeLevel {Name = "Upper–IntermediateStrong", IsDeleted = false},
+                new KnowledgeLevel {Name = "AdvancedLow", IsDeleted = false},
+                new KnowledgeLevel {Name = "Advanced", IsDeleted = false},
+                new KnowledgeLevel {Name = "AdvancedStrong", IsDeleted = false}
+            };
+
+            _context.KnowledgeLevels.AddRange(knowledgeLevels);
+            _context.SaveChanges();
+        }
+
         private void AddSkillKnowledgeTypes()
         {
-            var skilltype = _context.SkillTypes.FirstOrDefault();
-            var knowledgeType = _context.KnowledgeLevels.Take(4).ToArray();
+            var skilltypeList = _context.SkillTypes.Take(3).ToArray();
+            var knowledgeType = _context.KnowledgeLevels.Take(18).ToArray();
 
-            skilltype.SkillKnowledgeTypes = knowledgeType.Select((kn, index) => new SkillKnowledgeType()
+            foreach (var skilltype in skilltypeList)
             {
-                SkillTypeId = skilltype.Id,
-                KnowledgeLevelId = kn.Id,
-                Value = index
-            }).ToList();
+                skilltype.SkillKnowledgeTypes = knowledgeType.Select((kn, index) => new SkillKnowledgeType()
+                {
+                    SkillTypeId = skilltype.Id,
+                    KnowledgeLevelId = kn.Id,
+                    Value = index
+                }).ToList();
+            }
 
             _context.SaveChanges();
         }

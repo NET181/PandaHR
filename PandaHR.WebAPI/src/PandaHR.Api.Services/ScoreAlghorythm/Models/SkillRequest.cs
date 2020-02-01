@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PandaHR.Api.Services.ScoreAlghorythm.Models
 {
-    class SkillRequest
+    public class SkillRequest
     {
         public Skill Skill { get; set; }
         public int Weight { get; set; }

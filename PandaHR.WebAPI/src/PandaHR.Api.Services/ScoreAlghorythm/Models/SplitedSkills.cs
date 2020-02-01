@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PandaHR.Api.Services.ScoreAlghorythm.Models
 {
-    class SplitedSkills
+    public class SplitedSkills
     {
         public List<SrSk> MainSkills { get; set; }
         public List<SrSk> HardSkills { get; set; }
