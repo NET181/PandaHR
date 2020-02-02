@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
+using PandaHR.Api.DAL.DTOs.KnowledgeLevel;
 using PandaHR.Api.DAL.DTOs.Skill;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.KnowledgeLevel;
 using PandaHR.Api.Services.Models.Skill;
 using System;
 using System.Collections.Generic;
@@ -67,6 +69,21 @@ namespace PandaHR.Api.Services.Implementation
             var serviceModels = await _uow.Skills.GetSkillNameDTOsAsync();
 
             return _mapper.Map<ICollection<SkillNameDTO>, ICollection<SkillNameServiceModel>>(serviceModels);
+        }
+
+        public async Task<ICollection<SkillNameServiceModel>> GetSkillNamesByTerm(string term)
+        {
+            var dtos = await _uow.Skills.GetSkillNameDTOsAsync(s=>s.Name.Contains(term));
+
+            return _mapper.Map<ICollection<SkillNameDTO>, ICollection<SkillNameServiceModel>>(dtos);
+        }
+
+        public async Task<ICollection<KnowledgeLevelServiceModel>> GetKnowledgeLevelsBySkill(Guid skillId)
+        {
+            var skillTypeId = await _uow.Skills.GetSkillTypeIdBySkill(skillId);
+            var dtos = await _uow.KnowledgeLevels.GetKnowledgeLevelsBySkillTypeAsync(skillTypeId);
+
+            return _mapper.Map<ICollection<KnowledgeLevelDTO>, ICollection<KnowledgeLevelServiceModel>>(dtos);
         }
     }
 }

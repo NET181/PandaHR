@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Models.KnowledgeLevel;
 using PandaHR.Api.Models.Skill;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.KnowledgeLevel;
 using PandaHR.Api.Services.Models.Skill;
 
 namespace PandaHR.Api.Controllers
@@ -43,6 +45,7 @@ namespace PandaHR.Api.Controllers
             var skillNamesServiceModels = await _skillService.GetSkillNames();
             var responseModels = _mapper
                 .Map<ICollection<SkillNameServiceModel>, ICollection<SkillNameResponseModel>>(skillNamesServiceModels);
+           
             if (responseModels != null)
             {
                 return Ok(responseModels);
@@ -65,6 +68,42 @@ namespace PandaHR.Api.Controllers
 
             return Ok(skill);
         }
+
+
+        [HttpGet("{id}/knowledgelevels")]
+        public async Task<IActionResult> GetKnowledgeLevelsBySkillId(Guid id)
+        {
+            var knowledgeLevelServiceModels = await _skillService.GetKnowledgeLevelsBySkill(id);
+            var responseModels = _mapper
+                .Map<ICollection<KnowledgeLevelServiceModel>, ICollection<KnowledgeLevelResponseModel>>(knowledgeLevelServiceModels);
+
+            if (responseModels != null)
+            {
+                return Ok(responseModels);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("autofill/{term}")]
+        public async Task<IActionResult> GetSkillsByTermToSearchAsync(string term)
+        {
+            var skillNamesServiceModels = await _skillService.GetSkillNamesByTerm(term);
+            var responseModels = _mapper
+                .Map<ICollection<SkillNameServiceModel>, ICollection<SkillNameResponseModel>>(skillNamesServiceModels);
+            
+            if (responseModels != null)
+            {
+                return Ok(responseModels);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody]Skill skill)

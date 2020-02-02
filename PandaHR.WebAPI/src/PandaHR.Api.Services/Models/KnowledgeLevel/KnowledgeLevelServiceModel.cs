@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace PandaHR.Api.Models.Skill
+namespace PandaHR.Api.Services.Models.KnowledgeLevel
 {
-    public class SkillNameResponseModel
+    public class KnowledgeLevelServiceModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
