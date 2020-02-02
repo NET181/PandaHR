@@ -31,7 +31,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             _qualificationService = qualificationService;
         }
 
-        public async Task<List<IdAndRaiting>> GetCVsByVacancy(VacancyAlghorythmModel vacancy)
+        public async Task<List<IdAndRaiting>> GetCVsByVacancy(Guid vacancyId)
         {
             VacancyAlghorythmModel vacancy2 = TestVacansy();
 
@@ -48,8 +48,6 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             int languageSkillScaleStep = PERCENT_DIVIDER / skillTypes[2].SkillKnowledgeTypes.Count;
             int qualificationScaleStep = PERCENT_DIVIDER / qualifications.Count;
 
-
-
             List<CVAlghorythmModel> algCVs = new List<CVAlghorythmModel>();
 
             List<SkillKnowledgeAlghorythmModel> knowledges = new List<SkillKnowledgeAlghorythmModel>();
@@ -62,10 +60,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 algCVs.Last().Id = cVs[i].Id;
                 algCVs.Last().Qualification = qualifications.FirstOrDefault(q => q.Id == cVs[i].QualificationId).Value;
                 algCVs.Last().SkillKnowledges = new List<SkillKnowledgeAlghorythmModel>();
-                //{
-                //    Id = cVs[i].Id,
-                //    Qualification = cVs[i].Qualification.Value
-                //});
+
                 foreach (var sk in cVs[i].SkillKnowledges)
                 {
                     algCVs[i].SkillKnowledges.Add(new SkillKnowledgeAlghorythmModel()
@@ -75,16 +70,11 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                         Skill = new SkillAlghorythmModel()
                         {
                             Id = sk.SkillId,
-                            //Name = sk.Skill.Name,
                             SupSkills = new List<SkillAlghorythmModel>()
                         }
                     });
                 }
             }
-
-            var some = _alghorythm.GetCVsRaiting(vacancy2, algCVs
-                , languageSkillScaleStep, hardSkillScaleStep
-                , softSkillScaleStep, qualificationScaleStep);
 
             return _alghorythm.GetCVsRaiting(vacancy2, algCVs
                 , languageSkillScaleStep, hardSkillScaleStep
@@ -101,11 +91,10 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 KnowledgeLevel = 5,
                 Skill = new SkillAlghorythmModel()
                 {
-                    Id = new Guid("c7ea5c5d-4468-43c2-ba14-08d7a81161ba"),
-                    Name = "C#",
+                    Id = new Guid("b072e561-9258-4512-8b40-c545b121cb0c"),
                     SkillType = 1
                 },
-                Weight = 80
+                Weight = 40
             });
 
             skillRequests.Add(new SkillRequestAlghorythmModel()
@@ -114,8 +103,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 KnowledgeLevel = 5,
                 Skill = new SkillAlghorythmModel()
                 {
-                    Id = new Guid("80d1d89b-618d-4cfc-ba15-08d7a81161ba"),
-                    Name = "Asp.Net Core",
+                    Id = new Guid("b072e511-9258-4502-8b40-c545b121cb0c"),
                     SkillType = 1
                 },
                 Weight = 40

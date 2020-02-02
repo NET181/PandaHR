@@ -1,5 +1,6 @@
 ﻿using PandaHR.Api.Common;
 using PandaHR.Api.DAL.DTOs.SkillKnowledge;
+using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Models.SkillKnowledge;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace PandaHR.Api.Services.Mapper
         public SkillKnowledgeServiceModelProfile()
         {
             CreateMap<SkillKnowledgeServiceModel, SkillKnowledgeDTO>();
+
+            CreateMap<SkillKnowledge, SkillKnowledgeServiceModel>();
         }
     }
 }

@@ -11,6 +11,8 @@ namespace PandaHR.Api.Services.Models.CV
 {
     public class CVServiceModel
     {
+        public Guid Id { get; set; }
+
         public UserCreationServiceModel User { get; set; }
         public ICollection<EducationWithDetailsServiceModel> Educations { get; set; }
         public string Summary { get; set; }
@@ -19,7 +21,5 @@ namespace PandaHR.Api.Services.Models.CV
         public bool IsActive { get; set; } = false;
         public Guid TechnologyId { get; set; }
         public Guid QualificationId { get; set; }
-
-        public Guid Id { get; internal set; }
     }
 }

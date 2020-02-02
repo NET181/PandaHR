@@ -12,5 +12,6 @@ namespace PandaHR.Api.Services.Models.SkillKnowledge
         public Guid SkillId { get; set; }
         public Guid KnowledgeLevelId { get; set; }
         public Guid ExperienceId { get; set; }
+
     }
 }

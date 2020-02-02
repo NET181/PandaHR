@@ -20,19 +20,19 @@ namespace PandaHR.Api.Controllers
             _scoreCounter = scoreCounter;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get(Guid Id = new Guid())
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetCVsByRaitingForVacancy(int Id )
         {
             try
             {
-                var some = await _scoreCounter.GetCVsByVacancy(null);
+                var some = await _scoreCounter.GetCVsByVacancy(new Guid());
 
                 string a = "";
                 foreach (var item in some)
                 {
                     a += $"{item.Raiting}  ";
                 }
-                return Ok();
+                return Ok(some);
             }
             catch (Exception ex)
             {
@@ -41,12 +41,14 @@ namespace PandaHR.Api.Controllers
             }
 
         }
-        //public async Task<IActionResult> Get()
-        //{
-        //    var skills = await _vacancyService.GetAllAsync();
 
-        //    return Ok(skills);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var skills = await _vacancyService.GetAllAsync();
+
+            return Ok(skills);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Post(Vacancy vacancy)
