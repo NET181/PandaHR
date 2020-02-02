@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.DAL.Models;
 using PandaHR.Api.DAL.DTOs.SkillKnowledge;
 
 namespace PandaHR.Api.DAL.DTOs.CV
@@ -11,9 +11,10 @@ namespace PandaHR.Api.DAL.DTOs.CV
         public string Summary { get; set; }
         public bool IsActive { get; set; }
         public Guid UserId { get; set; }
-        public Qualification Qualification { get; set; }
-        public Technology Technology { get; set; }
+        public string QualificationName { get; set; }
+        public int QualificationValue { get; set; }
+        public string TechnologyName { get; set; }
 
-        public ICollection<SkillForSearchDTO> Skills { get; set; }
+        public ICollection<SkillForSearchDTO> SkillKnowledges { get; set; }
     }
 }

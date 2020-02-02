@@ -34,10 +34,22 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("/UserCVsExt")]
         public async Task<IActionResult> GetUserCVs(Guid userId, int page, int pageSize)
         {
+            return Ok(await _cvService.GetUserCVsAsync(userId, pageSize, page));
+        }
+
+        [HttpGet("/UserCVsSummary")]
+        public async Task<IActionResult> GetUserCVsSummary(Guid userId, int page, int pageSize)
+        {
             return Ok(await _cvService.GetUserCVsPreviewAsync(userId, pageSize, page));
+        }
+
+        [HttpGet("/VacanciesForCV")]
+        public async Task<IActionResult> GetVacanciesForCV(Guid vacancyId, int page, int pageSize)
+        {
+            return Ok(await _cvService.GetVacanciesForCV(vacancyId, pageSize, page));
         }
 
         [HttpDelete("{id}")]
