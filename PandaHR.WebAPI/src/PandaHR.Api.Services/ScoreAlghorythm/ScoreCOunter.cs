@@ -39,11 +39,12 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 KnowledgeLevel = 5,
                 Skill = new Skill()
                 {
+                    Id = new Guid("c7ea5c5d-4468-43c2-ba14-08d7a81161ba"),
                     Name = "C#",
                     SkillType = 2
                 },
                 Weight = 80
-            });
+            }); 
 
             skillRequests.Add(new SkillRequest()
             {
@@ -51,6 +52,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 KnowledgeLevel = 5,
                 Skill = new Skill()
                 {
+                    Id = new Guid("80d1d89b-618d-4cfc-ba15-08d7a81161ba"),
                     Name = "Asp.Net Core",
                     SkillType = 2
                 },
