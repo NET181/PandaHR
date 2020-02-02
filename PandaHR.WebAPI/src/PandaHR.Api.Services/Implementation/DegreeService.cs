@@ -1,19 +1,31 @@
-﻿using PandaHR.Api.DAL;
-using PandaHR.Api.DAL.Models.Entities;
-using PandaHR.Api.Services.Contracts;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using PandaHR.Api.Common.Contracts;
+using PandaHR.Api.DAL;
+using PandaHR.Api.DAL.DTOs.Degree;
+using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.Degree;
+using PandaHR.Api.DAL.Models.Entities;
+using System;
 
 namespace PandaHR.Api.Services.Implementation
 {
     public class DegreeService : IAsyncService<Degree>, IDegreeService
     {
         private readonly IUnitOfWork _uow;
+        private readonly IMapper _mapper;
 
-        public DegreeService(IUnitOfWork uow)
+        public DegreeService(IUnitOfWork uow, IMapper mapper)
         {
             _uow = uow;
+            _mapper = mapper;
+        }
+
+        public async Task<ICollection<DegreeServiceModel>> GetDegreesAsync()
+        {
+            var serviceModels = await _uow.Degrees.GetDegreeDTOsAsync();
+
+            return _mapper.Map<ICollection<DegreeDTO>, ICollection<DegreeServiceModel>>(serviceModels);
         }
 
         public async Task AddAsync(Degree entity)
