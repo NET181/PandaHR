@@ -19,5 +19,7 @@ namespace PandaHR.Api.Services.Models.CV
         public bool IsActive { get; set; } = false;
         public Guid TechnologyId { get; set; }
         public Guid QualificationId { get; set; }
+
+        public Guid Id { get; internal set; }
     }
 }

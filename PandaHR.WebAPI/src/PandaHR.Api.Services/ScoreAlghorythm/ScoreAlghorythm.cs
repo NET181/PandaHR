@@ -9,7 +9,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
     {
         private const int PERCENT_DIVIDER = 100;
 
-        public int GetRating(Vacancy vacancy, CV cv, int languageKnowledgeScaleStep
+        public int GetRating(VacancyAlghorythmModel vacancy, CVAlghorythmModel cv, int languageKnowledgeScaleStep
             , int hardKnowledgeScaleStep, int softKnowledgeScaleStep, int qualificationScaleStep)
         {
             int middleWeight = FindMiddleWeight(vacancy.SkillRequests);
@@ -20,7 +20,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 , languageKnowledgeScaleStep, middleWeight);
         }
 
-        public List<IdAndRaiting> GetCVsRaiting(Vacancy vacancy, IEnumerable<CV> cVs
+        public List<IdAndRaiting> GetCVsRaiting(VacancyAlghorythmModel vacancy, IEnumerable<CVAlghorythmModel> cVs
             , int languageKnowledgeScaleStep, int hardKnowledgeScaleStep
             , int softKnowledgeScaleStep, int qualificationScaleStep)
         {
@@ -29,7 +29,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             var splitedSkills = SplitSkills(vacancy.SkillRequests, middleWeight);
             int raiting;
 
-            foreach (CV cV in cVs)
+            foreach (CVAlghorythmModel cV in cVs)
             {
                 raiting = CountRaiting(splitedSkills, cV, vacancy, softKnowledgeScaleStep
                     , hardKnowledgeScaleStep, qualificationScaleStep
@@ -47,16 +47,16 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             return cvsByRaiting;
         }
 
-        public List<IdAndRaiting> GetVacancysRaiting(IEnumerable<Vacancy> vacancys, CV cV
+        public List<IdAndRaiting> GetVacancysRaiting(IEnumerable<VacancyAlghorythmModel> vacancys, CVAlghorythmModel cV
             , int languageKnowledgeScaleStep, int hardKnowledgeScaleStep
             , int softKnowledgeScaleStep, int qualificationScaleStep)
         {
             List<IdAndRaiting> vacancysByRaiting = new List<IdAndRaiting>();
             int middleWeight;
-            SplitedSkills splitedSkills;
+            SplitedSkillsAlghorythmModel splitedSkills;
             int raiting;
 
-            foreach (Vacancy vacancy in vacancys)
+            foreach (VacancyAlghorythmModel vacancy in vacancys)
             {
                 middleWeight = FindMiddleWeight(vacancy.SkillRequests);
                 splitedSkills = SplitSkills(vacancy.SkillRequests, middleWeight);
@@ -70,14 +70,14 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                     Id = vacancy.Id
                 });
 
-                splitedSkills = new SplitedSkills();
+                splitedSkills = new SplitedSkillsAlghorythmModel();
             }
             vacancysByRaiting = vacancysByRaiting.OrderByDescending(x => x.Raiting).ToList();
 
             return vacancysByRaiting;
         }
 
-        private int CountRaiting(SplitedSkills splitedSkills, CV cv, Vacancy vacancy
+        private int CountRaiting(SplitedSkillsAlghorythmModel splitedSkills, CVAlghorythmModel cv, VacancyAlghorythmModel vacancy
             , int softKnowledgeScaleStep, int hardKnowledgeScaleStep, int qualificationScaleStep
             , int languageKnowledgeScaleStep, int middleWeight)
         {
@@ -95,8 +95,8 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             return raiting;
         }
 
-        private int CountRaitingWithQualification(int raiting, CV cv
-            , Vacancy vacancy, int qualificationScaleStep)
+        private int CountRaitingWithQualification(int raiting, CVAlghorythmModel cv
+            , VacancyAlghorythmModel vacancy, int qualificationScaleStep)
         {
 
 
@@ -114,7 +114,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             return raiting;
         }
 
-        private int CountMainSkillScore(List<SrSk> mainSkills, int scaleStep)
+        private int CountMainSkillScore(List<SkillRequestSkillKnowledge> mainSkills, int scaleStep)
         {
             if (mainSkills.Count == 0)
             {
@@ -149,7 +149,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             return raiting;
         }
 
-        private int CountLanguageSkillScore(SplitedSkills splitedSkills, int middleWeight, int scaleStep)
+        private int CountLanguageSkillScore(SplitedSkillsAlghorythmModel splitedSkills, int middleWeight, int scaleStep)
         {
             if (splitedSkills.LangSkills.Count == 0)
             {
@@ -210,7 +210,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             return raiting;
         }
 
-        private int CountOtherSkillScore(List<SrSk> skills, int scaleStep)
+        private int CountOtherSkillScore(List<SkillRequestSkillKnowledge> skills, int scaleStep)
         {
             if (skills.Count == 0)
             {
@@ -247,7 +247,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
 
         }
 
-        private SplitedSkills FindCommonSkills(List<SkillKnowledge> knowledges, SplitedSkills splitedSkills)
+        private SplitedSkillsAlghorythmModel FindCommonSkills(List<SkillKnowledgeAlghorythmModel> knowledges, SplitedSkillsAlghorythmModel splitedSkills)
         {
             splitedSkills.HardSkills = FindPairSkill(knowledges, splitedSkills.HardSkills);
             splitedSkills.LangSkills = FindPairSkill(knowledges, splitedSkills.LangSkills);
@@ -257,7 +257,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             return splitedSkills;
         }
 
-        private SplitedSkills FindAllSubSkills(List<SkillKnowledge> knowledges, SplitedSkills splitedSkills)
+        private SplitedSkillsAlghorythmModel FindAllSubSkills(List<SkillKnowledgeAlghorythmModel> knowledges, SplitedSkillsAlghorythmModel splitedSkills)
         {
             splitedSkills.HardSkills = FindRootSkills(knowledges, splitedSkills.HardSkills);
             splitedSkills.LangSkills = FindRootSkills(knowledges, splitedSkills.LangSkills);
@@ -267,13 +267,13 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             return splitedSkills;
         }
 
-        private List<SrSk> FindPairSkill(List<SkillKnowledge> knowledges, List<SrSk> requested)
+        private List<SkillRequestSkillKnowledge> FindPairSkill(List<SkillKnowledgeAlghorythmModel> knowledges, List<SkillRequestSkillKnowledge> requested)
         {
             foreach (var reqSkill in requested)
             {
                 foreach (var knowSkill in knowledges)
                 {
-                    if (reqSkill.Sr.Skill.Name == knowSkill.Skill.Name)
+                    if (reqSkill.Sr.Skill.Id == knowSkill.Skill.Id)
                     {
                         reqSkill.Sk = knowSkill;
                         break;
@@ -284,7 +284,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             return requested;
         }
 
-        private List<SrSk> FindRootSkills(List<SkillKnowledge> subSkills, List<SrSk> rootSkills)
+        private List<SkillRequestSkillKnowledge> FindRootSkills(List<SkillKnowledgeAlghorythmModel> subSkills, List<SkillRequestSkillKnowledge> rootSkills)
         {
             foreach (var rootSkill in rootSkills)
             {
@@ -301,7 +301,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             return rootSkills;
         }
 
-        private bool IsOneOfSubSkills(Skill subSkill, Skill rootSkill)
+        private bool IsOneOfSubSkills(SkillAlghorythmModel subSkill, SkillAlghorythmModel rootSkill)
         {
             if (rootSkill.SupSkills == null)
             {
@@ -327,9 +327,9 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             return result;
         }
 
-        private SplitedSkills SplitSkills(List<SkillRequest> skillRequests, int middleWeight)
+        private SplitedSkillsAlghorythmModel SplitSkills(List<SkillRequestAlghorythmModel> skillRequests, int middleWeight)
         {
-            var splitedSkills = new SplitedSkills();
+            var splitedSkills = new SplitedSkillsAlghorythmModel();
 
             skillRequests = skillRequests.OrderByDescending(w => w.Weight).ToList();
 
@@ -337,20 +337,22 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             {
                 switch (skillRequests[index].Skill.SkillType)
                 {
-                    case 1://SkillType.soft:
-                        splitedSkills.SoftSkills.Add(new SrSk()
+
+
+                    case 1:// SkillType.hard:
+                        splitedSkills.HardSkills.Add(new SkillRequestSkillKnowledge()
                         {
                             Sr = skillRequests[index]
                         });
                         break;
-                    case 2:// SkillType.hard:
-                        splitedSkills.HardSkills.Add(new SrSk()
+                    case 2:// SkillType.lang:
+                        splitedSkills.LangSkills.Add(new SkillRequestSkillKnowledge()
                         {
                             Sr = skillRequests[index]
                         });
                         break;
-                    case 3:// SkillType.lang:
-                        splitedSkills.LangSkills.Add(new SrSk()
+                    case 3://SkillType.soft:
+                        splitedSkills.SoftSkills.Add(new SkillRequestSkillKnowledge()
                         {
                             Sr = skillRequests[index]
                         });
@@ -360,40 +362,43 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 }
             }
 
-            var buf = new List<SrSk>();
-            bool stoped = false;
-            buf = splitedSkills.HardSkills.ToList();
-
-            for (int index = 1; index < splitedSkills.HardSkills.Count; index++)
+            if (splitedSkills.HardSkills.Count != 0)
             {
-                splitedSkills.MainSkills.Add(new SrSk()
-                {
-                    Sr = splitedSkills.HardSkills[index - 1].Sr
-                });
-                buf.Remove(splitedSkills.HardSkills[index - 1]);
 
-                if (splitedSkills.HardSkills[index - 1].Sr.Weight
-                    - splitedSkills.HardSkills[index].Sr.Weight > middleWeight)
+                var buf = new List<SkillRequestSkillKnowledge>();
+                bool stoped = false;
+                buf = splitedSkills.HardSkills.ToList();
+
+                for (int index = 1; index < splitedSkills.HardSkills.Count; index++)
                 {
-                    stoped = true;
-                    break;
+                    splitedSkills.MainSkills.Add(new SkillRequestSkillKnowledge()
+                    {
+                        Sr = splitedSkills.HardSkills[index - 1].Sr
+                    });
+                    buf.Remove(splitedSkills.HardSkills[index - 1]);
+
+                    if (splitedSkills.HardSkills[index - 1].Sr.Weight
+                        - splitedSkills.HardSkills[index].Sr.Weight > middleWeight)
+                    {
+                        stoped = true;
+                        break;
+                    }
                 }
-            }
-            if (!stoped)
-            {
-                splitedSkills.MainSkills.Add(new SrSk()
+                if (!stoped)
                 {
-                    Sr = splitedSkills.HardSkills[splitedSkills.HardSkills.Count - 1].Sr
-                });
-                buf.Remove(buf.Last());
+                    splitedSkills.MainSkills.Add(new SkillRequestSkillKnowledge()
+                    {
+                        Sr = splitedSkills.HardSkills[splitedSkills.HardSkills.Count - 1].Sr
+                    });
+                    buf.Remove(buf.Last());
+                }
+
+                splitedSkills.HardSkills = buf;
             }
-
-            splitedSkills.HardSkills = buf;
-
             return splitedSkills;
         }
 
-        private int FindMiddleWeight(List<SkillRequest> sr)
+        private int FindMiddleWeight(List<SkillRequestAlghorythmModel> sr)
         {
             int result = 0;
 

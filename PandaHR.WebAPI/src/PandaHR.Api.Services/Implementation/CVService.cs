@@ -1,40 +1,40 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
+using PandaHR.Api.DAL.DTOs.CV;
+using PandaHR.Api.DAL.DTOs.SkillKnowledge;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.CV;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Implementation
 {
     public class CVService : ICVService
     {
+        private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
 
-        public CVService(IUnitOfWork uow)
+        public CVService(IMapper mapper, IUnitOfWork uow)
         {
+            _mapper = mapper;
             _uow = uow;
         }
 
-        public async Task AddAsync(CV entity)
+        public async Task AddAsync(CVServiceModel cvServiceModel)
         {
-            await _uow.CVs.Add(entity);
+            CVDTO cv = _mapper.Map<CVServiceModel, CVDTO>(cvServiceModel);
+
+            await _uow.CVs.AddAsync(cv);
         }
 
-        public async Task<IEnumerable<CV>> GetAllAsync()
+        public async Task<IEnumerable<CVServiceModel>> GetAllAsync()
         {
-            var cVs = await _uow.CVs.GetAllAsync(
-                include: s => s
-                    .Include(k => k.SkillKnowledges)
-                        .ThenInclude(s => s.KnowledgeLevel)
-                    .Include(k => k.SkillKnowledges)
-                        .ThenInclude(s => s.Skill)
-                    .Include(k=> k.Qualification));
-
-            return cVs;
-
-         //   return await _uow.CVs.GetAllAsync();
+            return new List<CVServiceModel>(_mapper.Map<IEnumerable<CV>, IEnumerable<CVServiceModel>>
+                (await _uow.CVs.GetAllAsync()));
         }
 
         public async Task<CV> GetByIdAsync(Guid id)
@@ -53,9 +53,24 @@ namespace PandaHR.Api.Services.Implementation
             await _uow.CVs.Remove(entity);
         }
 
+        public Task RemoveAsync(CVServiceModel entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task UpdateAsync(CV entity)
         {
             await _uow.CVs.Update(entity);
+        }
+
+        public Task UpdateAsync(CVServiceModel entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<CVServiceModel> IAsyncService<CVServiceModel>.GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

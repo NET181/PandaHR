@@ -192,20 +192,21 @@ namespace PandaHR.Api.DAL.EF
                 Name = "C#",
                 IsDeleted = false,
                 RootSkillId = null,
-                SkillTypeId = skillType[0].Id
+                SkillTypeId = skillType[0].Id,
+                Id = new Guid("b072e561-9258-4512-8b40-c545b121cb0c")
             };
 
             _context.Skills.Add(parentSkill);
 
             var skills = new Skill[]
             {
-                new Skill {Name = "Asp.Net Core", IsDeleted = false, RootSkillId = parentSkill.Id,
+                new Skill {Id = new Guid("b072e511-9258-4502-8b40-c545b121cb0c"), Name = "Asp.Net Core", IsDeleted = false, RootSkillId = parentSkill.Id,
                     SkillTypeId = skillType[0].Id},
-                new Skill {Name = "Windows Forms", IsDeleted = false, RootSkillId = parentSkill.Id,
+                new Skill {Id = new Guid("b072e561-9458-4502-8b40-c545b121cb0c"), Name = "Windows Forms", IsDeleted = false, RootSkillId = parentSkill.Id,
                     SkillTypeId = skillType[0].Id},
-                new Skill {Name = "WPF", IsDeleted = false, RootSkillId = parentSkill.Id,
+                new Skill {Id = new Guid("b072e561-9258-4502-8b45-c545b121cb0c"), Name = "WPF", IsDeleted = false, RootSkillId = parentSkill.Id,
                     SkillTypeId = skillType[0].Id},
-                new Skill {Name = "Web Forms", IsDeleted = false, RootSkillId = parentSkill.Id,
+                new Skill {Id = new Guid("b072e561-9258-4502-3b40-c545b121cb0c"), Name = "Web Forms", IsDeleted = false, RootSkillId = parentSkill.Id,
                     SkillTypeId = skillType[0].Id}
             };
 
@@ -332,9 +333,12 @@ namespace PandaHR.Api.DAL.EF
         {
             List<SkillType> skillTypes = new List<SkillType>()
             {
-                new SkillType {Name = "HardSkill", IsDeleted = false, Value = 2},
-                new SkillType {Name = "SoftSkill", IsDeleted = false, Value = 1},
-                new SkillType {Name = "LanguageSkill", IsDeleted = false, Value = 3},
+                new SkillType {Id = new Guid("b072e511-9258-4502-8b33-c545b121cb0c"),
+                    Name = "HardSkill", IsDeleted = false, Value = 1},
+                new SkillType {Id = new Guid("b072e511-9258-4502-8b35-c545b121cb0c"),
+                    Name = "SoftSkill", IsDeleted = false, Value = 3},
+                new SkillType {Id = new Guid("b072e511-9258-4502-8b66-c545b121cb0c"),
+                    Name = "LanguageSkill", IsDeleted = false, Value = 2},
             };
 
             _context.SkillTypes.AddRange(skillTypes);

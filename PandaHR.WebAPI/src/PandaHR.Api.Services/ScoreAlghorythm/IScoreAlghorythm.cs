@@ -5,8 +5,8 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
 {
     public interface IScoreAlghorythm
     {
-        List<IdAndRaiting> GetCVsRaiting(Vacancy vacancy, IEnumerable<CV> cVs, int languageKnowledgeScaleStep, int hardKnowledgeScaleStep, int softKnowledgeScaleStep, int qualificationScaleStep);
-        int GetRating(Vacancy vacancy, CV cv, int languageKnowledgeScaleStep, int hardKnowledgeScaleStep, int softKnowledgeScaleStep, int qualificationScaleStep);
-        List<IdAndRaiting> GetVacancysRaiting(IEnumerable<Vacancy> vacancys, CV cV, int languageKnowledgeScaleStep, int hardKnowledgeScaleStep, int softKnowledgeScaleStep, int qualificationScaleStep);
+        List<IdAndRaiting> GetCVsRaiting(VacancyAlghorythmModel vacancy, IEnumerable<CVAlghorythmModel> cVs, int languageKnowledgeScaleStep, int hardKnowledgeScaleStep, int softKnowledgeScaleStep, int qualificationScaleStep);
+        int GetRating(VacancyAlghorythmModel vacancy, CVAlghorythmModel cv, int languageKnowledgeScaleStep, int hardKnowledgeScaleStep, int softKnowledgeScaleStep, int qualificationScaleStep);
+        List<IdAndRaiting> GetVacancysRaiting(IEnumerable<VacancyAlghorythmModel> vacancys, CVAlghorythmModel cV, int languageKnowledgeScaleStep, int hardKnowledgeScaleStep, int softKnowledgeScaleStep, int qualificationScaleStep);
     }
 }

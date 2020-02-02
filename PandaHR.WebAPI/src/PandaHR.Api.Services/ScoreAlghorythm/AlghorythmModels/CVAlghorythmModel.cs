@@ -4,11 +4,11 @@ using System.Text;
 
 namespace PandaHR.Api.Services.ScoreAlghorythm.Models
 {
-    public class Vacancy
+   public class CVAlghorythmModel
     {
-        public List<SkillRequest> SkillRequests { get; set; }
         public Guid Id { get; set; }
+        public List<SkillKnowledgeAlghorythmModel> SkillKnowledges { get; set; }
         public int Qualification { get; set; }
-
     }
 }
+

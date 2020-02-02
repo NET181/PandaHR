@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using System;
+using PandaHR.Api.Services.ScoreAlghorythm;
 
 namespace PandaHR.Api.DependencyResolver
 {
@@ -76,6 +77,9 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<IExperienceService, ExperienceService>();
+
+            services.AddScoped<IScoreCounter, ScoreCounter>();
+            services.AddScoped<IScoreAlghorythm, ScoreAlghorythm>();
 
             services.AddSingleton<IMapper, PandaHRAutoMapper>();
         }

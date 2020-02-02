@@ -6,11 +6,11 @@ using System.Text;
 
 namespace PandaHR.Api.Services.ScoreAlghorythm.Mapper
 {
-    class CVMap : AutoMapperProfile
+    class CVAlghorythmModelMap : AutoMapperProfile
     {
-        public CVMap()
+        public CVAlghorythmModelMap()
         {
-            CreateMap<DAL.Models.Entities.CV, CV>()
+            CreateMap<DAL.Models.Entities.CV, CVAlghorythmModel>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(c => c.Id));
                 //.ForMember(x => x.Qualification)
 

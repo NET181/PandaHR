@@ -4,9 +4,9 @@ using System.Text;
 
 namespace PandaHR.Api.Services.ScoreAlghorythm.Models
 {
-    public class SkillKnowledge
+    public class SkillKnowledgeAlghorythmModel
     {
-        public Skill Skill { get; set; }
+        public SkillAlghorythmModel Skill { get; set; }
         public int Expiriense { get; set; }
         public int KnowledgeLevel { get; set; }
 

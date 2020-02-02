@@ -21,17 +21,25 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int i)
+        public async Task<IActionResult> Get(Guid Id = new Guid())
         {
-
-            var some = await _scoreCounter.GetCVsByVacancy(null);
-
-            string a = "";
-            foreach (var item in some)
+            try
             {
-                a += $"{item.Raiting}  ";
+                var some = await _scoreCounter.GetCVsByVacancy(null);
+
+                string a = "";
+                foreach (var item in some)
+                {
+                    a += $"{item.Raiting}  ";
+                }
+                return Ok();
             }
-            return Ok();
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
         //public async Task<IActionResult> Get()
         //{

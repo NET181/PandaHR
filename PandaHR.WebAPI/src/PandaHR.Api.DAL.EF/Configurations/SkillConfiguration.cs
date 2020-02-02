@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PandaHR.Api.DAL.Models.Entities;
+using System;
 
 namespace PandaHR.Api.DAL.EF.Configurations
 {
@@ -14,7 +15,7 @@ namespace PandaHR.Api.DAL.EF.Configurations
                    .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(k => k.SkillKnowledges)
-                   .WithOne(s => s.Skill)   
+                   .WithOne(s => s.Skill)
                    .HasForeignKey(s => s.SkillId);
 
             builder.HasOne(t => t.SkillType)

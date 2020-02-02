@@ -1,4 +1,6 @@
-﻿using PandaHR.Api.Services.Contracts;
+﻿using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.ScoreAlghorythm.Models;
 using System;
 using System.Collections.Generic;
@@ -29,83 +31,54 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             _qualificationService = qualificationService;
         }
 
-        public async Task<List<IdAndRaiting>> GetCVsByVacancy(Vacancy vacancy)
+        public async Task<List<IdAndRaiting>> GetCVsByVacancy(VacancyAlghorythmModel vacancy)
         {
-            List<SkillRequest> skillRequests = new List<SkillRequest>();
+            VacancyAlghorythmModel vacancy2 = TestVacansy();
 
-            skillRequests.Add(new SkillRequest()
-            {
-                Expiriense = 0,
-                KnowledgeLevel = 5,
-                Skill = new Skill()
-                {
-                    Id = new Guid("c7ea5c5d-4468-43c2-ba14-08d7a81161ba"),
-                    Name = "C#",
-                    SkillType = 2
-                },
-                Weight = 80
-            }); 
 
-            skillRequests.Add(new SkillRequest()
-            {
-                Expiriense = 0,
-                KnowledgeLevel = 5,
-                Skill = new Skill()
-                {
-                    Id = new Guid("80d1d89b-618d-4cfc-ba15-08d7a81161ba"),
-                    Name = "Asp.Net Core",
-                    SkillType = 2
-                },
-                Weight = 40
-            });
-
-            Vacancy vacancy2 = new Vacancy()
-            {
-                Id = new Guid("8794dabf-2f91-423d-87c4-6317e2913be7"),
-                Qualification = 5,
-                SkillRequests = skillRequests
-            };
-            List<IdAndRaiting> cVsByRaiting = new List<IdAndRaiting>();
             var qualifications
-                = new List<DAL.Models.Entities.Qualification>(await _qualificationService.GetAllAsync());
+                = new List<Qualification>(await _qualificationService.GetAllAsync());
             var cVs
-                = new List<DAL.Models.Entities.CV>(await _cVService.GetAllAsync());
+                = new List<CVServiceModel>(await _cVService.GetAllAsync());
             var skillTypes
-                = new List<DAL.Models.Entities.SkillType>(await _skillTypeService.GetAllAsync());
+                = new List<SkillType>(await _skillTypeService.GetAllAsync());
 
             int hardSkillScaleStep = PERCENT_DIVIDER / skillTypes[0].SkillKnowledgeTypes.Count;
             int softSkillScaleStep = PERCENT_DIVIDER / skillTypes[1].SkillKnowledgeTypes.Count;
             int languageSkillScaleStep = PERCENT_DIVIDER / skillTypes[2].SkillKnowledgeTypes.Count;
             int qualificationScaleStep = PERCENT_DIVIDER / qualifications.Count;
 
-            List<CV> algCVs = new List<CV>();
-            List<SkillKnowledge> knowledges = new List<SkillKnowledge>();
+
+
+            List<CVAlghorythmModel> algCVs = new List<CVAlghorythmModel>();
+
+            List<SkillKnowledgeAlghorythmModel> knowledges = new List<SkillKnowledgeAlghorythmModel>();
 
             for (int i = 0; i < cVs.Count; i++)
             {
 
-                algCVs.Add(new CV());
+                algCVs.Add(new CVAlghorythmModel());
 
                 algCVs.Last().Id = cVs[i].Id;
-                algCVs.Last().Qualification = cVs[i].Qualification.Value;
-                algCVs.Last().SkillKnowledges = new List<SkillKnowledge>();
+                algCVs.Last().Qualification = qualifications.FirstOrDefault(q => q.Id == cVs[i].QualificationId).Value;
+                algCVs.Last().SkillKnowledges = new List<SkillKnowledgeAlghorythmModel>();
                 //{
                 //    Id = cVs[i].Id,
                 //    Qualification = cVs[i].Qualification.Value
                 //});
                 foreach (var sk in cVs[i].SkillKnowledges)
                 {
-                    algCVs[i].SkillKnowledges.Add(new SkillKnowledge()
+                    algCVs[i].SkillKnowledges.Add(new SkillKnowledgeAlghorythmModel()
                     {
                         KnowledgeLevel = 5,
                         Expiriense = 1,
-                        Skill = new Skill()
+                        Skill = new SkillAlghorythmModel()
                         {
-                            Id = sk.Skill.Id,
-                            Name = sk.Skill.Name,
-                            SupSkills = new List<Skill>()
+                            Id = sk.SkillId,
+                            //Name = sk.Skill.Name,
+                            SupSkills = new List<SkillAlghorythmModel>()
                         }
-                    }); 
+                    });
                 }
             }
 
@@ -116,6 +89,46 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             return _alghorythm.GetCVsRaiting(vacancy2, algCVs
                 , languageSkillScaleStep, hardSkillScaleStep
                 , softSkillScaleStep, qualificationScaleStep);
+        }
+
+        private static VacancyAlghorythmModel TestVacansy()
+        {
+            List<SkillRequestAlghorythmModel> skillRequests = new List<SkillRequestAlghorythmModel>();
+
+            skillRequests.Add(new SkillRequestAlghorythmModel()
+            {
+                Expiriense = 0,
+                KnowledgeLevel = 5,
+                Skill = new SkillAlghorythmModel()
+                {
+                    Id = new Guid("c7ea5c5d-4468-43c2-ba14-08d7a81161ba"),
+                    Name = "C#",
+                    SkillType = 1
+                },
+                Weight = 80
+            });
+
+            skillRequests.Add(new SkillRequestAlghorythmModel()
+            {
+                Expiriense = 0,
+                KnowledgeLevel = 5,
+                Skill = new SkillAlghorythmModel()
+                {
+                    Id = new Guid("80d1d89b-618d-4cfc-ba15-08d7a81161ba"),
+                    Name = "Asp.Net Core",
+                    SkillType = 1
+                },
+                Weight = 40
+            });
+
+            VacancyAlghorythmModel vacancy2 = new VacancyAlghorythmModel()
+            {
+                Id = new Guid("8794dabf-2f91-423d-87c4-6317e2913be7"),
+                Qualification = 5,
+                SkillRequests = skillRequests
+            };
+
+            return vacancy2;
         }
     }
 }
