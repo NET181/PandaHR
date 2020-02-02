@@ -55,7 +55,9 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             {
                 cv.SkillKnowledges.Add(new SkillKnowledge()
                 {
-                    
+                    Skill = skills[i],
+                    Experience = experiences[i],
+                    KnowledgeLevel = knowledgeLevels[i]
                 });
             }
 
@@ -66,6 +68,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
         public async Task<CV> GetById(Guid id)
         {
             var jobExperience = await _context.CVs.Where(j => j.Id == id).FirstAsync();
+
             return jobExperience;
         }
     }
