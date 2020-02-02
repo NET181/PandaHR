@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Models.Company;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.Company;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,9 +15,10 @@ namespace PandaHR.Api.Controllers
     public class CompanyController : ControllerBase
     {
         private readonly ICompanyService _companyService;
-
-        public CompanyController(ICompanyService companyService)
+        private readonly IMapper _mapper;
+        public CompanyController(IMapper mapper, ICompanyService companyService)
         {
+            _mapper = mapper;
             _companyService = companyService;
         }
 
@@ -73,6 +77,19 @@ namespace PandaHR.Api.Controllers
 
             return Ok(id);
         }
+
+        [HttpGet]
+        [Route("autofill/{name}")]
+        public async Task<ActionResult<ICollection<CompanyBasicInfoResponse>>> GetByName(string name)
+        {
+            var companies = await _companyService.GetCompaniesByNameAutoFillByString(name);
+
+            var companiesResponse = _mapper.Map<ICollection<CompanyBasicInfoServiceModel>, 
+                ICollection<CompanyBasicInfoResponse>>(companies);
+
+            return Ok(companiesResponse);
+        }
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Company>> GetByIdAsync(Guid id)

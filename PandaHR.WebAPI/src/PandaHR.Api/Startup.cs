@@ -41,13 +41,12 @@ namespace PandaHR.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                dataInitializer.Seed();
+                //dataInitializer.Seed();
             }
             app.UseStaticFiles();
 
             app.UseHttpsRedirection();
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseOpenApi();

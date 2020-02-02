@@ -1,15 +1,17 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.DAL.EF.Configurations;
 using PandaHR.Api.DAL.Models;
 using PandaHR.Api.DAL.Models.Entities;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.DAL.EF.Context
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

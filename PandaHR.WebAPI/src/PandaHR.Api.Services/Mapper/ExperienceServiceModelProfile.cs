@@ -1,5 +1,5 @@
 ﻿using PandaHR.Api.Common;
-using PandaHR.Api.DAL.DTO.Experience;
+using PandaHR.Api.DAL.DTOs.Experience;
 using PandaHR.Api.Services.Models.Experience;
 
 namespace PandaHR.Api.Services.Mapper
@@ -9,6 +9,8 @@ namespace PandaHR.Api.Services.Mapper
         public ExperienceServiceModelProfile()
         {
             CreateMap<ExperienceDTO, ExperienceServiceModel>();
+
+            CreateMap<ExperienceServiceModel, ExperienceDTO>();
         }
     }
 }
