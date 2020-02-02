@@ -22,7 +22,8 @@ namespace PandaHR.Api.DAL
         private readonly IExperienceRepository _experienceRepository;
         private readonly ICityRepository _cityRepository;
         private readonly ICountryRepository _countryRepository;
-        
+        private readonly ITechnologyRepository _technologyRepository;
+
         public UnitOfWork(IVacancyRepository vacancyRepository,
             ICVRepository cvRepository,
             ISkillRepository skillRepository,
@@ -40,7 +41,8 @@ namespace PandaHR.Api.DAL
             IUserCompanyRepository userCompanyRepository,
             IExperienceRepository experienceRepository,
             ICityRepository cityRepository,
-            ICountryRepository countryRepository)
+            ICountryRepository countryRepository,
+            ITechnologyRepository technologyRepository)
         {
             _skillTypeRepository = skillTypeRepository;
             _skillRepository = skillRepository;
@@ -60,6 +62,7 @@ namespace PandaHR.Api.DAL
             _experienceRepository = experienceRepository;
             _cityRepository = cityRepository;
             _countryRepository = countryRepository;
+            _technologyRepository = technologyRepository;
         }
 
         public IKnowledgeLevelRepository KnowledgeLevels
@@ -203,6 +206,14 @@ namespace PandaHR.Api.DAL
             get
             {
                 return _countryRepository;
+            }
+        }
+
+        public ITechnologyRepository Technologies
+        {
+            get
+            {
+                return _technologyRepository;
             }
         }
     }

@@ -5,13 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PandaHR.Api.DAL.EF\PandaHR.Api.DAL.EF.csproj" />
-    <ProjectReference Include="..\PandaHR.Api.DAL.Models\PandaHR.Api.DAL.Models.csproj" />
+    <Compile Remove="DTOs\CV\**" />
+    <EmbeddedResource Remove="DTOs\CV\**" />
+    <None Remove="DTOs\CV\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\CV\" />
-    <Folder Include="DTO\Skill\" />
+    <ProjectReference Include="..\PandaHR.Api.DAL.EF\PandaHR.Api.DAL.EF.csproj" />
+    <ProjectReference Include="..\PandaHR.Api.DAL.Models\PandaHR.Api.DAL.Models.csproj" />
   </ItemGroup>
 
 </Project>
