@@ -2,6 +2,7 @@
 using PandaHR.Api.Services.ScoreAlghorythm.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -81,11 +82,15 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             for (int i = 0; i < cVs.Count; i++)
             {
 
-                algCVs.Add(new CV()
-                {
-                    Id = cVs[i].Id,
-                    Qualification = cVs[i].Qualification.Value
-                });
+                algCVs.Add(new CV());
+
+                algCVs.Last().Id = cVs[i].Id;
+                algCVs.Last().Qualification = cVs[i].Qualification.Value;
+                algCVs.Last().SkillKnowledges = new List<SkillKnowledge>();
+                //{
+                //    Id = cVs[i].Id,
+                //    Qualification = cVs[i].Qualification.Value
+                //});
                 foreach (var sk in cVs[i].SkillKnowledges)
                 {
                     algCVs[i].SkillKnowledges.Add(new SkillKnowledge()
@@ -94,10 +99,11 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                         Expiriense = 1,
                         Skill = new Skill()
                         {
+                            Id = sk.Skill.Id,
                             Name = sk.Skill.Name,
                             SupSkills = new List<Skill>()
                         }
-                    });
+                    }); 
                 }
             }
 

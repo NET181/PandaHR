@@ -1,4 +1,5 @@
-﻿using PandaHR.Api.DAL;
+﻿using Microsoft.EntityFrameworkCore;
+using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using System;
@@ -23,7 +24,17 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<IEnumerable<CV>> GetAllAsync()
         {
-            return await _uow.CVs.GetAllAsync();
+            var cVs = await _uow.CVs.GetAllAsync(
+                include: s => s
+                    .Include(k => k.SkillKnowledges)
+                        .ThenInclude(s => s.KnowledgeLevel)
+                    .Include(k => k.SkillKnowledges)
+                        .ThenInclude(s => s.Skill)
+                    .Include(k=> k.Qualification));
+
+            return cVs;
+
+         //   return await _uow.CVs.GetAllAsync();
         }
 
         public async Task<CV> GetByIdAsync(Guid id)

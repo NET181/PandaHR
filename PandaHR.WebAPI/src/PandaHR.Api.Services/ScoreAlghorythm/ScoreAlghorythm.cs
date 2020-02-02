@@ -273,7 +273,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             {
                 foreach (var knowSkill in knowledges)
                 {
-                    if (reqSkill.Sr.Skill == knowSkill.Skill)
+                    if (reqSkill.Sr.Skill.Id == knowSkill.Skill.Id)
                     {
                         reqSkill.Sk = knowSkill;
                         break;
@@ -312,7 +312,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
 
             foreach (var skill in rootSkill.SupSkills)
             {
-                if (subSkill == skill)
+                if (subSkill.Id == skill.Id)
                 {
                     result = true;
                     break;
