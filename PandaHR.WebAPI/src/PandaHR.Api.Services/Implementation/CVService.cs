@@ -28,10 +28,6 @@ namespace PandaHR.Api.Services.Implementation
         {
             CVDTO cv = _mapper.Map<CVServiceModel, CVDTO>(cvServiceModel);
 
-            //var tasks = new List<Task> { skill, experience, knowledgeLevel };
-            //Task.WhenAll(tasks);
-
-
             await _uow.CVs.AddAsync(cv);
         }
 

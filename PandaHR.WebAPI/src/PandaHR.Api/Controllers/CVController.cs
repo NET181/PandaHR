@@ -7,7 +7,9 @@ using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.Models.SkillKnowledge;
 using PandaHR.Api.Services.Models.User;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Controllers
@@ -28,7 +30,7 @@ namespace PandaHR.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-           
+
             return NotFound();
         }
 
@@ -37,7 +39,7 @@ namespace PandaHR.Api.Controllers
         {
             try
             {
-               // await _cvService.RemoveAsync(id);
+                // await _cvService.RemoveAsync(id);
 
                 return StatusCode(200);
             }
@@ -52,7 +54,7 @@ namespace PandaHR.Api.Controllers
         {
             try
             {
-              //  await _cvService.UpdateAsync(cv);
+                //  await _cvService.UpdateAsync(cv);
 
                 return StatusCode(200);
             }
@@ -69,9 +71,9 @@ namespace PandaHR.Api.Controllers
             {
                 cv.User = new UserCreationServiceModel()
                 {
-                    FirstName = "timuuuuuuur8",
-                    SecondName = "mirzaieeeeeeeeeev",
-                    Email = "asfafssafasf8@gmail.com",
+                    FirstName = "1imuuuuuuur8",
+                    SecondName = "1irzaieeeeeeeeeev",
+                    Email = "1sfafssafasf8@gmail.com",
                     Phone = "1234512345"
                 };
 
@@ -80,22 +82,27 @@ namespace PandaHR.Api.Controllers
                 cv.SkillKnowledges = new Collection<SkillKnowledgeServiceModel>();
 
                 cv.SkillKnowledges.Add(new SkillKnowledgeServiceModel()
-                    {
-                        ExperienceId = new Guid("561d468e-a93b-4e6b-a576-52b3d7bbf32a"),
-                        KnowledgeLevelId = new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31"),
-                        SkillId = new Guid("503661d4-297f-4e3d-f1cb-08d7a67ce45d")
-                    });
+                {
+                    ExperienceId = new Guid("561d468e-a93b-4e6b-a576-52b3d7bbf32a"),
+                    KnowledgeLevelId = new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31"),
+                    SkillId = new Guid("503661d4-297f-4e3d-f1cb-08d7a67ce45d")
+                });
+                cv.SkillKnowledges.Add(new SkillKnowledgeServiceModel()
+                {
+                    ExperienceId = new Guid("561d468e-a93b-4e6b-a576-52b3d7bbf32a"),
+                    KnowledgeLevelId = new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31"),
+                    SkillId = new Guid("503661d4-297f-4e3d-f1cb-08d7a67ce45d")
+                });
 
                 var cvServiceModel = _mapper.Map<CVCreationRequestModel, CVServiceModel>(cv);
                 await _cvService.AddAsync(cvServiceModel);
 
-                return StatusCode(200);
+                return Ok();
             }
             catch
             {
                 return StatusCode(500, "Internal server error");
             }
         }
-    
     }
 }
