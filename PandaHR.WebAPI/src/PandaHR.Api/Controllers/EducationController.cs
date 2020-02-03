@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Models.Education;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.Education;
 
 namespace PandaHR.Api.Controllers
 {
@@ -11,9 +15,11 @@ namespace PandaHR.Api.Controllers
     public class EducationController : ControllerBase
     {
         private readonly IEducationService _educationService;
+        private readonly IMapper _mapper;
 
-        public EducationController(IEducationService educationService)
+        public EducationController(IMapper mapper, IEducationService educationService)
         {
+            _mapper = mapper;
             _educationService = educationService;
         }
 
@@ -40,6 +46,18 @@ namespace PandaHR.Api.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [HttpGet]
+        [Route("api/educations/autofill/{name}")]
+        public async Task<ActionResult<ICollection<EducationBasicInfoResponse>>> GetByName(string name)
+        {
+            var educations = await _educationService.GetBasicInfoByAutofillByName(name);
+
+            var educationsResponse = _mapper.Map<ICollection<EducationBasicInfoServiceModel>,
+                ICollection<EducationBasicInfoResponse>>(educations);
+
+            return Ok(educationsResponse);
         }
 
         // POST: api/Education

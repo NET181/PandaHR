@@ -19,8 +19,8 @@ namespace PandaHR.Api.DAL.EF
 
         public void Seed()
         {
-            _context.Database.EnsureDeleted();
-            _context.Database.EnsureCreated();
+            //_context.Database.EnsureDeleted();
+            //_context.Database.EnsureCreated();
             AddCompanies();
             AddCompanyCities();
             AddUser();
@@ -123,11 +123,11 @@ namespace PandaHR.Api.DAL.EF
 
             var users = new User[]
             {
-                new User { FirstName = "Kolya", SecondName = "Limonosov", CityId = cityId},
-                new User { FirstName = "Igor", SecondName = "Savlepov", CityId = cityId},
-                new User { FirstName = "Petr", SecondName = "Kolok", CityId = cityId},
-                new User { FirstName = "Hleb", SecondName = "Kibets", CityId = cityId},
-                new User { FirstName = "Sofia", SecondName = "Karpova", CityId = cityId}
+                new User { Id = new Guid("b072e561-9258-4502-8b40-c545b121cb0c"), FirstName = "Kolya", SecondName = "Limonosov", CityId = cityId},
+                new User { Id = new Guid("396f6c38-92e1-43b2-9fd0-39db398144e8"), FirstName = "Igor", SecondName = "Savlepov", CityId = cityId},
+                new User { Id = new Guid("8f52436e-274b-4944-94bc-8e8e7497c88c"), FirstName = "Petr", SecondName = "Kolok", CityId = cityId},
+                new User { Id = new Guid("d2e34494-2a44-4c0d-a09b-4cc9849e4e97"), FirstName = "Hleb", SecondName = "Kibets", CityId = cityId},
+                new User { Id = new Guid("5e0b7eed-1e24-4166-8f00-a563923d1fc5"), FirstName = "Sofia", SecondName = "Karpova", CityId = cityId}
             };
 
             _context.Users.AddRange(users);

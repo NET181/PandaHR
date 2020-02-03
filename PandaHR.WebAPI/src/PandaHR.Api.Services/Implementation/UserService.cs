@@ -63,6 +63,14 @@ namespace PandaHR.Api.Services.Implementation
             return userServiceModel;
         }
 
+        public async Task<UserServiceModel> GetUserInfo(Guid id)
+        {
+            UserDTO userDTO = await _uow.Users.GetUserInfo(id);
+            UserServiceModel userServiceModel = _mapper.Map<UserDTO, UserServiceModel>(userDTO);
+
+            return userServiceModel;
+        }
+
         public async Task RemoveAsync(Guid id)
         {
             var city = await _uow.Users.GetByIdAsync(id);
