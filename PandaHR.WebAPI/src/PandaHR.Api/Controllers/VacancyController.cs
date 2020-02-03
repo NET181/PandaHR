@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.ScoreAlghorythm;
+using PandaHR.Api.Services.ScoreAlghorythm.Models;
+using PandaHR.Api.Models.IdAndRating;
 
 namespace PandaHR.Api.Controllers
 {
@@ -13,11 +17,14 @@ namespace PandaHR.Api.Controllers
     {
         private readonly IVacancyService _vacancyService;
         private readonly IScoreCounter _scoreCounter;
+        private readonly IMapper _mapper;
 
-        public VacancyController(IVacancyService vacancyService, IScoreCounter scoreCounter)
+        public VacancyController(IVacancyService vacancyService
+            , IScoreCounter scoreCounter, IMapper mapper)
         {
             _vacancyService = vacancyService;
             _scoreCounter = scoreCounter;
+            _mapper = mapper;
         }
 
         [HttpGet("{id}")]
@@ -27,13 +34,10 @@ namespace PandaHR.Api.Controllers
             {
                 var some = await _scoreCounter.GetCVsByVacancy(id);
 
-                string a = "";
-                foreach (var item in some)
-                {
-                    a += $"{item.Raiting}  ";
-                }
+                var request = _mapper.Map<IEnumerable<IdAndRating>
+                    , IEnumerable<IdAndRatingResponseModel>>(some);
 
-                return Ok(some);
+                return Ok(request);
             }
             catch (Exception ex)
             {

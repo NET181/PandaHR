@@ -15,43 +15,43 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             int middleWeight = FindMiddleWeight(vacancy.SkillRequests);
             var splitedSkills = SplitSkills(vacancy.SkillRequests, middleWeight);
 
-            return CountRaiting(splitedSkills, cv, vacancy, softKnowledgeScaleStep
+            return CountRating(splitedSkills, cv, vacancy, softKnowledgeScaleStep
                 , hardKnowledgeScaleStep, qualificationScaleStep
                 , languageKnowledgeScaleStep, middleWeight);
         }
 
-        public List<IdAndRaiting> GetCVsRaiting(VacancyAlghorythmModel vacancy, IEnumerable<CVAlghorythmModel> cVs
+        public List<IdAndRating> GetCVsRating(VacancyAlghorythmModel vacancy, IEnumerable<CVAlghorythmModel> cVs
             , int languageKnowledgeScaleStep, int hardKnowledgeScaleStep
             , int softKnowledgeScaleStep, int qualificationScaleStep)
         {
-            List<IdAndRaiting> cvsByRaiting = new List<IdAndRaiting>();
+            List<IdAndRating> cvsByRaiting = new List<IdAndRating>();
             int middleWeight = FindMiddleWeight(vacancy.SkillRequests);
             var splitedSkills = SplitSkills(vacancy.SkillRequests, middleWeight);
-            int raiting;
+            int rating;
 
             foreach (CVAlghorythmModel cV in cVs)
             {
-                raiting = CountRaiting(splitedSkills, cV, vacancy, softKnowledgeScaleStep
+                rating = CountRating(splitedSkills, cV, vacancy, softKnowledgeScaleStep
                     , hardKnowledgeScaleStep, qualificationScaleStep
                     , languageKnowledgeScaleStep, middleWeight);
-                cvsByRaiting.Add(new IdAndRaiting()
+                cvsByRaiting.Add(new IdAndRating()
                 {
                     Id = cV.Id,
-                    Raiting = raiting
+                    Rating = rating
                 });
 
                 splitedSkills.ClearCV();
             }
-            cvsByRaiting = cvsByRaiting.OrderByDescending(x => x.Raiting).ToList();
+            cvsByRaiting = cvsByRaiting.OrderByDescending(x => x.Rating).ToList();
 
             return cvsByRaiting;
         }
 
-        public List<IdAndRaiting> GetVacancysRaiting(IEnumerable<VacancyAlghorythmModel> vacancys, CVAlghorythmModel cV
+        public List<IdAndRating> GetVacancysRaiting(IEnumerable<VacancyAlghorythmModel> vacancys, CVAlghorythmModel cV
             , int languageKnowledgeScaleStep, int hardKnowledgeScaleStep
             , int softKnowledgeScaleStep, int qualificationScaleStep)
         {
-            List<IdAndRaiting> vacancysByRaiting = new List<IdAndRaiting>();
+            List<IdAndRating> vacancysByRating = new List<IdAndRating>();
             int middleWeight;
             SplitedSkillsAlghorythmModel splitedSkills;
             int raiting;
@@ -61,23 +61,23 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 middleWeight = FindMiddleWeight(vacancy.SkillRequests);
                 splitedSkills = SplitSkills(vacancy.SkillRequests, middleWeight);
 
-                raiting = CountRaiting(splitedSkills, cV, vacancy, softKnowledgeScaleStep
+                raiting = CountRating(splitedSkills, cV, vacancy, softKnowledgeScaleStep
                     , hardKnowledgeScaleStep, qualificationScaleStep
                     , languageKnowledgeScaleStep, middleWeight);
-                vacancysByRaiting.Add(new IdAndRaiting()
+                vacancysByRating.Add(new IdAndRating()
                 {
-                    Raiting = raiting,
+                    Rating = raiting,
                     Id = vacancy.Id
                 });
 
                 splitedSkills = new SplitedSkillsAlghorythmModel();
             }
-            vacancysByRaiting = vacancysByRaiting.OrderByDescending(x => x.Raiting).ToList();
+            vacancysByRating = vacancysByRating.OrderByDescending(x => x.Rating).ToList();
 
-            return vacancysByRaiting;
+            return vacancysByRating;
         }
 
-        private int CountRaiting(SplitedSkillsAlghorythmModel splitedSkills, CVAlghorythmModel cv, VacancyAlghorythmModel vacancy
+        private int CountRating(SplitedSkillsAlghorythmModel splitedSkills, CVAlghorythmModel cv, VacancyAlghorythmModel vacancy
             , int softKnowledgeScaleStep, int hardKnowledgeScaleStep, int qualificationScaleStep
             , int languageKnowledgeScaleStep, int middleWeight)
         {
@@ -90,12 +90,12 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             raiting += CountMainSkillScore(splitedSkills.MainSkills, hardKnowledgeScaleStep);
             raiting += CountOtherSkillScore(splitedSkills.HardSkills, hardKnowledgeScaleStep);
             raiting += CountLanguageSkillScore(splitedSkills, middleWeight, languageKnowledgeScaleStep);
-            raiting = CountRaitingWithQualification(raiting, cv, vacancy, qualificationScaleStep);
+            raiting = CountRatingWithQualification(raiting, cv, vacancy, qualificationScaleStep);
 
             return raiting;
         }
 
-        private int CountRaitingWithQualification(int raiting, CVAlghorythmModel cv
+        private int CountRatingWithQualification(int raiting, CVAlghorythmModel cv
             , VacancyAlghorythmModel vacancy, int qualificationScaleStep)
         {
 

@@ -2,6 +2,7 @@
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.Models.Skill;
+using PandaHR.Api.Services.Models.Vacancy;
 using PandaHR.Api.Services.ScoreAlghorythm.Models;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             _qualificationService = qualificationService;
         }
 
-        public async Task<List<IdAndRaiting>> GetCVsByVacancy(Guid vacancyId)
+        public async Task<List<IdAndRating>> GetCVsByVacancy(Guid vacancyId)
         {
             var vacansy = await GetVacancyFromDBAsync(vacancyId);
 
@@ -75,7 +76,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 }
             }
 
-            return _alghorythm.GetCVsRaiting(vacansy, algCVs
+            return _alghorythm.GetCVsRating(vacansy, algCVs
                 , languageSkillScaleStep, hardSkillScaleStep
                 , softSkillScaleStep, qualificationScaleStep);
         }
@@ -84,7 +85,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
         {
             VacancyAlghorythmModel vacancy = new VacancyAlghorythmModel();
 
-            Vacancy vacancy2 = await _vacancyService.GetByIdWithSkillAsync(id);
+            VacancyServiceModel vacancy2 = await _vacancyService.GetByIdWithSkillAsync(id);
 
             vacancy.Id = vacancy2.Id;
             vacancy.Qualification = vacancy2.Qualification.Value;

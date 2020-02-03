@@ -4,9 +4,9 @@ using System.Text;
 
 namespace PandaHR.Api.Services.ScoreAlghorythm.Models
 {
-    public class IdAndRaiting
+    public class IdAndRating
     {
         public Guid Id { get; set; }
-        public int Raiting { get; set; }
+        public int Rating { get; set; }
     }
 }

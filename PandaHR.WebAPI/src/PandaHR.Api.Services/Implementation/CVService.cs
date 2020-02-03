@@ -50,22 +50,7 @@ namespace PandaHR.Api.Services.Implementation
                 .Include(e => e.SkillKnowledges)
                 .ThenInclude(e => e.Experience)));
 
-            /*
-             * .Include(x => x.SkillRequirements)
-                .ThenInclude(s => s.Skill)
-                .ThenInclude(t => t.SkillType)
-            .Include(x => x.SkillRequirements)
-                .ThenInclude(s => s.Skill)
-                .ThenInclude(s => s.SubSkills)
-             .Include(x => x.SkillRequirements)
-                .ThenInclude(e => e.Experience)
-             .Include(k => k.SkillRequirements)
-                .ThenInclude(k => k.KnowledgeLevel)
-                .ThenInclude(t => t.SkillKnowledgeTypes)
-            .Include(q => q.Qualification));
-             */
-
-            return new List<CVServiceModel>(_mapper.Map<IEnumerable<CV>, IEnumerable<CVServiceModel>>(CVs)); ;
+            return new List<CVServiceModel>(_mapper.Map<IEnumerable<CV>, IEnumerable<CVServiceModel>>(CVs)); 
         }
 
         public async Task<CV> GetByIdAsync(Guid id)

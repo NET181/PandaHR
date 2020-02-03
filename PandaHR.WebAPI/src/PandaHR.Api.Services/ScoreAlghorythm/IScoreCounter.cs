@@ -7,6 +7,6 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
 {
     public interface IScoreCounter
     {
-        Task<List<IdAndRaiting>> GetCVsByVacancy(Guid vacancyId);
+        Task<List<IdAndRating>> GetCVsByVacancy(Guid vacancyId);
     }
 }
