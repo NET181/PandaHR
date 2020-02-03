@@ -75,37 +75,11 @@ namespace PandaHR.Api.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Add(CVCreationRequestModel cv)
-        {
-            try
-            {
-                cv.User = new UserCreationServiceModel()
-                {
-                    FirstName = "1imuuuuuuur8",
-                    SecondName = "1irzaieeeeeeeeeev",
-                    Email = "1sfafssafasf8@gmail.com",
-                    Phone = "1234512345"
-                };
+        { 
+            var cvServiceModel = _mapper.Map<CVCreationRequestModel, CVCreationServiceModel>(cv);
+            await _cvService.AddAsync(cvServiceModel);
 
-                cv.QualificationId = new Guid("a76428b1-aac5-410b-af4f-811c9b474997");
-                cv.TechnologyId = new Guid("f43f4b05-6cb1-4c72-9ebb-1fe5fd1fc62e");
-                cv.SkillKnowledges = new Collection<SkillKnowledgeServiceModel>();
-
-                cv.SkillKnowledges.Add(new SkillKnowledgeServiceModel()
-                {
-                    ExperienceId = new Guid("561d468e-a93b-4e6b-a576-52b3d7bbf32a"),
-                    KnowledgeLevelId = new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31"),
-                    SkillId = new Guid("503661d4-297f-4e3d-f1cb-08d7a67ce45d")
-                });
-
-                var cvServiceModel = _mapper.Map<CVCreationRequestModel, CVCreationServiceModel>(cv);
-                await _cvService.AddAsync(cvServiceModel);
-
-                return Ok();
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            return Ok();
         }
     }
 }
