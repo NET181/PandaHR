@@ -46,23 +46,31 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             return _mapper.Map<IEnumerable<CV>, IEnumerable<CVSummaryDTO>>(query);
         }
 
-        public async Task<IEnumerable<CVforSearchDTO>> GetCVsAsync(Expression<Func<CV, bool>> predicate,/*Guid userId,*/ int? pageSize = 10, int? page = 1)
+        public async Task<IEnumerable<CVforSearchDTO>> GetCVsAsync(Expression<Func<CV, bool>> predicate = null, int? pageSize = 10, int? page = 1)
         {
-            IEnumerable<CV> query = await _context.CVs.Where(predicate)
-                .Include(c => c.Qualification)
-                .Include(c => c.Technology)
-                .Include(cc => cc.SkillKnowledges)
-                    .ThenInclude(c => c.KnowledgeLevel)
-                        .ThenInclude(k=>k.SkillKnowledgeTypes)
-                        //.Where(t=>t.UserId ==userId)
-                .Include(cc => cc.SkillKnowledges)
-                    .ThenInclude(c => c.Skill)
-                        .ThenInclude(s => s.SkillType)
-                            .ThenInclude(t => t.SkillKnowledgeTypes)
-                .ToListAsync();
+            IQueryable<CV> query;
+            if (predicate != null)
+            {
+                query = _context.CVs.Where(predicate);
+            }
+            else
+            {
+                query = _context.CVs;
+            }
 
+            query = query.Include(c => c.Qualification)
+                         .Include(c => c.Technology)
+                         .Include(cc => cc.SkillKnowledges)
+                            .ThenInclude(c => c.KnowledgeLevel)
+                                .ThenInclude(k => k.SkillKnowledgeTypes)
+                         .Include(cc => cc.SkillKnowledges)
+                            .ThenInclude(c => c.Skill)
+                                .ThenInclude(s => s.SkillType)
+                                    .ThenInclude(t => t.SkillKnowledgeTypes);
+            var selection = await query.ToListAsync();
+            
             IEnumerable<CVforSearchDTO> query1 =
-                from t in query
+                from t in selection
                 select new CVforSearchDTO()
                 {
                     Id = t.Id,

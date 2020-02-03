@@ -14,23 +14,20 @@ namespace PandaHR.Api.ElasticSearch
         {
             var url = configuration["elasticsearch:url"];
             var defaultIndex = configuration["elasticsearch:index"];
-            var username = configuration["elasticsearch:url"];
-            var password = configuration["elasticsearch:index"];
+            var username = configuration["elasticsearch:username"];
+            var password = configuration["elasticsearch:password"];
 
             var pool = new SingleNodeConnectionPool(new Uri(url));
             var settings = new ConnectionSettings(pool)
                 .BasicAuthentication(username, password)
-                .ApiKeyAuthentication(username,password)
-                .DisablePing()
+                .DisableDirectStreaming()
                 .DefaultIndex(defaultIndex)
                 .DefaultMappingFor<CV>(m => m
-                    .Ignore(cv => cv.IsDeleted)
-                    .PropertyName(p => p.Summary, "summary")
-                );
-
+                    .Ignore(cv => cv.IsDeleted));
             
             var client = new ElasticClient(settings);
-            //var createIndexResponse = client.Indices.Create("Vacancyindex", c => c
+
+            //var createIndexResponse = client.Indices.Create(defaultIndex, c => c
             //    .Map<CV>(m => m.AutoMap())
             //);
 

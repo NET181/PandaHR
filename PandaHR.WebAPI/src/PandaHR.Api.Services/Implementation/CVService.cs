@@ -50,6 +50,11 @@ namespace PandaHR.Api.Services.Implementation
             return await _uow.CVs.GetCVsAsync(cv => cv.UserId == userId, pageSize, page);
         }
 
+        public async Task<IEnumerable<CVforSearchDTO>> GetCVsForSearchAsync()
+        {
+            return await _uow.CVs.GetCVsAsync();
+        }
+
         public async Task RemoveAsync(Guid id)
         {
             var CV = await GetByIdAsync(id);

@@ -2,18 +2,16 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Services.Contracts;
-using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.DAL.DTOs.CV;
 using Nest;
 
 namespace PandaHR.Api.Controllers
 {
-    //[Route("api/[controller]")]
     [ApiController]
     public class SearchController : ControllerBase
     {
         private readonly ICVService _CVService;
         private readonly IElasticClient _elasticClient;
-      
 
         public SearchController(ICVService CVService, IElasticClient elasticClient)
         {
@@ -24,22 +22,23 @@ namespace PandaHR.Api.Controllers
         [Route("/search/reindex")]
         public async Task<IActionResult> ReIndex()
         {
-            await _elasticClient.DeleteByQueryAsync<CV>(q => q.MatchAll());
+            await _elasticClient.DeleteByQueryAsync<CVforSearchDTO>(q => q.MatchAll());
 
-            var allCVs = (await _CVService.GetAllAsync()).ToArray();
+            var allCVs = await _CVService.GetCVsForSearchAsync();
 
-            foreach (var post in allCVs)
+            foreach (var cv in allCVs)
             {
-                await _elasticClient.IndexDocumentAsync(post);
+                var res = await _elasticClient.IndexDocumentAsync(cv);
+                var debug = res.DebugInformation;
             }
 
-            return Ok($"{allCVs.Length} CV(s) reindexed");
+            return Ok($"{allCVs.Count()} CV(s) reindexed");
         }
 
         [Route("/search")]
         public async Task<IActionResult> Find(string query, int page = 1, int pageSize = 30)
         {
-            var response = await _elasticClient.SearchAsync<CV>(
+            var response = await _elasticClient.SearchAsync<CVforSearchDTO>(
                 s => s.Query(q => q.QueryString(d => d.Query(query)))
                     .From((page - 1) * pageSize)
                     .Size(pageSize));
@@ -49,11 +48,6 @@ namespace PandaHR.Api.Controllers
                 // We could handle errors here by checking response.OriginalException or response.ServerError properties
                 return NotFound();
             }
-
-            //if (page > 1)
-            //    ViewData["prev"] = GetSearchUrl(query, page - 1, pageSize);
-            //if (response.IsValid && response.Total > page * pageSize)
-            //    ViewData["next"] = GetSearchUrl(query, page + 1, pageSize);
 
             return Ok(response.Documents);
         }

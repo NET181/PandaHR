@@ -12,5 +12,6 @@ namespace PandaHR.Api.Services.Contracts
         Task<IEnumerable<CVSummaryDTO>> GetUserCVsPreviewAsync(Guid userId, int? pageSize, int? page);
         Task<IEnumerable<CVforSearchDTO>> GetUserCVsAsync(Guid userId, int? pageSize = 10, int? page = 1);
         Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? pageSize = 10, int? page = 1);
+        Task<IEnumerable<CVforSearchDTO>> GetCVsForSearchAsync();
     }
 }
