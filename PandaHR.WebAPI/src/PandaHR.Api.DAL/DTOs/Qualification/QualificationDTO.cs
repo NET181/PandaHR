@@ -1,8 +1,8 @@
 ﻿using System;
 
-﻿namespace PandaHR.Api.Services.Models.Qualification
+namespace PandaHR.Api.DAL.DTOs.Qualification
 {
-    public class QualificationServiceModel
+    public class QualificationDTO
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

@@ -1,8 +1,12 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Common.Contracts;
+using PandaHR.Api.Models.Degree;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.Degree;
+using PandaHR.Api.DAL.Models.Entities;
+using System;
 
 namespace PandaHR.Api.Controllers
 {
@@ -11,19 +15,32 @@ namespace PandaHR.Api.Controllers
     public class DegreeController : ControllerBase
     {
         private readonly IDegreeService _degreeService;
+        private readonly IMapper _mapper;
 
-        public DegreeController(IDegreeService degreeService)
+        public DegreeController(IDegreeService degreeService, IMapper mapper)
         {
             _degreeService = degreeService;
+            _mapper = mapper;
         }
 
-        // GET: api/Degree
+        // GET: api/degree
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetDegreesAsync()
         {
-            var degrees = await _degreeService.GetAllAsync();
+            var degreesServiceModel = await _degreeService.GetDegreesAsync();
 
-            return Ok(degrees);
+            var responseModels = _mapper
+                .Map<ICollection<DegreeServiceModel>
+                , ICollection<DegreeResponseModel>>(degreesServiceModel);
+
+            if (responseModels != null)
+            {
+                return Ok(responseModels);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // GET: api/Degree/5    
