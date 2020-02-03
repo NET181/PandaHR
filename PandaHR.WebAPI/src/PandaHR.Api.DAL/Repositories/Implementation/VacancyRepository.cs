@@ -39,5 +39,13 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
 
             return _mapper.Map<IEnumerable<Vacancy>, IEnumerable<VacancySummaryDTO>>(query);
         }
+
+        public async Task AddAsync(VacancyDTO vacancyDto)
+        {
+            var vacancy = _mapper.Map<VacancyDTO, Vacancy>(vacancyDto);
+                        
+            await _context.Vacancies.AddAsync(vacancy);
+            await _context.SaveChangesAsync();
+        }
     }
 }

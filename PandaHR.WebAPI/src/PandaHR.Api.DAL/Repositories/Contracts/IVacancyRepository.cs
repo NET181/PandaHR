@@ -9,5 +9,6 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
     public interface IVacancyRepository : IAsyncRepository<Vacancy>
     {
         Task<IEnumerable<VacancySummaryDTO>> GetUserVacancySummaryAsync(Guid userId, int? pageSize = 10, int? page = 1);
+        Task AddAsync(VacancyDTO vacancyDto);
     }
 }

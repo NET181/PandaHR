@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
+using PandaHR.Api.DAL.DTOs.Company;
 using PandaHR.Api.DAL.DTOs.User;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.Company;
 using PandaHR.Api.Services.Models.User;
 using System;
 using System.Collections.Generic;
@@ -53,6 +55,13 @@ namespace PandaHR.Api.Services.Implementation
             var userFullInfo = _mapper.Map<UserFullInfoDTO, UserFullInfoServiceModel>(userInfo);
 
             return userFullInfo;
+        }
+
+        public async Task<ICollection<CompanyNameServiceModel>> GetUserCompanies(Guid userId)
+        {
+            var serviceModels = await _uow.Companies.GetCompanyNamesByUserId(userId);
+
+            return _mapper.Map<ICollection<CompanyNameDTO>, ICollection<CompanyNameServiceModel>>(serviceModels);
         }
 
         public async Task<UserServiceModel> GetUserInfo(Guid id)

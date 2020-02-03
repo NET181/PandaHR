@@ -25,21 +25,6 @@ namespace PandaHR.Api.Controllers
             _cvService = cvService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
-        {
-            CV cv = await _cvService.GetByIdAsync(id);
-
-            if (cv != null)
-            {
-                return Ok(cv);
-            }
-            else
-            {
-                return NotFound();
-            }
-        }
-
         [HttpGet("/UserCVsExt")]
         public async Task<IActionResult> GetUserCVs(Guid userId, int page, int pageSize)
         {
