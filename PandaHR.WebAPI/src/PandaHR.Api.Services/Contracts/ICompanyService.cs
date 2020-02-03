@@ -1,4 +1,6 @@
-﻿using PandaHR.Api.DAL.Models.Entities;
+﻿using PandaHR.Api.DAL.DTOs.Company;
+using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Services.Models.Company;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -13,5 +15,6 @@ namespace PandaHR.Api.Services.Contracts
         Task AddUserToCompanyAsync(UserCompany userCompany);
         Task AddCompanyToCityAsync(CompanyCity companyCity);
         Task RemoveCompanyFromCityAsync(CompanyCity companyCity);
+        Task<ICollection<CompanyBasicInfoServiceModel>> GetCompaniesByNameAutoFillByString(string name);
     }
 }

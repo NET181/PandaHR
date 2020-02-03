@@ -23,6 +23,16 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpGet]
+        [Route("api/user/full/{id}")]
+        public async Task<ActionResult<UserFullInfoResponse>> GetFullInfoById(Guid id)
+        {
+            var user = await _userService.GetFullInfoById(id);
+            var userResponse = _mapper.Map<UserFullInfoServiceModel, UserFullInfoResponse>(user);
+
+            return Ok(userResponse);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             var users = await _userService.GetAllAsync();

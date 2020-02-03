@@ -9,5 +9,6 @@ namespace PandaHR.Api.Services.Contracts
     public interface IUserService : IAsyncService<User>
     {
         Task<UserServiceModel> GetUserInfo(Guid id);
+        Task<UserFullInfoServiceModel> GetFullInfoById(Guid id);
     }
 }

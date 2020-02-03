@@ -1,13 +1,13 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
+using PandaHR.Api.DAL.DTOs.User;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.User;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PandaHR.Api.Services.Models.User;
-using PandaHR.Api.DAL.DTOs.User;
-using PandaHR.Api.Common.Contracts;
 
 namespace PandaHR.Api.Services.Implementation
 {
@@ -44,6 +44,15 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<User> GetByIdAsync(Guid id)
         {
             return await _uow.Users.GetByIdAsync(id);
+        }
+
+        public async Task<UserFullInfoServiceModel> GetFullInfoById(Guid id)
+        {
+            var userInfo = await _uow.Users.GetFullUserInfo(id);
+
+            var userFullInfo = _mapper.Map<UserFullInfoDTO, UserFullInfoServiceModel>(userInfo);
+
+            return userFullInfo;
         }
 
         public async Task<UserServiceModel> GetUserInfo(Guid id)

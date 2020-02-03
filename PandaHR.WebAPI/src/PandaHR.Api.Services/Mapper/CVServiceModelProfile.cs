@@ -9,6 +9,7 @@ namespace PandaHR.Api.Services.Mapper
     {
         public CVServiceModelProfile()
         {
+            CreateMap<CVCreationServiceModel, CVDTO>();
             CreateMap<CVforSearchDTO, CVServiceModel>();
         }
     }

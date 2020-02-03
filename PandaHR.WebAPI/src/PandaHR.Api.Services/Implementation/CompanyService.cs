@@ -7,15 +7,20 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Linq.Expressions;
+using PandaHR.Api.DAL.DTOs.Company;
+using PandaHR.Api.Common.Contracts;
+using PandaHR.Api.Services.Models.Company;
 
 namespace PandaHR.Api.Services.Implementation
 {
     public class CompanyService : ICompanyService
     {
         private readonly IUnitOfWork _uow;
+        private readonly IMapper _mapper;
 
-        public CompanyService(IUnitOfWork uow)
+        public CompanyService(IMapper mapper, IUnitOfWork uow)
         {
+            _mapper = mapper;
             _uow = uow;
         }
 
@@ -97,7 +102,15 @@ namespace PandaHR.Api.Services.Implementation
             var companyToRemove = await _uow.Companies.GetFirstOrDefaultAsync(c => c.Id == id);
             await RemoveAsync(companyToRemove);
         }
-        //TO DO
-        //DTOs
+
+        public async Task<ICollection<CompanyBasicInfoServiceModel>> GetCompaniesByNameAutoFillByString(string name)
+        {
+            var companiesDto = await _uow.Companies.GetCompaniesByNameAutofillByString(name);
+
+            var companiesServiceModel = _mapper.Map<ICollection<CompanyBasicInfoDTO>,
+                    ICollection<CompanyBasicInfoServiceModel>>(companiesDto);
+
+            return companiesServiceModel;
+        }
     }
 }

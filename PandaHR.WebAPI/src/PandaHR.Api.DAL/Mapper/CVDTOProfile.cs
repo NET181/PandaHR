@@ -11,6 +11,7 @@ namespace PandaHR.Api.DAL.Mapper
     {
         public CVDTOProfile()
         {
+            CreateMap<CVDTO, CV>();
             CreateMap<CV, CVSummaryDTO>()
                 .ForMember(dest => dest.QualificationName, opt => opt.MapFrom(src => src.Qualification.Name))
                 .ForMember(dest => dest.TechnologyName, opt => opt.MapFrom(src => src.Technology.Name))

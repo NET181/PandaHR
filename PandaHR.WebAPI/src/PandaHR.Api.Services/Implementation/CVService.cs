@@ -8,23 +8,31 @@ using PandaHR.Api.DAL.DTOs.CV;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.CV;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Implementation
 {
     public class CVService : ICVService
     {
-        private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _uow;
 
-        public CVService(IUnitOfWork uow, IMapper mapper)
+        public CVService(IMapper mapper, IUnitOfWork uow)
         {
-            _uow = uow;
             _mapper = mapper;
+            _uow = uow;
         }
 
-        public async Task AddAsync(CV entity)
+        public async Task AddAsync(CVCreationServiceModel cvServiceModel)
         {
-            await _uow.CVs.Add(entity);
+            CVDTO cv = _mapper.Map<CVCreationServiceModel, CVDTO>(cvServiceModel);
+
+            await _uow.CVs.AddAsync(cv);
         }
 
         public async Task<IEnumerable<CV>> GetAllAsync()
@@ -69,6 +77,11 @@ namespace PandaHR.Api.Services.Implementation
             var result = (await _uow.Vacancies.GetAllAsync()).Where(v => MatchVacancyCV.Matches(v, cv) > 0);
 
             return _mapper.Map<IEnumerable<Vacancy>, IEnumerable<VacancySummaryDTO>>(result);
+        }
+
+        public async Task AddAsync(CV entity)
+        {
+            await _uow.CVs.Add(entity);
         }
     }
 }
