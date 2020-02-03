@@ -73,7 +73,7 @@ namespace PandaHR.Api.DAL.EF
                     UserId = userId, QualificationId = qualificationId},
                 new Vacancy{ TechnologyId = technologyId, CityId = cityId, CompanyId = companyId, Description = "Even better vacancy than the previous!",
                     UserId = userId, QualificationId = qualificationId},
-                new Vacancy{ TechnologyId = technologyId, CityId = cityId, CompanyId = companyId, Description = "Vacancy for C# developer",
+                new Vacancy{ TechnologyId = technologyId, CityId = cityId, CompanyId = companyId, Description = "Vacancy for .Net developer",
                     UserId = userId, QualificationId = qualificationId}
             };
 

@@ -1,4 +1,5 @@
-﻿using PandaHR.Api.DAL;
+﻿using Microsoft.EntityFrameworkCore;
+using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using System;
@@ -39,7 +40,10 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<Vacancy> GetByIdAsync(Guid id)
         {
-            return await _uow.Vacancies.GetFirstOrDefaultAsync(d => d.Id == id);
+            return await _uow.Vacancies.GetFirstOrDefaultAsync(d => d.Id == id
+            , include: i => i
+            .Include( x => x.SkillRequirements)
+            .Include(q => q.Qualification));
         }
 
         public async Task UpdateAsync(Vacancy vacancy)

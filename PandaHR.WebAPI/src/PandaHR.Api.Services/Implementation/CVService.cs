@@ -35,34 +35,11 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<IEnumerable<CVServiceModel>> GetAllAsync()
         {
-            
-
             var CVs = new List<CV>
                 (await _uow.CVs.GetAllAsync(include: s => s
                 .Include(x => x.SkillKnowledges)));
 
-            
-            //for (int i = 0; i < CVs.Count; i++)
-            //{
-            //    CVServiceModels.Add(_mapper.Map<CV, CVServiceModel>(CVs[i]));
-
-            //    // CVServiceModels[i].SkillKnowledges = _mapper.Map<IEnumerable<SkillKnowledge>, IEnumerable<SkillKnowledgeServiceModel>>(CVs[i].SkillKnowledges)
-            //    //var a = _mapper.Map<IEnumerable<SkillKnowledge>, IEnumerable<SkillKnowledgeServiceModel>>(CVs[i].SkillKnowledges);
-                
-            //    //foreach (var item in CVs[i].SkillKnowledges)
-            //    //{
-            //    //    CVServiceModels[i].SkillKnowledges.Add(_mapper.Map<SkillKnowledge, SkillKnowledgeServiceModel>(item));
-            //    //}
-            //}
-            
             return new List<CVServiceModel>(_mapper.Map<IEnumerable<CV>, IEnumerable<CVServiceModel>>(CVs)); ;
-                
-                /*new List<CVServiceModel>(_mapper.Map<IEnumerable<CV>, IEnumerable<CVServiceModel>>
-                (await _uow.CVs.GetAllAsync(/*include: s => s
-                .Include(x => x.SkillKnowledges)
-                .ThenInclude(k => k.KnowledgeLevel)
-                .ThenInclude(xx => xx.SkillKnowledgeTypes)
-                    */
         }
 
         public async Task<CV> GetByIdAsync(Guid id)

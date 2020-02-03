@@ -20,18 +20,19 @@ namespace PandaHR.Api.Controllers
             _scoreCounter = scoreCounter;
         }
 
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> GetCVsByRaitingForVacancy(int Id )
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCVsByRaitingForVacancy(Guid id )
         {
             try
             {
-                var some = await _scoreCounter.GetCVsByVacancy(new Guid());
+                var some = await _scoreCounter.GetCVsByVacancy(id);
 
                 string a = "";
                 foreach (var item in some)
                 {
                     a += $"{item.Raiting}  ";
                 }
+
                 return Ok(some);
             }
             catch (Exception ex)

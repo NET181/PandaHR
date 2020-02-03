@@ -35,6 +35,8 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
         {
             VacancyAlghorythmModel vacancy2 = TestVacansy();
 
+      //      var vacancy3 = await _vacancyService.GetByIdAsync(vacancyId);
+             var aaa = await GetVacancyFromDBAsync(vacancyId);
 
             var qualifications
                 = new List<Qualification>(await _qualificationService.GetAllAsync());
@@ -76,9 +78,47 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 }
             }
 
-            return _alghorythm.GetCVsRaiting(vacancy2, algCVs
+            var aaaaaa = _alghorythm.GetCVsRaiting(aaa, algCVs
                 , languageSkillScaleStep, hardSkillScaleStep
                 , softSkillScaleStep, qualificationScaleStep);
+
+            return _alghorythm.GetCVsRaiting(aaa, algCVs
+                , languageSkillScaleStep, hardSkillScaleStep
+                , softSkillScaleStep, qualificationScaleStep);
+        }
+
+        private async Task<VacancyAlghorythmModel> GetVacancyFromDBAsync(Guid id)
+        {
+            VacancyAlghorythmModel vacancy = new VacancyAlghorythmModel();
+
+            Vacancy vacancy2 = await _vacancyService.GetByIdAsync(id);
+
+             vacancy.Id = vacancy2.Id;
+            vacancy.Qualification = vacancy2.Qualification.Value;
+
+            foreach (var sr in vacancy2.SkillRequirements)
+            {
+                vacancy.SkillRequests.Add(new SkillRequestAlghorythmModel()
+                {
+                    Expiriense = 5,
+                    KnowledgeLevel = 3,
+                    Weight = (int)sr.Weight,
+                    Skill = new SkillAlghorythmModel()
+                    {
+                        Id = sr.SkillId,
+                        SkillType = 1
+                        
+                    }
+                }); 
+            }
+            //var s = new SkillAlghorythmModel()
+            //{
+            //    //Id = sr.Skill.Id,
+            //    Id = new Guid(),
+            //    SkillType = 1
+            //    //    SupSkills = new List<SkillAlghorythmModel>()
+            //};
+            return vacancy;
         }
 
         private static VacancyAlghorythmModel TestVacansy()
