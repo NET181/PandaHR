@@ -21,13 +21,19 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             _context = context;
         }
 
-        public async Task<ICollection<SkillNameDTO>> GetSkillNameDTOsAsync(Expression<Func<Skill, bool>> predicate = null)
+        public async Task<ICollection<SkillNameDTO>> GetSkillNameDTOsAsync(Expression<Func<Skill, bool>> predicate = null,
+                                                                            int maxCountToTake = -1)
         {
             IQueryable<Skill> query = _dbSet;
 
             if (predicate != null)
             {
                 query = query.Where(predicate);
+            }
+
+            if(maxCountToTake > 0)
+            {
+                query = query.Take(maxCountToTake);
             }
 
             var dtos = await query.Select(s => new SkillNameDTO()

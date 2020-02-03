@@ -73,7 +73,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<ICollection<SkillNameServiceModel>> GetSkillNamesByTerm(string term)
         {
-            var dtos = await _uow.Skills.GetSkillNameDTOsAsync(s=>s.Name.Contains(term));
+            int countToTake = 5;
+            var dtos = await _uow.Skills.GetSkillNameDTOsAsync(s=>s.Name.Contains(term), countToTake);
 
             return _mapper.Map<ICollection<SkillNameDTO>, ICollection<SkillNameServiceModel>>(dtos);
         }
