@@ -16,7 +16,7 @@ namespace PandaHR.Api.DAL.Models.Entities
 
         public string FirstName { get; set; }
         public string SecondName { get; set; }
-        public Guid CityId { get; set; }
+        public Guid? CityId { get; set; }
         public City City { get; set; }
         public bool IsDeleted { get; set; }
 
@@ -24,5 +24,7 @@ namespace PandaHR.Api.DAL.Models.Entities
         public ICollection<CV> CVs { get; set; }
         public ICollection<Vacancy> Vacancies { get; set; }
         public ICollection<UserCompany> UserCompanies { get; set; }
+        public DateTime AddedDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace PandaHR.Api.DAL.Models.Entities
         public string Summary { get; set; }
         public bool IsActive { get; set; }
 
-        public Guid UserId { get; set; }
+        public Guid? UserId { get; set; }
         public User User { get; set; }
 
         public Guid QualificationId { get; set; }

@@ -6,6 +6,7 @@ using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.EF;
 using PandaHR.Api.DAL.EF.Context;
+using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.Repositories.Contracts;
 using PandaHR.Api.DAL.Repositories.Implementation;
 using PandaHR.Api.Services.Contracts;
@@ -21,6 +22,12 @@ namespace PandaHR.Api.DependencyResolver
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connection));
+
+            //services.AddDefaultIdentity<User>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddDefaultIdentity<User>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IDataInitializer, EFDataInitializer>();
 

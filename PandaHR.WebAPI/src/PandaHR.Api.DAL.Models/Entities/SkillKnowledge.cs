@@ -9,7 +9,7 @@ namespace PandaHR.Api.DAL.Models.Entities
         public Skill Skill { get; set; }
         public Guid SkillId { get; set; }
 
-        public KnowledgeLevel KnowledgeLevel{ get; set; }
+        public KnowledgeLevel KnowledgeLevel { get; set; }
         public Guid KnowledgeLevelId { get; set; }
 
         public Experience Experience { get; set; }

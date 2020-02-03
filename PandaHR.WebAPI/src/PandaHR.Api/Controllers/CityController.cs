@@ -3,6 +3,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Common.Contracts;
+using PandaHR.Api.Models.City;
+using PandaHR.Api.Services.Models.City;
+using System.Collections.Generic;
 
 namespace PandaHR.Api.Controllers
 {
@@ -11,10 +15,12 @@ namespace PandaHR.Api.Controllers
     public class CityController : ControllerBase
     {
         private readonly ICityService _cityService;
+        private readonly IMapper _mapper;
 
-        public CityController(ICityService cityService)
+        public CityController(ICityService cityService, IMapper mapper)
         {
             _cityService = cityService;
+            _mapper = mapper;
         }
 
         // GET: api/Country
@@ -38,6 +44,24 @@ namespace PandaHR.Api.Controllers
                 return NotFound();
             }
         }
+
+        [HttpGet("autofill/{term}")]
+        public async Task<IActionResult> GetSkillsByTermToSearchAsync(string term)
+        {
+            var cityNamesServiceModels = await _cityService.GetCityNamesByTerm(term);
+            var responseModels = _mapper
+                .Map<ICollection<CityNameServiceModel>, ICollection<CityNameResponseModel>>(cityNamesServiceModels);
+
+            if (responseModels != null)
+            {
+                return Ok(responseModels);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
 
         // POST: api/Country
         [HttpPost]

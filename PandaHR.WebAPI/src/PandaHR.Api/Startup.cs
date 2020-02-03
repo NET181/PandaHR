@@ -33,6 +33,7 @@ namespace PandaHR.Api
                 document.DocumentName = "v1";
             });
             services.RegisterDependencies(Configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,13 +42,12 @@ namespace PandaHR.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                dataInitializer.Seed();
+                //dataInitializer.Seed();
             }
             app.UseStaticFiles();
 
             app.UseHttpsRedirection();
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseOpenApi();

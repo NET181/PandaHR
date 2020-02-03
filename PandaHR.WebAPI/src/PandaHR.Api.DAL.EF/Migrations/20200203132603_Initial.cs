@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PandaHR.Api.DAL.EF.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
@@ -22,35 +22,12 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Companies",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true)
@@ -65,6 +42,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
@@ -78,6 +57,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
@@ -91,6 +72,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Value = table.Column<int>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
@@ -105,8 +88,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    Value = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -119,6 +103,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Value = table.Column<int>(nullable: false)
@@ -133,6 +119,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
@@ -146,6 +134,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
@@ -159,6 +149,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     ParentId = table.Column<Guid>(nullable: true)
@@ -179,7 +171,7 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<Guid>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -195,95 +187,12 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserLogins",
-                columns: table => new
-                {
-                    LoginProvider = table.Column<string>(nullable: false),
-                    ProviderKey = table.Column<string>(nullable: false),
-                    ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserTokens",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Cities",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     CountryId = table.Column<Guid>(nullable: false)
@@ -305,7 +214,7 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 {
                     SkillTypeId = table.Column<Guid>(nullable: false),
                     KnowledgeLevelId = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
+                    Value = table.Column<int>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -330,6 +239,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     RootSkillId = table.Column<Guid>(nullable: true),
@@ -349,6 +260,43 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         principalTable: "SkillTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    SecondName = table.Column<string>(nullable: true),
+                    CityId = table.Column<Guid>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -372,41 +320,6 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         name: "FK_CompanyCities_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    UserName = table.Column<string>(nullable: true),
-                    NormalizedUserName = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    NormalizedEmail = table.Column<string>(nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    SecondName = table.Column<string>(nullable: true),
-                    CityId = table.Column<Guid>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Cities_CityId",
-                        column: x => x.CityId,
-                        principalTable: "Cities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -437,14 +350,101 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<Guid>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    ProviderDisplayName = table.Column<string>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(nullable: false),
+                    RoleId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CVs",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Summary = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: true),
                     QualificationId = table.Column<Guid>(nullable: false),
                     TechnologyId = table.Column<Guid>(nullable: false)
                 },
@@ -464,11 +464,11 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CVs_Users_UserId",
+                        name: "FK_CVs_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -476,6 +476,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     PlaceName = table.Column<string>(nullable: true),
                     UserId = table.Column<Guid>(nullable: false),
                     SpecialityId = table.Column<Guid>(nullable: false),
@@ -500,9 +502,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Educations_Users_UserId",
+                        name: "FK_Educations_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -525,9 +527,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserCompanies_Users_UserId",
+                        name: "FK_UserCompanies_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -537,6 +539,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
@@ -574,9 +578,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Vacancies_Users_UserId",
+                        name: "FK_Vacancies_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -586,6 +590,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     CompanyName = table.Column<string>(nullable: true),
                     ProjectName = table.Column<string>(nullable: true),
@@ -611,7 +617,6 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 {
                     SkillId = table.Column<Guid>(nullable: false),
                     CVId = table.Column<Guid>(nullable: false),
-                    Id = table.Column<Guid>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     KnowledgeLevelId = table.Column<Guid>(nullable: false),
                     ExperienceId = table.Column<Guid>(nullable: false)
@@ -650,7 +655,6 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 {
                     SkillId = table.Column<Guid>(nullable: false),
                     VacancyId = table.Column<Guid>(nullable: false),
-                    Id = table.Column<Guid>(nullable: false),
                     Weight = table.Column<float>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     KnowledgeLevelId = table.Column<Guid>(nullable: false),
@@ -686,86 +690,86 @@ namespace PandaHR.Api.DAL.EF.Migrations
 
             migrationBuilder.InsertData(
                 table: "Countries",
-                columns: new[] { "Id", "IsDeleted", "Name" },
+                columns: new[] { "Id", "AddedDate", "IsDeleted", "ModifiedDate", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"), false, "Ukraine" },
-                    { new Guid("7f9619ff-8b86-d011-b42d-00cf4fc964ff"), false, "Russia" },
-                    { new Guid("8f9619ff-8b86-d011-b42d-00cf4fc964ff"), false, "Georgia" },
-                    { new Guid("9f9619ff-8b86-d011-b42d-00cf4fc964ff"), false, "Moldova" },
-                    { new Guid("0f9619ff-8b86-d011-b42d-00cf4fc964ff"), false, "Belarus" }
+                    { new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ukraine" },
+                    { new Guid("7f9619ff-8b86-d011-b42d-00cf4fc964ff"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Russia" },
+                    { new Guid("8f9619ff-8b86-d011-b42d-00cf4fc964ff"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Georgia" },
+                    { new Guid("9f9619ff-8b86-d011-b42d-00cf4fc964ff"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Moldova" },
+                    { new Guid("0f9619ff-8b86-d011-b42d-00cf4fc964ff"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Belarus" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Degrees",
-                columns: new[] { "Id", "IsDeleted", "Name" },
+                columns: new[] { "Id", "AddedDate", "IsDeleted", "ModifiedDate", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("07a37911-a33e-4248-b8e3-02495f3030d4"), false, "Specialist" },
-                    { new Guid("30d96e97-149f-4d6e-a398-2433b1a12cff"), false, "Barchelor" },
-                    { new Guid("8ff346e5-b5ae-4afa-bbc6-cb08d5e8cbd3"), false, "Master" },
-                    { new Guid("369c13f0-dbb1-4907-92b7-6d2afb0b5f95"), false, "Postgraduate" }
+                    { new Guid("07a37911-a33e-4248-b8e3-02495f3030d4"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Specialist" },
+                    { new Guid("30d96e97-149f-4d6e-a398-2433b1a12cff"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Barchelor" },
+                    { new Guid("8ff346e5-b5ae-4afa-bbc6-cb08d5e8cbd3"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Master" },
+                    { new Guid("369c13f0-dbb1-4907-92b7-6d2afb0b5f95"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Postgraduate" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Experiences",
-                columns: new[] { "Id", "IsDeleted", "Name", "Value" },
+                columns: new[] { "Id", "AddedDate", "IsDeleted", "ModifiedDate", "Name", "Value" },
                 values: new object[,]
                 {
-                    { new Guid("8b4bc763-1e35-4b07-adc9-e9a7f01dad06"), false, "1+ year", 3 },
-                    { new Guid("fbdf0376-ccd8-44f0-85b0-0609d4f25b0e"), false, "2+ year", 4 },
-                    { new Guid("561d468e-a93b-4e6b-a576-52b3d7bbf32a"), false, "0-6", 1 },
-                    { new Guid("0e6ab8cc-66e2-4fa4-95fc-25aa0f2eff90"), false, "6-12", 2 }
+                    { new Guid("8b4bc763-1e35-4b07-adc9-e9a7f01dad06"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1+ year", 3 },
+                    { new Guid("fbdf0376-ccd8-44f0-85b0-0609d4f25b0e"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "2+ year", 4 },
+                    { new Guid("561d468e-a93b-4e6b-a576-52b3d7bbf32a"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "0-6", 1 },
+                    { new Guid("0e6ab8cc-66e2-4fa4-95fc-25aa0f2eff90"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "6-12", 2 }
                 });
 
             migrationBuilder.InsertData(
                 table: "KnowledgeLevels",
-                columns: new[] { "Id", "IsDeleted", "Name", "Value" },
+                columns: new[] { "Id", "AddedDate", "IsDeleted", "ModifiedDate", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e81"), false, "Beginer", 1 },
-                    { new Guid("32832ec4-968b-4619-b8cb-af4e65c52a37"), false, "Lower Intermidiate", 2 },
-                    { new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31"), false, "Intermidiate", 3 },
-                    { new Guid("9b9be3ca-9c11-4afe-9c5f-225bbf192e81"), false, "Upper Intermidiate", 4 }
+                    { new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e81"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Beginer" },
+                    { new Guid("32832ec4-968b-4619-b8cb-af4e65c52a37"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lower Intermidiate" },
+                    { new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intermidiate" },
+                    { new Guid("9b9be3ca-9c11-4afe-9c5f-225bbf192e81"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Upper Intermidiate" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Qualifications",
-                columns: new[] { "Id", "IsDeleted", "Name", "Value" },
+                columns: new[] { "Id", "AddedDate", "IsDeleted", "ModifiedDate", "Name", "Value" },
                 values: new object[,]
                 {
-                    { new Guid("6015f293-a102-459b-9fa3-2ce7cc92c386"), false, "Trainee", 1 },
-                    { new Guid("6331e0ea-9df6-4e20-9bed-b18382b180bd"), false, "Junior", 2 },
-                    { new Guid("e2e061e1-201e-41f8-8fb8-1106b00f5ae7"), false, "Middle", 3 },
-                    { new Guid("a76428b1-aac5-410b-af4f-811c9b474997"), false, "Senior", 4 }
+                    { new Guid("6015f293-a102-459b-9fa3-2ce7cc92c386"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Trainee", 1 },
+                    { new Guid("6331e0ea-9df6-4e20-9bed-b18382b180bd"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Junior", 2 },
+                    { new Guid("e2e061e1-201e-41f8-8fb8-1106b00f5ae7"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Middle", 3 },
+                    { new Guid("a76428b1-aac5-410b-af4f-811c9b474997"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Senior", 4 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Specialities",
-                columns: new[] { "Id", "IsDeleted", "Name" },
+                columns: new[] { "Id", "AddedDate", "IsDeleted", "ModifiedDate", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("2b82ca8b-1047-4830-83d5-e1e716b4407f"), false, "Applied Physics" },
-                    { new Guid("f98a7083-825c-496a-9112-ecd375a17dcb"), false, "Software Engineering" },
-                    { new Guid("3cceb22e-d32f-4a29-9c49-651b258c088d"), false, "System Analysis" },
-                    { new Guid("0d59cea4-85f5-4107-9d0f-8fecbe6a1933"), false, "Applied Math" },
-                    { new Guid("3a4d31f3-c8ab-4f09-8fde-684af2890d69"), false, "Computer Science" }
+                    { new Guid("2b82ca8b-1047-4830-83d5-e1e716b4407f"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Applied Physics" },
+                    { new Guid("f98a7083-825c-496a-9112-ecd375a17dcb"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Software Engineering" },
+                    { new Guid("3cceb22e-d32f-4a29-9c49-651b258c088d"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "System Analysis" },
+                    { new Guid("0d59cea4-85f5-4107-9d0f-8fecbe6a1933"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Applied Math" },
+                    { new Guid("3a4d31f3-c8ab-4f09-8fde-684af2890d69"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Computer Science" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Cities",
-                columns: new[] { "Id", "CountryId", "IsDeleted", "Name" },
-                values: new object[] { new Guid("619619ff-8b86-d011-b42d-00cf4fc964ff"), new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"), false, "Dnipro" });
+                columns: new[] { "Id", "AddedDate", "CountryId", "IsDeleted", "ModifiedDate", "Name" },
+                values: new object[] { new Guid("619619ff-8b86-d011-b42d-00cf4fc964ff"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Dnipro" });
 
             migrationBuilder.InsertData(
                 table: "Cities",
-                columns: new[] { "Id", "CountryId", "IsDeleted", "Name" },
-                values: new object[] { new Guid("629619ff-8b86-d011-b42d-00cf4fc964ff"), new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"), false, "Vinnytsia" });
+                columns: new[] { "Id", "AddedDate", "CountryId", "IsDeleted", "ModifiedDate", "Name" },
+                values: new object[] { new Guid("629619ff-8b86-d011-b42d-00cf4fc964ff"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Vinnytsia" });
 
             migrationBuilder.InsertData(
                 table: "Cities",
-                columns: new[] { "Id", "CountryId", "IsDeleted", "Name" },
-                values: new object[] { new Guid("639619ff-8b86-d011-b42d-00cf4fc964ff"), new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"), false, "Kyiv" });
+                columns: new[] { "Id", "AddedDate", "CountryId", "IsDeleted", "ModifiedDate", "Name" },
+                values: new object[] { new Guid("639619ff-8b86-d011-b42d-00cf4fc964ff"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Kyiv" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -793,6 +797,11 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 name: "IX_AspNetUserRoles_RoleId",
                 table: "AspNetUserRoles",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_CityId",
+                table: "AspNetUsers",
+                column: "CityId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -912,11 +921,6 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_CityId",
-                table: "Users",
-                column: "CityId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Vacancies_CityId",
                 table: "Vacancies",
                 column: "CityId");
@@ -987,9 +991,6 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Degrees");
 
             migrationBuilder.DropTable(
@@ -1020,7 +1021,7 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 name: "Technologies");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "SkillTypes");

@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DTOs\CV\**" />
-    <EmbeddedResource Remove="DTOs\CV\**" />
-    <None Remove="DTOs\CV\**" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.1" />
   </ItemGroup>
 
   <ItemGroup>

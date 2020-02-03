@@ -5,7 +5,7 @@ using PandaHR.Api.DAL.Models.Entities;
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface IQualificationService : IAsyncService<Qualification>
+    public interface IQualificationService : IAsyncCrudService<Qualification>
     {
         Task<IEnumerable<QualificationServiceModel>> GetAllQualificationsAsync();
     }

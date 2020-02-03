@@ -21,9 +21,9 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<IEnumerable<ExperienceServiceModel>> GetAllAsync()
         {
-            var dto = await _uow.Experiences.GetExperienceDTOsAsync();
+            var serviceModels = await _uow.Experiences.GetExperienceDTOsAsync();
 
-            return _mapper.Map<ICollection<ExperienceDTO>, ICollection<ExperienceServiceModel>>(dto);
+            return _mapper.Map<ICollection<ExperienceDTO>, ICollection<ExperienceServiceModel>>(serviceModels);
         }
     }
 }
