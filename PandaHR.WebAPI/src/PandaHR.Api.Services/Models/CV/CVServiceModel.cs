@@ -1,11 +1,9 @@
 ﻿using PandaHR.Api.Services.Models.Education;
 using PandaHR.Api.Services.Models.JobExperience;
-using PandaHR.Api.Services.Models.Skill;
 using PandaHR.Api.Services.Models.SkillKnowledge;
 using PandaHR.Api.Services.Models.User;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PandaHR.Api.Services.Models.CV
 {

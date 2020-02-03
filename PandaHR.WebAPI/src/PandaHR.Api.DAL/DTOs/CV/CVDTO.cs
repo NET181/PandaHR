@@ -1,11 +1,9 @@
 ﻿using PandaHR.Api.DAL.DTOs.Education;
 using PandaHR.Api.DAL.DTOs.JobExperience;
-using PandaHR.Api.DAL.DTOs.Skill;
 using PandaHR.Api.DAL.DTOs.SkillKnowledge;
 using PandaHR.Api.DAL.DTOs.User;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PandaHR.Api.DAL.DTOs.CV
 {

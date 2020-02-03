@@ -5,9 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PandaHR.Api.DAL.EF;
 using PandaHR.Api.DAL.EF.Context;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace PandaHR.Api.UnitTests
 {
