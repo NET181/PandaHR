@@ -1,18 +1,19 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.DTOs.CV;
-using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.Services.Models.CV;
 
 namespace PandaHR.Api.Services.Implementation
 {
-    public class CVService : ICVService
+    public class CVService : ICVService ,IAsyncService<CVServiceModel>
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
@@ -30,9 +31,24 @@ namespace PandaHR.Api.Services.Implementation
             await _uow.CVs.AddAsync(cv);
         }
 
-        public async Task<IEnumerable<CV>> GetAllAsync()
+        public async Task<IEnumerable<CVServiceModel>> GetAllAsync()
         {
-            return await _uow.CVs.GetAllAsync();
+            var CVs = new List<CV>
+                (await _uow.CVs.GetAllAsync(include: s => s
+                .Include(x => x.SkillKnowledges)
+                    .ThenInclude(s => s.Skill)
+                    .ThenInclude(s => s.SubSkills)
+                .Include(x => x.SkillKnowledges)
+                    .ThenInclude(s => s.Skill)
+                    .ThenInclude(s => s.SkillType)
+                .Include(q => q.Qualification)
+                .Include(x => x.SkillKnowledges)
+                    .ThenInclude(k => k.KnowledgeLevel)
+                    .ThenInclude(t => t.SkillKnowledgeTypes)
+                .Include(e => e.SkillKnowledges)
+                .ThenInclude(e => e.Experience)));
+
+            return new List<CVServiceModel>(_mapper.Map<IEnumerable<CV>, IEnumerable<CVServiceModel>>(CVs)); 
         }
 
         public async Task<CV> GetByIdAsync(Guid id)
@@ -61,6 +77,11 @@ namespace PandaHR.Api.Services.Implementation
             await _uow.CVs.Remove(entity);
         }
 
+        public Task RemoveAsync(CVServiceModel entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task UpdateAsync(CV entity)
         {
             await _uow.CVs.Update(entity);
@@ -77,6 +98,21 @@ namespace PandaHR.Api.Services.Implementation
         public async Task AddAsync(CV entity)
         {
             await _uow.CVs.Add(entity);
+        }
+
+        Task<CVServiceModel> IAsyncService<CVServiceModel>.GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task AddAsync(CVServiceModel entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(CVServiceModel entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

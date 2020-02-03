@@ -11,6 +11,7 @@ using PandaHR.Api.DAL.Repositories.Contracts;
 using PandaHR.Api.DAL.Repositories.Implementation;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Implementation;
+using PandaHR.Api.Services.ScoreAlghorythm;
 
 namespace PandaHR.Api.DependencyResolver
 {
@@ -51,6 +52,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<IExperienceRepository, ExperienceRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<ITechnologyRepository, TechnologyRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -70,6 +72,10 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<IExperienceService, ExperienceService>();
+            services.AddScoped<ITechnologyService, TechnologyService>();
+
+            services.AddScoped<IScoreCounter, ScoreCounter>();
+            services.AddScoped<IScoreAlghorythm, ScoreAlghorythm>();
 
             services.AddSingleton<PandaHR.Api.Common.Contracts.IMapper, PandaHRAutoMapper>();
         }
