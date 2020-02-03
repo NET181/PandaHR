@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Models.Vacancy;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.SkillRequirement;

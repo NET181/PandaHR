@@ -1,10 +1,6 @@
-﻿using PandaHR.Api.DAL.DTOs.City;
-using PandaHR.Api.DAL.DTOs.Company;
-using PandaHR.Api.DAL.DTOs.SkillRequirement;
-using PandaHR.Api.DAL.DTOs.User;
+﻿using PandaHR.Api.DAL.DTOs.SkillRequirement;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PandaHR.Api.DAL.DTOs.Vacancy
 {

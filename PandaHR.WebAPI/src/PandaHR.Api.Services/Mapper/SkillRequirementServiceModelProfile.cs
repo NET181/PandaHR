@@ -1,9 +1,6 @@
 ﻿using PandaHR.Api.Common;
 using PandaHR.Api.DAL.DTOs.SkillRequirement;
 using PandaHR.Api.Services.Models.SkillRequirement;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PandaHR.Api.Services.Mapper
 {
