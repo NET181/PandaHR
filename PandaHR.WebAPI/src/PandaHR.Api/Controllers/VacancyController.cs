@@ -22,6 +22,20 @@ namespace PandaHR.Api.Controllers
             _vacancyService = vacancyService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var skills = await _vacancyService.GetAllAsync();
+
+            return Ok(skills);
+        }
+
+        [HttpGet("/getVacancySummary")]
+        public async Task<IActionResult> GetUserCVsSummary(Guid userId, int page, int pageSize)
+        {
+            return Ok(await _vacancyService.GetVacancyPreviewAsync(userId, pageSize, page));
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddVacancy(VacancyCreationRequestModel vacancy)
         {

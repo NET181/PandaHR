@@ -58,5 +58,10 @@ namespace PandaHR.Api.Services.Implementation
 
             await _uow.Vacancies.AddAsync(vacancyDto);
         }
+
+        public async Task<IEnumerable<VacancySummaryDTO>> GetVacancyPreviewAsync(Guid userId, int? pageSize, int? page)
+        {
+            return await _uow.Vacancies.GetUserVacancySummaryAsync(userId, pageSize, page);
+        }
     }
 }

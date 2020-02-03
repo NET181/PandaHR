@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PandaHR.Api.DAL.Repositories.Contracts
 {
-    public interface ICityRepository: IAsyncRepository<City>
+    public interface ICityRepository : IAsyncRepository<City>
     {
         Task<ICollection<CityNameDTO>> GetCityNameDTOsAsync(Expression<Func<City, bool>> predicate = null,
                                                              int maxCountToTake = -1);

@@ -28,7 +28,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             var test = await _context.Companies.ToListAsync();
 
             IQueryable<CompanyBasicInfoDTO> query = _context.Companies.AsQueryable()
-                .Where(c => c.Name.Contains(name))
+                .Where(c => Microsoft.EntityFrameworkCore.EF.Functions.Like(c.Name, $"%{name}%"))
                 .Select(c => new CompanyBasicInfoDTO()
                 {
                     Id = c.Id,
@@ -38,19 +38,6 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             var companiesDto = await query.ToListAsync();
 
             return companiesDto;
-        }
-
-        public async Task<ICollection<CompanyNameDTO>> GetCompanyNamesByUserId(Guid userId)
-        {
-            var dtos = await _context.Companies.Where(c => 
-            c.UserCompanies.Any(uc=> uc.UserId == userId))
-                .Select(c => new CompanyNameDTO()
-            {
-                Id = c.Id,
-                Name = c.Name
-            }).ToListAsync();
-
-            return dtos;
         }
     }
 }

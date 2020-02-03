@@ -8,7 +8,10 @@ namespace PandaHR.Api.Services.Mapper
     {
         public CityServiceModelProfile()
         {
+            CreateMap<CityWithNameServiceModel, CityDTO>();
+
             CreateMap<CityNameDTO, CityNameServiceModel>();
+            CreateMap<CityDTO, CityWithNameServiceModel>();
         }
     }
 }

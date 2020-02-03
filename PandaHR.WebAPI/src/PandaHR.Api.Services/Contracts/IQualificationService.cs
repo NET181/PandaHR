@@ -2,7 +2,7 @@
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface IQualificationService : IAsyncService<Qualification>
+    public interface IQualificationService : IAsyncCrudService<Qualification>
     {
     }
 }

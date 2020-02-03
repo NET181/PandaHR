@@ -20,6 +20,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
         public async Task<JobExperience> GetById(Guid id)
         {
             var jobExperience = await _context.JobExperiences.Where(j => j.Id == id).FirstAsync();
+
             return jobExperience;
         }
     }
