@@ -1,7 +1,4 @@
-﻿using PandaHR.Api.DAL.DTOs.JobExperience;
-using PandaHR.Api.DAL.Models.Entities;
-using System;
-using System.Threading.Tasks;
+﻿using PandaHR.Api.DAL.Models.Entities;
 
 namespace PandaHR.Api.DAL.Repositories.Contracts
 {

@@ -1,9 +1,7 @@
 ﻿using PandaHR.Api.DAL.DTOs.City;
 using PandaHR.Api.DAL.DTOs.Education;
-using PandaHR.Api.DAL.DTOs.JobExperience;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PandaHR.Api.DAL.DTOs.User
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PandaHR.Api.DAL.DTOs.Skill
+﻿namespace PandaHR.Api.DAL.DTOs.Skill
 {
     public class SkillDTO
     {

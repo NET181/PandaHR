@@ -1,5 +1,4 @@
-﻿using System;
-using PandaHR.Api.Common;
+﻿using PandaHR.Api.Common;
 using PandaHR.Api.DAL.DTOs.CV;
 using PandaHR.Api.Services.Models.CV;
 

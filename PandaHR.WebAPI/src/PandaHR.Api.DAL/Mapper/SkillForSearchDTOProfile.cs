@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using PandaHR.Api.Common;
+﻿using PandaHR.Api.Common;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.DTOs.SkillKnowledge;
 

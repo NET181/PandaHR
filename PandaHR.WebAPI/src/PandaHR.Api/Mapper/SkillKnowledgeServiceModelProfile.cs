@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace PandaHR.Api.Mapper
+﻿namespace PandaHR.Api.Mapper
 {
     public class SkillKnowledgeServiceModelProfile
     {

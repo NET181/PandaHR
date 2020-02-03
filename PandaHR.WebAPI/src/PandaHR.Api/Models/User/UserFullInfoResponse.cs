@@ -1,7 +1,5 @@
 ﻿using PandaHR.Api.Services.Models.City;
 using PandaHR.Api.Services.Models.Education;
-using PandaHR.Api.Services.Models.JobExperience;
-using PandaHR.Api.Services.Models.User;
 using System;
 using System.Collections.Generic;
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using PandaHR.Api.DAL.Models;
 using PandaHR.Api.DAL.DTOs.SkillKnowledge;
 
 namespace PandaHR.Api.DAL.DTOs.CV
