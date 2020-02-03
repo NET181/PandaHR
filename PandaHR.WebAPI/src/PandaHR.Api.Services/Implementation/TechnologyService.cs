@@ -3,10 +3,7 @@ using System.Threading.Tasks;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.DTOs.Technology;
-using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.Technology;
-using PandaHR.Api.DAL.Models.Entities;
-using System;
 
 namespace PandaHR.Api.Services.Implementation
 {

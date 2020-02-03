@@ -47,9 +47,9 @@ namespace PandaHR.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var degrees = await _degreeService.GetAllAsync();
+            var allDegrees = await _degreeService.GetAllAsync();
 
-            return Ok(degrees);
+            return Ok(allDegrees);
         }
 
         // GET: api/Degree/5    
