@@ -10,8 +10,8 @@ using PandaHR.Api.DAL.EF.Context;
 namespace PandaHR.Api.DAL.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200203174251_initial")]
-    partial class initial
+    [Migration("20200203192932_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
