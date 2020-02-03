@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
@@ -26,6 +23,20 @@ namespace PandaHR.Api.Controllers
             var skills = await _vacancyService.GetAllAsync();
 
             return Ok(skills);
+        }
+
+        [HttpGet("/getVacancySummary")]
+        public async Task<IActionResult> GetUserCVsSummary(Guid userId, int page, int pageSize)
+        {
+            return Ok(await _vacancyService.GetVacancyPreviewAsync(userId, pageSize, page));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(Vacancy vacancy)
+        {
+            await _vacancyService.AddAsync(vacancy);
+
+            return Ok();
         }
 
         [HttpPost]

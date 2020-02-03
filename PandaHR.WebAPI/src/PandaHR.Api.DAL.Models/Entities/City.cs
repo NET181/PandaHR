@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    public class City : BaseEntity
+    public class City : BaseEntity, ISoftDeletable
     {
         public City()
         {
@@ -12,6 +11,7 @@ namespace PandaHR.Api.DAL.Models.Entities
             Vacancies = new HashSet<Vacancy>();
         }
 
+        public bool IsDeleted { get; set; }
         public string Name { get; set; }
 
         public Guid CountryId { get; set; }

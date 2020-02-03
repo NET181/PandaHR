@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PandaHR.Api.DAL;
+﻿using PandaHR.Api.DAL;
+using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using System;
@@ -48,6 +48,11 @@ namespace PandaHR.Api.Services.Implementation
         public async Task UpdateAsync(Vacancy vacancy)
         {
             await _uow.Vacancies.Update(vacancy);
+        }
+
+        public async Task<IEnumerable<VacancySummaryDTO>> GetVacancyPreviewAsync(Guid userId, int? pageSize, int? page)
+        {
+            return await _uow.Vacancies.GetUserVacancySummaryAsync(userId, pageSize, page);
         }
     }
 }

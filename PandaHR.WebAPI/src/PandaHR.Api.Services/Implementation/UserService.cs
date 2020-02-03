@@ -1,21 +1,30 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using PandaHR.Api.Services.Models.User;
+using PandaHR.Api.DAL.DTOs.User;
+using PandaHR.Api.Common.Contracts;
 
 namespace PandaHR.Api.Services.Implementation
 {
     public class UserService : IUserService
     {
+        private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
 
-        public UserService(IUnitOfWork uow)
+        public UserService(IMapper mapper, IUnitOfWork uow)
         {
+            _mapper = mapper;
             _uow = uow;
+        }
+
+        public async Task AddAsync(User entity)
+        {
+            await _uow.Users.Add(entity);
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()
@@ -30,6 +39,35 @@ namespace PandaHR.Api.Services.Implementation
             .Include(v => v.Vacancies));
 
             return users;
+        }
+
+        public async Task<User> GetByIdAsync(Guid id)
+        {
+            return await _uow.Users.GetByIdAsync(id);
+        }
+
+        public async Task<UserServiceModel> GetUserInfo(Guid id)
+        {
+            UserDTO userDTO = await _uow.Users.GetUserInfo(id);
+            UserServiceModel userServiceModel = _mapper.Map<UserDTO, UserServiceModel>(userDTO);
+
+            return userServiceModel;
+        }
+
+        public async Task RemoveAsync(Guid id)
+        {
+            var city = await _uow.Users.GetByIdAsync(id);
+            await _uow.Users.Remove(city);
+        }
+
+        public async Task RemoveAsync(User user)
+        {
+            await _uow.Users.Remove(user);
+        }
+
+        public async Task UpdateAsync(User entity)
+        {
+            await _uow.Users.Update(entity);
         }
     }
 }

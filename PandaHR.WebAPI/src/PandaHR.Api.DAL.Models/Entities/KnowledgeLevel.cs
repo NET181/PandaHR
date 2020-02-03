@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
@@ -10,15 +8,13 @@ namespace PandaHR.Api.DAL.Models.Entities
         {
             SkillRequirements = new HashSet<SkillRequirement>();
             SkillKnowledges = new HashSet<SkillKnowledge>();
+            SkillKnowledgeTypes = new HashSet<SkillKnowledgeType>();
         }
 
         public bool IsDeleted { get; set; }
-        public int Value { get; set; }
         public string Name { get; set; }
 
-        public SkillType SkillType { get; set; }
-        public Guid SkillTypeId { get; set; }
-
+        public ICollection<SkillKnowledgeType> SkillKnowledgeTypes { get; set; }
         public ICollection<SkillRequirement> SkillRequirements { get; set; }
         public ICollection<SkillKnowledge> SkillKnowledges { get; set; }
        

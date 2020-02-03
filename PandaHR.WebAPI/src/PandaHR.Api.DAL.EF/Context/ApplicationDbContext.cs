@@ -1,14 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.DAL.EF.Configurations;
 using PandaHR.Api.DAL.Models;
 using PandaHR.Api.DAL.Models.Entities;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -42,6 +37,9 @@ namespace PandaHR.Api.DAL.EF.Context
         public DbSet<User> Users { get; set; }
         public DbSet<UserCompany> UserCompanies { get; set; }
         public DbSet<Vacancy> Vacancies { get; set; }
+        public DbSet<Experience> Experiences { get; set; }
+        public DbSet<Technology> Technologies { get; set; }
+        public DbSet<TechnologySkill> TechnologySkills { get; set; }
 
         #endregion
 
@@ -52,8 +50,6 @@ namespace PandaHR.Api.DAL.EF.Context
                 if (typeof(ISoftDeletable).IsAssignableFrom(type.ClrType))
                 {
                     modelBuilder.SetSoftDeleteFilter(type.ClrType);
-                 
-                    //modelBuilder.Entity<>(.
                 }
             }
 
@@ -75,9 +71,13 @@ namespace PandaHR.Api.DAL.EF.Context
                 .ApplyConfiguration<SkillType>(new SkillTypeConfiguration())
                 .ApplyConfiguration<Speciality>(new SpecialityConfiguration())
                 .ApplyConfiguration<KnowledgeLevel>(new KnowledgeLevelConfiguration())
+                .ApplyConfiguration<SkillKnowledgeType>(new SkillKnowledgeTypeConfiguration())
                 .ApplyConfiguration<UserCompany>(new UserCompanyConfiguration())
                 .ApplyConfiguration<User>(new UserConfiguration())
-                .ApplyConfiguration<Vacancy>(new VacancyConfiguration());
+                .ApplyConfiguration<Vacancy>(new VacancyConfiguration())
+                .ApplyConfiguration<Experience>(new ExperienceConfiguration())                
+                .ApplyConfiguration<Technology>(new TechnologyConfiguration())
+                .ApplyConfiguration<TechnologySkill>(new TechnologySkillConfiguration());
         }
 
         public override int SaveChanges()

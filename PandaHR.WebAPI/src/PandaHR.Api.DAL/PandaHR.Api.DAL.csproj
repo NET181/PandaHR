@@ -1,12 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PandaHR.Api.DAL.EF\PandaHR.Api.DAL.EF.csproj" />
     <ProjectReference Include="..\PandaHR.Api.DAL.Models\PandaHR.Api.DAL.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DTOs\CV\" />
   </ItemGroup>
 
 </Project>

@@ -1,13 +1,17 @@
 ﻿using PandaHR.Api.DAL.Models.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface ICompanyService
+    public interface ICompanyService : IAsyncService<Company>
     {
-        Task<IEnumerable<Company>> GetAllAsync();
+        Task<IEnumerable<Company>> GetWhereAsync(Expression<Func<Company, bool>> predicate);
+        Task RemoveUserFromCompanyAsync(UserCompany userCompany);
+        Task AddUserToCompanyAsync(UserCompany userCompany);
+        Task AddCompanyToCityAsync(CompanyCity companyCity);
+        Task RemoveCompanyFromCityAsync(CompanyCity companyCity);
     }
 }
