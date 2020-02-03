@@ -1,7 +1,4 @@
-﻿using PandaHR.Api.DAL.Models.Entities;
-using PandaHR.Api.Services.Models;
-using PandaHR.Api.Services.Models.CV;
-using System;
+﻿using PandaHR.Api.Services.Models.CV;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Contracts

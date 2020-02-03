@@ -1,5 +1,4 @@
-﻿using PandaHR.Api.DAL.DTOs.Company;
-using PandaHR.Api.DAL.Models.Entities;
+﻿using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Models.Company;
 using System;
 using System.Collections.Generic;

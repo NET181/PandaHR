@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PandaHR.Api.DAL.DTOs.User
+﻿namespace PandaHR.Api.DAL.DTOs.User
 {
     public class UserCreationDTO
     {

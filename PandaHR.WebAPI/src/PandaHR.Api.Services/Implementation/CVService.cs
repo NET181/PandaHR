@@ -2,15 +2,11 @@
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.DTOs.CV;
-using PandaHR.Api.DAL.DTOs.SkillKnowledge;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.CV;
-using PandaHR.Api.Services.Models.SkillKnowledge;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Implementation

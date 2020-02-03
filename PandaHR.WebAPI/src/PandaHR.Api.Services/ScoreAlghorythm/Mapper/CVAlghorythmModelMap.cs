@@ -1,8 +1,5 @@
 ﻿using PandaHR.Api.Common;
 using PandaHR.Api.Services.ScoreAlghorythm.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PandaHR.Api.Services.ScoreAlghorythm.Mapper
 {

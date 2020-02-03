@@ -1,10 +1,7 @@
-﻿using PandaHR.Api.Services.Mapper;
-using PandaHR.Api.Services.Models.Experience;
+﻿using PandaHR.Api.Services.Models.Experience;
 using PandaHR.Api.Services.Models.KnowledgeLevel;
 using PandaHR.Api.Services.Models.Skill;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PandaHR.Api.Services.Models.SkillKnowledge
 {

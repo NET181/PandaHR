@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PandaHR.Api.Services.Models
+﻿namespace PandaHR.Api.Services.Models
 {
-   public class SkillTypeServiceModel
+    public class SkillTypeServiceModel
     {
         public int Value { get; set; }
     }
