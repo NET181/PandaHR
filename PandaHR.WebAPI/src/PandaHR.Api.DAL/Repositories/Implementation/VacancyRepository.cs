@@ -47,5 +47,10 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             await _context.Vacancies.AddAsync(vacancy);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Vacancy> GetByIdWithSkillRequestAsync(Guid Id)
+        {
+            return await _context.Set<Vacancy>().FindAsync(Id);
+        }
     }
 }

@@ -585,40 +585,6 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("KnowledgeLevels");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e81"),
-                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsDeleted = false,
-                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Beginer"
-                        },
-                        new
-                        {
-                            Id = new Guid("32832ec4-968b-4619-b8cb-af4e65c52a37"),
-                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsDeleted = false,
-                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Lower Intermidiate"
-                        },
-                        new
-                        {
-                            Id = new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31"),
-                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsDeleted = false,
-                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Intermidiate"
-                        },
-                        new
-                        {
-                            Id = new Guid("9b9be3ca-9c11-4afe-9c5f-225bbf192e81"),
-                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsDeleted = false,
-                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Upper Intermidiate"
-                        });
                 });
 
             modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.Qualification", b =>
@@ -775,7 +741,13 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<Guid>("VacancyId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("ExperienceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
@@ -783,6 +755,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
 
                     b.Property<Guid>("KnowledgeLevelId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<float>("Weight")
                         .HasColumnType("real");
@@ -815,6 +790,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
