@@ -21,13 +21,11 @@ namespace PandaHR.Api.Services.Implementation
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
-        private readonly IMapper _mapper;
 
         public CVService(IMapper mapper, IUnitOfWork uow)
         {
             _mapper = mapper;
             _uow = uow;
-            _mapper = mapper;
         }
 
         public async Task AddAsync(CVCreationServiceModel cvServiceModel)
@@ -79,6 +77,11 @@ namespace PandaHR.Api.Services.Implementation
             var result = (await _uow.Vacancies.GetAllAsync()).Where(v => MatchVacancyCV.Matches(v, cv) > 0);
 
             return _mapper.Map<IEnumerable<Vacancy>, IEnumerable<VacancySummaryDTO>>(result);
+        }
+
+        public async Task AddAsync(CV entity)
+        {
+            await _uow.CVs.Add(entity);
         }
     }
 }

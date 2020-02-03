@@ -10,7 +10,7 @@ namespace PandaHR.Api.DAL.DTOs.CV
         public Guid Id { get; set; }
         public string Summary { get; set; }
         public bool IsActive { get; set; }
-        public Guid UserId { get; set; }
+        public Guid? UserId { get; set; }
         public string QualificationName { get; set; }
         public int QualificationValue { get; set; }
         public string TechnologyName { get; set; }
