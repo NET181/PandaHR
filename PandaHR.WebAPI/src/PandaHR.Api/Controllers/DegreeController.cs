@@ -23,7 +23,7 @@ namespace PandaHR.Api.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/degrees
+        // GET: api/degree
         [HttpGet]
         public async Task<IActionResult> GetDegreesAsync()
         {
@@ -41,15 +41,6 @@ namespace PandaHR.Api.Controllers
             {
                 return NotFound();
             }
-        }
-
-        // GET: api/Degree
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var allDegrees = await _degreeService.GetAllAsync();
-
-            return Ok(allDegrees);
         }
 
         // GET: api/Degree/5    
