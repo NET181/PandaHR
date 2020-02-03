@@ -116,43 +116,6 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             return await _context.Set<T>().FindAsync(Id);
         }
 
-        public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate = null,
-                  Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-                  Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
-                  bool disableTracking = true, bool ignoreQueryFilters = false)
-        {
-            IQueryable<T> query = _dbSet;
-
-            if (disableTracking)
-            {
-                query = query.AsNoTracking();
-            }
-
-            if (include != null)
-            {
-                query = include(query);
-            }
-
-            if (predicate != null)
-            {
-                query = query.Where(predicate);
-            }
-
-            if (ignoreQueryFilters)
-            {
-                query = query.IgnoreQueryFilters();
-            }
-
-            if (orderBy != null)
-            {
-                return await orderBy(query).FirstOrDefaultAsync();
-            }
-            else
-            {
-                return await query.FirstOrDefaultAsync();
-            }
-        }
-
         public async Task Add(T entity)
         {
             await _context.Set<T>().AddAsync(entity);

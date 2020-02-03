@@ -198,23 +198,6 @@ namespace PandaHR.Api.DAL
             }
         }
 
-        public IUserRepository Users => _userRepository;
-
-        public IQualificationRepository Qualifications
-        {
-            get
-            {
-                return _qualificationRepository;
-            }
-        }
-
-        public ISkillRequirementRepository SkillRequirements
-        {
-            get
-            {
-                return _skillRequirementRepository;
-            }
-        }
         public ICountryRepository Countries
         {
             get

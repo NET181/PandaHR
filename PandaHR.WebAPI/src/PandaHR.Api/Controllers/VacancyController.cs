@@ -39,14 +39,6 @@ namespace PandaHR.Api.Controllers
             return Ok();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(Vacancy vacancy)
-        {
-            await _vacancyService.AddAsync(vacancy);
-
-            return Ok();
-        }
-
         [HttpPut]
         public async Task<IActionResult> Put(Guid id, Vacancy vacancy)
         {
