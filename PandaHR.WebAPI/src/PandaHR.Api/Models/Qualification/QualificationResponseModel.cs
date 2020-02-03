@@ -2,7 +2,7 @@
 
 namespace PandaHR.Api.Models.Qualification
 {
-    public class QualificationResponceModel
+    public class QualificationResponseModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

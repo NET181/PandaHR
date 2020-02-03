@@ -29,13 +29,13 @@ namespace PandaHR.Api.Controllers
         {
             var degreesServiceModel = await _degreeService.GetDegreesAsync();
 
-            var responceModels = _mapper
+            var responseModels = _mapper
                 .Map<ICollection<DegreeServiceModel>
-                , ICollection<DegreeResponceModel>>(degreesServiceModel);
+                , ICollection<DegreeResponseModel>>(degreesServiceModel);
 
-            if (responceModels != null)
+            if (responseModels != null)
             {
-                return Ok(responceModels);
+                return Ok(responseModels);
             }
             else
             {

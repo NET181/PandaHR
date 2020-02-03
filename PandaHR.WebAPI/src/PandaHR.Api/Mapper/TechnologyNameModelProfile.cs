@@ -8,7 +8,7 @@ namespace PandaHR.Api.Mapper
     {
         public TechnologyNameModelProfile()
         {
-            CreateMap<TechnologyNameServiceModel, TechnologyNameResponceModel>();
+            CreateMap<TechnologyNameServiceModel, TechnologyNameResponseModel>();
         }
     }
 }

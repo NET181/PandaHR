@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PandaHR.Api.DAL.DTO.Qualification
+namespace PandaHR.Api.DAL.DTOs.Qualification
 {
     public class QualificationDTO
     {

@@ -1,5 +1,5 @@
 ﻿using PandaHR.Api.Common;
-using PandaHR.Api.DAL.DTO.Qualification;
+using PandaHR.Api.DAL.DTOs.Qualification;
 using PandaHR.Api.DAL.Models.Entities;
 
 namespace PandaHR.Api.DAL.Mapper

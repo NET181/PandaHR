@@ -1,11 +1,10 @@
 ﻿using System;
 
-namespace PandaHR.Api.DAL.DTO.Experience
+namespace PandaHR.Api.Models.Degree
 {
-    public class ExperienceDTO
+    public class DegreeResponseModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public int Value { get; set; }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace PandaHR.Api.Models.Degree
+namespace PandaHR.Api.Models.Technology
 {
-    public class DegreeResponceModel
+    public class TechnologyNameResponseModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

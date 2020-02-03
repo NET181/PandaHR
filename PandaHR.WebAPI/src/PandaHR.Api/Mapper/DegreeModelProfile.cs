@@ -8,7 +8,7 @@ namespace PandaHR.Api.Mapper
     {
         public DegreeModelProfile()
         {
-            CreateMap<DegreeServiceModel, DegreeResponceModel>();
+            CreateMap<DegreeServiceModel, DegreeResponseModel>();
         }   
     }
 }

@@ -27,13 +27,14 @@ namespace PandaHR.Api.Controllers
         public async Task<IActionResult> GetTechnologyNames()
         {
             var technologyNamesServiceModel = await _technologyService.GetTechnologyNamesAsync();
-            var responceModels = _mapper
-                .Map<ICollection<TechnologyNameServiceModel>
-                , ICollection<TechnologyNameResponceModel>>(technologyNamesServiceModel);
 
-            if(responceModels != null)
+            var responseModels = _mapper
+                .Map<ICollection<TechnologyNameServiceModel>
+                , ICollection<TechnologyNameResponseModel>>(technologyNamesServiceModel);
+
+            if(responseModels != null)
             {
-                return Ok(responceModels);
+                return Ok(responseModels);
             }
             else
             {
