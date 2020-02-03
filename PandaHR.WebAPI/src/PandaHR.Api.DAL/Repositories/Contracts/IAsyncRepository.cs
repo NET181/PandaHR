@@ -26,7 +26,5 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
                                        bool ignoreQueryFilters = false);
 
         Task<T> GetByIdAsync(Guid id);
-
-        //Task InsertAsync(params T[] entities) => _dbSet.AddRangeAsync(entities);
     }
 }
