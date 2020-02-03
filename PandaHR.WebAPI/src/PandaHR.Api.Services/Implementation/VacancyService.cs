@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PandaHR.Api.Common.Contracts;
+﻿using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
+using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.Vacancy;
@@ -18,7 +18,7 @@ namespace PandaHR.Api.Services.Implementation
         public VacancyService(IUnitOfWork uow, IMapper mapper)
         {
             _uow = uow;
-            _mapper = mapper;            
+            _mapper = mapper;
         }
 
         public async Task AddAsync(Vacancy entity)
@@ -70,6 +70,18 @@ namespace PandaHR.Api.Services.Implementation
         public async Task UpdateAsync(Vacancy vacancy)
         {
             await _uow.Vacancies.Update(vacancy);
+        }
+
+        public async Task AddAsync(VacancyServiceModel vacancyServiceModel)
+        {
+            var vacancyDto = _mapper.Map<VacancyServiceModel, VacancyDTO>(vacancyServiceModel);
+
+            await _uow.Vacancies.AddAsync(vacancyDto);
+        }
+
+        public async Task<IEnumerable<VacancySummaryDTO>> GetVacancyPreviewAsync(Guid userId, int? pageSize, int? page)
+        {
+            return await _uow.Vacancies.GetUserVacancySummaryAsync(userId, pageSize, page);
         }
     }
 }

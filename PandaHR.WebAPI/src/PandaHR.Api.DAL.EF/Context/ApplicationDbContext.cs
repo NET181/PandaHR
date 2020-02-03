@@ -57,7 +57,6 @@ namespace PandaHR.Api.DAL.EF.Context
 
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.ApplyConfiguration<Country>(new CountryConfiguration())
                 .ApplyConfiguration<City>(new CityConfiguration())
                 .ApplyConfiguration<CompanyCity>(new CompanyCityConfiguration())
@@ -84,41 +83,41 @@ namespace PandaHR.Api.DAL.EF.Context
 
         public override int SaveChanges()
         {
-            ChangeTracker.DetectChanges();
+            OnBeforeSaving();
 
-            var markedAsDeleted = ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted);
-
-            foreach (var item in markedAsDeleted)
-            {
-                if (item.Entity is ISoftDeletable entity)
-                {
-                    // Set the entity to unchanged (if we mark the whole entity as Modified, every field gets sent to Db as an update)
-                    item.State = EntityState.Unchanged;
-                    // Only update the IsDeleted flag - only this will get sent to the Db
-                    entity.IsDeleted = true;
-                }
-            }
             return base.SaveChanges();
         }
 
         public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
+            OnBeforeSaving();
+            
+            return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        private void OnBeforeSaving()
+        {
             ChangeTracker.DetectChanges();
 
-            var markedAsDeleted = ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted);
-
-            foreach (var item in markedAsDeleted)
+            var deletedEntities = ChangeTracker.Entries<ISoftDeletable>().Where(E => E.State == EntityState.Deleted).ToList();
+            deletedEntities.ForEach(e =>
             {
-                if (item.Entity is ISoftDeletable entity)
-                {
-                    // Set the entity to unchanged (if we mark the whole entity as Modified, every field gets sent to Db as an update)
-                    item.State = EntityState.Unchanged;
-                    // Only update the IsDeleted flag - only this will get sent to the Db
-                    entity.IsDeleted = true;
-                }
-            }
+                e.State = EntityState.Unchanged;
+                e.Entity.IsDeleted = true;
+                
+            });
 
-            return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+            var addedEntities = ChangeTracker.Entries<IBaseEntity>().Where(E => E.State == EntityState.Added).ToList();
+            addedEntities.ForEach(e =>
+            {
+                e.Entity.AddedDate = DateTime.UtcNow;
+            });
+
+            var modifiedEntities = ChangeTracker.Entries<IBaseEntity>().Where(E => E.State == EntityState.Modified).ToList();
+            modifiedEntities.ForEach(e =>
+            {
+                e.Entity.ModifiedDate = DateTime.UtcNow;
+            });
         }
     }
 }

@@ -9,6 +9,9 @@ namespace PandaHR.Api.Services.Models.KnowledgeLevel
         {
             SkillKnowledgeTypes = new List<SkillKnowledgeTypeServiceModel>();
         }
+
+        public Guid Id { get; set; }
+       public string Name { get; set; }
        public List<SkillKnowledgeTypeServiceModel> SkillKnowledgeTypes { get; set; }
     }
 }

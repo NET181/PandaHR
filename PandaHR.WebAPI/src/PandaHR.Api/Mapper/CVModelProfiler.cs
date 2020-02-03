@@ -11,6 +11,8 @@ namespace PandaHR.Api.Mapper
             CreateMap<CVCreationRequestModel, CVServiceModel>();
             
 
+            CreateMap<CVCreationRequestModel, CVCreationServiceModel>();
+
         }
     }
 }

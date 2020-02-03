@@ -22,7 +22,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
         public async Task<ICollection<EducationBasicInfoDTO>> GetBasicInfoByAutofillByName(string name)
         {
             IQueryable<EducationBasicInfoDTO> query = _context.Educations.AsQueryable()
-                .Where(e => e.PlaceName.Contains(name))
+                .Where(c => Microsoft.EntityFrameworkCore.EF.Functions.Like(c.PlaceName, $"%{name}%"))
                 .Select(e => new EducationBasicInfoDTO()
                 {
                     Id = e.Id,

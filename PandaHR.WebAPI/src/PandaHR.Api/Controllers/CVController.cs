@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Models.CV;
@@ -6,9 +8,7 @@ using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.Models.SkillKnowledge;
 using PandaHR.Api.Services.Models.User;
-using System;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
 namespace PandaHR.Api.Controllers
 {
@@ -25,11 +25,22 @@ namespace PandaHR.Api.Controllers
             _cvService = cvService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        [HttpGet("/UserCVsExt")]
+        public async Task<IActionResult> GetUserCVs(Guid userId, int page, int pageSize)
         {
+            return Ok(await _cvService.GetUserCVsAsync(userId, pageSize, page));
+        }
 
-            return NotFound();
+        [HttpGet("/UserCVsSummary")]
+        public async Task<IActionResult> GetUserCVsSummary(Guid userId, int page, int pageSize)
+        {
+            return Ok(await _cvService.GetUserCVsPreviewAsync(userId, pageSize, page));
+        }
+
+        [HttpGet("/VacanciesForCV")]
+        public async Task<IActionResult> GetVacanciesForCV(Guid CVId, int page, int pageSize)
+        {
+            return Ok(await _cvService.GetVacanciesForCV(CVId, pageSize, page));
         }
 
         [HttpDelete("{id}")]
@@ -85,14 +96,8 @@ namespace PandaHR.Api.Controllers
                     KnowledgeLevelId = new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31"),
                     SkillId = new Guid("503661d4-297f-4e3d-f1cb-08d7a67ce45d")
                 });
-                cv.SkillKnowledges.Add(new SkillKnowledgeServiceModel()
-                {
-                    ExperienceId = new Guid("561d468e-a93b-4e6b-a576-52b3d7bbf32a"),
-                    KnowledgeLevelId = new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31"),
-                    SkillId = new Guid("503661d4-297f-4e3d-f1cb-08d7a67ce45d")
-                });
 
-                var cvServiceModel = _mapper.Map<CVCreationRequestModel, CVServiceModel>(cv);
+                var cvServiceModel = _mapper.Map<CVCreationRequestModel, CVCreationServiceModel>(cv);
                 await _cvService.AddAsync(cvServiceModel);
 
                 return Ok();

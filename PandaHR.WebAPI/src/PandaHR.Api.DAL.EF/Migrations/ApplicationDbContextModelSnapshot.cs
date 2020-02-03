@@ -158,11 +158,17 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("QualificationId")
                         .HasColumnType("uniqueidentifier");
@@ -193,11 +199,17 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("CountryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -212,22 +224,28 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         new
                         {
                             Id = new Guid("619619ff-8b86-d011-b42d-00cf4fc964ff"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CountryId = new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Dnipro"
                         },
                         new
                         {
                             Id = new Guid("629619ff-8b86-d011-b42d-00cf4fc964ff"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CountryId = new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Vinnytsia"
                         },
                         new
                         {
                             Id = new Guid("639619ff-8b86-d011-b42d-00cf4fc964ff"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CountryId = new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Kyiv"
                         });
                 });
@@ -238,11 +256,17 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -276,8 +300,14 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -290,31 +320,41 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         new
                         {
                             Id = new Guid("6f9619ff-8b86-d011-b42d-00cf4fc964ff"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Ukraine"
                         },
                         new
                         {
                             Id = new Guid("7f9619ff-8b86-d011-b42d-00cf4fc964ff"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Russia"
                         },
                         new
                         {
                             Id = new Guid("8f9619ff-8b86-d011-b42d-00cf4fc964ff"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Georgia"
                         },
                         new
                         {
                             Id = new Guid("9f9619ff-8b86-d011-b42d-00cf4fc964ff"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Moldova"
                         },
                         new
                         {
                             Id = new Guid("0f9619ff-8b86-d011-b42d-00cf4fc964ff"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Belarus"
                         });
                 });
@@ -325,8 +365,14 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -339,25 +385,33 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         new
                         {
                             Id = new Guid("07a37911-a33e-4248-b8e3-02495f3030d4"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Specialist"
                         },
                         new
                         {
                             Id = new Guid("30d96e97-149f-4d6e-a398-2433b1a12cff"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Barchelor"
                         },
                         new
                         {
                             Id = new Guid("8ff346e5-b5ae-4afa-bbc6-cb08d5e8cbd3"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Master"
                         },
                         new
                         {
                             Id = new Guid("369c13f0-dbb1-4907-92b7-6d2afb0b5f95"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Postgraduate"
                         });
                 });
@@ -367,6 +421,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateEnd")
                         .HasColumnType("datetime2");
@@ -379,6 +436,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PlaceName")
                         .HasColumnType("nvarchar(max)");
@@ -406,8 +466,14 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -423,28 +489,36 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         new
                         {
                             Id = new Guid("561d468e-a93b-4e6b-a576-52b3d7bbf32a"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "0-6",
                             Value = 1
                         },
                         new
                         {
                             Id = new Guid("0e6ab8cc-66e2-4fa4-95fc-25aa0f2eff90"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "6-12",
                             Value = 2
                         },
                         new
                         {
                             Id = new Guid("8b4bc763-1e35-4b07-adc9-e9a7f01dad06"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "1+ year",
                             Value = 3
                         },
                         new
                         {
                             Id = new Guid("fbdf0376-ccd8-44f0-85b0-0609d4f25b0e"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "2+ year",
                             Value = 4
                         });
@@ -455,6 +529,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("CVId")
                         .HasColumnType("uniqueidentifier");
@@ -470,6 +547,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ProjectName")
                         .HasColumnType("nvarchar(max)");
@@ -490,8 +570,14 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -499,6 +585,40 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("KnowledgeLevels");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e81"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Beginer"
+                        },
+                        new
+                        {
+                            Id = new Guid("32832ec4-968b-4619-b8cb-af4e65c52a37"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Lower Intermidiate"
+                        },
+                        new
+                        {
+                            Id = new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Intermidiate"
+                        },
+                        new
+                        {
+                            Id = new Guid("9b9be3ca-9c11-4afe-9c5f-225bbf192e81"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Upper Intermidiate"
+                        });
                 });
 
             modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.Qualification", b =>
@@ -507,8 +627,14 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -524,28 +650,36 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         new
                         {
                             Id = new Guid("6015f293-a102-459b-9fa3-2ce7cc92c386"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Trainee",
                             Value = 1
                         },
                         new
                         {
                             Id = new Guid("6331e0ea-9df6-4e20-9bed-b18382b180bd"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Junior",
                             Value = 2
                         },
                         new
                         {
                             Id = new Guid("e2e061e1-201e-41f8-8fb8-1106b00f5ae7"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Middle",
                             Value = 3
                         },
                         new
                         {
                             Id = new Guid("a76428b1-aac5-410b-af4f-811c9b474997"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Senior",
                             Value = 4
                         });
@@ -557,8 +691,14 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -664,8 +804,14 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -684,8 +830,14 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -698,31 +850,41 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         new
                         {
                             Id = new Guid("f98a7083-825c-496a-9112-ecd375a17dcb"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Software Engineering"
                         },
                         new
                         {
                             Id = new Guid("3cceb22e-d32f-4a29-9c49-651b258c088d"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "System Analysis"
                         },
                         new
                         {
                             Id = new Guid("0d59cea4-85f5-4107-9d0f-8fecbe6a1933"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Applied Math"
                         },
                         new
                         {
                             Id = new Guid("2b82ca8b-1047-4830-83d5-e1e716b4407f"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Applied Physics"
                         },
                         new
                         {
                             Id = new Guid("3a4d31f3-c8ab-4f09-8fde-684af2890d69"),
+                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
+                            ModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Computer Science"
                         });
                 });
@@ -733,8 +895,14 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -776,6 +944,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid?>("CityId")
                         .HasColumnType("uniqueidentifier");
 
@@ -801,6 +972,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(256)")
@@ -871,6 +1045,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid?>("CityId")
                         .HasColumnType("uniqueidentifier");
 
@@ -885,6 +1062,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("QualificationId")
                         .HasColumnType("uniqueidentifier");

@@ -39,7 +39,7 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<SkillRequirement> GetByIdAsync(Guid id)
         {
-            return await _uow.SkillRequirements.GetFirstOrDefaultAsync(d => d.SkillId == id);
+            return await _uow.SkillRequirements.GetFirstOrDefaultAsync(d => d.Id == id);
         }
 
         public async Task UpdateAsync(SkillRequirement skillRequirement)

@@ -20,6 +20,8 @@ namespace PandaHR.Api.Services.Mapper
             .ForMember(x => x.User, o => o.MapFrom(c => c.User));
 
             CreateMap<CV, CVServiceModel>();
+            CreateMap<CVCreationServiceModel, CVDTO>();
+            CreateMap<CVforSearchDTO, CVServiceModel>();
         }
     }
 }

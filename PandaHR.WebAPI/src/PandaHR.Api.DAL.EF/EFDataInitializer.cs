@@ -154,7 +154,7 @@ namespace PandaHR.Api.DAL.EF
         {
             var companies = new Company[]
             {
-                new Company{ Name = "SoftServe", Description = "Very good company"},
+                new Company{Id = new Guid("53653054-750e-4ed8-a636-db00ee728b15"), Name = "SoftServe", Description = "Very good company"},
                 new Company{ Name = "Apriorit", Description = "Not bad company"},
                 new Company{ Name = "SiteCore", Description = "Big company"},
                 new Company{ Name = "NeoLit", Description = "Company from Dnipro"},
@@ -189,6 +189,7 @@ namespace PandaHR.Api.DAL.EF
 
             var parentSkill = new Skill
             {
+                Id = new Guid("477c595a-3188-476a-a4a5-7611bae371cd"),
                 Name = "C#",
                 IsDeleted = false,
                 RootSkillId = null,

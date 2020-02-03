@@ -3,11 +3,12 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Common.Contracts;
-using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Models.Vacancy;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.ScoreAlghorythm;
 using PandaHR.Api.Services.ScoreAlghorythm.Models;
 using PandaHR.Api.Models.IdAndRating;
+using PandaHR.Api.Services.Models.Vacancy;
 
 namespace PandaHR.Api.Controllers
 {
@@ -45,18 +46,14 @@ namespace PandaHR.Api.Controllers
                 throw ex;
             }
 
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("/getVacancySummary")]
+        public async Task<IActionResult> GetUserCVsSummary(Guid userId, int page, int pageSize)
         {
-            var skills = await _vacancyService.GetAllAsync();
-
-            return Ok(skills);
+            return Ok(await _vacancyService.GetVacancyPreviewAsync(userId, pageSize, page));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Vacancy vacancy)
+        public async Task<IActionResult> AddVacancy(VacancyCreationRequestModel vacancy)
         {
             await _vacancyService.AddAsync(vacancy);
 
