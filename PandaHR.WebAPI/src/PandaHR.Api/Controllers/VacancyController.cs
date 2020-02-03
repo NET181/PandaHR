@@ -21,7 +21,7 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCVsByRaitingForVacancy(Guid id )
+        public async Task<IActionResult> GetCVsByRaitingForVacancy(Guid id)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace PandaHR.Api.Controllers
             return Ok();
         }
 
-       
+
 
         [HttpDelete]
         public async Task<IActionResult> Delete(Guid id)

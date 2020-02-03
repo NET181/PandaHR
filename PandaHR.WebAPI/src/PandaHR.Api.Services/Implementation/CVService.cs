@@ -37,7 +37,33 @@ namespace PandaHR.Api.Services.Implementation
         {
             var CVs = new List<CV>
                 (await _uow.CVs.GetAllAsync(include: s => s
-                .Include(x => x.SkillKnowledges)));
+                .Include(x => x.SkillKnowledges)
+                    .ThenInclude(s => s.Skill)
+                    .ThenInclude(s => s.SubSkills)
+                .Include(x => x.SkillKnowledges)
+                    .ThenInclude(s => s.Skill)
+                    .ThenInclude(s => s.SkillType)
+                .Include(q => q.Qualification)
+                .Include(x => x.SkillKnowledges)
+                    .ThenInclude(k => k.KnowledgeLevel)
+                    .ThenInclude(t => t.SkillKnowledgeTypes)
+                .Include(e => e.SkillKnowledges)
+                .ThenInclude(e => e.Experience)));
+
+            /*
+             * .Include(x => x.SkillRequirements)
+                .ThenInclude(s => s.Skill)
+                .ThenInclude(t => t.SkillType)
+            .Include(x => x.SkillRequirements)
+                .ThenInclude(s => s.Skill)
+                .ThenInclude(s => s.SubSkills)
+             .Include(x => x.SkillRequirements)
+                .ThenInclude(e => e.Experience)
+             .Include(k => k.SkillRequirements)
+                .ThenInclude(k => k.KnowledgeLevel)
+                .ThenInclude(t => t.SkillKnowledgeTypes)
+            .Include(q => q.Qualification));
+             */
 
             return new List<CVServiceModel>(_mapper.Map<IEnumerable<CV>, IEnumerable<CVServiceModel>>(CVs)); ;
         }

@@ -18,8 +18,5 @@ namespace PandaHR.Api.Services.ScoreAlghorythm.Mapper
                 //.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
 
         }
-        //public Guid Id { get; set; }
-        //public List<SkillKnowledge> SkillKnowledges { get; set; }
-        //public int Qualification { get; set; }
     }
 }

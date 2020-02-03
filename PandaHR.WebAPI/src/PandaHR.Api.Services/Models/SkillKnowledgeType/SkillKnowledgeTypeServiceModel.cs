@@ -4,7 +4,10 @@ using System.Text;
 
 namespace PandaHR.Api.Services.Models.SkillKnowledgeType
 {
-    class SkillKnowledgeTypeServiceModel
+    public class SkillKnowledgeTypeServiceModel
     {
+        public Guid KnowledgeLevelId { get; set; }
+        public int Value { get; set; }
+       
     }
 }

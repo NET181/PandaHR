@@ -10,4 +10,8 @@
     <ProjectReference Include="..\PandaHR.Api.DAL\PandaHR.Api.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\SkillReq\" />
+  </ItemGroup>
+
 </Project>
