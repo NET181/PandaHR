@@ -67,24 +67,6 @@ namespace PandaHR.Api.Services.Implementation
             return _mapper.Map<Vacancy,VacancyServiceModel>(vacancys);
         }
 
-        //public async Task<Vacancy> GetByIdWithSkillAsync(Guid id)
-        //{
-        //    return await _uow.Vacancies.GetFirstOrDefaultAsync(d => d.Id == id
-        //    , include: i => i
-        //    .Include(x => x.SkillRequirements)
-        //        .ThenInclude(s => s.Skill)
-        //        .ThenInclude(t => t.SkillType)
-        //    .Include(x => x.SkillRequirements)
-        //        .ThenInclude(s => s.Skill)
-        //        .ThenInclude(s => s.SubSkills)
-        //     .Include(x => x.SkillRequirements)
-        //        .ThenInclude(e => e.Experience)
-        //     .Include(k => k.SkillRequirements)
-        //        .ThenInclude(k => k.KnowledgeLevel)
-        //        .ThenInclude(t => t.SkillKnowledgeTypes)
-        //    .Include(q => q.Qualification));
-        //}
-
         public async Task UpdateAsync(Vacancy vacancy)
         {
             await _uow.Vacancies.Update(vacancy);

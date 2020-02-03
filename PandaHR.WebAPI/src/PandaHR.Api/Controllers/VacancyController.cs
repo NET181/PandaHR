@@ -27,7 +27,7 @@ namespace PandaHR.Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("searchfor/{id}")]
         public async Task<IActionResult> GetCVsByRaitingForVacancy(Guid id)
         {
             try
