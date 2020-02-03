@@ -25,25 +25,21 @@ namespace PandaHR.Api.DAL.EF.Configurations
                 new KnowledgeLevel
                 {
                     Name = "Beginer",
-                    Value = 1,
                     Id = new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e81")
                 },
                 new KnowledgeLevel
                 {
                     Name = "Lower Intermidiate",
-                    Value = 2,
                     Id = new Guid("32832ec4-968b-4619-b8cb-af4e65c52a37")
                 },
                 new KnowledgeLevel
                 {
                     Name = "Intermidiate",
-                    Value = 3,
                     Id = new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31")
                 },
                 new KnowledgeLevel
                 {
                     Name = "Upper Intermidiate",
-                    Value = 4,
                     Id = new Guid("9b9be3ca-9c11-4afe-9c5f-225bbf192e81")
                 });
         }

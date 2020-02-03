@@ -61,6 +61,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ISpecialityService, SpecialityService>();
             services.AddScoped<IKnowledgeLevelService, KnowledgeLevelService>();
             services.AddScoped<ISkillTypeService, SkillTypeService>();
+            services.AddScoped<IExperienceService, ExperienceService>();
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ICityService, CityService>();
 

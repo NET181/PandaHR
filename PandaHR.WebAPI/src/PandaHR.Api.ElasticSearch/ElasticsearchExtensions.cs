@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nest;
+using Elasticsearch.Net;
 using PandaHR.Api.DAL.Models.Entities;
 
 namespace PandaHR.Api.ElasticSearch
@@ -13,8 +14,14 @@ namespace PandaHR.Api.ElasticSearch
         {
             var url = configuration["elasticsearch:url"];
             var defaultIndex = configuration["elasticsearch:index"];
+            var username = configuration["elasticsearch:url"];
+            var password = configuration["elasticsearch:index"];
 
-            var settings = new ConnectionSettings(new Uri(url))
+            var pool = new SingleNodeConnectionPool(new Uri(url));
+            var settings = new ConnectionSettings(pool)
+                .BasicAuthentication(username, password)
+                .ApiKeyAuthentication(username,password)
+                .DisablePing()
                 .DefaultIndex(defaultIndex)
                 .DefaultMappingFor<CV>(m => m
                     .Ignore(cv => cv.IsDeleted)

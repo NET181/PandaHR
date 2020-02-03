@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
-using System;
-using System.Threading.Tasks;
+using PandaHR.Api.Services.Models.CV;
 
 namespace PandaHR.Api.Controllers
 {
@@ -30,6 +32,24 @@ namespace PandaHR.Api.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [HttpGet("/UserCVsExt")]
+        public async Task<IActionResult> GetUserCVs(Guid userId, int page, int pageSize)
+        {
+            return Ok(await _cvService.GetUserCVsAsync(userId, pageSize, page));
+        }
+
+        [HttpGet("/UserCVsSummary")]
+        public async Task<IActionResult> GetUserCVsSummary(Guid userId, int page, int pageSize)
+        {
+            return Ok(await _cvService.GetUserCVsPreviewAsync(userId, pageSize, page));
+        }
+
+        [HttpGet("/VacanciesForCV")]
+        public async Task<IActionResult> GetVacanciesForCV(Guid vacancyId, int page, int pageSize)
+        {
+            return Ok(await _cvService.GetVacanciesForCV(vacancyId, pageSize, page));
         }
 
         [HttpDelete("{id}")]

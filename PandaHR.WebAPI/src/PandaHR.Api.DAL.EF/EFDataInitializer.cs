@@ -19,21 +19,23 @@ namespace PandaHR.Api.DAL.EF
 
         public void Seed()
         {
-            //_context.Database.EnsureDeleted();
-            //_context.Database.EnsureCreated();
-            //AddCompanies();
-            //AddCompanyCities();
-            //AddUser();
-            //AddUserCompany();
-            //AddTechnologies();
-            //AddCV();
-            //AddEducations();
-            //AddJobExperience();
-            //AddVacancy();
-            //AddSkillTypes();
-            //AddSkills();
-            //AddSkillKnowledge();
-            //AddSkillRequirements();
+            _context.Database.EnsureDeleted();
+            _context.Database.EnsureCreated();
+            AddCompanies();
+            AddCompanyCities();
+            AddUser();
+            AddUserCompany();
+            AddTechnologies();
+            AddCV();
+            AddEducations();
+            AddJobExperience();
+            AddVacancy();
+            AddSkillTypes();
+            AddSkills();
+            AddSkillKnowledge();
+            AddSkillRequirements();
+            AddTechnologySkills();
+            AddSkillKnowledgeTypes();
         }
 
         private void AddCV()
@@ -121,11 +123,11 @@ namespace PandaHR.Api.DAL.EF
 
             var users = new User[]
             {
-                new User { FirstName = "Kolya", SecondName = "Limonosov", CityId = cityId},
-                new User { FirstName = "Igor", SecondName = "Savlepov", CityId = cityId},
-                new User { FirstName = "Petr", SecondName = "Kolok", CityId = cityId},
-                new User { FirstName = "Hleb", SecondName = "Kibets", CityId = cityId},
-                new User { FirstName = "Sofia", SecondName = "Karpova", CityId = cityId}
+                new User { Id = new Guid("b072e561-9258-4502-8b40-c545b121cb0c"), FirstName = "Kolya", SecondName = "Limonosov", CityId = cityId},
+                new User { Id = new Guid("396f6c38-92e1-43b2-9fd0-39db398144e8"), FirstName = "Igor", SecondName = "Savlepov", CityId = cityId},
+                new User { Id = new Guid("8f52436e-274b-4944-94bc-8e8e7497c88c"), FirstName = "Petr", SecondName = "Kolok", CityId = cityId},
+                new User { Id = new Guid("d2e34494-2a44-4c0d-a09b-4cc9849e4e97"), FirstName = "Hleb", SecondName = "Kibets", CityId = cityId},
+                new User { Id = new Guid("5e0b7eed-1e24-4166-8f00-a563923d1fc5"), FirstName = "Sofia", SecondName = "Karpova", CityId = cityId}
             };
 
             _context.Users.AddRange(users);
@@ -211,6 +213,15 @@ namespace PandaHR.Api.DAL.EF
 
         private void AddTechnologies()
         {
+            var parentTechnology = new Technology()
+            {
+                Id = new Guid("a43f4b05-6cb1-4c72-9ebb-1fe5fd1fc62e"),
+                Name = "Fullstack",
+                IsDeleted = false,
+                ParentId = null
+            };
+            _context.Technologies.Add(parentTechnology);
+
             var technologies = new Technology[]
             {
                  new Technology()
@@ -218,20 +229,42 @@ namespace PandaHR.Api.DAL.EF
                     Id = new Guid("f43f4b05-6cb1-4c72-9ebb-1fe5fd1fc62e"),
                     Name = "Back-end",
                     IsDeleted = false,
-                    Parent = null,
-                    ParentId = null
+                    ParentId = parentTechnology.Id
                  },
                  new Technology()
                  {
                     Id = new Guid("c3c0583c-a662-421a-8013-ba05ded4a279"),
                     Name = "Front-end",
                     IsDeleted = false,
-                    Parent = null,
-                    ParentId = null
+                    ParentId = parentTechnology.Id
                  }
             };
 
             _context.Technologies.AddRange(technologies);
+            _context.SaveChanges();
+        }
+
+        private void AddTechnologySkills()
+        {
+            var skills = _context.Skills.ToArray();
+
+            var technologySkills = new TechnologySkill[]
+            {
+                 new TechnologySkill()
+                 {
+                    TechnologyId = new Guid("f43f4b05-6cb1-4c72-9ebb-1fe5fd1fc62e"),
+                    SkillId = skills[0].Id,
+                    IsDeleted = false
+                 },
+                 new TechnologySkill()
+                 {
+                    TechnologyId = new Guid("c3c0583c-a662-421a-8013-ba05ded4a279"),
+                    SkillId = skills[1].Id,
+                    IsDeleted = false
+                 }
+            };
+
+            _context.TechnologySkills.AddRange(technologySkills);
             _context.SaveChanges();
         }
 
@@ -297,10 +330,28 @@ namespace PandaHR.Api.DAL.EF
         {
             List<SkillType> skillTypes = new List<SkillType>()
             {
-                new SkillType {Name = "BackEnd", IsDeleted = false}
+                new SkillType {Name = "BackEnd", IsDeleted = false},
+                new SkillType {Name = "FrontEnd", IsDeleted = false},
+                new SkillType {Name = "FullStack", IsDeleted = false},
+                new SkillType {Name = "DB designer", IsDeleted = false}
             };
 
             _context.SkillTypes.AddRange(skillTypes);
+            _context.SaveChanges();
+        }
+
+        private void AddSkillKnowledgeTypes()
+        {
+            var skilltype = _context.SkillTypes.FirstOrDefault();
+            var knowledgeType = _context.KnowledgeLevels.Take(4).ToArray();
+
+            skilltype.SkillKnowledgeTypes = knowledgeType.Select((kn, index) => new SkillKnowledgeType()
+            {
+                SkillTypeId = skilltype.Id,
+                KnowledgeLevelId = kn.Id,
+                Value = index
+            }).ToList();
+
             _context.SaveChanges();
         }
     }

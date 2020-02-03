@@ -2,7 +2,7 @@
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    public class SkillRequirement : BaseEntity, ISoftDeletable
+    public class SkillRequirement : ISoftDeletable
     {
         public float Weight { get; set; }
         public bool IsDeleted { get; set; }
