@@ -66,9 +66,9 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? pageSize = 10, int? page = 1)
         {
             CVforSearchDTO cv = (await _uow.CVs.GetCVsAsync(cv => cv.Id == CVId, pageSize, page)).FirstOrDefault();
-            var result = await _uow.Vacancies.GetAllAsync(predicate: v => MatchVacancyCV.Matches(v, cv));
+            var result = (await _uow.Vacancies.GetAllAsync()).Where(v => MatchVacancyCV.Matches(v, cv) > 0);
 
-            return _mapper.Map<IList<Vacancy>, IList<VacancySummaryDTO>>(result);
+            return _mapper.Map<IEnumerable<Vacancy>, IEnumerable<VacancySummaryDTO>>(result);
         }
     }
 }

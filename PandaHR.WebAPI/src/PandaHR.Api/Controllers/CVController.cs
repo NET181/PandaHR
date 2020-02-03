@@ -47,9 +47,9 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpGet("/VacanciesForCV")]
-        public async Task<IActionResult> GetVacanciesForCV(Guid vacancyId, int page, int pageSize)
+        public async Task<IActionResult> GetVacanciesForCV(Guid CVId, int page, int pageSize)
         {
-            return Ok(await _cvService.GetVacanciesForCV(vacancyId, pageSize, page));
+            return Ok(await _cvService.GetVacanciesForCV(CVId, pageSize, page));
         }
 
         [HttpDelete("{id}")]
