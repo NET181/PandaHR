@@ -1,14 +1,15 @@
-﻿using PandaHR.Api.DAL.Models.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.Models.Skill;
 using PandaHR.Api.Services.Models.Vacancy;
 using PandaHR.Api.Services.ScoreAlghorythm.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PandaHR.Api.Services.ScoreAlghorythm
 {
