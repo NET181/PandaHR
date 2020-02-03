@@ -8,6 +8,6 @@ namespace PandaHR.Api.Services.Contracts
 {
     public interface ICVService
     {
-        Task AddAsync(CVServiceModel cvServiceModel);
+        Task AddAsync(CVCreationServiceModel cvServiceModel);
     }
 }

@@ -27,7 +27,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             var test = await _context.Companies.ToListAsync();
 
             IQueryable<CompanyBasicInfoDTO> query = _context.Companies.AsQueryable()
-                .Where(c => c.Name.Contains(name))
+                .Where(c => Microsoft.EntityFrameworkCore.EF.Functions.Like(c.Name, $"%{name}%"))
                 .Select(c => new CompanyBasicInfoDTO()
                 {
                     Id = c.Id,

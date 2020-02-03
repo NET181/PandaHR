@@ -87,14 +87,8 @@ namespace PandaHR.Api.Controllers
                     KnowledgeLevelId = new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31"),
                     SkillId = new Guid("503661d4-297f-4e3d-f1cb-08d7a67ce45d")
                 });
-                cv.SkillKnowledges.Add(new SkillKnowledgeServiceModel()
-                {
-                    ExperienceId = new Guid("561d468e-a93b-4e6b-a576-52b3d7bbf32a"),
-                    KnowledgeLevelId = new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31"),
-                    SkillId = new Guid("503661d4-297f-4e3d-f1cb-08d7a67ce45d")
-                });
 
-                var cvServiceModel = _mapper.Map<CVCreationRequestModel, CVServiceModel>(cv);
+                var cvServiceModel = _mapper.Map<CVCreationRequestModel, CVCreationServiceModel>(cv);
                 await _cvService.AddAsync(cvServiceModel);
 
                 return Ok();

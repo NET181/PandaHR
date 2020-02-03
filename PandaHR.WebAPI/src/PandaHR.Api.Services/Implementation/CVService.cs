@@ -24,9 +24,9 @@ namespace PandaHR.Api.Services.Implementation
             _uow = uow;
         }
 
-        public async Task AddAsync(CVServiceModel cvServiceModel)
+        public async Task AddAsync(CVCreationServiceModel cvServiceModel)
         {
-            CVDTO cv = _mapper.Map<CVServiceModel, CVDTO>(cvServiceModel);
+            CVDTO cv = _mapper.Map<CVCreationServiceModel, CVDTO>(cvServiceModel);
 
             await _uow.CVs.AddAsync(cv);
         }

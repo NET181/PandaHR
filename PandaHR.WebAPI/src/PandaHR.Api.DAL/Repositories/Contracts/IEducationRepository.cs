@@ -1,5 +1,6 @@
 ﻿using PandaHR.Api.DAL.DTOs.Education;
 using PandaHR.Api.DAL.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -12,7 +12,7 @@ namespace PandaHR.Api.Mapper
     {
         public CVModelProfiler()
         {
-            CreateMap<CVCreationRequestModel, CVServiceModel>();
+            CreateMap<CVCreationRequestModel, CVCreationServiceModel>();
 
         }
     }

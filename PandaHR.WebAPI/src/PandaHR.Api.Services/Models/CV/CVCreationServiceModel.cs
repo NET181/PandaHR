@@ -9,7 +9,7 @@ using System.Text;
 
 namespace PandaHR.Api.Services.Models.CV
 {
-    public class CVServiceModel
+    public class CVCreationServiceModel
     {
         public UserCreationServiceModel User { get; set; }
         public ICollection<EducationWithDetailsServiceModel> Educations { get; set; }

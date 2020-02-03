@@ -21,6 +21,7 @@ namespace PandaHR.Api.DAL.Mapper
             CreateMap<UserDTO, User>();
             CreateMap<UserCreationDTO, User>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => ($"{src.FirstName}{src.SecondName}")));
+
         }
     }
 }
