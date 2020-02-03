@@ -71,7 +71,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<IExperienceService, ExperienceService>();
 
-            services.AddSingleton<IMapper, PandaHRAutoMapper>();
+            services.AddSingleton<PandaHR.Api.Common.Contracts.IMapper, PandaHRAutoMapper>();
         }
     }
 }

@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +42,7 @@ namespace PandaHR.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //dataInitializer.Seed();
+                dataInitializer.Seed();
             }
             app.UseStaticFiles();
 
@@ -49,12 +50,13 @@ namespace PandaHR.Api
             app.UseRouting();
             app.UseAuthorization();
 
+
             app.UseOpenApi();
             app.UseSwaggerUi3(cfg=>
             {
                 cfg.CustomStylesheetPath = "/css/swaggercustom.css";
             });
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

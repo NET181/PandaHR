@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Newtonsoft.Json;
 using PandaHR.Api.Models.CV;
 using PandaHR.Api.Services.Models.Education;
 using PandaHR.Api.Services.Models.SkillKnowledge;
@@ -29,10 +32,10 @@ namespace PandaHR.Api.UnitTests
             {
                 Url = "api/User/"
             };
-
             // Act
-            var id = new Guid("232ca7e5-6c81-425e-ae2b-08d7a680c1b8");
+            var id = new Guid("b072e561-9258-4502-8b40-c545b121cb0c");
             var url = String.Format($"{request.Url}{id.ToString()}");
+            
             var response = await _client.GetAsync(url);
 
             // Assert
