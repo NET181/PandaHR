@@ -1,4 +1,5 @@
-﻿using PandaHR.Api.Common.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.Models.Entities;

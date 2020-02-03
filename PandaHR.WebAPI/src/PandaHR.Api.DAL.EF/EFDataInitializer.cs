@@ -19,8 +19,8 @@ namespace PandaHR.Api.DAL.EF
 
         public void Seed()
         {
-            //_context.Database.EnsureDeleted();
-            //_context.Database.EnsureCreated();
+            _context.Database.EnsureDeleted();
+            _context.Database.EnsureCreated();
             AddCompanies();
             AddCompanyCities();
             AddUser();
@@ -189,7 +189,6 @@ namespace PandaHR.Api.DAL.EF
 
             var parentSkill = new Skill
             {
-                Id = new Guid("477c595a-3188-476a-a4a5-7611bae371cd"),
                 Name = "C#",
                 IsDeleted = false,
                 RootSkillId = null,

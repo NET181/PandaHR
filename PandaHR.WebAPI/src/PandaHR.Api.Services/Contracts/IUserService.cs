@@ -2,6 +2,7 @@
 using PandaHR.Api.Services.Models.Company;
 using PandaHR.Api.Services.Models.User;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Contracts

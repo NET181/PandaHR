@@ -2,13 +2,13 @@
 using System;
 using System.Collections.Generic;
 using PandaHR.Api.Services.Models.Qualification;
-using PandaHR.Api.Services.Models.SkillRequirement;
 
 
 namespace PandaHR.Api.Services.Models.Vacancy
 {
     public class VacancyServiceModel
     {
+        public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public string Description { get; set; }
         public Guid CompanyId { get; set; }

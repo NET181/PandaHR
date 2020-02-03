@@ -1,4 +1,5 @@
 ﻿using PandaHR.Api.Services.Models.SkillKnowledgeType;
+using System;
 using System.Collections.Generic;
 
 namespace PandaHR.Api.Services.Models.KnowledgeLevel

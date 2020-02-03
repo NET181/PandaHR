@@ -8,8 +8,6 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PandaHR.Api.Common.Contracts;
-using PandaHR.Api.DAL.DTOs.CV;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.Services.Models.CV;
 
@@ -100,6 +98,21 @@ namespace PandaHR.Api.Services.Implementation
         public async Task AddAsync(CV entity)
         {
             await _uow.CVs.Add(entity);
+        }
+
+        Task<CVServiceModel> IAsyncService<CVServiceModel>.GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task AddAsync(CVServiceModel entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(CVServiceModel entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }
