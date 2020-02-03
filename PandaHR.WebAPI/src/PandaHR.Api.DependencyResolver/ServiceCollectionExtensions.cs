@@ -72,6 +72,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<IExperienceService, ExperienceService>();
+            services.AddScoped<ITechnologyService, TechnologyService>();
 
             services.AddScoped<IScoreCounter, ScoreCounter>();
             services.AddScoped<IScoreAlghorythm, ScoreAlghorythm>();
