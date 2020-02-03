@@ -3,7 +3,6 @@ using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PandaHR.Api.DAL.Models.Entities;
-using System.Threading.Tasks;
 using PandaHR.Api.DAL.DTOs.CV;
 
 namespace PandaHR.Api.DAL.Repositories.Contracts

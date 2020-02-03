@@ -1,5 +1,4 @@
-﻿using PandaHR.Api.DAL.Models.Entities;
-using PandaHR.Api.Services.Models.CV;
+﻿using PandaHR.Api.Services.Models.CV;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;

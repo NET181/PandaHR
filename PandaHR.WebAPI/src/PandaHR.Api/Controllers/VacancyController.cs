@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.Models.Vacancy;
 using PandaHR.Api.Services.Contracts;
-using PandaHR.Api.Services.Models.SkillRequirement;
 using PandaHR.Api.Services.Models.Vacancy;
 
 namespace PandaHR.Api.Controllers
@@ -17,17 +15,10 @@ namespace PandaHR.Api.Controllers
         private readonly IVacancyService _vacancyService;
         private readonly IMapper _mapper;
 
-        public VacancyController(IVacancyService vacancyService)
+        public VacancyController(IVacancyService vacancyService, IMapper mapper)
         {
             _vacancyService = vacancyService;
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var skills = await _vacancyService.GetAllAsync();
-
-            return Ok(skills);
+            _mapper = mapper;
         }
 
         [HttpGet("/getVacancySummary")]

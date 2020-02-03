@@ -33,11 +33,24 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
                 {
                     Id = c.Id,
                     Name = c.Name
-                }); 
+                });
 
             var companiesDto = await query.ToListAsync();
 
             return companiesDto;
+        }
+
+        public async Task<ICollection<CompanyNameDTO>> GetCompanyNamesByUserId(Guid userId)
+        {
+            var dtos = await _context.Companies.Where(c =>
+                 c.UserCompanies.Any(uc => uc.UserId == userId))
+                .Select(c => new CompanyNameDTO()
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                }).ToListAsync();
+
+            return dtos;
         }
     }
 }

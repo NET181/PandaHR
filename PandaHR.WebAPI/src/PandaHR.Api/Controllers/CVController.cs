@@ -8,9 +8,7 @@ using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.Models.SkillKnowledge;
 using PandaHR.Api.Services.Models.User;
-using System;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
 namespace PandaHR.Api.Controllers
 {
@@ -25,21 +23,6 @@ namespace PandaHR.Api.Controllers
         {
             _mapper = mapper;
             _cvService = cvService;
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
-        {
-            CV cv = await _cvService.GetByIdAsync(id);
-
-            if (cv != null)
-            {
-                return Ok(cv);
-            }
-            else
-            {
-                return NotFound();
-            }
         }
 
         [HttpGet("/UserCVsExt")]

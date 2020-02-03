@@ -9,7 +9,6 @@ using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.EF.Context;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.Repositories.Contracts;
-using System.Threading.Tasks;
 
 namespace PandaHR.Api.DAL.Repositories.Implementation
 {
@@ -39,7 +38,6 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             }
 
             return _mapper.Map<IEnumerable<Vacancy>, IEnumerable<VacancySummaryDTO>>(query);
-            _mapper = mapper;
         }
 
         public async Task AddAsync(VacancyDTO vacancyDto)

@@ -6,11 +6,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PandaHR.Api.Common.Contracts;
-using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.DTOs.CV;
 using PandaHR.Api.DAL.DTOs.Vacancy;
-using PandaHR.Api.DAL.Models.Entities;
-using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.CV;
 
 namespace PandaHR.Api.Services.Implementation
