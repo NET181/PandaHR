@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PandaHR.Api.DAL.EF.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -122,7 +122,8 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     AddedDate = table.Column<DateTime>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false)
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Value = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -655,6 +656,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 {
                     SkillId = table.Column<Guid>(nullable: false),
                     VacancyId = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     Weight = table.Column<float>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     KnowledgeLevelId = table.Column<Guid>(nullable: false),
@@ -716,21 +720,10 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 columns: new[] { "Id", "AddedDate", "IsDeleted", "ModifiedDate", "Name", "Value" },
                 values: new object[,]
                 {
-                    { new Guid("8b4bc763-1e35-4b07-adc9-e9a7f01dad06"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1+ year", 3 },
                     { new Guid("fbdf0376-ccd8-44f0-85b0-0609d4f25b0e"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "2+ year", 4 },
-                    { new Guid("561d468e-a93b-4e6b-a576-52b3d7bbf32a"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "0-6", 1 },
-                    { new Guid("0e6ab8cc-66e2-4fa4-95fc-25aa0f2eff90"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "6-12", 2 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "KnowledgeLevels",
-                columns: new[] { "Id", "AddedDate", "IsDeleted", "ModifiedDate", "Name" },
-                values: new object[,]
-                {
-                    { new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e81"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Beginer" },
-                    { new Guid("32832ec4-968b-4619-b8cb-af4e65c52a37"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lower Intermidiate" },
-                    { new Guid("9b9be3ca-2c11-4afe-9c5f-225bbf192e31"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intermidiate" },
-                    { new Guid("9b9be3ca-9c11-4afe-9c5f-225bbf192e81"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Upper Intermidiate" }
+                    { new Guid("8b4bc763-1e35-4b07-adc9-e9a7f01dad06"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1+ year", 3 },
+                    { new Guid("0e6ab8cc-66e2-4fa4-95fc-25aa0f2eff90"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "6-12", 2 },
+                    { new Guid("561d468e-a93b-4e6b-a576-52b3d7bbf32a"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "0-6", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -749,10 +742,10 @@ namespace PandaHR.Api.DAL.EF.Migrations
                 columns: new[] { "Id", "AddedDate", "IsDeleted", "ModifiedDate", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("2b82ca8b-1047-4830-83d5-e1e716b4407f"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Applied Physics" },
                     { new Guid("f98a7083-825c-496a-9112-ecd375a17dcb"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Software Engineering" },
                     { new Guid("3cceb22e-d32f-4a29-9c49-651b258c088d"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "System Analysis" },
                     { new Guid("0d59cea4-85f5-4107-9d0f-8fecbe6a1933"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Applied Math" },
+                    { new Guid("2b82ca8b-1047-4830-83d5-e1e716b4407f"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Applied Physics" },
                     { new Guid("3a4d31f3-c8ab-4f09-8fde-684af2890d69"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Computer Science" }
                 });
 

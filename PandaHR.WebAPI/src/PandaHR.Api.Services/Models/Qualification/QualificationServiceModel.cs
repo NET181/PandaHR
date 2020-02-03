@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PandaHR.Api.Services.Models.Qualification
+﻿namespace PandaHR.Api.Services.Models.Qualification
 {
     public class QualificationServiceModel
     {

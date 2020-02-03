@@ -1,5 +1,6 @@
 ﻿using PandaHR.Api.Common;
 using PandaHR.Api.DAL.DTOs.Qualification;
+using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Models.Qualification;
 
 namespace PandaHR.Api.Services.Mapper
@@ -9,6 +10,8 @@ namespace PandaHR.Api.Services.Mapper
         public QualificationServiceModelProfile()
         {
             CreateMap<QualificationDTO, QualificationServiceModel>();
+            
+            CreateMap<Qualification, QualificationServiceModel>();
         }
     }
 }

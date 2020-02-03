@@ -1,14 +1,15 @@
 ﻿using PandaHR.Api.Services.Models.CV;
-using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using PandaHR.Api.DAL.DTOs.CV;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.Models.Entities;
+using System;
+
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface ICVService
+    public interface ICVService : IAsyncService<CVServiceModel>
     {
         Task<IEnumerable<CVSummaryDTO>> GetUserCVsPreviewAsync(Guid userId, int? pageSize, int? page);
         Task<IEnumerable<CVforSearchDTO>> GetUserCVsAsync(Guid userId, int? pageSize = 10, int? page = 1);
