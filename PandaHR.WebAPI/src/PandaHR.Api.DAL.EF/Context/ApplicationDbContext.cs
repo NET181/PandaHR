@@ -1,13 +1,16 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using PandaHR.Api.DAL.EF.Configurations;
-using PandaHR.Api.DAL.Models;
-using PandaHR.Api.DAL.Models.Entities;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+
+using PandaHR.Api.DAL.EF.Configurations;
+using PandaHR.Api.DAL.Models;
+using PandaHR.Api.DAL.Models.Entities;
+
 
 namespace PandaHR.Api.DAL.EF.Context
 {
