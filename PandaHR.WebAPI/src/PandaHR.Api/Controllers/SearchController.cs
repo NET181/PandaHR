@@ -19,22 +19,6 @@ namespace PandaHR.Api.Controllers
             _elasticClient = elasticClient;
         }
 
-        [Route("/search/reindex")]
-        public async Task<IActionResult> ReIndex()
-        {
-            await _elasticClient.DeleteByQueryAsync<CVforSearchDTO>(q => q.MatchAll());
-
-            var allCVs = await _CVService.GetCVsForSearchAsync();
-
-            foreach (var cv in allCVs)
-            {
-                var res = await _elasticClient.IndexDocumentAsync(cv);
-                var debug = res.DebugInformation;
-            }
-
-            return Ok($"{allCVs.Count()} CV(s) reindexed");
-        }
-
         [Route("/search")]
         public async Task<IActionResult> Find(string query, int page = 1, int pageSize = 30)
         {

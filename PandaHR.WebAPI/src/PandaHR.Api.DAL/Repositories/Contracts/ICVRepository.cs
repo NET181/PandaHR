@@ -11,5 +11,6 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
     {
         Task<IEnumerable<CVSummaryDTO>> GetUserCVSummaryAsync(Guid userId, int? pageSize = 10, int? page = 1);
         Task<IEnumerable<CVforSearchDTO>> GetCVsAsync(Expression<Func<CV, bool>> predicate = null, int? pageSize = 10, int? page = 1);
+        IEnumerable<CVforSearchDTO> GetCVs(Expression<Func<CV, bool>> predicate = null, int? pageSize = 10, int? page = 1);
     }
 }

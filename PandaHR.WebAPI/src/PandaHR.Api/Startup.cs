@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DependencyResolver;
+using PandaHR.Api.ElasticSearch;
 
 namespace PandaHR.Api
 {
@@ -32,16 +33,18 @@ namespace PandaHR.Api
             {
                 document.DocumentName = "v1";
             });
+            services.AddElasticsearch(Configuration);
             services.RegisterDependencies(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDataInitializer dataInitializer)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDataInitializer dataInitializer, IElasticSearchDataInitializer elasticDataInitializer)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 dataInitializer.Seed();
+                elasticDataInitializer.Reindex();
             }
             app.UseStaticFiles();
 

@@ -46,7 +46,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             return _mapper.Map<IEnumerable<CV>, IEnumerable<CVSummaryDTO>>(query);
         }
 
-        public async Task<IEnumerable<CVforSearchDTO>> GetCVsAsync(Expression<Func<CV, bool>> predicate = null, int? pageSize = 10, int? page = 1)
+        private IQueryable<CV> GetCVQueryable(Expression<Func<CV, bool>> predicate = null, int? pageSize = 10, int? page = 1)
         {
             IQueryable<CV> query;
             if (predicate != null)
@@ -67,7 +67,17 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
                             .ThenInclude(c => c.Skill)
                                 .ThenInclude(s => s.SkillType)
                                     .ThenInclude(t => t.SkillKnowledgeTypes);
-            var selection = await query.ToListAsync();
+            if (pageSize != null && page != null)
+            {
+                query = query.Skip((int)pageSize * ((int)page - 1)).Take((int)pageSize);
+            }
+
+            return query;
+        }
+
+        public async Task<IEnumerable<CVforSearchDTO>> GetCVsAsync(Expression<Func<CV, bool>> predicate = null, int? pageSize = 10, int? page = 1)
+        {
+            var selection = await GetCVQueryable(predicate).ToListAsync();
             
             IEnumerable<CVforSearchDTO> query1 =
                 from t in selection
@@ -88,12 +98,34 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
                                         KnowledgeValueValue = s.KnowledgeLevel.SkillKnowledgeTypes.FirstOrDefault().Value
                                     }).ToHashSet()
                 };
-
-            if (pageSize != null && page != null)
-            {
-                query1 = query1.Skip((int)pageSize * ((int)page-1)).Take((int)pageSize);
-            }
             
+            return query1;
+        }
+
+        public IEnumerable<CVforSearchDTO> GetCVs(Expression<Func<CV, bool>> predicate = null, int? pageSize = 10, int? page = 1)
+        {
+            var selection = GetCVQueryable(predicate).ToList();
+
+            IEnumerable<CVforSearchDTO> query1 =
+                from t in selection
+                select new CVforSearchDTO()
+                {
+                    Id = t.Id,
+                    IsActive = t.IsActive,
+                    TechnologyName = t.Technology.Name,
+                    QualificationName = t.Qualification.Name,
+                    QualificationValue = t.Qualification.Value,
+                    Summary = t.Summary,
+                    UserId = t.UserId,
+                    SkillKnowledges = (from s in t.SkillKnowledges
+                                       select new SkillForSearchDTO()
+                                       {
+                                           SkillName = s.Skill.Name,
+                                           KnowledgeLevelName = s.KnowledgeLevel.Name,
+                                           KnowledgeValueValue = s.KnowledgeLevel.SkillKnowledgeTypes.FirstOrDefault().Value
+                                       }).ToHashSet()
+                };
+
             return query1;
         }
     }

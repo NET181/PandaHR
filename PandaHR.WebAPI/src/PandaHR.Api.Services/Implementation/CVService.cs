@@ -18,16 +18,17 @@ namespace PandaHR.Api.Services.Implementation
         private readonly IMapper _mapper;
         private readonly IElasticClient _elasticClient;
 
-        public CVService(IUnitOfWork uow, IMapper mapper)
+        public CVService(IUnitOfWork uow, IMapper mapper, IElasticClient elasticClient)
         {
             _uow = uow;
             _mapper = mapper;
+            _elasticClient = elasticClient;
         }
 
         public async Task AddAsync(CV entity)
         {
             await _uow.CVs.Add(entity);
-            await _elasticClient.IndexDocumentAsync(entity);
+            await _elasticClient.IndexDocumentAsync(_mapper.Map<CV, CVforSearchDTO>(entity));
         }
 
         public async Task<IEnumerable<CV>> GetAllAsync()
@@ -64,13 +65,15 @@ namespace PandaHR.Api.Services.Implementation
         public async Task RemoveAsync(CV entity)
         {
             await _uow.CVs.Remove(entity);
-            await _elasticClient.DeleteAsync<CV>(entity);
+            CVforSearchDTO mappedCV = _mapper.Map<CV, CVforSearchDTO>(entity);
+            await _elasticClient.DeleteAsync<CVforSearchDTO>(mappedCV);
         }
 
         public async Task UpdateAsync(CV entity)
         {
             await _uow.CVs.Update(entity);
-            await _elasticClient.UpdateAsync<CV>(entity, u => u.Doc(entity));
+            CVforSearchDTO mappedCV = _mapper.Map<CV, CVforSearchDTO>(entity);
+            await _elasticClient.UpdateAsync<CVforSearchDTO>(mappedCV, u => u.Doc(mappedCV));
         }
 
         public async Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? pageSize = 10, int? page = 1)

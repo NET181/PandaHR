@@ -3,11 +3,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nest;
 using Elasticsearch.Net;
-using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Common.Contracts;
 
 namespace PandaHR.Api.ElasticSearch
 {
-    public static class ElasticsearchExtensions
+    public static class ElasticSearchExtensions
     {
         public static void AddElasticsearch(
             this IServiceCollection services, IConfiguration configuration)
@@ -21,9 +21,7 @@ namespace PandaHR.Api.ElasticSearch
             var settings = new ConnectionSettings(pool)
                 .BasicAuthentication(username, password)
                 .DisableDirectStreaming()
-                .DefaultIndex(defaultIndex)
-                .DefaultMappingFor<CV>(m => m
-                    .Ignore(cv => cv.IsDeleted));
+                .DefaultIndex(defaultIndex);
             
             var client = new ElasticClient(settings);
 
@@ -32,6 +30,7 @@ namespace PandaHR.Api.ElasticSearch
             //);
 
             services.AddSingleton<IElasticClient>(client);
+            //services.AddScoped<IElasticSearchDataInitializer, ElasticSearchDataInitializer>();
         }
     }
 }

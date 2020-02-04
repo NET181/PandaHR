@@ -67,8 +67,8 @@ namespace PandaHR.Api.DependencyResolver
 
             services.AddScoped<IMapper, PandaHRAutoMapper>();
             services.AddSingleton<IMapper, PandaHRAutoMapper>();
-
-            services.AddElasticsearch(configuration);
+ 
+            services.AddScoped<IElasticSearchDataInitializer, ElasticSearchDataInitializer>();
         }
     }
 }
