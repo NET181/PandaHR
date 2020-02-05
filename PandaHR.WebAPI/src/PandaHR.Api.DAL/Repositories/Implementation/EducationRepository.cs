@@ -29,7 +29,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
                     PlaceName = e.PlaceName
                 });
 
-            var educations = await query.ToListAsync();
+            List<EducationBasicInfoDTO> educations = await query.ToListAsync();
 
             return educations;
         }

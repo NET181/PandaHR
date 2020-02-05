@@ -52,12 +52,21 @@ namespace PandaHR.Api.Controllers
         [Route("autofill/{name}")]
         public async Task<ActionResult<ICollection<EducationBasicInfoResponse>>> GetByName(string name)
         {
-            var educations = await _educationService.GetBasicInfoByAutofillByName(name);
+            ICollection<EducationBasicInfoServiceModel> educations = await _educationService.GetBasicInfoByAutofillByName(name);
 
-            var educationsResponse = _mapper.Map<ICollection<EducationBasicInfoServiceModel>,
-                ICollection<EducationBasicInfoResponse>>(educations);
+            ICollection<EducationBasicInfoResponse> educationsResponse = _mapper
+                .Map<ICollection<EducationBasicInfoServiceModel>,
+                    ICollection<EducationBasicInfoResponse>>(educations);
 
-            return Ok(educationsResponse);
+            if(educationsResponse != null)
+            {
+                return Ok(educationsResponse);
+
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // POST: api/Education
