@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
-using PandaHR.Api.Models.Company;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
+using PandaHR.Api.Models.Company;
 
 namespace PandaHR.Api.UnitTests.IntegrationTests
 {
