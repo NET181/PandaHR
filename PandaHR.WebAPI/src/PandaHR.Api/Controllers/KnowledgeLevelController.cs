@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using PandaHR.Api.Services.Contracts;
-using System.Threading.Tasks;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Services.Contracts;
+using System;
+using System.Threading.Tasks;
 
 namespace PandaHR.Api.Controllers
 {

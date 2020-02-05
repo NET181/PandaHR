@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Models.CV;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.CV;
+using PandaHR.Api.Services.Models.SkillKnowledge;
+using PandaHR.Api.Services.Models.User;
+using System.Collections.ObjectModel;
 
 namespace PandaHR.Api.Controllers
 {
@@ -12,26 +16,13 @@ namespace PandaHR.Api.Controllers
     [ApiController]
     public class CVController : Controller
     {
+        private IMapper _mapper;
         private readonly ICVService _cvService;
 
-        public CVController(ICVService cvService)
+        public CVController(IMapper mapper, ICVService cvService)
         {
+            _mapper = mapper;
             _cvService = cvService;
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
-        {
-            CV cv = await _cvService.GetByIdAsync(id);
-
-            if (cv != null)
-            {
-                return Ok(cv);
-            }
-            else
-            {
-                return NotFound();
-            }
         }
 
         [HttpGet("/UserCVsExt")]
@@ -47,9 +38,9 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpGet("/VacanciesForCV")]
-        public async Task<IActionResult> GetVacanciesForCV(Guid vacancyId, int page, int pageSize)
+        public async Task<IActionResult> GetVacanciesForCV(Guid CVId, int page, int pageSize)
         {
-            return Ok(await _cvService.GetVacanciesForCV(vacancyId, pageSize, page));
+            return Ok(await _cvService.GetVacanciesForCV(CVId, pageSize, page));
         }
 
         [HttpDelete("{id}")]
@@ -57,7 +48,7 @@ namespace PandaHR.Api.Controllers
         {
             try
             {
-                await _cvService.RemoveAsync(id);
+                // await _cvService.RemoveAsync(id);
 
                 return StatusCode(200);
             }
@@ -72,7 +63,7 @@ namespace PandaHR.Api.Controllers
         {
             try
             {
-                await _cvService.UpdateAsync(cv);
+                //  await _cvService.UpdateAsync(cv);
 
                 return StatusCode(200);
             }
@@ -83,19 +74,12 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(CV cv)
-        {
-            try
-            {
-                await _cvService.AddAsync(cv);
+        public async Task<IActionResult> Add(CVCreationRequestModel cv)
+        { 
+            var cvServiceModel = _mapper.Map<CVCreationRequestModel, CVCreationServiceModel>(cv);
+            await _cvService.AddAsync(cvServiceModel);
 
-                return StatusCode(200);
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            return Ok();
         }
-    
     }
 }

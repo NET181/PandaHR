@@ -14,7 +14,7 @@ namespace PandaHR.Api.DAL.EF.Configurations
                    .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(k => k.SkillKnowledges)
-                   .WithOne(s => s.Skill)   
+                   .WithOne(s => s.Skill)
                    .HasForeignKey(s => s.SkillId);
 
             builder.HasOne(t => t.SkillType)
@@ -22,8 +22,8 @@ namespace PandaHR.Api.DAL.EF.Configurations
                    .HasForeignKey(t => t.SkillTypeId);
 
             builder.HasMany(t => t.TechnologySkills)
-                .WithOne(t => t.Skill)
-                .HasForeignKey(t => t.SkillId);
+                   .WithOne(t => t.Skill)
+                   .HasForeignKey(t => t.SkillId);
 
             builder.HasMany(r => r.SkillRequirements)
                    .WithOne(s => s.Skill)

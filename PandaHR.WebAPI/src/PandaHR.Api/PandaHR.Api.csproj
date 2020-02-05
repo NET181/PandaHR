@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,10 +22,8 @@
   <ItemGroup>
     <ProjectReference Include="..\PandaHR.Api.Common\PandaHR.Api.Common.csproj" />
     <ProjectReference Include="..\PandaHR.Api.DependencyResolver\PandaHR.Api.DependencyResolver.csproj" />
+    <ProjectReference Include="..\PandaHR.Api.ElasticSearch\PandaHR.Api.ElasticSearch.csproj" />
     <ProjectReference Include="..\PandaHR.Api.Services\PandaHR.Api.Services.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\CV\" />
   </ItemGroup>
 
 </Project>

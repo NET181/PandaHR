@@ -19,7 +19,7 @@ namespace PandaHR.Api.DAL.Models.Entities
         public Guid? RootSkillId { get; set; }
         public Skill RootSkill { get; set; }
         public Guid SkillTypeId { get; set; }
-        public SkillType SkillType { get; set; }
+        public SkillType SkillType { get; set; } 
 
         public ICollection<TechnologySkill> TechnologySkills { get; set; }
         public ICollection<Skill> SubSkills { get; set; }

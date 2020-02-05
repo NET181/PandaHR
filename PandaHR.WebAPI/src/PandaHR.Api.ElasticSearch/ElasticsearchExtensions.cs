@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nest;
 using Elasticsearch.Net;
-using PandaHR.Api.Common.Contracts;
 
 namespace PandaHR.Api.ElasticSearch
 {
@@ -25,12 +24,8 @@ namespace PandaHR.Api.ElasticSearch
             
             var client = new ElasticClient(settings);
 
-            //var createIndexResponse = client.Indices.Create(defaultIndex, c => c
-            //    .Map<CV>(m => m.AutoMap())
-            //);
-
             services.AddSingleton<IElasticClient>(client);
-            //services.AddScoped<IElasticSearchDataInitializer, ElasticSearchDataInitializer>();
+            
         }
     }
 }

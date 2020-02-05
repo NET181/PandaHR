@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Models.Company;
 using PandaHR.Api.Models.User;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.Company;
 using PandaHR.Api.Services.Models.User;
 
 namespace PandaHR.Api.Controllers
@@ -20,6 +23,16 @@ namespace PandaHR.Api.Controllers
         {
             _mapper = mapper;
             _userService = userService;
+        }
+
+        [HttpGet]
+        [Route("api/user/full/{id}")]
+        public async Task<ActionResult<UserFullInfoResponse>> GetFullInfoById(Guid id)
+        {
+            var user = await _userService.GetFullInfoById(id);
+            var userResponse = _mapper.Map<UserFullInfoServiceModel, UserFullInfoResponse>(user);
+
+            return Ok(userResponse);
         }
 
         [HttpGet]
@@ -39,6 +52,23 @@ namespace PandaHR.Api.Controllers
             if (userResponseModel != null)
             {
                 return Ok(userResponseModel);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        // GET: api/User/5/companies
+        [HttpGet("{id}/companies")]
+        public async Task<IActionResult> GetUserCompaniesById(Guid id)
+        {
+            var companiesServiceModels = await _userService.GetUserCompanies(id);
+            var responseModels = _mapper
+                .Map<ICollection<CompanyNameServiceModel>, ICollection<CompanyNameResponseModel>>(companiesServiceModels);
+            if (responseModels != null)
+            {
+                return Ok(responseModels);
             }
             else
             {

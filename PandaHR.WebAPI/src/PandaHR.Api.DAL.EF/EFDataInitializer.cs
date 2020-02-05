@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.EF.Context;
 using PandaHR.Api.DAL.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PandaHR.Api.DAL.EF
 {
@@ -32,9 +33,11 @@ namespace PandaHR.Api.DAL.EF
             AddVacancy();
             AddSkillTypes();
             AddSkills();
+            AddKnowledgeLevel();
             AddSkillKnowledge();
             AddSkillRequirements();
             AddTechnologySkills();
+
             AddSkillKnowledgeTypes();
         }
 
@@ -71,7 +74,7 @@ namespace PandaHR.Api.DAL.EF
                     UserId = userId, QualificationId = qualificationId},
                 new Vacancy{ TechnologyId = technologyId, CityId = cityId, CompanyId = companyId, Description = "Even better vacancy than the previous!",
                     UserId = userId, QualificationId = qualificationId},
-                new Vacancy{ TechnologyId = technologyId, CityId = cityId, CompanyId = companyId, Description = "Vacancy for C# developer",
+                new Vacancy{ TechnologyId = technologyId, CityId = cityId, CompanyId = companyId, Description = "Vacancy for .Net developer",
                     UserId = userId, QualificationId = qualificationId}
             };
 
@@ -152,7 +155,7 @@ namespace PandaHR.Api.DAL.EF
         {
             var companies = new Company[]
             {
-                new Company{ Name = "SoftServe", Description = "Very good company"},
+                new Company{Id = new Guid("53653054-750e-4ed8-a636-db00ee728b15"), Name = "SoftServe", Description = "Very good company"},
                 new Company{ Name = "Apriorit", Description = "Not bad company"},
                 new Company{ Name = "SiteCore", Description = "Big company"},
                 new Company{ Name = "NeoLit", Description = "Company from Dnipro"},
@@ -190,20 +193,21 @@ namespace PandaHR.Api.DAL.EF
                 Name = "C#",
                 IsDeleted = false,
                 RootSkillId = null,
-                SkillTypeId = skillType[0].Id
+                SkillTypeId = skillType[0].Id,
+                Id = new Guid("b072e561-9258-4512-8b40-c545b121cb0c")
             };
 
             _context.Skills.Add(parentSkill);
 
             var skills = new Skill[]
             {
-                new Skill {Name = "Asp.Net Core", IsDeleted = false, RootSkillId = parentSkill.Id,
+                new Skill {Id = new Guid("b072e511-9258-4502-8b40-c545b121cb0c"), Name = "Asp.Net Core", IsDeleted = false, RootSkillId = parentSkill.Id,
                     SkillTypeId = skillType[0].Id},
-                new Skill {Name = "Windows Forms", IsDeleted = false, RootSkillId = parentSkill.Id,
+                new Skill {Id = new Guid("b072e561-9458-4502-8b40-c545b121cb0c"), Name = "Windows Forms", IsDeleted = false, RootSkillId = parentSkill.Id,
                     SkillTypeId = skillType[0].Id},
-                new Skill {Name = "WPF", IsDeleted = false, RootSkillId = parentSkill.Id,
+                new Skill {Id = new Guid("b072e561-9258-4502-8b45-c545b121cb0c"), Name = "WPF", IsDeleted = false, RootSkillId = parentSkill.Id,
                     SkillTypeId = skillType[0].Id},
-                new Skill {Name = "Web Forms", IsDeleted = false, RootSkillId = parentSkill.Id,
+                new Skill {Id = new Guid("b072e561-9258-4502-3b40-c545b121cb0c"), Name = "Web Forms", IsDeleted = false, RootSkillId = parentSkill.Id,
                     SkillTypeId = skillType[0].Id}
             };
 
@@ -330,27 +334,60 @@ namespace PandaHR.Api.DAL.EF
         {
             List<SkillType> skillTypes = new List<SkillType>()
             {
-                new SkillType {Name = "BackEnd", IsDeleted = false},
-                new SkillType {Name = "FrontEnd", IsDeleted = false},
-                new SkillType {Name = "FullStack", IsDeleted = false},
-                new SkillType {Name = "DB designer", IsDeleted = false}
+                new SkillType {Id = new Guid("b072e511-9258-4502-8b33-c545b121cb0c"),
+                    Name = "HardSkill", IsDeleted = false, Value = 1},
+                new SkillType {Id = new Guid("b072e511-9258-4502-8b35-c545b121cb0c"),
+                    Name = "SoftSkill", IsDeleted = false, Value = 3},
+                new SkillType {Id = new Guid("b072e511-9258-4502-8b66-c545b121cb0c"),
+                    Name = "LanguageSkill", IsDeleted = false, Value = 2},
             };
 
             _context.SkillTypes.AddRange(skillTypes);
             _context.SaveChanges();
         }
 
+        private void AddKnowledgeLevel()
+        {
+            List<KnowledgeLevel> knowledgeLevels = new List<KnowledgeLevel>()
+            {
+                new KnowledgeLevel {Name = "BeginnerLow", IsDeleted = false},
+                new KnowledgeLevel {Name = "Beginner", IsDeleted = false},
+                new KnowledgeLevel {Name = "BeginnerStrong", IsDeleted = false},
+                new KnowledgeLevel {Name = "ElementaryLow", IsDeleted = false},
+                new KnowledgeLevel {Name = "Elementary", IsDeleted = false},
+                new KnowledgeLevel {Name = "ElementaryStrong", IsDeleted = false},
+                new KnowledgeLevel {Name = "Pre–IntermediateLow", IsDeleted = false},
+                new KnowledgeLevel {Name = "Pre–Intermediate", IsDeleted = false},
+                new KnowledgeLevel {Name = "Pre–IntermediateStrong", IsDeleted = false},
+                new KnowledgeLevel {Name = "IntermediateLow", IsDeleted = false},
+                new KnowledgeLevel {Name = "Intermediate", IsDeleted = false},
+                new KnowledgeLevel {Name = "IntermediateStrong", IsDeleted = false},
+                new KnowledgeLevel {Name = "Upper–IntermediateLow", IsDeleted = false},
+                new KnowledgeLevel {Name = "Upper–Intermediate", IsDeleted = false},
+                new KnowledgeLevel {Name = "Upper–IntermediateStrong", IsDeleted = false},
+                new KnowledgeLevel {Name = "AdvancedLow", IsDeleted = false},
+                new KnowledgeLevel {Name = "Advanced", IsDeleted = false},
+                new KnowledgeLevel {Name = "AdvancedStrong", IsDeleted = false}
+            };
+
+            _context.KnowledgeLevels.AddRange(knowledgeLevels);
+            _context.SaveChanges();
+        }
+
         private void AddSkillKnowledgeTypes()
         {
-            var skilltype = _context.SkillTypes.FirstOrDefault();
-            var knowledgeType = _context.KnowledgeLevels.Take(4).ToArray();
+            var skilltypeList = _context.SkillTypes.Take(3).ToArray();
+            var knowledgeType = _context.KnowledgeLevels.Take(18).ToArray();
 
-            skilltype.SkillKnowledgeTypes = knowledgeType.Select((kn, index) => new SkillKnowledgeType()
+            foreach (var skilltype in skilltypeList)
             {
-                SkillTypeId = skilltype.Id,
-                KnowledgeLevelId = kn.Id,
-                Value = index
-            }).ToList();
+                skilltype.SkillKnowledgeTypes = knowledgeType.Select((kn, index) => new SkillKnowledgeType()
+                {
+                    SkillTypeId = skilltype.Id,
+                    KnowledgeLevelId = kn.Id,
+                    Value = index
+                }).ToList();
+            }
 
             _context.SaveChanges();
         }

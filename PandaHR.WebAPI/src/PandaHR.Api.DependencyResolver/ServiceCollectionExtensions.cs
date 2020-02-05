@@ -6,10 +6,12 @@ using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.EF;
 using PandaHR.Api.DAL.EF.Context;
+using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.Repositories.Contracts;
 using PandaHR.Api.DAL.Repositories.Implementation;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Implementation;
+using PandaHR.Api.Services.ScoreAlghorythm;
 using PandaHR.Api.ElasticSearch;
 
 namespace PandaHR.Api.DependencyResolver
@@ -22,6 +24,12 @@ namespace PandaHR.Api.DependencyResolver
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connection));
+
+            //services.AddDefaultIdentity<User>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddDefaultIdentity<User>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IDataInitializer, EFDataInitializer>();
 
@@ -45,6 +53,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<IExperienceRepository, ExperienceRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<ITechnologyRepository, TechnologyRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -64,7 +73,13 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<IExperienceService, ExperienceService>();
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ICityService, CityService>();
+            services.AddScoped<IExperienceService, ExperienceService>();
+            services.AddScoped<ITechnologyService, TechnologyService>();
 
+            services.AddScoped<IScoreCounter, ScoreCounter>();
+            services.AddScoped<IScoreAlghorythm, ScoreAlghorythm>();
+
+            services.AddSingleton<PandaHR.Api.Common.Contracts.IMapper, PandaHRAutoMapper>();
             services.AddScoped<IMapper, PandaHRAutoMapper>();
             services.AddSingleton<IMapper, PandaHRAutoMapper>();
  

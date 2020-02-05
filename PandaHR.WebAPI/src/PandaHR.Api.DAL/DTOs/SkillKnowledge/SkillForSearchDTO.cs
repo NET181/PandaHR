@@ -1,7 +1,4 @@
-﻿using System;
-using PandaHR.Api.DAL.Models.Entities;
-
-namespace PandaHR.Api.DAL.DTOs.SkillKnowledge
+﻿namespace PandaHR.Api.DAL.DTOs.SkillKnowledge
 {
     public class SkillForSearchDTO
     {

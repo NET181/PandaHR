@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,7 @@ namespace PandaHR.Api
             });
             services.AddElasticsearch(Configuration);
             services.RegisterDependencies(Configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,15 +52,15 @@ namespace PandaHR.Api
 
             app.UseHttpsRedirection();
             app.UseRouting();
-
             app.UseAuthorization();
+
 
             app.UseOpenApi();
             app.UseSwaggerUi3(cfg=>
             {
                 cfg.CustomStylesheetPath = "/css/swaggercustom.css";
             });
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

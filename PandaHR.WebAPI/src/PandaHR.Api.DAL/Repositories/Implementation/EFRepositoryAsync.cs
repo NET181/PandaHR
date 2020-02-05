@@ -57,27 +57,10 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             }
         }
 
-        public Task Remove(T entity)
-        {
-            _context.Set<T>().Remove(entity);
-            return _context.SaveChangesAsync();
-        }
-
-        public Task Update(T entity)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
-            return _context.SaveChangesAsync();
-        }
-
-        public async Task<T> GetByIdAsync(Guid Id)
-        {
-            return await _context.Set<T>().FindAsync(Id);
-        }
-
         public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate = null,
-                  Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-                  Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
-                  bool disableTracking = true, bool ignoreQueryFilters = false)
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+            bool disableTracking = true, bool ignoreQueryFilters = false)
         {
             IQueryable<T> query = _dbSet;
 
@@ -109,6 +92,28 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             {
                 return await query.FirstOrDefaultAsync();
             }
+        }
+
+        public async Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate)
+        {
+            return await _context.Set<T>().Where(predicate).ToListAsync();
+        }
+
+        public Task Remove(T entity)
+        {
+            _context.Set<T>().Remove(entity);
+            return _context.SaveChangesAsync();
+        }
+
+        public Task Update(T entity)
+        {
+            _context.Entry(entity).State = EntityState.Modified;
+            return _context.SaveChangesAsync();
+        }
+
+        public async Task<T> GetByIdAsync(Guid Id)
+        {
+            return await _context.Set<T>().FindAsync(Id);
         }
 
         public async Task Add(T entity)

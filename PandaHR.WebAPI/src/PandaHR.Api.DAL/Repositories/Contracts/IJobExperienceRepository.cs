@@ -2,7 +2,7 @@
 
 namespace PandaHR.Api.DAL.Repositories.Contracts
 {
-    public interface IJobExperienceRepository: IAsyncRepository<JobExperience>
+    public interface IJobExperienceRepository : IAsyncRepository<JobExperience>
     {
 
     }

@@ -1,19 +1,31 @@
-﻿using PandaHR.Api.DAL;
-using PandaHR.Api.DAL.Models.Entities;
-using PandaHR.Api.Services.Contracts;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using PandaHR.Api.Common.Contracts;
+using PandaHR.Api.DAL;
+using PandaHR.Api.DAL.DTOs.Qualification;
+using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.Qualification;
+using PandaHR.Api.DAL.Models.Entities;
+using System;
 
 namespace PandaHR.Api.Services.Implementation
 {
     public class QualificationService : IQualificationService
     {
         private readonly IUnitOfWork _uow;
+        private readonly IMapper _mapper;
 
-        public QualificationService(IUnitOfWork uow)
+        public QualificationService(IUnitOfWork uow, IMapper mapper)
         {
             _uow = uow;
+            _mapper = mapper;
+        }
+
+        public async Task<IEnumerable<QualificationServiceModel>> GetAllQualificationsAsync()
+        {
+            var dto = await _uow.Qualifications.GetQualificationDTOsAsync();
+
+            return _mapper.Map<ICollection<QualificationDTO>, ICollection<QualificationServiceModel>>(dto);
         }
 
         public async Task AddAsync(Qualification qualification)
@@ -34,7 +46,9 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<IEnumerable<Qualification>> GetAllAsync()
         {
-            return await _uow.Qualifications.GetAllAsync();
+            var qualifications = await _uow.Qualifications.GetAllAsync();
+
+            return qualifications;
         }
 
         public async Task<Qualification> GetByIdAsync(Guid id)
