@@ -107,8 +107,7 @@ namespace PandaHR.Api.DAL.EF.Context
             {
                 e.State = EntityState.Unchanged;
                 e.Entity.IsDeleted = true;
-                
-            });
+            }); 
 
             var addedEntities = ChangeTracker.Entries<IBaseEntity>().Where(E => E.State == EntityState.Added).ToList();
             addedEntities.ForEach(e =>

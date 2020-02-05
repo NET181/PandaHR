@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PandaHR.Api.DAL.EF;
-using PandaHR.Api.DAL.EF.Context;
 using System;
 using System.Linq;
+using PandaHR.Api.DAL.EF;
+using PandaHR.Api.DAL.EF.Context;
 
 namespace PandaHR.Api.UnitTests
 {
@@ -15,7 +15,6 @@ namespace PandaHR.Api.UnitTests
         {
             builder.ConfigureServices(services =>
             {
-
                 var descriptor = services.SingleOrDefault(
                   d => d.ServiceType ==
                      typeof(DbContextOptions<ApplicationDbContext>));
