@@ -13,6 +13,7 @@ namespace PandaHR.Api.DAL.Mapper
 
             CreateMap<Education, EducationWithDetailsDTO>();
             CreateMap<Education, EducationBasicInfoDTO>();
+            CreateMap<Education, EducationDTO>();
         }
     }
 }

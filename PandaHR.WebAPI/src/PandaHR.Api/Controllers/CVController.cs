@@ -9,6 +9,9 @@ using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.Models.SkillKnowledge;
 using PandaHR.Api.Services.Models.User;
 using System.Collections.ObjectModel;
+using PandaHR.Api.Validation.CV;
+using FluentValidation.Results;
+using System.Net;
 
 namespace PandaHR.Api.Controllers
 {
@@ -75,10 +78,10 @@ namespace PandaHR.Api.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Add(CVCreationRequestModel cv)
-        { 
+        {
             var cvServiceModel = _mapper.Map<CVCreationRequestModel, CVCreationServiceModel>(cv);
             await _cvService.AddAsync(cvServiceModel);
-
+                
             return Ok();
         }
     }
