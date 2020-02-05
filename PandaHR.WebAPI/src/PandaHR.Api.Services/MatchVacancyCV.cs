@@ -16,6 +16,7 @@ namespace PandaHR.Api.Services
 
             var result = reqSkills.Count() == 0 ? cvSkills.Count() 
                 : cvSkills.Intersect(reqSkills).Count();
+
             return result;
         }
     }

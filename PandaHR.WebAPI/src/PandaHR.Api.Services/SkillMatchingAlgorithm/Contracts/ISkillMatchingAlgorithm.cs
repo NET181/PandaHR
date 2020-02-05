@@ -7,6 +7,7 @@ namespace PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts
 {
     public interface ISkillMatchingAlgorithm<T>
     {
-        Task<IEnumerable<T>> GetMatchingBySkillsObjects(IEnumerable<T> source, IEnumerable<Skill> properties, double threshold);
+        Task<IEnumerable<T>> GetMatchingBySkillsObjects(IEnumerable<T> source
+            , IEnumerable<Skill> properties, double threshold);
     }
 }
