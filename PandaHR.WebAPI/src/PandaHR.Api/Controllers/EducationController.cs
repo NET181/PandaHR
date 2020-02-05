@@ -49,7 +49,7 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/educations/autofill/{name}")]
+        [Route("autofill/{name}")]
         public async Task<ActionResult<ICollection<EducationBasicInfoResponse>>> GetByName(string name)
         {
             var educations = await _educationService.GetBasicInfoByAutofillByName(name);

@@ -1,4 +1,5 @@
-﻿using PandaHR.Api.Services.Models.Education;
+﻿using PandaHR.Api.Services.Models.Company;
+using PandaHR.Api.Services.Models.Education;
 using PandaHR.Api.Services.Models.JobExperience;
 using PandaHR.Api.Services.Models.SkillKnowledge;
 using PandaHR.Api.Services.Models.User;

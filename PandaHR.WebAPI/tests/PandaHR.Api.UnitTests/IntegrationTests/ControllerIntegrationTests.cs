@@ -5,11 +5,11 @@ using Xunit;
 
 namespace PandaHR.Api.UnitTests
 {
-    public class ControllerTests : IClassFixture<TestingWebAppFactory<Startup>>
+    public class ControllerIntegrationTests : IClassFixture<TestingWebAppFactory<Startup>>
     {
         private readonly HttpClient _client;
 
-        public ControllerTests(TestingWebAppFactory<Startup> factory)
+        public ControllerIntegrationTests(TestingWebAppFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }
@@ -22,7 +22,7 @@ namespace PandaHR.Api.UnitTests
             //act
             var response = await _client.GetAsync("/");
             //assert
-            Assert.Equal(response.StatusCode, HttpStatusCode.NotFound);
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
         [Fact]
@@ -33,7 +33,7 @@ namespace PandaHR.Api.UnitTests
             //act
             var response = await _client.GetAsync("swagger/index.html");
             //assert
-            Assert.Equal(response.StatusCode, HttpStatusCode.OK);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }
 }
