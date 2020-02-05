@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PandaHR.Api.DAL.Models.Entities;
-using System;
 
 namespace PandaHR.Api.DAL.EF.Configurations
 {
