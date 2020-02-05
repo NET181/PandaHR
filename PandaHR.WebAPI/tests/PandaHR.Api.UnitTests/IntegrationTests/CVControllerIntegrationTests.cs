@@ -1,20 +1,16 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.ObjectModel;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Xunit;
 using PandaHR.Api.Models.CV;
 using PandaHR.Api.Models.User;
 using PandaHR.Api.Services.Models.Education;
 using PandaHR.Api.Services.Models.SkillKnowledge;
 using PandaHR.Api.Services.Models.User;
 using PandaHR.Api.UnitTests.IntegrationTests;
-using System;
-using System.Collections.ObjectModel;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace PandaHR.Api.UnitTests
 {
