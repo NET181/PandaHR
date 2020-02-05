@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
@@ -6,7 +7,6 @@ using PandaHR.Api.DAL.DTOs.Qualification;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.Qualification;
 using PandaHR.Api.DAL.Models.Entities;
-using System;
 
 namespace PandaHR.Api.Services.Implementation
 {

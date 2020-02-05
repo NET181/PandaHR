@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.Services.Models.Vacancy;
 
-
-
 namespace PandaHR.Api.Services.Contracts
 {
     public interface IVacancyService

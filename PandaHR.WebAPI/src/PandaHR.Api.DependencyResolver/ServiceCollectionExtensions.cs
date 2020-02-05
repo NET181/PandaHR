@@ -24,9 +24,6 @@ namespace PandaHR.Api.DependencyResolver
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connection));
 
-            //services.AddDefaultIdentity<User>()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
-
             services.AddDefaultIdentity<User>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -77,7 +74,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<IScoreCounter, ScoreCounter>();
             services.AddScoped<IScoreAlghorythm, ScoreAlghorythm>();
 
-            services.AddSingleton<PandaHR.Api.Common.Contracts.IMapper, PandaHRAutoMapper>();
+            services.AddSingleton<IMapper, PandaHRAutoMapper>();
         }
     }
 }

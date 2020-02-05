@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PandaHR.Api.DAL;
-using PandaHR.Api.DAL.Models.Entities;
-using PandaHR.Api.Services.Contracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using PandaHR.Api.DAL;
+using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.DAL.DTOs.Company;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.Services.Models.Company;

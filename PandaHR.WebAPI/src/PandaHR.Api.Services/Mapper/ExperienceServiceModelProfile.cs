@@ -10,9 +10,7 @@ namespace PandaHR.Api.Services.Mapper
         public ExperienceServiceModelProfile()
         {
             CreateMap<ExperienceDTO, ExperienceServiceModel>();
-
             CreateMap<ExperienceServiceModel, ExperienceDTO>();
-
             CreateMap<Experience, ExperienceServiceModel>();
         }
     }

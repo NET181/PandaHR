@@ -2,7 +2,7 @@
 {
     public class SkillRequestSkillKnowledge
     {
-        public SkillKnowledgeAlghorythmModel Sk { get; set; }
-        public SkillRequestAlghorythmModel Sr { get; set; }
+        public SkillKnowledgeAlghorythmModel SkillKnowledge { get; set; }
+        public SkillRequestAlghorythmModel SkillRequirement { get; set; }
     }
 }

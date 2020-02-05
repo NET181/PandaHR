@@ -9,11 +9,6 @@ namespace PandaHR.Api.Services.ScoreAlghorythm.Mapper
         {
             CreateMap<DAL.Models.Entities.CV, CVAlghorythmModel>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(c => c.Id));
-                //.ForMember(x => x.Qualification)
-
-
-                //.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-
         }
     }
 }

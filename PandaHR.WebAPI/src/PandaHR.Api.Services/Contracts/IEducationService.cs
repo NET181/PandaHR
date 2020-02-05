@@ -1,7 +1,7 @@
-﻿using PandaHR.Api.DAL.Models.Entities;
-using PandaHR.Api.Services.Models.Education;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Services.Models.Education;
 
 namespace PandaHR.Api.Services.Contracts
 {

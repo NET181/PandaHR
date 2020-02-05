@@ -1,7 +1,7 @@
-﻿using PandaHR.Api.Services.Models.Experience;
+﻿using System;
+using PandaHR.Api.Services.Models.Experience;
 using PandaHR.Api.Services.Models.KnowledgeLevel;
 using PandaHR.Api.Services.Models.Skill;
-using System;
 
 namespace PandaHR.Api.Services.Models.SkillKnowledge
 {

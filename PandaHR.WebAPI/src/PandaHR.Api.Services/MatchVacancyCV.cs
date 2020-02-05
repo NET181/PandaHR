@@ -10,10 +10,12 @@ namespace PandaHR.Api.Services
         {
             var reqSkills = from v in vacancy.SkillRequirements
                             select v.Skill.Name;
+
             var cvSkills = from v in cv.SkillKnowledges
                            select v.SkillName;
 
-            var result = reqSkills.Count() == 0 ? cvSkills.Count() : cvSkills.Intersect(reqSkills).Count();
+            var result = reqSkills.Count() == 0 ? cvSkills.Count() 
+                : cvSkills.Intersect(reqSkills).Count();
             return result;
         }
     }
