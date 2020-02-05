@@ -25,16 +25,9 @@ namespace PandaHR.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Company>> CreateAsync(Company company)
         {
-            //if (ModelState.IsValid)
-            //{
             await _companyService.AddAsync(company);
 
             return Ok(company);
-            //}
-            //else
-            //{
-            //    return ValidationProblem();
-            //}
         }
 
         [HttpGet]
@@ -57,17 +50,9 @@ namespace PandaHR.Api.Controllers
             {
                 return NotFound();
             }
-
-            //if (ModelState.IsValid)
-            //{
             await _companyService.UpdateAsync(company);
 
             return Ok(company);
-            //}
-            //else
-            //{
-            //    return ValidationProblem();
-            //}
         }
 
         [HttpDelete("{id}")]
@@ -104,8 +89,7 @@ namespace PandaHR.Api.Controllers
             return new ObjectResult(givenCompany);
         }
 
-        #region uncompleted code
-        [HttpDelete("Users")] //[HttpDelete("Users/{companyId}/{userId}")]
+        [HttpDelete("Users")]
         public async Task<ActionResult<UserCompany>> RemoveUserFromCompanyAsync(UserCompany userCompany)
         {
             await _companyService.RemoveUserFromCompanyAsync(userCompany);
@@ -136,6 +120,5 @@ namespace PandaHR.Api.Controllers
 
             return Ok(companyCity);
         }
-        #endregion
     }
 }

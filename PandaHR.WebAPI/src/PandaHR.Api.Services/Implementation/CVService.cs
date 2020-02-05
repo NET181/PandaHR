@@ -10,18 +10,42 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.Services.Models.CV;
+using PandaHR.Api.Services.SkillMatchingAlgorithm;
+using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
+using PandaHR.Api.Services.Models.Skill;
 
 namespace PandaHR.Api.Services.Implementation
 {
-    public class CVService : ICVService ,IAsyncService<CVServiceModel>
+    public class CVService : ICVService, IAsyncService<CVServiceModel>
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
+        private readonly IMatchingCVsForSkillSetAlgorithm _skillSetAlgorithm;
 
-        public CVService(IMapper mapper, IUnitOfWork uow)
+        public CVService(IMapper mapper, IUnitOfWork uow, IMatchingCVsForSkillSetAlgorithm skillSetAlgorithm)
         {
             _mapper = mapper;
             _uow = uow;
+            _skillSetAlgorithm = skillSetAlgorithm;
+        }
+
+        public async Task<IEnumerable<CV>> GetBySkillSet(IEnumerable<Skill> skills, double threshold)
+        {
+            var cvs = await _uow.CVs.GetAllAsync(include: s => s
+                .Include(x => x.SkillKnowledges)
+                    .ThenInclude(s => s.Skill)
+                    .ThenInclude(s => s.SubSkills)
+                .Include(x => x.SkillKnowledges)
+                    .ThenInclude(s => s.Skill)
+                    .ThenInclude(s => s.SkillType)
+                .Include(q => q.Qualification)
+                .Include(x => x.SkillKnowledges)
+                    .ThenInclude(k => k.KnowledgeLevel)
+                    .ThenInclude(t => t.SkillKnowledgeTypes)
+                .Include(e => e.SkillKnowledges)
+                .ThenInclude(e => e.Experience));
+
+            return await _skillSetAlgorithm.GetMatchingBySkillsObjects(cvs, skills, threshold);
         }
 
         public async Task AddAsync(CVCreationServiceModel cvServiceModel)
@@ -48,7 +72,7 @@ namespace PandaHR.Api.Services.Implementation
                 .Include(e => e.SkillKnowledges)
                 .ThenInclude(e => e.Experience)));
 
-            return new List<CVServiceModel>(_mapper.Map<IEnumerable<CV>, IEnumerable<CVServiceModel>>(CVs)); 
+            return new List<CVServiceModel>(_mapper.Map<IEnumerable<CV>, IEnumerable<CVServiceModel>>(CVs));
         }
 
         public async Task<CV> GetByIdAsync(Guid id)

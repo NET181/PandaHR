@@ -5,6 +5,7 @@ using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.Vacancy;
+using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,11 +16,14 @@ namespace PandaHR.Api.Services.Implementation
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
+        private readonly IMatchingVacanciesForSkillSetAlgorithm _skillSetAlgorithm;
 
-        public VacancyService(IUnitOfWork uow, IMapper mapper)
+
+        public VacancyService(IUnitOfWork uow, IMapper mapper, IMatchingVacanciesForSkillSetAlgorithm skillSetAlgorithm)
         {
             _uow = uow;
             _mapper = mapper;
+            _skillSetAlgorithm = skillSetAlgorithm;
         }
 
         public async Task AddAsync(Vacancy entity)
@@ -83,6 +87,26 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<IEnumerable<VacancySummaryDTO>> GetVacancyPreviewAsync(Guid userId, int? pageSize, int? page)
         {
             return await _uow.Vacancies.GetUserVacancySummaryAsync(userId, pageSize, page);
+        }
+
+        public async Task<IEnumerable<Vacancy>> GetBySkillSet(IEnumerable<Skill> skills, double threshold)
+        {
+            var vacancies = await _uow.Vacancies.GetAllAsync( 
+                include: i => i
+            .Include(x => x.SkillRequirements)
+                .ThenInclude(s => s.Skill)
+                .ThenInclude(t => t.SkillType)
+            .Include(x => x.SkillRequirements)
+                .ThenInclude(s => s.Skill)
+                .ThenInclude(s => s.SubSkills)
+             .Include(x => x.SkillRequirements)
+                .ThenInclude(e => e.Experience)
+             .Include(k => k.SkillRequirements)
+                .ThenInclude(k => k.KnowledgeLevel)
+                .ThenInclude(t => t.SkillKnowledgeTypes)
+            .Include(q => q.Qualification));
+
+            return await _skillSetAlgorithm.GetMatchingBySkillsObjects(vacancies, skills, threshold);
         }
     }
 }
