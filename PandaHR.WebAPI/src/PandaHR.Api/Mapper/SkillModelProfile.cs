@@ -10,8 +10,6 @@ namespace PandaHR.Api.Mapper
         public SkillModelProfile()
         {
             CreateMap<SkillNameServiceModel, SkillNameResponseModel>();
-
-            CreateMap<SkillServiceModel, Skill>();
         }
     }
 }
