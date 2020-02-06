@@ -1,5 +1,4 @@
-using AutoMapper;
-using FluentValidation.AspNetCore;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -7,9 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using AutoMapper;
+using FluentValidation.AspNetCore;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DependencyResolver;
-using System.Reflection;
+
 
 namespace PandaHR.Api
 {

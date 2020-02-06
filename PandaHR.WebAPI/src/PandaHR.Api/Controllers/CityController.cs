@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.Models.City;
 using PandaHR.Api.Services.Models.City;
-using System.Collections.Generic;
 
 namespace PandaHR.Api.Controllers
 {

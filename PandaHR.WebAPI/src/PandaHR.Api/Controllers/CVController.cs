@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Net;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using Microsoft.AspNetCore.Mvc;
+using FluentValidation.Results;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Models.CV;
@@ -8,11 +12,7 @@ using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.Models.SkillKnowledge;
 using PandaHR.Api.Services.Models.User;
-using System.Collections.ObjectModel;
 using PandaHR.Api.Validation.CV;
-using FluentValidation.Results;
-using System.Net;
-using System.Collections.Generic;
 using PandaHR.Api.Services.Models.Skill;
 
 namespace PandaHR.Api.Controllers

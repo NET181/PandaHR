@@ -1,8 +1,8 @@
-﻿using PandaHR.Api.Services.Models.City;
+﻿using System;
+using System.Collections.Generic;
+using PandaHR.Api.Services.Models.City;
 using PandaHR.Api.Services.Models.Company;
 using PandaHR.Api.Services.Models.Education;
-using System;
-using System.Collections.Generic;
 
 namespace PandaHR.Api.Models.User
 {

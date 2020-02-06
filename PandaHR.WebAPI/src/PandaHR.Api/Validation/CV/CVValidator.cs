@@ -1,9 +1,9 @@
-﻿using FluentValidation;
-using PandaHR.Api.Models.CV;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
+using PandaHR.Api.Models.CV;
 
 namespace PandaHR.Api.Validation.CV
 {
