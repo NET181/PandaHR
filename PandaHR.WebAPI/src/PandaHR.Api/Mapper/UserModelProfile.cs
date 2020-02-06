@@ -13,7 +13,6 @@ namespace PandaHR.Api.Mapper
             CreateMap<UserFullInfoServiceModel, UserFullInfoResponse>();
 
             CreateMap<UserFullInfoResponse, UserFullInfoServiceModel>();
-            CreateMap<UserFullInfoDTO, UserFullInfoServiceModel>();
         }
     }
 }
