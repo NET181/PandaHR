@@ -6,11 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using AutoMapper;
 using FluentValidation.AspNetCore;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DependencyResolver;
-
 
 namespace PandaHR.Api
 {
