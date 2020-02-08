@@ -37,6 +37,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ISkillRepository, SkillRepository>();
             services.AddScoped<ICVRepository, CVRepository>();
             services.AddScoped<IVacancyRepository, VacancyRepository>();
+            services.AddScoped<IVacancyCityRepository, VacancyCityRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserCompanyRepository, UserCompanyRepository>();

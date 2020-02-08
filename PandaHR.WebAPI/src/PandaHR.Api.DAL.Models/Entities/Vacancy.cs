@@ -8,6 +8,7 @@ namespace PandaHR.Api.DAL.Models.Entities
         public Vacancy()
         {
             SkillRequirements = new HashSet<SkillRequirement>();
+            VacancyCities = new HashSet<VacancyCity>();
         }
 
         public bool IsDeleted { get; set; }
@@ -23,12 +24,10 @@ namespace PandaHR.Api.DAL.Models.Entities
         public Guid? CompanyId { get; set; }
         public Company Company { get; set; }
 
-        public Guid? CityId { get; set; }
-        public City City { get; set; }
-
         public Guid TechnologyId { get; set; }
         public Technology Technology { get; set; }
 
         public ICollection<SkillRequirement> SkillRequirements { get; set; }
+        public ICollection<VacancyCity> VacancyCities { get; set; }
     }
 }

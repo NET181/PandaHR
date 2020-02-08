@@ -31,6 +31,7 @@ namespace PandaHR.Api.DAL.EF
             AddEducations();
             AddJobExperience();
             AddVacancy();
+            AddVacancyCityLinks();
             AddSkillTypes();
             AddSkills();
             AddKnowledgeLevel();
@@ -62,7 +63,6 @@ namespace PandaHR.Api.DAL.EF
 
         private void AddVacancy()
         {
-            var cityId = _context.Cities.FirstOrDefault().Id;
             var companyId = _context.Companies.FirstOrDefault().Id;
             var userId = _context.Users.FirstOrDefault().Id;
             var qualificationId = _context.Qualifications.FirstOrDefault().Id;
@@ -70,15 +70,35 @@ namespace PandaHR.Api.DAL.EF
 
             var vacancies = new Vacancy[]
             {
-                new Vacancy{ TechnologyId = technologyId, CityId = cityId, CompanyId = companyId, Description = "Best vacancy ever!",
+                new Vacancy{ Id = new Guid("623af0cf-21c1-4dc6-8f86-09601e9dba86"), TechnologyId = technologyId, CompanyId = companyId, Description = "Best vacancy ever!",
                     UserId = userId, QualificationId = qualificationId},
-                new Vacancy{ TechnologyId = technologyId, CityId = cityId, CompanyId = companyId, Description = "Even better vacancy than the previous!",
+                new Vacancy{ Id = new Guid("a8c58938-2339-4466-b662-023be9e4e9a5"),TechnologyId = technologyId, CompanyId = companyId, Description = "Even better vacancy than the previous!",
                     UserId = userId, QualificationId = qualificationId},
-                new Vacancy{ TechnologyId = technologyId, CityId = cityId, CompanyId = companyId, Description = "Vacancy for .Net developer",
+                new Vacancy{ Id = new Guid("aeed7aa1-78fa-427c-b2f8-30bbd08df1b5"), TechnologyId = technologyId, CompanyId = companyId, Description = "Vacancy for .Net developer",
                     UserId = userId, QualificationId = qualificationId}
             };
 
             _context.Vacancies.AddRange(vacancies);
+            _context.SaveChanges();
+        }
+
+        private void AddVacancyCityLinks()
+        {
+            var cities = _context.Cities.Select(c => c.Id).ToArray();
+            var vacancies = _context.Vacancies.Select(t => t.Id).ToArray();
+
+            var vacancyCity = new VacancyCity[]
+                {
+                    new VacancyCity() { CityId = cities[0], VacancyId = vacancies[0]},
+                    new VacancyCity() { CityId = cities[0], VacancyId = vacancies[1]},
+                    new VacancyCity() { CityId = cities[1], VacancyId = vacancies[1]},
+                    new VacancyCity() { CityId = cities[1], VacancyId = vacancies[2]},
+                    new VacancyCity() { CityId = cities[2], VacancyId = vacancies[0]},
+                    new VacancyCity() { CityId = cities[2], VacancyId = vacancies[1]},
+                    new VacancyCity() { CityId = cities[2], VacancyId = vacancies[2]}
+                };
+
+            _context.VacancyCities.AddRange(vacancyCity);
             _context.SaveChanges();
         }
 

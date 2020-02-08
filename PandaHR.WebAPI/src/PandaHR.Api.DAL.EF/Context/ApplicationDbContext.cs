@@ -36,12 +36,14 @@ namespace PandaHR.Api.DAL.EF.Context
         public DbSet<Qualification> Qualifications { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<SkillKnowledge> SkillKnowledges { get; set; }
+        public DbSet<SkillKnowledgeType> SkillKnowledgeTypes { get; set; }
         public DbSet<SkillRequirement> SkillRequirements { get; set; }
         public DbSet<SkillType> SkillTypes { get; set; }
         public DbSet<Speciality> Specialities { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserCompany> UserCompanies { get; set; }
         public DbSet<Vacancy> Vacancies { get; set; }
+        public DbSet<VacancyCity> VacancyCities { get; set; }
         public DbSet<Experience> Experiences { get; set; }
         public DbSet<Technology> Technologies { get; set; }
         public DbSet<TechnologySkill> TechnologySkills { get; set; }
@@ -79,6 +81,7 @@ namespace PandaHR.Api.DAL.EF.Context
                 .ApplyConfiguration<UserCompany>(new UserCompanyConfiguration())
                 .ApplyConfiguration<User>(new UserConfiguration())
                 .ApplyConfiguration<Vacancy>(new VacancyConfiguration())
+                .ApplyConfiguration<VacancyCity>(new VacancyCityConfiguration())
                 .ApplyConfiguration<Experience>(new ExperienceConfiguration())                
                 .ApplyConfiguration<Technology>(new TechnologyConfiguration())
                 .ApplyConfiguration<TechnologySkill>(new TechnologySkillConfiguration());

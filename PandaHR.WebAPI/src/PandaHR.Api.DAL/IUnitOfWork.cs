@@ -6,6 +6,7 @@ namespace PandaHR.Api.DAL
     {
         ISkillRepository Skills { get; }
         IVacancyRepository Vacancies { get; }
+        IVacancyCityRepository VacancyCities { get; }
         ICVRepository CVs { get; }
         ICompanyRepository Companies { get; }
         IJobExperienceRepository JobExperiences { get; }

@@ -8,6 +8,7 @@ namespace PandaHR.Api.DAL
         private readonly IUserRepository _userRepository;
         private readonly ISkillRepository _skillRepository;
         private readonly IVacancyRepository _vacancyRepository;
+        private readonly IVacancyCityRepository _vacancyCityRepository;
         private readonly ICVRepository _cvRepository;
         private readonly IUserCompanyRepository _userCompanyRepository;
         private readonly ICompanyCityRepository _companyCityRepository;
@@ -24,7 +25,9 @@ namespace PandaHR.Api.DAL
         private readonly ICountryRepository _countryRepository;
         private readonly ITechnologyRepository _technologyRepository;
 
-        public UnitOfWork(IVacancyRepository vacancyRepository,
+        public UnitOfWork(
+            IVacancyRepository vacancyRepository,
+            IVacancyCityRepository vacancyCityRepository,
             ICVRepository cvRepository,
             ISkillRepository skillRepository,
             ICompanyRepository companyRepository,
@@ -49,6 +52,7 @@ namespace PandaHR.Api.DAL
             _companyRepository = companyRepository;
             _userRepository = userRepository;
             _vacancyRepository = vacancyRepository;
+            _vacancyCityRepository = vacancyCityRepository;
             _cvRepository = cvRepository;
             _companyCityRepository = companyCityRepository;
             _qualificationRepository = qualificationRepository;
@@ -214,6 +218,14 @@ namespace PandaHR.Api.DAL
             get
             {
                 return _technologyRepository;
+            }
+        }
+
+        public IVacancyCityRepository VacancyCities
+        {
+            get
+            {
+                return _vacancyCityRepository;
             }
         }
     }
