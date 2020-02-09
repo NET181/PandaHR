@@ -96,7 +96,6 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
                 .Include(cc => cc.SkillKnowledges)
                     .ThenInclude(c => c.KnowledgeLevel)
                         .ThenInclude(k=>k.SkillKnowledgeTypes)
-                        //.Where(t=>t.UserId ==userId)
                 .Include(cc => cc.SkillKnowledges)
                     .ThenInclude(c => c.Skill)
                         .ThenInclude(s => s.SkillType)

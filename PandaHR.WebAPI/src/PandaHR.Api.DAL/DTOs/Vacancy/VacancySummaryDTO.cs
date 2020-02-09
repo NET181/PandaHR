@@ -1,5 +1,6 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using PandaHR.Api.DAL.DTOs.City;
 
 namespace PandaHR.Api.DAL.DTOs.Vacancy
 {
@@ -10,5 +11,6 @@ namespace PandaHR.Api.DAL.DTOs.Vacancy
         public string QualificationName { get; set; }
         public string TechnologyName { get; set; }
         public string CompanyName { get; set; }
+        public IEnumerable<CityNameDTO> CityNames {get;set;}
     }
 }

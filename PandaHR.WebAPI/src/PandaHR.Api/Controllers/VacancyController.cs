@@ -50,5 +50,35 @@ namespace PandaHR.Api.Controllers
         {
             return Ok(await _vacancyService.GetVacancyPreviewAsync(userId, pageSize, page));
         }
+
+        [HttpGet("city/{id}")]
+        public async Task<IActionResult> GetByCity(Guid id, int page = 1, int pageSize = 10)
+        {
+            var vacancies = await _vacancyService.GetByCity(id, pageSize, page);
+           
+            if (vacancies != null)
+            {
+                return Ok(vacancies);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("company/{id}")]
+        public async Task<IActionResult> GetByCompany(Guid id, int page = 1, int pageSize = 10)
+        {
+            var vacancies = await _vacancyService.GetByCompany(id, pageSize, page);
+
+            if (vacancies != null)
+            {
+                return Ok(vacancies);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
     }
 }

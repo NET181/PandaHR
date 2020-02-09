@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.Vacancy;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Implementation
 {
@@ -83,6 +84,16 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<IEnumerable<VacancySummaryDTO>> GetVacancyPreviewAsync(Guid userId, int? pageSize, int? page)
         {
             return await _uow.Vacancies.GetUserVacancySummaryAsync(userId, pageSize, page);
+        }
+
+        public async Task<IEnumerable<VacancySummaryDTO>> GetByCity(Guid cityId, int? pageSize, int? page)
+        {
+            return await _uow.Vacancies.GetVacanciesFiltered(t => t.VacancyCities.Any(c => c.City.Id == cityId), pageSize, page);
+        }
+
+        public async Task<IEnumerable<VacancySummaryDTO>> GetByCompany(Guid companyId, int? pageSize, int? page)
+        {
+            return await _uow.Vacancies.GetVacanciesFiltered(t => t.CompanyId == companyId, pageSize, page);
         }
     }
 }
