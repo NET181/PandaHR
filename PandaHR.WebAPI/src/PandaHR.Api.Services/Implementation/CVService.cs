@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.Common.Contracts;
+using PandaHR.Api.Services.Exporter;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.DTOs.CV;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.DAL.DTOs.Vacancy;
+using PandaHR.Api.Services.Exporter.Models;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.SkillMatchingAlgorithm;
 using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
@@ -53,6 +56,11 @@ namespace PandaHR.Api.Services.Implementation
             CVDTO cv = _mapper.Map<CVCreationServiceModel, CVDTO>(cvServiceModel);
 
             await _uow.CVs.AddAsync(cv);
+        }
+
+        public CustomFile ExportToDocx(string templatePath)
+        {
+            return ExportingTool.ToDocx(templatePath);
         }
 
         public async Task<IEnumerable<CVServiceModel>> GetAllAsync()

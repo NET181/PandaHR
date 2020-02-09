@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
@@ -18,12 +19,14 @@ namespace PandaHR.Api.Controllers
         private IMapper _mapper;
         private readonly ICVService _cvService;
         private readonly ISkillService _skillService;
+        private readonly IWebHostEnvironment _env;
 
-        public CVController(IMapper mapper, ICVService cvService, ISkillService skillService)
+        public CVController(IMapper mapper, ICVService cvService, ISkillService skillService, IWebHostEnvironment env)
         {
             _mapper = mapper;
             _cvService = cvService;
             _skillService = skillService;
+            _env = env;
         }
 
         [HttpGet("{threshold}/{skillNames}")]
@@ -48,6 +51,14 @@ namespace PandaHR.Api.Controllers
             var algorithmSkills = _mapper.Map<IEnumerable<SkillNameServiceModel>, IEnumerable<Skill>>(findedSkills);
 
             return await _cvService.GetBySkillSet(algorithmSkills, threshold);
+        }
+
+        [HttpGet("{id}/export/{type}")]
+        public async Task<IActionResult> ExportCv(Guid id, string type)
+        {
+            var file = _cvService.ExportToDocx(_env.WebRootPath + "/export/CV_ExportTemplate.docx");
+
+            return File(file.FileContents, file.ContentType, file.FileName);
         }
 
         [HttpGet("/UserCVsExt")]
