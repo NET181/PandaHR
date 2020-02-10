@@ -24,9 +24,9 @@ namespace PandaHR.Api.DAL.EF
             _context.Database.EnsureCreated();
             AddCompanies();
             AddCompanyCities();
+            AddTechnologies();
             AddUser();
             AddUserCompany();
-            AddTechnologies();
             AddCV();
             AddEducations();
             AddJobExperience();
@@ -38,26 +38,31 @@ namespace PandaHR.Api.DAL.EF
             AddSkillKnowledge();
             AddSkillRequirements();
             AddTechnologySkills();
-
             AddSkillKnowledgeTypes();
         }
 
         private void AddCV()
         {
-            var userId = _context.Users.FirstOrDefault().Id;
+            var users = _context.Users.ToArray();
             var qualificationId = _context.Qualifications.FirstOrDefault().Id;
             var technologyId = _context.Technologies.FirstOrDefault().Id;
 
             var cv = new List<CV>()
             {
-                new CV{ TechnologyId = technologyId, Summary = "Im very good", UserId = userId, QualificationId = qualificationId},
-                new CV{ TechnologyId = technologyId, Summary = "Im better than good", UserId = userId, QualificationId = qualificationId},
-                new CV{ TechnologyId = technologyId, Summary = "Im better than better", UserId = userId, QualificationId = qualificationId},
-                new CV{ TechnologyId = technologyId, Summary = "Im the best", UserId = userId, QualificationId = qualificationId},
-                new CV{ TechnologyId = technologyId, Summary = "Im so clever boy", UserId = userId, QualificationId = qualificationId},
+                new CV{ Id = new Guid("a6a7e31d-3db1-45b6-8172-3ad5556f65ce"), TechnologyId = technologyId, Summary = "Im very good", UserId = users[0].Id, QualificationId = qualificationId},
+                new CV{ Id = new Guid("e92dd3cd-e6ef-4bce-8b78-9047d793a21b"), TechnologyId = technologyId, Summary = "Im better than good", UserId = users[1].Id, QualificationId = qualificationId},
+                new CV{ Id = new Guid("fb06c4a3-c641-4222-84ac-f9e49a6a20dd"), TechnologyId = technologyId, Summary = "Im better than better", UserId = users[2].Id, QualificationId = qualificationId},
+                new CV{ Id = new Guid("e2df5eff-3171-472c-9828-367bc5ed92bf"), TechnologyId = technologyId, Summary = "Im the best", UserId = users[3].Id, QualificationId = qualificationId},
+                new CV{ Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9044"), TechnologyId = technologyId, Summary = "Im so clever boy", UserId = users[4].Id, QualificationId = qualificationId},
             };
 
-            _context.CVs.AddRange(cv);
+            for(int i = 0; i < 5; i++)
+            {
+                users[i].CV = cv[i];
+                users[i].CVId = cv[i].Id;
+                _context.Users.Update(users[i]);
+            }
+
             _context.SaveChanges();
         }
 
@@ -84,8 +89,8 @@ namespace PandaHR.Api.DAL.EF
 
         private void AddVacancyCityLinks()
         {
-            var cities = _context.Cities.Select(c => c.Id).ToArray();
-            var vacancies = _context.Vacancies.Select(t => t.Id).ToArray();
+            var cities = _context.Cities.AsNoTracking().Select(c => c.Id).ToArray();
+            var vacancies = _context.Vacancies.AsNoTracking().Select(t => t.Id).ToArray();
 
             var vacancyCity = new VacancyCity[]
                 {

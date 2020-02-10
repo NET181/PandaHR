@@ -9,7 +9,6 @@ namespace PandaHR.Api.DAL.Models.Entities
         public User()
         {
             Educations = new HashSet<Education>();
-            CVs = new HashSet<CV>();
             Vacancies = new HashSet<Vacancy>();
             UserCompanies = new HashSet<UserCompany>();
         }
@@ -18,10 +17,11 @@ namespace PandaHR.Api.DAL.Models.Entities
         public string SecondName { get; set; }
         public Guid? CityId { get; set; }
         public City City { get; set; }
+        public Guid? CVId { get; set; }
+        public CV CV { get; set; }
         public bool IsDeleted { get; set; }
 
         public ICollection<Education> Educations { get; set; }
-        public ICollection<CV> CVs { get; set; }
         public ICollection<Vacancy> Vacancies { get; set; }
         public ICollection<UserCompany> UserCompanies { get; set; }
         public DateTime AddedDate { get; set; }

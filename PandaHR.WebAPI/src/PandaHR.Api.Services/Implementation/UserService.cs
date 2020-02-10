@@ -37,7 +37,7 @@ namespace PandaHR.Api.Services.Implementation
                 .ThenInclude(d => d.Degree)
             .Include(e => e.Educations)
                 .ThenInclude(d => d.Speciality)
-            .Include(cv => cv.CVs)
+            .Include(cv => cv.CV)
             .Include(v => v.Vacancies));
 
             return users;
