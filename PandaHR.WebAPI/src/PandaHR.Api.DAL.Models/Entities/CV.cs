@@ -9,7 +9,7 @@ namespace PandaHR.Api.DAL.Models.Entities
         {
             JobExperiences = new HashSet<JobExperience>();
             SkillKnowledges = new HashSet<SkillKnowledge>();
-            Vacancies = new HashSet<VacancyCVStatus>();
+            Vacancies = new HashSet<VacancyCVFlow>();
         }
 
         public bool IsDeleted { get; set; }
@@ -27,6 +27,6 @@ namespace PandaHR.Api.DAL.Models.Entities
 
         public ICollection<JobExperience> JobExperiences { get; set; }
         public ICollection<SkillKnowledge> SkillKnowledges { get; set; }
-        public ICollection<VacancyCVStatus> Vacancies { get; set; }
+        public ICollection<VacancyCVFlow> Vacancies { get; set; }
     }
 }

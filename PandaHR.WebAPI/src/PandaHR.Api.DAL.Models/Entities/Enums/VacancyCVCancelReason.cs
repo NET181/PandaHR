@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 namespace PandaHR.Api.DAL.Models.Entities.Enums
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum VacancyProfileCancelReason
+    public enum VacancyCVCancelReason
     {
         RejectedByClient,
         RejectedByHR,
