@@ -9,6 +9,7 @@ namespace PandaHR.Api.DAL.Models.Entities
         {
             SkillRequirements = new HashSet<SkillRequirement>();
             VacancyCities = new HashSet<VacancyCity>();
+            Profiles = new HashSet<VacancyCVStatus>();
         }
 
         public bool IsDeleted { get; set; }
@@ -29,5 +30,6 @@ namespace PandaHR.Api.DAL.Models.Entities
 
         public ICollection<SkillRequirement> SkillRequirements { get; set; }
         public ICollection<VacancyCity> VacancyCities { get; set; }
+        public ICollection<VacancyCVStatus> Profiles {get; set;}
     }
 }
