@@ -7,6 +7,7 @@ using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Exporter.Models;
+using PandaHR.Api.Services.Exporter.Models.ExportTypes;
 
 namespace PandaHR.Api.Services.Contracts
 {

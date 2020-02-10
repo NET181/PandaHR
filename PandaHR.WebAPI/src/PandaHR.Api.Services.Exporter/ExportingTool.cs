@@ -1,5 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using PandaHR.Api.Services.Exporter.Models;
+using PandaHR.Api.Services.Exporter.Models.Enums;
+using PandaHR.Api.Services.Exporter.Models.ExportModels;
+using PandaHR.Api.Services.Exporter.Models.ExportTypes;
 using TemplateEngine.Docx;
 
 
@@ -14,22 +18,23 @@ namespace PandaHR.Api.Services.Exporter
         //    _templatePath = templatePath;
         //}
 
-        public static CustomFile ToDocx(string templatePath)
+        public static CustomFile ExportCV(string templatePath, CVExportModel cvModel, ExportType exportType = ExportType.Docx)
         {
-
-            using (MemoryStream mem = new MemoryStream(File.ReadAllBytes(templatePath)))
+            CustomFile file;
+            switch (exportType)
             {
-                using (var outputDocument = new TemplateProcessor(mem)
-                    .SetRemoveContentControls(true))
+                case ExportType.Docx:
                 {
-                    var valuesToFill = new Content(
-                        new FieldContent("FullName", "Kyrylo Rudenko")
-                    );
-                    outputDocument.FillContent(valuesToFill);
-                    outputDocument.SaveChanges();
-                    return new CustomFile(){FileContents = mem.ToArray(), ContentType = "application/msword", FileName = "Rudenko.docx"};
+                    file = new DocxFile(cvModel.FullName);
+                    break;
+                }
+                default:
+                {
+                    throw new ArgumentNullException();
                 }
             }
+
+            return file.ProceedCV(templatePath, cvModel);
         }
     }
 }
