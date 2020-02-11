@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.EF.Context;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.DAL.Models.Entities.Enums;
 
 namespace PandaHR.Api.DAL.EF
 {
@@ -39,6 +39,7 @@ namespace PandaHR.Api.DAL.EF
             AddSkillRequirements();
             AddTechnologySkills();
             AddSkillKnowledgeTypes();
+            AddFlows();
         }
 
         private void AddCV()
@@ -415,6 +416,33 @@ namespace PandaHR.Api.DAL.EF
                 }).ToList();
             }
 
+            _context.SaveChanges();
+        }
+
+        private void AddFlows()
+        {
+            var CVs = _context.CVs.ToArray();
+            var Vacancies = _context.Vacancies.ToArray();
+
+            VacancyCVFlow[] flows = new VacancyCVFlow[]
+                {
+                    new VacancyCVFlow() { Id = new Guid("342f6c46-9bd1-4508-b1f7-6a8eed1ac270"), CV = CVs[0], Vacancy = Vacancies[0], Status = VacancyCVStatus.Draft},
+                    new VacancyCVFlow() { 
+                                            Id = new Guid("8c3978e9-bb20-4170-8a7e-20ae97250da3"), CV = CVs[1], Vacancy = Vacancies[0], Status = VacancyCVStatus.CVPreparation,
+                                            Files = new HashSet<VacancyCVFile>() 
+                                                    { 
+                                                                new VacancyCVFile() { Name = "DraftCV", Path = @"\\pathtofile"},
+                                                                new VacancyCVFile() { Name = "DraftCV2", Path = @"\\pathtofile2"}
+                                                    }
+                                        },
+                    new VacancyCVFlow() { Id = new Guid("fe9098da-3258-4aac-96dd-88b0b65e2805"), CV = CVs[2], Vacancy = Vacancies[0], Status = VacancyCVStatus.Cancelled, CancelReason = VacancyCVCancelReason.CallLater},
+                    new VacancyCVFlow() { Id = new Guid("2888146e-e198-4fa4-bcc5-c6b488b3d812"), CV = CVs[3], Vacancy = Vacancies[0], Status = VacancyCVStatus.CVReadyForClient},
+                    
+                    new VacancyCVFlow() { Id = new Guid("ad85fc0a-7f11-4d8f-9b3a-2b655658aaaf"), CV = CVs[0], Vacancy = Vacancies[1], Status = VacancyCVStatus.Draft},
+                    new VacancyCVFlow() { Id = new Guid("0fecd44f-a898-4c12-b768-b5c6986429ee"), CV = CVs[4], Vacancy = Vacancies[1], Status = VacancyCVStatus.Draft}
+                };
+
+            _context.VacancyCVFlows.AddRange(flows);
             _context.SaveChanges();
         }
     }
