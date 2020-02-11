@@ -23,37 +23,22 @@ namespace PandaHR.Api.Controllers
     {
         private IMapper _mapper;
         private readonly ICVService _cvService;
-        private readonly ISkillService _skillService;
 
         public CVController(IMapper mapper, ICVService cvService, ISkillService skillService)
         {
             _mapper = mapper;
             _cvService = cvService;
-            _skillService = skillService;
         }
 
-        [HttpGet("{threshold}/{skillNames}")]
-        public async Task<IEnumerable<CV>> GetCVsBySkills(
-       [FromRoute]string[] skillNames, double threshold)
+        [HttpGet("/GetCVsByVacancy")]
+        public async Task<IActionResult> GetCVsBySkills(Guid vacancyId, double threshold)
         {
-            skillNames = skillNames[0].Split(",");
-
-            var findedSkills = new List<SkillNameServiceModel>();
-            var skills = await _skillService.GetSkillNames();
-
-            foreach (var skill in skills)
+            if (threshold < 0)
             {
-                foreach (var skillName in skillNames)
-                {
-                    if (skill.Name == skillName)
-                    {
-                        findedSkills.Add(skill);
-                    }
-                }
+                return BadRequest(threshold);
             }
-            var algorithmSkills = _mapper.Map<IEnumerable<SkillNameServiceModel>, IEnumerable<Skill>>(findedSkills);
 
-            return await _cvService.GetBySkillSet(algorithmSkills, threshold);
+            return Ok(await _cvService.GetByVacancy(vacancyId, threshold));
         }
 
         [HttpGet("/UserCVsExt")]

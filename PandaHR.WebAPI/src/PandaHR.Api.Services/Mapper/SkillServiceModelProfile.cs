@@ -1,6 +1,7 @@
 ﻿using PandaHR.Api.Common;
 using PandaHR.Api.DAL.DTOs.Skill;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Services.MatchingAlgorithm.Models;
 using PandaHR.Api.Services.Models.Skill;
 
 namespace PandaHR.Api.Services.Mapper
@@ -18,6 +19,8 @@ namespace PandaHR.Api.Services.Mapper
             CreateMap<Skill, SkillNameServiceModel>();
 
             CreateMap<SkillNameServiceModel, Skill>();
+
+            CreateMap<Skill, SkillMatchingAlgorithmModel>();
         }
     }
 }

@@ -10,9 +10,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.Services.Models.CV;
-using PandaHR.Api.Services.SkillMatchingAlgorithm;
-using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
-using PandaHR.Api.Services.Models.Skill;
+using PandaHR.Api.Services.MatchingAlgorithm.Contracts;
+using PandaHR.Api.Services.MatchingAlgorithm.Models;
 
 namespace PandaHR.Api.Services.Implementation
 {
@@ -20,32 +19,13 @@ namespace PandaHR.Api.Services.Implementation
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
-        private readonly IMatchingCVsForSkillSetAlgorithm _skillSetAlgorithm;
+        private readonly IСVsMatchingAlgorithm _matchingAlgorithm;
 
-        public CVService(IMapper mapper, IUnitOfWork uow, IMatchingCVsForSkillSetAlgorithm skillSetAlgorithm)
+        public CVService(IMapper mapper, IUnitOfWork uow, IСVsMatchingAlgorithm matchingAlgorithm)
         {
             _mapper = mapper;
             _uow = uow;
-            _skillSetAlgorithm = skillSetAlgorithm;
-        }
-
-        public async Task<IEnumerable<CV>> GetBySkillSet(IEnumerable<Skill> skills, double threshold)
-        {
-            var cvs = await _uow.CVs.GetAllAsync(include: s => s
-                .Include(x => x.SkillKnowledges)
-                    .ThenInclude(s => s.Skill)
-                    .ThenInclude(s => s.SubSkills)
-                .Include(x => x.SkillKnowledges)
-                    .ThenInclude(s => s.Skill)
-                    .ThenInclude(s => s.SkillType)
-                .Include(q => q.Qualification)
-                .Include(x => x.SkillKnowledges)
-                    .ThenInclude(k => k.KnowledgeLevel)
-                    .ThenInclude(t => t.SkillKnowledgeTypes)
-                .Include(e => e.SkillKnowledges)
-                .ThenInclude(e => e.Experience));
-
-            return await _skillSetAlgorithm.GetMatchingBySkillsObjects(cvs, skills, threshold);
+            _matchingAlgorithm = matchingAlgorithm;
         }
 
         public async Task AddAsync(CVCreationServiceModel cvServiceModel)
@@ -123,6 +103,26 @@ namespace PandaHR.Api.Services.Implementation
         {
             await _uow.CVs.Add(entity);
         }
+
+        public async Task<IEnumerable<CVWithRatingModel>> GetByVacancy(Guid vacancyId, double threshold)
+        {
+            var CVs = new List<CV>
+                (await _uow.CVs.GetAllAsync(include: s => s
+                .Include(x => x.SkillKnowledges)
+                    .ThenInclude(s => s.Skill)));
+
+            var vacancy = await _uow.Vacancies.GetFirstOrDefaultAsync(predicate: s => s
+                .Id == vacancyId,
+                include: s => s
+                .Include(x => x.SkillRequirements)
+                    .ThenInclude(s => s.Skill));
+
+            var algorithmCVs = _mapper.Map<IEnumerable<CV>, IEnumerable<CVMatchingAlgorithmModel>>(CVs);
+            var algorithmVacancy = _mapper.Map<Vacancy, VacancyMatchingAlgorithmModel>(vacancy);
+
+            return await _matchingAlgorithm.SearchByVacancy(algorithmCVs, algorithmVacancy, threshold);
+        }
+
 
         Task<CVServiceModel> IAsyncService<CVServiceModel>.GetByIdAsync(Guid id)
         {

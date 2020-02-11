@@ -2,6 +2,7 @@
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.Services.Models.Vacancy;
+using PandaHR.Api.Services.MatchingAlgorithm.Models;
 
 namespace PandaHR.Api.Services.Mapper
 {
@@ -14,6 +15,8 @@ namespace PandaHR.Api.Services.Mapper
             CreateMap<VacancyServiceModel, VacancyDTO>();
 
             CreateMap<VacancyDTO, VacancyServiceModel>();
+
+            CreateMap<Vacancy, VacancyMatchingAlgorithmModel>();
         }
     }
 }

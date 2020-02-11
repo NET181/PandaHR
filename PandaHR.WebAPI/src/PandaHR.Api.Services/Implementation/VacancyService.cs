@@ -4,8 +4,9 @@ using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.MatchingAlgorithm.Contracts;
+using PandaHR.Api.Services.MatchingAlgorithm.Models;
 using PandaHR.Api.Services.Models.Vacancy;
-using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,14 +17,13 @@ namespace PandaHR.Api.Services.Implementation
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
-        private readonly IMatchingVacanciesForSkillSetAlgorithm _skillSetAlgorithm;
+        private readonly IVacanciesMatchingAlgorithm _matchingAlgorithm;
 
-
-        public VacancyService(IUnitOfWork uow, IMapper mapper, IMatchingVacanciesForSkillSetAlgorithm skillSetAlgorithm)
+        public VacancyService(IUnitOfWork uow, IMapper mapper, IVacanciesMatchingAlgorithm matchingAlgorithm)
         {
             _uow = uow;
             _mapper = mapper;
-            _skillSetAlgorithm = skillSetAlgorithm;
+            _matchingAlgorithm = matchingAlgorithm;
         }
 
         public async Task AddAsync(Vacancy entity)
@@ -89,24 +89,23 @@ namespace PandaHR.Api.Services.Implementation
             return await _uow.Vacancies.GetUserVacancySummaryAsync(userId, pageSize, page);
         }
 
-        public async Task<IEnumerable<Vacancy>> GetBySkillSet(IEnumerable<Skill> skills, double threshold)
+        public async Task<IEnumerable<VacancyWithRatingModel>> GetByCV(Guid cvId, double threshold)
         {
-            var vacancies = await _uow.Vacancies.GetAllAsync( 
-                include: i => i
-            .Include(x => x.SkillRequirements)
-                .ThenInclude(s => s.Skill)
-                .ThenInclude(t => t.SkillType)
-            .Include(x => x.SkillRequirements)
-                .ThenInclude(s => s.Skill)
-                .ThenInclude(s => s.SubSkills)
-             .Include(x => x.SkillRequirements)
-                .ThenInclude(e => e.Experience)
-             .Include(k => k.SkillRequirements)
-                .ThenInclude(k => k.KnowledgeLevel)
-                .ThenInclude(t => t.SkillKnowledgeTypes)
-            .Include(q => q.Qualification));
+            var vacancies = new List<Vacancy>
+                (await _uow.Vacancies.GetAllAsync(include: s => s
+                .Include(x => x.SkillRequirements)
+                    .ThenInclude(s => s.Skill)));
 
-            return await _skillSetAlgorithm.GetMatchingBySkillsObjects(vacancies, skills, threshold);
+            var CV = await _uow.CVs.GetFirstOrDefaultAsync(predicate: s => s
+                .Id == cvId,
+                include: s => s
+                .Include(x => x.SkillKnowledges)
+                    .ThenInclude(s => s.Skill));
+
+            var algorithmVacancies = _mapper.Map<IEnumerable<Vacancy>, IEnumerable<VacancyMatchingAlgorithmModel>>(vacancies);
+            var algorithmCV = _mapper.Map<CV, CVMatchingAlgorithmModel>(CV);
+
+            return await _matchingAlgorithm.SearchByCV(algorithmVacancies, algorithmCV, threshold);
         }
     }
 }

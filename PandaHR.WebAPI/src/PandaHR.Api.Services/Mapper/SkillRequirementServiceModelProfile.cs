@@ -2,6 +2,7 @@
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.DTOs.SkillRequirement;
 using PandaHR.Api.Services.Models.SkillRequirement;
+using PandaHR.Api.Services.MatchingAlgorithm.Models;
 
 namespace PandaHR.Api.Services.Mapper
 {
@@ -14,6 +15,8 @@ namespace PandaHR.Api.Services.Mapper
             CreateMap<SkillRequirementServiceModel, SkillRequirementDTO>();
 
             CreateMap<SkillRequirementDTO, SkillRequirementServiceModel>();
+
+            CreateMap<SkillRequirement, SkillRequirementMatchingAlgorithmModel>();
         }
     }
 }

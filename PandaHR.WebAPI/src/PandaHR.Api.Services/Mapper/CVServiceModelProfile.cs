@@ -1,6 +1,7 @@
 ﻿using PandaHR.Api.Common;
 using PandaHR.Api.DAL.DTOs.CV;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Services.MatchingAlgorithm.Models;
 using PandaHR.Api.Services.Models.CV;
 
 namespace PandaHR.Api.Services.Mapper
@@ -23,6 +24,8 @@ namespace PandaHR.Api.Services.Mapper
             CreateMap<CVCreationServiceModel, CVDTO>();
             CreateMap<CVforSearchDTO, CVServiceModel>();
             CreateMap<CVServiceModel, CV>();
+
+            CreateMap<CV, CVMatchingAlgorithmModel>();
         }
     }
 }
