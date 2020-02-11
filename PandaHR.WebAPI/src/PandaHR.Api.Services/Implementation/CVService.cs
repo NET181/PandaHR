@@ -114,5 +114,10 @@ namespace PandaHR.Api.Services.Implementation
         {
             throw new NotImplementedException();
         }
+
+        public Task UpdateAsync(CVCreationServiceModel cv)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
