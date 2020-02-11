@@ -24,7 +24,7 @@ namespace PandaHR.Api.Controllers
         private IMapper _mapper;
         private readonly ICVService _cvService;
 
-        public CVController(IMapper mapper, ICVService cvService, ISkillService skillService)
+        public CVController(IMapper mapper, ICVService cvService)
         {
             _mapper = mapper;
             _cvService = cvService;
@@ -33,12 +33,16 @@ namespace PandaHR.Api.Controllers
         [HttpGet("/GetCVsByVacancy")]
         public async Task<IActionResult> GetCVsBySkills(Guid vacancyId, double threshold)
         {
-            if (threshold < 0)
+            try
             {
-                return BadRequest(threshold);
-            }
+                var result = await _cvService.GetByVacancy(vacancyId, threshold);
 
-            return Ok(await _cvService.GetByVacancy(vacancyId, threshold));
+                return Ok(result);
+            }
+            catch (ArgumentNullException)
+            {
+                return NotFound(vacancyId);
+            }
         }
 
         [HttpGet("/UserCVsExt")]
@@ -94,7 +98,7 @@ namespace PandaHR.Api.Controllers
         {
             var cvServiceModel = _mapper.Map<CVCreationRequestModel, CVCreationServiceModel>(cv);
             await _cvService.AddAsync(cvServiceModel);
-                
+
             return Ok();
         }
     }

@@ -14,6 +14,11 @@ namespace PandaHR.Api.Services.SkillMatchingAlgorithm.Implementation
                CVMatchingAlgorithmModel cv,
                double threshold)
         {
+            if (cv == null)
+            {
+                throw new ArgumentNullException(nameof(cv));
+            }
+
             IEnumerable<SkillMatchingAlgorithmModel> requiredSkills = cv.
                 SkillKnowledges.Select(s => s.Skill);
 
@@ -32,7 +37,7 @@ namespace PandaHR.Api.Services.SkillMatchingAlgorithm.Implementation
            VacancyMatchingAlgorithmModel vacancy,
            IEnumerable<SkillMatchingAlgorithmModel> cvSkills)
         {
-            var vacancySkills = vacancy.SkillRequirements.Select(s => s.Skill);
+            IEnumerable<SkillMatchingAlgorithmModel> vacancySkills = vacancy.SkillRequirements.Select(s => s.Skill);
 
             int matchesCount = cvSkills
                 .Select(s => s.Id)

@@ -14,6 +14,11 @@ namespace PandaHR.Api.Services.SkillMatchingAlgorithm.Implementation
             VacancyMatchingAlgorithmModel vacancy,
             double threshold)
         {
+            if (vacancy == null)
+            {
+                throw new ArgumentNullException(nameof(vacancy));
+            }
+
             IEnumerable<SkillMatchingAlgorithmModel> requiredSkills = vacancy.SkillRequirements.Select(s => s.Skill);
 
             var result = Task.Run(() =>

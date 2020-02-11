@@ -26,15 +26,19 @@ namespace PandaHR.Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("/GetVacancyByCV")]
+        [HttpGet("GetVacancyByCV")]
         public async Task<IActionResult> GetCVsBySkills(Guid CVId, double threshold)
         {
-            if (threshold < 0)
+            try
             {
-                return BadRequest(threshold);
-            }
+                var result = await _vacancyService.GetByCV(CVId, threshold);
 
-            return Ok(await _vacancyService.GetByCV(CVId, threshold));
+                return Ok(result);
+            }
+            catch (ArgumentNullException)
+            {
+                return NotFound(CVId);
+            };
         }
 
         [HttpGet("searchfor/{id}")]
