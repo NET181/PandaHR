@@ -5,14 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
-using PandaHR.Api.DAL.DTOs.CV;
 using PandaHR.Api.DAL.Models.Entities;
-using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.DAL.DTOs.CV;
 using PandaHR.Api.DAL.DTOs.Vacancy;
+using PandaHR.Api.DAL.DTOs.SkillKnowledge;
+using PandaHR.Api.DAL.DTOs.JobExperience;
+using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.CV;
-using PandaHR.Api.Services.SkillMatchingAlgorithm;
+using PandaHR.Api.Services.Models.SkillKnowledge;
+using PandaHR.Api.Services.Models.JobExperience;
 using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
-using PandaHR.Api.Services.Models.Skill;
 
 namespace PandaHR.Api.Services.Implementation
 {
@@ -106,9 +108,11 @@ namespace PandaHR.Api.Services.Implementation
             throw new NotImplementedException();
         }
 
-        public async Task UpdateAsync(CV entity)
+        public async Task UpdateAsync(CVCreationServiceModel model)
         {
-            await _uow.CVs.Update(entity);
+            var cvDTO = _mapper.Map<CVCreationServiceModel, CVDTO>(model);
+
+            await _uow.CVs.UpdateAsync(cvDTO);
         }
 
         public async Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? pageSize = 10, int? page = 1)
@@ -137,6 +141,28 @@ namespace PandaHR.Api.Services.Implementation
         public Task UpdateAsync(CVServiceModel entity)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task AddSkillKnowledgeToCVAsync(SkillKnowledgeServiceModel model, Guid CVId)
+        {
+            var skillKnowledgeDALModel = _mapper.Map<SkillKnowledgeServiceModel, SkillKnowledgeDTO>(model);
+            await _uow.CVs.AddSkillKnowledgeIntoCVAsync(skillKnowledgeDALModel, CVId);
+        }
+
+        public async Task DeleteSkillKnowledgeFromCVAsync(Guid skillKnowledgeId)
+        {
+            await _uow.CVs.DeleteSkillKnowledgeFromCVAsync(skillKnowledgeId);
+        }
+
+        public async Task AddJobExperienceToCVAsync(JobExperienceServiceModel model, Guid CVId)
+        {
+            var jobExperienceDALModel = _mapper.Map<JobExperienceServiceModel, JobExperienceDTO>(model);
+            await _uow.CVs.AddJobExperienceIntoCVAsync(jobExperienceDALModel, CVId);
+        }
+
+        public async Task DeleteJobExperienceFromCVAsync(Guid jobExperienceId)
+        {
+            await _uow.CVs.DeleteJobExperienceFromCVAsync(jobExperienceId);
         }
     }
 }

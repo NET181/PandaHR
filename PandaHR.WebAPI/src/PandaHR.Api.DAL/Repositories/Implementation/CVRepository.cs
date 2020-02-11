@@ -11,6 +11,7 @@ using PandaHR.Api.DAL.EF.Context;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.Repositories.Contracts;
 using System.Collections.ObjectModel;
+using PandaHR.Api.DAL.DTOs.JobExperience;
 
 namespace PandaHR.Api.DAL.Repositories.Implementation
 {
@@ -128,6 +129,50 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             }
             
             return query1;
+        }
+
+        public async Task AddSkillKnowledgeIntoCVAsync(SkillKnowledgeDTO model, Guid CVId)
+        {
+            var cv = await _context.CVs.FindAsync(CVId);
+
+            var skillKnowledgeEntity = _mapper.Map<SkillKnowledgeDTO, SkillKnowledge>(model);
+            cv.SkillKnowledges.Add(skillKnowledgeEntity);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteSkillKnowledgeFromCVAsync(Guid skillKnowledgeId)
+        {
+            var skillKnowledge =  await _context.SkillKnowledges.FindAsync(skillKnowledgeId);
+            _context.SkillKnowledges.Remove(skillKnowledge);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddJobExperienceIntoCVAsync(JobExperienceDTO model, Guid CVId)
+        {
+            var cv = await _context.CVs.FindAsync(CVId);
+
+            var jobExperience = _mapper.Map<JobExperienceDTO, JobExperience>(model);
+            cv.JobExperiences.Add(jobExperience);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteJobExperienceFromCVAsync(Guid JobExperienceId)
+        {
+            var jobExperience = await _context.JobExperiences.FindAsync(JobExperienceId);
+            _context.JobExperiences.Remove(jobExperience);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(CVDTO cv)
+        {
+            var entity = _mapper.Map<CVDTO, CV>(cv);
+            _context.Entry(entity).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -8,6 +8,12 @@ using PandaHR.Api.Models.CV;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.Models.Skill;
+using PandaHR.Api.Services.Models.SkillKnowledge;
+using PandaHR.Api.Services.Models.User;
+using System.Collections.ObjectModel;
+using PandaHR.Api.Models.SkillKnowledge;
+using PandaHR.Api.Models.JobExperience;
+using PandaHR.Api.Services.Models.JobExperience;
 
 namespace PandaHR.Api.Controllers
 {
@@ -56,6 +62,70 @@ namespace PandaHR.Api.Controllers
             return Ok(await _cvService.GetUserCVsAsync(userId, pageSize, page));
         }
 
+        [HttpPost("/CV/{id}/AddSkillKnowledge")]
+        public async Task<IActionResult> AddSkillKnowledgeToCV(SkillKnowledgeRequestModel model, Guid id)
+        {
+            var mappedModel = _mapper.Map<SkillKnowledgeRequestModel, SkillKnowledgeServiceModel>(model);
+
+            try
+            {
+                await _cvService.AddSkillKnowledgeToCVAsync(mappedModel, id);
+
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpDelete("/CV/{CVId}/DeleteSkillKnowledge/{SkillKnowledgeId}")]
+        public async Task<IActionResult> DeleteSkillKnowledgeFromCV(Guid SkillKnowledgeId, Guid CVId)
+        {
+            try
+            {
+                await _cvService.DeleteSkillKnowledgeFromCVAsync(SkillKnowledgeId);
+
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPost("/CV/{id}/AddJobExperience")]
+        public async Task<IActionResult> AddJobExperienceToCV(JobExperienceRequestModel model, Guid id)
+        {
+            var mappedModel = _mapper.Map<JobExperienceRequestModel, JobExperienceServiceModel>(model);
+
+            try
+            {
+                await _cvService.AddJobExperienceToCVAsync(mappedModel, id);
+
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpDelete("/CV/{CVId}/DeleteJobExperience/{JobExperienceId}")]
+        public async Task<IActionResult> DeleteJobExperienceFromCV(Guid JobExperienceId, Guid CVId)
+        {
+            try
+            {
+                await _cvService.DeleteJobExperienceFromCVAsync(JobExperienceId);
+
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpGet("/UserCVsSummary")]
         public async Task<IActionResult> GetUserCVsSummary(Guid userId, int page, int pageSize)
         {
@@ -84,11 +154,12 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(CV cv)
+        public async Task<IActionResult> Update(CVCreationRequestModel cv)
         {
             try
             {
-                //  await _cvService.UpdateAsync(cv);
+                var mappedCV = _mapper.Map<CVCreationRequestModel, CVCreationServiceModel>(cv);
+                await _cvService.UpdateAsync(mappedCV);
 
                 return StatusCode(200);
             }
@@ -103,7 +174,7 @@ namespace PandaHR.Api.Controllers
         {
             var cvServiceModel = _mapper.Map<CVCreationRequestModel, CVCreationServiceModel>(cv);
             await _cvService.AddAsync(cvServiceModel);
-                
+
             return Ok();
         }
     }
