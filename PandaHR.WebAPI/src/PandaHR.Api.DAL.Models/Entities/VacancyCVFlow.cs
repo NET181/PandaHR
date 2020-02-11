@@ -15,7 +15,6 @@ namespace PandaHR.Api.DAL.Models.Entities
         public CV CV { get; set; }
         public Guid VacancyId { get; set; }
         public Vacancy Vacancy { get; set; }
-        public Guid? FileId { get; set; }
         public VacancyCVStatus Status { get; set; }
         public VacancyCVCancelReason CancelReason { get; set; }
         public string Notes { get; set; }

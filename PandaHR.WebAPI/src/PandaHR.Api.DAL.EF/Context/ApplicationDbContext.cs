@@ -44,6 +44,8 @@ namespace PandaHR.Api.DAL.EF.Context
         public DbSet<UserCompany> UserCompanies { get; set; }
         public DbSet<Vacancy> Vacancies { get; set; }
         public DbSet<VacancyCity> VacancyCities { get; set; }
+        public DbSet<VacancyCVFile> VacancyCVFiles { get; set; }
+        public DbSet<VacancyCVFlow> VacancyCVFlows { get; set; }
         public DbSet<Experience> Experiences { get; set; }
         public DbSet<Technology> Technologies { get; set; }
         public DbSet<TechnologySkill> TechnologySkills { get; set; }
@@ -82,6 +84,8 @@ namespace PandaHR.Api.DAL.EF.Context
                 .ApplyConfiguration<User>(new UserConfiguration())
                 .ApplyConfiguration<Vacancy>(new VacancyConfiguration())
                 .ApplyConfiguration<VacancyCity>(new VacancyCityConfiguration())
+                .ApplyConfiguration<VacancyCVFile>(new VacancyCVFileConfiguration())
+                .ApplyConfiguration<VacancyCVFlow>(new VacancyCVFlowConfiguration())
                 .ApplyConfiguration<Experience>(new ExperienceConfiguration())                
                 .ApplyConfiguration<Technology>(new TechnologyConfiguration())
                 .ApplyConfiguration<TechnologySkill>(new TechnologySkillConfiguration());

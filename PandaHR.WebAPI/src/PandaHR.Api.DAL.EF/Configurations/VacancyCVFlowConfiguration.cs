@@ -8,7 +8,7 @@ namespace PandaHR.Api.DAL.EF.Configurations
     {
         public void Configure(EntityTypeBuilder<VacancyCVFlow> builder)
         {
-            builder.HasKey(cc => new { cc.CVId, cc.VacancyId});
+            builder.HasKey(cc => new { cc.CVId, cc.VacancyId });
 
             builder.HasOne(cc => cc.CV)
                     .WithMany(c => c.Vacancies)
@@ -20,7 +20,9 @@ namespace PandaHR.Api.DAL.EF.Configurations
 
             builder.HasMany(u => u.Files)
                     .WithOne(v => v.VacancyCVFlow)
-                    .HasForeignKey(v => v.VacancyCVFlowId);
+                    .HasForeignKey(v => v.VacancyCVFlowId)
+                    .HasPrincipalKey(u => u.Id);
+                  
         }
     }
 }
