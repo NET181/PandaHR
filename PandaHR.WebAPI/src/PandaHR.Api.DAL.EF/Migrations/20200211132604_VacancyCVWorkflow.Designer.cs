@@ -10,7 +10,7 @@ using PandaHR.Api.DAL.EF.Context;
 namespace PandaHR.Api.DAL.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200211053922_VacancyCVWorkflow")]
+    [Migration("20200211132604_VacancyCVWorkflow")]
     partial class VacancyCVWorkflow
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1438,13 +1438,13 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.HasOne("PandaHR.Api.DAL.Models.Entities.CV", "CV")
                         .WithMany("Vacancies")
                         .HasForeignKey("CVId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("PandaHR.Api.DAL.Models.Entities.Vacancy", "Vacancy")
                         .WithMany("CVs")
                         .HasForeignKey("VacancyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 

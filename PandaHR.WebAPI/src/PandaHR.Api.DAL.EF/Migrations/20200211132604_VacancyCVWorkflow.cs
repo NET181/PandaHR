@@ -28,14 +28,12 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         name: "FK_VacancyCVFlows_CVs_CVId",
                         column: x => x.CVId,
                         principalTable: "CVs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_VacancyCVFlows_Vacancies_VacancyId",
                         column: x => x.VacancyId,
                         principalTable: "Vacancies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

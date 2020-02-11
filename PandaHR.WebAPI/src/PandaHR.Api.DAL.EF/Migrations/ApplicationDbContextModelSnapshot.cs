@@ -1436,13 +1436,13 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.HasOne("PandaHR.Api.DAL.Models.Entities.CV", "CV")
                         .WithMany("Vacancies")
                         .HasForeignKey("CVId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("PandaHR.Api.DAL.Models.Entities.Vacancy", "Vacancy")
                         .WithMany("CVs")
                         .HasForeignKey("VacancyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
