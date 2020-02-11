@@ -375,7 +375,8 @@ namespace PandaHR.Api.DAL.EF
         {
             List<KnowledgeLevel> knowledgeLevels = new List<KnowledgeLevel>()
             {
-                new KnowledgeLevel {Name = "BeginnerLow", IsDeleted = false},
+                new KnowledgeLevel {Id = new Guid("2cb573c8-c593-445a-a1ca-d072fba8b47e"),
+                    Name = "BeginnerLow", IsDeleted = false},
                 new KnowledgeLevel {Name = "Beginner", IsDeleted = false},
                 new KnowledgeLevel {Name = "BeginnerStrong", IsDeleted = false},
                 new KnowledgeLevel {Name = "ElementaryLow", IsDeleted = false},

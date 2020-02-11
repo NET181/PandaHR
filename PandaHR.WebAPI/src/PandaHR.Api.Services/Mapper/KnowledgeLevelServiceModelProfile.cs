@@ -10,9 +10,7 @@ namespace PandaHR.Api.Services.Mapper
         public KnowledgeLevelServiceModelProfile()
         {
             CreateMap< KnowledgeLevel, KnowledgeLevelServiceModel>();
-
             CreateMap<KnowledgeLevelServiceModel, KnowledgeLevelDTO>();
-
             CreateMap<KnowledgeLevelDTO, KnowledgeLevelServiceModel>();
         }
     }

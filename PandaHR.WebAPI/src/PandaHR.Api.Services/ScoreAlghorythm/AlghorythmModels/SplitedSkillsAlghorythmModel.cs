@@ -4,11 +4,6 @@ namespace PandaHR.Api.Services.ScoreAlghorythm.Models
 {
     public class SplitedSkillsAlghorythmModel
     {
-        public List<SkillRequestSkillKnowledge> MainSkills { get; set; }
-        public List<SkillRequestSkillKnowledge> HardSkills { get; set; }
-        public List<SkillRequestSkillKnowledge> SoftSkills { get; set; }
-        public List<SkillRequestSkillKnowledge> LangSkills { get; set; }
-
         public SplitedSkillsAlghorythmModel()
         {
             MainSkills = new List<SkillRequestSkillKnowledge>();
@@ -17,23 +12,28 @@ namespace PandaHR.Api.Services.ScoreAlghorythm.Models
             LangSkills = new List<SkillRequestSkillKnowledge>();
         }
 
+        public List<SkillRequestSkillKnowledge> MainSkills { get; set; }
+        public List<SkillRequestSkillKnowledge> HardSkills { get; set; }
+        public List<SkillRequestSkillKnowledge> SoftSkills { get; set; }
+        public List<SkillRequestSkillKnowledge> LangSkills { get; set; }
+
         public void ClearCV()
         {
             foreach (var skill in MainSkills)
             {
-                skill.Sk = null;
+                skill.SkillKnowledge = null;
             }
             foreach (var skill in HardSkills)
             {
-                skill.Sk = null;
+                skill.SkillKnowledge = null;
             }
             foreach (var skill in SoftSkills)
             {
-                skill.Sk = null;
+                skill.SkillKnowledge = null;
             }
             foreach (var skill in LangSkills)
             {
-                skill.Sk = null;
+                skill.SkillKnowledge = null;
             }
         }
     }

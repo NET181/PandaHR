@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.DTOs.City;
+using PandaHR.Api.DAL.DTOs.Company;
 using PandaHR.Api.DAL.DTOs.Education;
 using PandaHR.Api.DAL.DTOs.User;
 using PandaHR.Api.DAL.EF.Context;
@@ -47,7 +48,19 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
                         ICollection<EducationDTO>>(u.Educations)
                 });
 
-            var user = await query.FirstOrDefaultAsync();
+            UserFullInfoDTO user = await query.FirstOrDefaultAsync();
+
+            Task<List<CompanyWithDetailsDTO>> companies = _context.Users.AsQueryable()
+               .Include(u => u.UserCompanies)
+               .SelectMany(a => a.UserCompanies)
+               .Where(a => a.UserId == id)
+               .Select(c => new CompanyWithDetailsDTO()
+               {
+                   Id = c.CompanyId,
+                   Name = c.Company.Name
+               }).ToListAsync();
+
+            user.Companies = companies.Result;
 
             return user;
         }

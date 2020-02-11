@@ -1,12 +1,12 @@
-﻿using PandaHR.Api.Common.Contracts;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.DTOs.Education;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.Education;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Implementation
 {
@@ -54,10 +54,11 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<ICollection<EducationBasicInfoServiceModel>> GetBasicInfoByAutofillByName(string name)
         {
-            var educations = await _uow.Educations.GetBasicInfoByAutofillByName(name);
+            ICollection<EducationBasicInfoDTO> educations = await _uow.Educations.GetBasicInfoByAutofillByName(name);
 
-            var educationsServiceModel = _mapper.Map<ICollection<EducationBasicInfoDTO>,
-                ICollection<EducationBasicInfoServiceModel>>(educations);
+            ICollection<EducationBasicInfoServiceModel> educationsServiceModel = _mapper
+                .Map<ICollection<EducationBasicInfoDTO>,
+                    ICollection<EducationBasicInfoServiceModel>>(educations);
 
             return educationsServiceModel;
         }

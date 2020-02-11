@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.DTOs.KnowledgeLevel;
@@ -7,9 +10,6 @@ using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.KnowledgeLevel;
 using PandaHR.Api.Services.Models.Skill;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Implementation
 {

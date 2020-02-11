@@ -1,7 +1,7 @@
-﻿using PandaHR.Api.Services.ScoreAlghorythm.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PandaHR.Api.Services.ScoreAlghorythm.Models;
 
 namespace PandaHR.Api.Services.ScoreAlghorythm
 {
@@ -98,8 +98,6 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
         private int CountRatingWithQualification(int raiting, CVAlghorythmModel cv
             , VacancyAlghorythmModel vacancy, int qualificationScaleStep)
         {
-
-
             if (cv.Qualification < vacancy.Qualification)
             {
                 raiting = raiting - raiting * (vacancy.Qualification - cv.Qualification)
@@ -125,24 +123,24 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
 
             foreach (var skill in mainSkills)
             {
-                if (skill.Sk != null)
+                if (skill.SkillKnowledge != null)
                 {
-                    if (skill.Sk.KnowledgeLevel >= skill.Sr.KnowledgeLevel)
+                    if (skill.SkillKnowledge.KnowledgeLevel >= skill.SkillRequirement.KnowledgeLevel)
                     {
-                        raiting += skill.Sr.Weight + skill.Sr.Weight
-                            * (skill.Sk.KnowledgeLevel - skill.Sr.KnowledgeLevel)
+                        raiting += skill.SkillRequirement.Weight + skill.SkillRequirement.Weight
+                            * (skill.SkillKnowledge.KnowledgeLevel - skill.SkillRequirement.KnowledgeLevel)
                             * scaleStep / PERCENT_DIVIDER;
                     }
-                    else if (skill.Sk.KnowledgeLevel < skill.Sr.KnowledgeLevel)
+                    else if (skill.SkillKnowledge.KnowledgeLevel < skill.SkillRequirement.KnowledgeLevel)
                     {
-                        raiting += skill.Sr.Weight - skill.Sr.Weight
-                            * (skill.Sr.KnowledgeLevel - skill.Sk.KnowledgeLevel)
+                        raiting += skill.SkillRequirement.Weight - skill.SkillRequirement.Weight
+                            * (skill.SkillRequirement.KnowledgeLevel - skill.SkillKnowledge.KnowledgeLevel)
                             * scaleStep * scaleStep / PERCENT_DIVIDER;
                     }
                 }
                 else
                 {
-                    raiting -= skill.Sr.Weight;
+                    raiting -= skill.SkillRequirement.Weight;
                 }
             }
 
@@ -160,48 +158,49 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
 
             foreach (var skill in splitedSkills.LangSkills)
             {
-                if (skill.Sr.Weight > splitedSkills.MainSkills.Last().Sr.Weight - middleWeight) // lang is main?
+                if (skill.SkillRequirement.Weight > splitedSkills.MainSkills.Last().SkillRequirement.Weight - middleWeight) // lang is main?
                 {
-                    if (skill.Sk != null)
+                    if (skill.SkillKnowledge != null)
                     {
-                        if (skill.Sk.KnowledgeLevel >= skill.Sr.KnowledgeLevel)
+                        if (skill.SkillKnowledge.KnowledgeLevel >= skill.SkillRequirement.KnowledgeLevel)
                         {
-                            raiting += skill.Sr.Weight + skill.Sr.Weight
-                                * (skill.Sk.KnowledgeLevel - skill.Sr.KnowledgeLevel)
+                            raiting += skill.SkillRequirement.Weight + skill.SkillRequirement.Weight
+                                * (skill.SkillKnowledge.KnowledgeLevel - skill.SkillRequirement.KnowledgeLevel)
                                 * scaleStep / PERCENT_DIVIDER;
                         }
-                        else if (skill.Sk.KnowledgeLevel < skill.Sr.KnowledgeLevel)
+                        else if (skill.SkillKnowledge.KnowledgeLevel < skill.SkillRequirement.KnowledgeLevel)
                         {
-                            raiting += skill.Sr.Weight - skill.Sr.Weight
-                                * (skill.Sr.KnowledgeLevel - skill.Sk.KnowledgeLevel)
+                            raiting += skill.SkillRequirement.Weight - skill.SkillRequirement.Weight
+                                * (skill.SkillRequirement.KnowledgeLevel - skill.SkillKnowledge.KnowledgeLevel)
                                 * scaleStep * scaleStep / PERCENT_DIVIDER;
                         }
                     }
                     else
                     {
-                        raiting -= skill.Sr.Weight;// * 3 / 2;
+                        raiting -= skill.SkillRequirement.Weight;// * 3 / 2;
                     }
                 }
+
                 else
                 {
-                    if (skill.Sk != null)
+                    if (skill.SkillKnowledge != null)
                     {
-                        if (skill.Sk.KnowledgeLevel >= skill.Sr.KnowledgeLevel)
+                        if (skill.SkillKnowledge.KnowledgeLevel >= skill.SkillRequirement.KnowledgeLevel)
                         {
-                            raiting += skill.Sr.Weight + skill.Sr.Weight
-                                * (skill.Sk.KnowledgeLevel - skill.Sr.KnowledgeLevel)
+                            raiting += skill.SkillRequirement.Weight + skill.SkillRequirement.Weight
+                                * (skill.SkillKnowledge.KnowledgeLevel - skill.SkillRequirement.KnowledgeLevel)
                                 * scaleStep / PERCENT_DIVIDER >> 1;
                         }
-                        else if (skill.Sk.KnowledgeLevel < skill.Sr.KnowledgeLevel)
+                        else if (skill.SkillKnowledge.KnowledgeLevel < skill.SkillRequirement.KnowledgeLevel)
                         {
-                            raiting += skill.Sr.Weight - skill.Sr.Weight
-                                * (skill.Sr.KnowledgeLevel - skill.Sk.KnowledgeLevel)
+                            raiting += skill.SkillRequirement.Weight - skill.SkillRequirement.Weight
+                                * (skill.SkillRequirement.KnowledgeLevel - skill.SkillKnowledge.KnowledgeLevel)
                                 * scaleStep * scaleStep / PERCENT_DIVIDER >> 1;
                         }
                     }
                     else
                     {
-                        raiting -= skill.Sr.Weight >> 1;
+                        raiting -= skill.SkillRequirement.Weight >> 1;
                     }
                 }
             }
@@ -221,25 +220,25 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
 
             foreach (var skill in skills)
             {
-                if (skill.Sk != null)
+                if (skill.SkillKnowledge != null)
                 {
-                    if (skill.Sk.KnowledgeLevel >= skill.Sr.KnowledgeLevel)
+                    if (skill.SkillKnowledge.KnowledgeLevel >= skill.SkillRequirement.KnowledgeLevel)
                     {
-                        raiting += skill.Sr.Weight + skill.Sr.Weight
-                            * (skill.Sk.KnowledgeLevel - skill.Sr.KnowledgeLevel)
+                        raiting += skill.SkillRequirement.Weight + skill.SkillRequirement.Weight
+                            * (skill.SkillKnowledge.KnowledgeLevel - skill.SkillRequirement.KnowledgeLevel)
                             * scaleStep / PERCENT_DIVIDER >> 1;
 
                     }
-                    else if (skill.Sk.KnowledgeLevel < skill.Sr.KnowledgeLevel)
+                    else if (skill.SkillKnowledge.KnowledgeLevel < skill.SkillRequirement.KnowledgeLevel)
                     {
-                        raiting += skill.Sr.Weight - skill.Sr.Weight
-                            * (skill.Sr.KnowledgeLevel - skill.Sk.KnowledgeLevel)
+                        raiting += skill.SkillRequirement.Weight - skill.SkillRequirement.Weight
+                            * (skill.SkillRequirement.KnowledgeLevel - skill.SkillKnowledge.KnowledgeLevel)
                             * scaleStep * scaleStep / PERCENT_DIVIDER >> 1;
                     }
                 }
                 else
                 {
-                    raiting -= skill.Sr.Weight >> 1;
+                    raiting -= skill.SkillRequirement.Weight >> 1;
                 }
             }
 
@@ -273,9 +272,9 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             {
                 foreach (var knowSkill in knowledges)
                 {
-                    if (reqSkill.Sr.Skill.Id == knowSkill.Skill.Id)
+                    if (reqSkill.SkillRequirement.Skill.Id == knowSkill.Skill.Id)
                     {
-                        reqSkill.Sk = knowSkill;
+                        reqSkill.SkillKnowledge = knowSkill;
                         break;
                     }
                 }
@@ -290,9 +289,9 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             {
                 foreach (var subSkill in subSkills)
                 {
-                    if (IsOneOfSubSkills(subSkill.Skill, rootSkill.Sr.Skill))
+                    if (IsOneOfSubSkills(subSkill.Skill, rootSkill.SkillRequirement.Skill))
                     {
-                        rootSkill.Sk = subSkill;
+                        rootSkill.SkillKnowledge = subSkill;
                         break;
                     }
                 }
@@ -342,19 +341,19 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                     case 1:// SkillType.hard:
                         splitedSkills.HardSkills.Add(new SkillRequestSkillKnowledge()
                         {
-                            Sr = skillRequests[index]
+                            SkillRequirement = skillRequests[index]
                         });
                         break;
                     case 2:// SkillType.lang:
                         splitedSkills.LangSkills.Add(new SkillRequestSkillKnowledge()
                         {
-                            Sr = skillRequests[index]
+                            SkillRequirement = skillRequests[index]
                         });
                         break;
                     case 3://SkillType.soft:
                         splitedSkills.SoftSkills.Add(new SkillRequestSkillKnowledge()
                         {
-                            Sr = skillRequests[index]
+                            SkillRequirement = skillRequests[index]
                         });
                         break;
                     default:
@@ -373,12 +372,12 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 {
                     splitedSkills.MainSkills.Add(new SkillRequestSkillKnowledge()
                     {
-                        Sr = splitedSkills.HardSkills[index - 1].Sr
+                        SkillRequirement = splitedSkills.HardSkills[index - 1].SkillRequirement
                     });
                     buf.Remove(splitedSkills.HardSkills[index - 1]);
 
-                    if (splitedSkills.HardSkills[index - 1].Sr.Weight
-                        - splitedSkills.HardSkills[index].Sr.Weight > middleWeight)
+                    if (splitedSkills.HardSkills[index - 1].SkillRequirement.Weight
+                        - splitedSkills.HardSkills[index].SkillRequirement.Weight > middleWeight)
                     {
                         stoped = true;
                         break;
@@ -388,13 +387,14 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 {
                     splitedSkills.MainSkills.Add(new SkillRequestSkillKnowledge()
                     {
-                        Sr = splitedSkills.HardSkills[splitedSkills.HardSkills.Count - 1].Sr
+                        SkillRequirement = splitedSkills.HardSkills[splitedSkills.HardSkills.Count - 1].SkillRequirement
                     });
                     buf.Remove(buf.Last());
                 }
 
                 splitedSkills.HardSkills = buf;
             }
+
             return splitedSkills;
         }
 

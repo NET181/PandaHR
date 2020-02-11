@@ -11,6 +11,8 @@ namespace PandaHR.Api.DAL.Mapper
             CreateMap<CompanyBasicInfoDTO, Company>();
 
             CreateMap<Company, CompanyBasicInfoDTO>();
+
+            CreateMap<Company, CompanyWithDetailsDTO>();
         }
     }
 }

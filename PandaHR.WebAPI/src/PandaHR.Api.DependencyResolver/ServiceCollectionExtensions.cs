@@ -12,6 +12,8 @@ using PandaHR.Api.DAL.Repositories.Implementation;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Implementation;
 using PandaHR.Api.Services.ScoreAlghorythm;
+using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
+using PandaHR.Api.Services.SkillMatchingAlgorithm.Implementation;
 
 namespace PandaHR.Api.DependencyResolver
 {
@@ -23,9 +25,6 @@ namespace PandaHR.Api.DependencyResolver
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connection));
-
-            //services.AddDefaultIdentity<User>()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddDefaultIdentity<User>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -77,8 +76,11 @@ namespace PandaHR.Api.DependencyResolver
 
             services.AddScoped<IScoreCounter, ScoreCounter>();
             services.AddScoped<IScoreAlghorythm, ScoreAlghorythm>();
+            services.AddScoped<IMatchingCVsForSkillSetAlgorithm, MatchingCVsForSkillSetAlgorithm>();
+            services.AddScoped<IMatchingVacanciesForSkillSetAlgorithm, MatchingVacanciesForSkillSetAlgorithm>();
 
-            services.AddSingleton<PandaHR.Api.Common.Contracts.IMapper, PandaHRAutoMapper>();
+
+            services.AddSingleton<IMapper, PandaHRAutoMapper>();
         }
     }
 }
