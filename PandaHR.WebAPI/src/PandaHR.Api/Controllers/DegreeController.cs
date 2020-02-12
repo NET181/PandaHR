@@ -44,7 +44,7 @@ namespace PandaHR.Api.Controllers
         }
 
         // GET: api/Degree/5    
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetDegree")]
         public async Task<IActionResult> Get(Guid id)
         {
             var degree = await _degreeService.GetByIdAsync(id);
@@ -65,7 +65,7 @@ namespace PandaHR.Api.Controllers
         {
             await _degreeService.AddAsync(value);
 
-            return Ok();
+            return CreatedAtRoute("GetDegree", new { id = value.Id }, value);
         }
 
         // PUT: api/Degree/5
