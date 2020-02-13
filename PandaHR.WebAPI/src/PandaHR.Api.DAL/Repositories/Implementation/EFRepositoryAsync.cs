@@ -93,7 +93,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
                 return await query.FirstOrDefaultAsync();
             }
         }
-
+            
         public async Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate)
         {
             return await _context.Set<T>().Where(predicate).ToListAsync();

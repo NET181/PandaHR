@@ -17,9 +17,9 @@ namespace PandaHR.Api.Services.Implementation
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
-        private readonly IVacanciesMatchingAlgorithm _matchingAlgorithm;
+        private readonly ISkillMatchingAlgorithm _matchingAlgorithm;
 
-        public VacancyService(IUnitOfWork uow, IMapper mapper, IVacanciesMatchingAlgorithm matchingAlgorithm)
+        public VacancyService(IUnitOfWork uow, IMapper mapper, ISkillMatchingAlgorithm matchingAlgorithm)
         {
             _uow = uow;
             _mapper = mapper;
@@ -89,7 +89,7 @@ namespace PandaHR.Api.Services.Implementation
             return await _uow.Vacancies.GetUserVacancySummaryAsync(userId, pageSize, page);
         }
 
-        public async Task<IEnumerable<VacancyWithRatingModel>> GetByCV(Guid cvId, double threshold)
+        public async Task<IEnumerable<MatchingAlgorithmResponceModel>> GetVacanciesByCV(Guid cvId, double threshold)
         {
             var vacancies = new List<Vacancy>
                 (await _uow.Vacancies.GetAllAsync(include: s => s
@@ -102,10 +102,10 @@ namespace PandaHR.Api.Services.Implementation
                 .Include(x => x.SkillKnowledges)
                     .ThenInclude(s => s.Skill));
 
-            var algorithmVacancies = _mapper.Map<IEnumerable<Vacancy>, IEnumerable<VacancyMatchingAlgorithmModel>>(vacancies);
-            var algorithmCV = _mapper.Map<CV, CVMatchingAlgorithmModel>(CV);
+            var algorithmVacancies = _mapper.Map<IEnumerable<Vacancy>, IEnumerable<VacancyMatchingModel>>(vacancies);
+            var algorithmCV = _mapper.Map<CV, CVMatchingModel>(CV);
 
-            return await _matchingAlgorithm.SearchByCV(algorithmVacancies, algorithmCV, threshold);
+            return _matchingAlgorithm.GetMatchingModels(algorithmCV, algorithmVacancies, threshold);
         }
     }
 }

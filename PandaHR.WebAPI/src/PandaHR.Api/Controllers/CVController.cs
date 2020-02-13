@@ -33,16 +33,7 @@ namespace PandaHR.Api.Controllers
         [HttpGet("/GetCVsByVacancy")]
         public async Task<IActionResult> GetCVsBySkills(Guid vacancyId, double threshold)
         {
-            try
-            {
-                var result = await _cvService.GetByVacancy(vacancyId, threshold);
-
-                return Ok(result);
-            }
-            catch (ArgumentNullException)
-            {
-                return NotFound(vacancyId);
-            }
+            return Ok(await _cvService.GetCVsByVacancy(vacancyId, threshold));
         }
 
         [HttpGet("/UserCVsExt")]

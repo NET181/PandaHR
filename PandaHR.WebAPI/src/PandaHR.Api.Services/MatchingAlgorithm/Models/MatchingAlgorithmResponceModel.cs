@@ -4,10 +4,9 @@ using System.Text;
 
 namespace PandaHR.Api.Services.MatchingAlgorithm.Models
 {
-    public class VacancyMatchingAlgorithmModel
+    public class MatchingAlgorithmResponceModel
     {
         public Guid Id { get; set; }
-
-        public ICollection<SkillRequirementMatchingAlgorithmModel> SkillRequirements;
+        public double Matching { get; set; }
     }
 }

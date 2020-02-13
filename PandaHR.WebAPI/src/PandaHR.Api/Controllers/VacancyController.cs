@@ -29,17 +29,9 @@ namespace PandaHR.Api.Controllers
         [HttpGet("GetVacancyByCV")]
         public async Task<IActionResult> GetCVsBySkills(Guid CVId, double threshold)
         {
-            try
-            {
-                var result = await _vacancyService.GetByCV(CVId, threshold);
-
-                return Ok(result);
-            }
-            catch (ArgumentNullException)
-            {
-                return NotFound(CVId);
-            };
+            return Ok(await _vacancyService.GetVacanciesByCV(CVId, threshold));
         }
+
 
         [HttpGet("searchfor/{id}")]
         public async Task<IActionResult> GetCVsByRaitingForVacancy(Guid id)

@@ -3,6 +3,7 @@ using PandaHR.Api.DAL.DTOs.CV;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.MatchingAlgorithm.Models;
 using PandaHR.Api.Services.Models.CV;
+using System.Linq;
 
 namespace PandaHR.Api.Services.Mapper
 {
@@ -25,7 +26,8 @@ namespace PandaHR.Api.Services.Mapper
             CreateMap<CVforSearchDTO, CVServiceModel>();
             CreateMap<CVServiceModel, CV>();
 
-            CreateMap<CV, CVMatchingAlgorithmModel>();
+            CreateMap<CV, CVMatchingModel>()
+                .ForMember(x => x.SkillIds, o => o.MapFrom(c => c.SkillKnowledges.Select(s => s.SkillId)));
         }
     }
 }

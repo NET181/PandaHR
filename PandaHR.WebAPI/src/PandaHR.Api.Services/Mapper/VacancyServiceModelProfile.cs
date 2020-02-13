@@ -3,6 +3,7 @@ using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.Services.Models.Vacancy;
 using PandaHR.Api.Services.MatchingAlgorithm.Models;
+using System.Linq;
 
 namespace PandaHR.Api.Services.Mapper
 {
@@ -16,7 +17,8 @@ namespace PandaHR.Api.Services.Mapper
 
             CreateMap<VacancyDTO, VacancyServiceModel>();
 
-            CreateMap<Vacancy, VacancyMatchingAlgorithmModel>();
+            CreateMap<Vacancy, VacancyMatchingModel>()
+                .ForMember(x => x.SkillIds, o => o.MapFrom(c => c.SkillRequirements.Select(s => s.SkillId)));
         }
     }
 }

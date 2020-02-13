@@ -13,6 +13,6 @@ namespace PandaHR.Api.Services.Contracts
         Task<IEnumerable<VacancySummaryDTO>> GetVacancyPreviewAsync(Guid userId, int? pageSize, int? page);
         Task AddAsync(VacancyServiceModel vacancyServiceModel);
         Task<VacancyServiceModel> GetByIdWithSkillAsync(Guid id);
-        Task<IEnumerable<VacancyWithRatingModel>> GetByCV(Guid cvId, double threshold);
+        Task<IEnumerable<MatchingAlgorithmResponceModel>> GetVacanciesByCV(Guid cvId, double threshold);
     }
 }

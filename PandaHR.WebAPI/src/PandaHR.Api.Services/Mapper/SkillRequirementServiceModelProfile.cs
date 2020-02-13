@@ -15,8 +15,6 @@ namespace PandaHR.Api.Services.Mapper
             CreateMap<SkillRequirementServiceModel, SkillRequirementDTO>();
 
             CreateMap<SkillRequirementDTO, SkillRequirementServiceModel>();
-
-            CreateMap<SkillRequirement, SkillRequirementMatchingAlgorithmModel>();
         }
     }
 }

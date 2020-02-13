@@ -19,9 +19,10 @@ namespace PandaHR.Api.Services.Implementation
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
-        private readonly IСVsMatchingAlgorithm _matchingAlgorithm;
+        private readonly ISkillMatchingAlgorithm _matchingAlgorithm;
 
-        public CVService(IMapper mapper, IUnitOfWork uow, IСVsMatchingAlgorithm matchingAlgorithm)
+
+        public CVService(IMapper mapper, IUnitOfWork uow, ISkillMatchingAlgorithm matchingAlgorithm)
         {
             _mapper = mapper;
             _uow = uow;
@@ -104,12 +105,11 @@ namespace PandaHR.Api.Services.Implementation
             await _uow.CVs.Add(entity);
         }
 
-        public async Task<IEnumerable<CVWithRatingModel>> GetByVacancy(Guid vacancyId, double threshold)
+        public async Task<IEnumerable<MatchingAlgorithmResponceModel>> GetCVsByVacancy(Guid vacancyId, double threshold)
         {
-            var CVs = new List<CV>
-                (await _uow.CVs.GetAllAsync(include: s => s
-                .Include(x => x.SkillKnowledges)
-                    .ThenInclude(s => s.Skill)));
+            var CVs = (await _uow.CVs.GetAllAsync(include: s => s
+                 .Include(x => x.SkillKnowledges)
+                     .ThenInclude(s => s.Skill)));
 
             var vacancy = await _uow.Vacancies.GetFirstOrDefaultAsync(predicate: s => s
                 .Id == vacancyId,
@@ -117,10 +117,10 @@ namespace PandaHR.Api.Services.Implementation
                 .Include(x => x.SkillRequirements)
                     .ThenInclude(s => s.Skill));
 
-            var algorithmCVs = _mapper.Map<IEnumerable<CV>, IEnumerable<CVMatchingAlgorithmModel>>(CVs);
-            var algorithmVacancy = _mapper.Map<Vacancy, VacancyMatchingAlgorithmModel>(vacancy);
+            var algorithmCVs = _mapper.Map<IEnumerable<CV>, IEnumerable<CVMatchingModel>>(CVs);
+            var algorithmVacancy = _mapper.Map<Vacancy, VacancyMatchingModel>(vacancy);
 
-            return await _matchingAlgorithm.SearchByVacancy(algorithmCVs, algorithmVacancy, threshold);
+            return _matchingAlgorithm.GetMatchingModels(algorithmVacancy, algorithmCVs, threshold);
         }
 
 
