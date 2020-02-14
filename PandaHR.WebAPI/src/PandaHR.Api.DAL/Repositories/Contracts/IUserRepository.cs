@@ -9,5 +9,6 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
     {
         Task<UserDTO> GetUserInfo(Guid id);
         Task<UserFullInfoDTO> GetFullUserInfo(Guid id);
+        Task<UserDTO> AddAsync(UserCreationDTO user);
     }
 }

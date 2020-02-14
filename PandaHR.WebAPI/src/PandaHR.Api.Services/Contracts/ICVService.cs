@@ -20,7 +20,7 @@ namespace PandaHR.Api.Services.Contracts
         Task DeleteSkillKnowledgeFromCVAsync(Guid skillKnowledgeId);
         Task AddJobExperienceToCVAsync(JobExperienceServiceModel model, Guid CVId);
         Task DeleteJobExperienceFromCVAsync(Guid jobExperienceId);
-        Task AddAsync(CVCreationServiceModel cvServiceModel);
+        Task<CVServiceModel> AddAsync(CVCreationServiceModel cvServiceModel);
         Task UpdateAsync(CVCreationServiceModel model);
     }
 }

@@ -7,9 +7,8 @@ using PandaHR.Api.DAL.DTOs.User;
 
 namespace PandaHR.Api.DAL.DTOs.CV
 {
-    public class CVDTO
+    public class CVCreationDTO
     {
-        public Guid Id { get; set; }
         public UserDTO User { get; set; }
         public ICollection<EducationWithDetailsDTO> Educations { get; set; }
         public string Summary { get; set; }

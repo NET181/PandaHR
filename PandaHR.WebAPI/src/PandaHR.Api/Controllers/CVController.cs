@@ -34,7 +34,8 @@ namespace PandaHR.Api.Controllers
 
         [HttpGet("{threshold}/{skillNames}")]
         public async Task<IEnumerable<CV>> GetCVsBySkills(
-       [FromRoute]string[] skillNames, double threshold)
+            [FromRoute]string[] skillNames,
+            double threshold)
         {
             skillNames = skillNames[0].Split(",");
 
@@ -132,6 +133,18 @@ namespace PandaHR.Api.Controllers
             return Ok(await _cvService.GetUserCVsPreviewAsync(userId, pageSize, page));
         }
 
+        [HttpGet("/CVSummary", Name = "GetCVSummary")]
+        public async Task<IActionResult> GetCVSummary(Guid id)
+        {
+            return Ok(await _cvService.GetByIdAsync(id));
+        }
+
+        [HttpGet("/CreatedCV", Name = "CreatedCV")]
+        public IActionResult CreatedCV(CVServiceModel cv)
+        {
+            return Ok(cv);
+        }
+
         [HttpGet("/VacanciesForCV")]
         public async Task<IActionResult> GetVacanciesForCV(Guid CVId, int page, int pageSize)
         {
@@ -173,9 +186,11 @@ namespace PandaHR.Api.Controllers
         public async Task<IActionResult> Add(CVCreationRequestModel cv)
         {
             var cvServiceModel = _mapper.Map<CVCreationRequestModel, CVCreationServiceModel>(cv);
-            await _cvService.AddAsync(cvServiceModel);
+            var createdCV = await _cvService.AddAsync(cvServiceModel);
 
-            return Ok();
+            CreatedResult result = new CreatedResult("CreatedCV", createdCV);
+            return result;
+            //return CreatedAtRoute("GetCVSummary", new { id = createdCV.Id }, createdCV);
         }
     }
 }

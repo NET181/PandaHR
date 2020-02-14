@@ -26,7 +26,7 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task AddAsync(User entity)
         {
-            await _uow.Users.Add(entity);
+            await _uow.Users.AddAsync(entity);
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()

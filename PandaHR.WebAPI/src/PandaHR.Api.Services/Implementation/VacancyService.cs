@@ -29,7 +29,7 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task AddAsync(Vacancy entity)
         {
-            await _uow.Vacancies.Add(entity);
+            await _uow.Vacancies.AddAsync(entity);
         }
 
         public async Task RemoveAsync(Guid id)
