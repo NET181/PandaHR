@@ -75,14 +75,14 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
 
         private bool IsOneOfSubSkills(SkillAlghorythmModel subSkill, SkillAlghorythmModel rootSkill)
         {
-            if (rootSkill.SupSkills == null)
-            {
-                return false;
-            }
-
             bool result = false;
 
-            foreach (var skill in rootSkill.SupSkills)
+            if (rootSkill.SubSkills == null)
+            {
+                return result;
+            }
+
+            foreach (var skill in rootSkill.SubSkills)
             {
                 if (subSkill.Id == skill.Id)
                 {

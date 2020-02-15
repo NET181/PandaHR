@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PandaHR.Api.Services.ScoreAlgorithm.Validation
 {
-   public class SkillTypeValueValidator : AbstractValidator<SkillTypeValues>
+   public class SkillTypeValueValidator : AbstractValidator<SkillTypeValuesw>
     {
         public SkillTypeValueValidator()
         {

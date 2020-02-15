@@ -1,12 +1,13 @@
-﻿using System;
+﻿using PandaHR.Api.Services.ScoreAlgorithm.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PandaHR.Api.Services.ScoreAlghorythm.Models;
+
 
 namespace PandaHR.Api.Services.ScoreAlghorythm
 {
     public interface IScoreCounter
     {
-        Task<List<IdAndRating>> GetCVsByVacancy(Guid vacancyId);
+        Task<List<IdAndRatingServiceModel>> GetCVsByVacancy(Guid vacancyId);
     }
 }

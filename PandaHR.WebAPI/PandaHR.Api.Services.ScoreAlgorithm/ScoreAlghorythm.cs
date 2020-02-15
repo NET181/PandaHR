@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace PandaHR.Api.Services.ScoreAlgorithm
 {
-    public class ScoreAlghorythm
+    public class ScoreAlghorythm : IScoreAlghorythm
     {
         private readonly RatingCounter _ratingCounter;
         private readonly SkillsMatcher _skillsMatcher;
@@ -59,8 +59,9 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
 
 
             List<IdAndRating> vacancysByRating = new List<IdAndRating>();
-            int middleWeight;
             SplitedSkillsAlghorythmModel splitedSkills;
+
+            int middleWeight;
             int raiting;
 
             foreach (VacancyAlghorythmModel vacancy in vacancys)

@@ -31,7 +31,7 @@ namespace PandaHR.Api.Services.ScoreAlgorithm.Models
             {
                 skill.SkillKnowledge = null;
             }
-            foreach (var skill in LangSkills)
+            foreach (var skill in LangSkills) // заменить на new langSkills
             {
                 skill.SkillKnowledge = null;
             }

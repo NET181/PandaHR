@@ -129,6 +129,7 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
                     {
                         if (skill.SkillKnowledge.KnowledgeLevel >= skill.SkillRequirement.KnowledgeLevel)
                         {
+                            // add exp
                             raiting += skill.SkillRequirement.Weight + skill.SkillRequirement.Weight
                                 * (skill.SkillKnowledge.KnowledgeLevel - skill.SkillRequirement.KnowledgeLevel)
                                 * _languageKnowledgeScaleStep / PERCENT_DIVIDER >> 1;

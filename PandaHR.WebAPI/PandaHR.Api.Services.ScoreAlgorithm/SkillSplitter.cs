@@ -3,32 +3,32 @@ using PandaHR.Api.Services.ScoreAlgorithm.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
+[assembly: InternalsVisibleTo("PandaHR.Api.UnitTests")]
 namespace PandaHR.Api.Services.ScoreAlgorithm
 {
     internal class SkillSplitter
     {
-        private readonly SkillTypeValues _skillTypeValues;
+        private readonly SkillTypeValuesw _skillTypeValues;
 
-        public SkillSplitter(SkillTypeValues skillTypeValues)
+        public SkillSplitter(SkillTypeValuesw skillTypeValues)
         {
             _skillTypeValues = skillTypeValues;
         }
 
         public SplitedSkillsAlghorythmModel SplitSkills(List<SkillRequestAlghorythmModel> skillRequests, int middleWeight)
         {
-            var splitedSkills = new SplitedSkillsAlghorythmModel();
-
-            SplitSkillsByType(skillRequests, splitedSkills);
+            var splitedSkills = SplitSkillsByType(skillRequests);
             FindMainSkills(middleWeight, splitedSkills);
 
             return splitedSkills;
         }
 
-        private List<SkillRequestAlghorythmModel> SplitSkillsByType(List<SkillRequestAlghorythmModel> skillRequests
-            , SplitedSkillsAlghorythmModel splitedSkills)
+        private SplitedSkillsAlghorythmModel SplitSkillsByType(List<SkillRequestAlghorythmModel> skillRequests)
         {
+            var splitedSkills = new SplitedSkillsAlghorythmModel();
             skillRequests = skillRequests.OrderByDescending(w => w.Weight).ToList();
 
             for (int index = 0; index < skillRequests.Count; index++)
@@ -60,7 +60,7 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
                 }
             }
 
-            return skillRequests;
+            return splitedSkills;
         }
 
         private void FindMainSkills(int middleWeight, SplitedSkillsAlghorythmModel splitedSkills)
@@ -70,19 +70,18 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
                 var buffer = new List<SkillRequestSkillKnowledge>(splitedSkills.HardSkills.ToList());
                 bool stoped = false;
 
-                // buffer = splitedSkills.HardSkills.ToList();
-                for (int index = 1; index < splitedSkills.HardSkills.Count; index++)
+                for (int index = 0; index < splitedSkills.HardSkills.Count; index++)
                 {
                     splitedSkills.MainSkills.Add(new SkillRequestSkillKnowledge()
                     {
-                        SkillRequirement = splitedSkills.HardSkills[index - 1].SkillRequirement
+                        SkillRequirement = splitedSkills.HardSkills[index].SkillRequirement
                     });
-                    buffer.Remove(splitedSkills.HardSkills[index - 1]);
+                    buffer.Remove(splitedSkills.HardSkills[index]);
 
-                    if (splitedSkills.HardSkills[index - 1].SkillRequirement.Weight
-                        - splitedSkills.HardSkills[index].SkillRequirement.Weight > middleWeight)
+                    if (splitedSkills.HardSkills[index].SkillRequirement.Weight
+                        - splitedSkills.HardSkills[index + 1].SkillRequirement.Weight > middleWeight)
                     {
-                        stoped = true;
+                        stoped = true; // -1 x3 ... +1 
                         break;
                     }
                 }

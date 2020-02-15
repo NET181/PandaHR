@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PandaHR.Api.Services.ScoreAlgorithm.Models
+namespace PandaHR.Api.Services.ScoreAlghorythm.Models
 {
-    public class KnowledgeScaleSteps
+    public class KnowledgeScaleStepsAlgorithmModel
     {
-        //int softKnowledgeScaleStep, int hardKnowledgeScaleStep
-        //    , int languageKnowledgeScaleStep, int qualificationScaleStep
         public int SoftKnowledgeScaleStep { get; set; }
         public int HardKnowledgeScaleStep { get; set; }
         public int LanguageKnowledgeScaleStep { get; set; }

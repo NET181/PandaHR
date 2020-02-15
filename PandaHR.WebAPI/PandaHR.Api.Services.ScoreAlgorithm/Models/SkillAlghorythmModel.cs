@@ -7,10 +7,10 @@ namespace PandaHR.Api.Services.ScoreAlgorithm.Models
     {
         public SkillAlghorythmModel()
         {
-            SupSkills = new List<SkillAlghorythmModel>();
+            SubSkills = new List<SkillAlghorythmModel>();
         }
         public Guid Id { get; set; }
         public int SkillType { get; set; }
-        public List<SkillAlghorythmModel> SupSkills { get; set; }
+        public List<SkillAlghorythmModel> SubSkills { get; set; }
     }
 }

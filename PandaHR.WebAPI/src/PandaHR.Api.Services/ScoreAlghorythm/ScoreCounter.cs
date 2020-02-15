@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.Models.Skill;
 using PandaHR.Api.Services.Models.Vacancy;
 using PandaHR.Api.Services.ScoreAlghorythm.Models;
-
+using PandaHR.Api.Services.ScoreAlgorithm;
+using PandaHR.Api.Services.ScoreAlgorithm.Models;
 
 namespace PandaHR.Api.Services.ScoreAlghorythm
 {
@@ -16,38 +18,55 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
     {
         private const int PERCENT_DIVIDER = 100;
 
-        private readonly IScoreAlghorythm _alghorythm;
+        private readonly IScoreAlghorythmBuilder _alghorythmBuilder;
         private readonly ICVService _cVService;
         private readonly IVacancyService _vacancyService;
         private readonly ISkillTypeService _skillTypeService;
         private readonly IQualificationService _qualificationService;
+        private readonly IMapper _mapper;
+        private IScoreAlghorythm _alghorythm;
 
-        public ScoreCounter(IScoreAlghorythm alghorythm, ICVService cVService
+        public ScoreCounter(IScoreAlghorythmBuilder alghorythmBuilder, ICVService cVService
             , IVacancyService vacancyService, ISkillTypeService skillTypeService
-            , IQualificationService qualificationService)
+            , IQualificationService qualificationService, IMapper mapper)
         {
-            _alghorythm = alghorythm;
+            _mapper = mapper;
+            _alghorythmBuilder = alghorythmBuilder;
             _cVService = cVService;
             _vacancyService = vacancyService;
             _skillTypeService = skillTypeService;
             _qualificationService = qualificationService;
         }
 
-        public async Task<List<IdAndRating>> GetCVsByVacancy(Guid vacancyId)
+        public async Task<List<IdAndRatingServiceModel>> GetCVsByVacancy(Guid vacancyId)
         {
+
             var vacansy = await GetVacancyFromDBAsync(vacancyId);
 
-            var qualifications 
-                = new List<Qualification>(await _qualificationService.GetAllAsync());
+            var qualifications = new List<Qualification>(await _qualificationService.GetAllAsync());
             var cVs = new List<CVServiceModel>(await _cVService.GetAllAsync());
             var skillTypes = new List<SkillType>(await _skillTypeService.GetAllAsync());
 
-            int hardSkillScaleStep = PERCENT_DIVIDER / skillTypes[0].SkillKnowledgeTypes.Count;
-            int softSkillScaleStep = PERCENT_DIVIDER / skillTypes[1].SkillKnowledgeTypes.Count;
-            int languageSkillScaleStep = PERCENT_DIVIDER / skillTypes[2].SkillKnowledgeTypes.Count;
-            int qualificationScaleStep = PERCENT_DIVIDER / qualifications.Count;
-
             List<CVAlghorythmModel> algCVs = new List<CVAlghorythmModel>();
+
+            var knowledgeScaleSteps = new KnowledgeScaleStepsAlgorithmModel()
+            {
+                HardKnowledgeScaleStep = PERCENT_DIVIDER / skillTypes[0].SkillKnowledgeTypes.Count,
+                SoftKnowledgeScaleStep = PERCENT_DIVIDER / skillTypes[1].SkillKnowledgeTypes.Count,
+                LanguageKnowledgeScaleStep = PERCENT_DIVIDER / skillTypes[2].SkillKnowledgeTypes.Count,
+                QualificationScaleStep = PERCENT_DIVIDER / qualifications.Count
+            };
+            var skillTypeValues = new SkillTypeValuesAlgorithmModel()
+            {
+                SoftSkillsValue = skillTypes[1].Value,
+                HardSkillsValue = skillTypes[0].Value,
+                LanguageSkillsValue = skillTypes[2].Value
+
+            };
+
+            _alghorythm = _alghorythmBuilder.GetScoreAlghorythm(
+                _mapper.Map<SkillTypeValuesAlgorithmModel, SkillTypeValuesw>(skillTypeValues),
+                _mapper.Map<KnowledgeScaleStepsAlgorithmModel, KnowledgeScaleSteps>(knowledgeScaleSteps));
 
             for (int i = 0; i < cVs.Count; i++)
             {
@@ -55,7 +74,8 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 algCVs.Add(new CVAlghorythmModel());
 
                 algCVs.Last().Id = cVs[i].Id;
-                algCVs.Last().Qualification = qualifications.FirstOrDefault(q => q.Id == cVs[i].QualificationId).Value;
+                algCVs.Last().Qualification = qualifications
+                    .FirstOrDefault(q => q.Id == cVs[i].QualificationId).Value;
                 algCVs.Last().SkillKnowledges = new List<SkillKnowledgeAlghorythmModel>();
 
                 foreach (var sk in cVs[i].SkillKnowledges)
@@ -66,19 +86,18 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                         .SkillKnowledgeTypes
                         .Where(i => i.KnowledgeLevelId == sk.KnowledgeLevelId)
                         .FirstOrDefault().Value,
-                        Expiriense = sk.Experience.Value,
+                        Expirience = sk.Experience.Value,
                         Skill = new SkillAlghorythmModel()
                         {
                             Id = sk.SkillId,
-                            SupSkills = MapSubSkills(sk.Skill)
+                            SubSkills = MapSubSkills(sk.Skill)
                         }
                     });
                 }
             }
 
-            return _alghorythm.GetCVsRating(vacansy, algCVs
-                , languageSkillScaleStep, hardSkillScaleStep
-                , softSkillScaleStep, qualificationScaleStep);
+            return new List<IdAndRatingServiceModel>(_mapper.Map<IEnumerable<IdAndRating>
+                , IEnumerable<IdAndRatingServiceModel>>(_alghorythm.GetCVsRating(vacansy, algCVs)));
         }
 
         private async Task<VacancyAlghorythmModel> GetVacancyFromDBAsync(Guid id)
@@ -94,7 +113,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             {
                 vacancy.SkillRequests.Add(new SkillRequestAlghorythmModel()
                 {
-                    Expiriense = sr.Experience.Value,
+                    Expirience = sr.Experience.Value,
                     KnowledgeLevel = sr.KnowledgeLevel
                         .SkillKnowledgeTypes
                         .Where(i => i.KnowledgeLevelId == sr.KnowledgeLevelId)
@@ -104,11 +123,11 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                     {
                         Id = sr.SkillId,
                         SkillType = sr.Skill.SkillType.Value,
-                        SupSkills = MapSubSkills(sr.Skill)
+                        SubSkills = MapSubSkills(sr.Skill)
                     }
                 });
             }
-            
+
             return vacancy;
         }
 
@@ -127,7 +146,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 {
                     Id = subSkill.Id,
                     SkillType = subSkill.SkillType.Value,
-                    SupSkills = MapSubSkills(subSkill)
+                    SubSkills = MapSubSkills(subSkill)
                 });
             }
 
@@ -148,7 +167,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 {
                     Id = subSkill.Id,
                     SkillType = subSkill.SkillType.Value,
-                    SupSkills = MapSubSkills(subSkill)
+                    SubSkills = MapSubSkills(subSkill)
                 });
             }
 

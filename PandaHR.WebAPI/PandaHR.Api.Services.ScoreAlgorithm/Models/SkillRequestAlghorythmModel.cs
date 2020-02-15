@@ -4,7 +4,7 @@
     {
         public SkillAlghorythmModel Skill { get; set; }
         public int Weight { get; set; }
-        public int Expiriense { get; set; }
+        public int Expirience { get; set; }
         public int KnowledgeLevel { get; set; }
     }
 }
