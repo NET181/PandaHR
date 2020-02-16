@@ -35,6 +35,7 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
         internal SkillsMatcher SkillsMatcher { get; private set; }
         internal SkillSplitter SkillSplitter { get; private set; }
         internal RatingCounter RatingCounter { get; private set; }
+        internal ScoreAlghorythmBuilder AlghorythmBuilder { get; private set; }
 
         public VacancyAlghorythmModel Vacancy { get; set; }
         public CVAlghorythmModel CV { get; set; }
@@ -51,6 +52,12 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
             ConfigCV();
             ConfigKnowledgeScaleStep();
             ConfigRatingCounter();
+            ConfigAlghorythmBuilder();
+        }
+
+        private void ConfigAlghorythmBuilder()
+        {
+            AlghorythmBuilder = new ScoreAlghorythmBuilder();
         }
 
         private void ConfigKnowledgeScaleStep()
