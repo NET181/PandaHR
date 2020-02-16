@@ -2,25 +2,26 @@
 using PandaHR.Api.Services.ScoreAlgorithm.Validation;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
+[assembly: InternalsVisibleTo("PandaHR.Api.UnitTests")]
 namespace PandaHR.Api.Services.ScoreAlgorithm
 {
     public class ScoreAlghorythmBuilder : IScoreAlghorythmBuilder
     {
-        private readonly SkillTypeValueValidator _splittedValidator = new SkillTypeValueValidator();
-        private readonly KnowledgeScaleStepsValidator _knowledgeValidatior = new KnowledgeScaleStepsValidator();
-        
-        //инициил в конструктор 
+        private readonly SkillTypeValueValidator _splittedValidator;
+        private readonly KnowledgeScaleStepsValidator _knowledgeValidatior;
+
+        public ScoreAlghorythmBuilder()
+        {
+            _splittedValidator = new SkillTypeValueValidator();
+            _knowledgeValidatior = new KnowledgeScaleStepsValidator();
+        }
 
         /// <summary>
         /// exeption throw
         /// </summary>
-        /// <param name="hardSkillsValue"></param>
-        /// <param name="softSkillsValue"></param>
-        /// <param name="languageSkillsValue"></param>
-        /// <param name="softKnowledgeScaleStep"></param>
-        /// <param name="hardKnowledgeScaleStep"></param>
         /// <param name="languageKnowledgeScaleStep"></param>
         /// <param name="qualificationScaleStep"></param>
         /// <returns></returns>

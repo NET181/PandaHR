@@ -11,23 +11,93 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.UnitTests
         private const int HARD_SKILLS_SKILL_TYPE = 1;
         private const int LANGUAGE_SKILLS_SKILL_TYPE = 2;
         private const int SOFT_SKILLS_SKILL_TYPE = 3;
+        private const int INTERMEDIATE_QUALIFICATION_VALUE = 3;
 
-        public IReadOnlyList<SkillRequestAlghorythmModel> SkillRequests { get; private set; }
+        public List<SkillRequestAlghorythmModel> SkillRequests { get; private set; }
+        public List<SkillKnowledgeAlghorythmModel> SkillKnowledge { get; private set; }
+
+        public SplitedSkillsAlghorythmModel SplitedSkills { get; set; }
+
         public SkillAlghorythmModel DotNet { get; private set; }
         public SkillAlghorythmModel ASPNetCore { get; private set; }
         public SkillAlghorythmModel EntityFramework { get; private set; }
         public SkillAlghorythmModel English { get; private set; }
         public SkillAlghorythmModel Friendliness { get; private set; }
         public SkillAlghorythmModel Oratory { get; private set; }
+
+        internal SkillsMatcher SkillsMatcher { get; private set; }
         internal SkillSplitter SkillSplitter { get; private set; }
-        
+
+        public VacancyAlghorythmModel Vacancy { get; set; }
+        public CVAlghorythmModel CV { get; set; }
 
         public AlghorythmTestSeed()
         {
             ConfigSkills();
             ConfigRequests();
             ConfigSkillSplitter();
+            ConfigSplitedSkills();
+            ConfigSkillMathcer();
+            ConfigVacancy();
+            ConfigSkillKnowledge();
+            ConfigCV();
+        }
 
+        private void ConfigCV()
+        {
+            CV = new CVAlghorythmModel()
+            {
+                Id = new Guid("12aab432-50c0-424a-aae0-4cf89a3d577b"),
+                Qualification = INTERMEDIATE_QUALIFICATION_VALUE,
+                SkillKnowledges = SkillKnowledge
+            };
+        }
+
+        private void ConfigSkillKnowledge()
+        {
+            var skillKnowledge = new List<SkillKnowledgeAlghorythmModel>();
+
+            skillKnowledge.Add(new SkillKnowledgeAlghorythmModel()
+            {
+                Skill = DotNet
+            });
+            skillKnowledge.Add(new SkillKnowledgeAlghorythmModel()
+            {
+                Skill = Oratory
+            });
+            skillKnowledge.Add(new SkillKnowledgeAlghorythmModel()
+            {
+                Skill = Friendliness
+            });
+            skillKnowledge.Add(new SkillKnowledgeAlghorythmModel()
+            {
+                Skill = English
+            });
+            skillKnowledge.Add(new SkillKnowledgeAlghorythmModel()
+            {
+                Skill = EntityFramework
+            });
+            skillKnowledge.Add(new SkillKnowledgeAlghorythmModel()
+            {
+                Skill = ASPNetCore
+            });
+
+            SkillKnowledge = skillKnowledge;
+        }
+
+        private void ConfigVacancy()
+        {
+            Vacancy = new VacancyAlghorythmModel()
+            {
+                Id = new Guid("12aab402-50c0-424a-aae0-4cf89a3d577b"),
+                Qualification = INTERMEDIATE_QUALIFICATION_VALUE,
+                SkillRequests = SkillRequests
+            };
+        }
+
+        private void ConfigSkillMathcer()
+        {
+            SkillsMatcher = new SkillsMatcher();
         }
 
         private void ConfigSkillSplitter()
@@ -83,6 +153,74 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.UnitTests
             {
                 Id = new Guid("44aab402-50c0-424a-aae0-4cf59a3d577b"),
                 SkillType = SOFT_SKILLS_SKILL_TYPE,
+            };
+        }
+
+        private void ConfigSplitedSkills()
+        {
+            var hardSkills = new List<SkillRequestSkillKnowledge>();
+            var langSkills = new List<SkillRequestSkillKnowledge>();
+            var mainSkills = new List<SkillRequestSkillKnowledge>();
+            var softSkills = new List<SkillRequestSkillKnowledge>();
+
+            mainSkills.Add(new SkillRequestSkillKnowledge()
+            {
+                SkillRequirement = new SkillRequestAlghorythmModel()
+                {
+                    Skill = DotNet,
+                    Weight = 80
+                }
+            });
+            mainSkills.Add(new SkillRequestSkillKnowledge()
+            {
+                SkillRequirement = new SkillRequestAlghorythmModel()
+                {
+                    Skill = EntityFramework,
+                    Weight = 75
+                }
+            });
+
+            hardSkills.Add(new SkillRequestSkillKnowledge()
+            {
+                SkillRequirement = new SkillRequestAlghorythmModel()
+                {
+                    Skill = ASPNetCore,
+                    Weight = 45
+                }
+            });
+
+            langSkills.Add(new SkillRequestSkillKnowledge()
+            {
+                SkillRequirement = new SkillRequestAlghorythmModel()
+                {
+                    Skill = English,
+                    Weight = 80
+                }
+            });
+
+            softSkills.Add(new SkillRequestSkillKnowledge()
+            {
+                SkillRequirement = new SkillRequestAlghorythmModel()
+                {
+                    Skill = Oratory,
+                    Weight = 35
+                }
+            });
+            softSkills.Add(new SkillRequestSkillKnowledge()
+            {
+                SkillRequirement = new SkillRequestAlghorythmModel()
+                {
+                    Skill = Friendliness,
+                    Weight = 15
+                }
+            });
+
+            SplitedSkills = new SplitedSkillsAlghorythmModel()
+            {
+                HardSkills = hardSkills,
+                LangSkills = langSkills,
+                MainSkills = mainSkills,
+                SoftSkills = softSkills
             };
         }
 
