@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PandaHR.Api.Services.ScoreAlgorithm.Models
+﻿namespace PandaHR.Api.Services.ScoreAlgorithm.Models
 {
     public class KnowledgeScaleSteps
     {

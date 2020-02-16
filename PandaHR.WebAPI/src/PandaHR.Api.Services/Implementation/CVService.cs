@@ -10,9 +10,7 @@ using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.Services.Models.CV;
-using PandaHR.Api.Services.SkillMatchingAlgorithm;
 using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
-using PandaHR.Api.Services.Models.Skill;
 
 namespace PandaHR.Api.Services.Implementation
 {

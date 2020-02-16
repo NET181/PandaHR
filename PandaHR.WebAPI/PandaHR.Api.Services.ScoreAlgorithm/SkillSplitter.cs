@@ -1,10 +1,7 @@
 ﻿using PandaHR.Api.Services.ScoreAlgorithm.Models;
-using PandaHR.Api.Services.ScoreAlgorithm.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace PandaHR.Api.Services.ScoreAlgorithm
 {

@@ -1,8 +1,6 @@
 ﻿using PandaHR.Api.Services.ScoreAlgorithm;
 using PandaHR.Api.Services.ScoreAlgorithm.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
