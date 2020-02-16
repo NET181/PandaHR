@@ -7,11 +7,13 @@ using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.DTOs.CV;
+using PandaHR.Api.DAL.DTOs.Education;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.DTOs.User;
 using PandaHR.Api.DAL.DTOs.SkillKnowledge;
 using PandaHR.Api.DAL.DTOs.JobExperience;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.Education;
 using PandaHR.Api.Services.Models.User;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.Models.SkillKnowledge;
@@ -54,20 +56,41 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<CVServiceModel> AddAsync(CVCreationServiceModel cvServiceModel)
         {
-            Guid cvId;
             Guid? userId = cvServiceModel.UserId;
+            var educationsToAdd =
+                _mapper.Map<
+                    ICollection<EducationWithDetailsServiceModel>,
+                    ICollection<EducationWithDetailsDTO>>
+                (cvServiceModel.Educations);
+
 
             if (userId == null)
             {
-                var createdUser = await _uow.Users.AddAsync(_mapper.Map<UserCreationServiceModel, UserCreationDTO>(cvServiceModel.User));
-                userId = createdUser.Id;
-            }
+                UserFullInfoDTO userToAdd =
+                    _mapper.Map<
+                        UserCreationServiceModel,
+                        UserFullInfoDTO>
+                    (cvServiceModel.User);
+                userToAdd.Educations = educationsToAdd;
 
+                var createdUser = await _uow.Users.AddAsync(userToAdd);
+                userId = createdUser.Id;
+                cvServiceModel.UserId = userId;
+            }
+            else // check if user has educations
+            {
+                var addedEducations = await _uow.Users.AddEducationsNoExistAsync(educationsToAdd, (Guid)userId);
+                educationsToAdd = _mapper.Map<ICollection<Education>, ICollection<EducationWithDetailsDTO>>(addedEducations);
+            }
+            
             CVCreationDTO cv = _mapper.Map<CVCreationServiceModel, CVCreationDTO>(cvServiceModel);
-            var createdCV = await _uow.CVs.AddAsync(cv);
+            CVDTO createdCV = await _uow.CVs.AddAsync(cv);
+            createdCV.Educations = educationsToAdd;
             await _uow.CVs.LinkUserToCV(createdCV.Id, (Guid)userId);
 
-            return _mapper.Map<CVDTO, CVServiceModel>(createdCV);
+            CVServiceModel result = _mapper.Map<CVDTO, CVServiceModel>(createdCV);
+           
+            return result;
         }
 
         public async Task<IEnumerable<CVServiceModel>> GetAllAsync()
@@ -89,11 +112,6 @@ namespace PandaHR.Api.Services.Implementation
 
             return new List<CVServiceModel>(_mapper.Map<IEnumerable<CV>, IEnumerable<CVServiceModel>>(CVs));
         }
-
-        //public async Task<CV> GetByIdAsync(Guid id)
-        //{
-        //    return await _uow.CVs.GetByIdAsync(id);
-        //}
 
         public async Task<IEnumerable<CVSummaryDTO>> GetUserCVsPreviewAsync(Guid userId, int? pageSize = 10, int? page = 1)
         {

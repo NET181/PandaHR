@@ -4,15 +4,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
-using PandaHR.Api.Models.CV;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.Models.Skill;
 using PandaHR.Api.Services.Models.SkillKnowledge;
-using PandaHR.Api.Services.Models.User;
-using System.Collections.ObjectModel;
 using PandaHR.Api.Models.SkillKnowledge;
 using PandaHR.Api.Models.JobExperience;
+using PandaHR.Api.Models.CV;
 using PandaHR.Api.Services.Models.JobExperience;
 
 namespace PandaHR.Api.Controllers
@@ -142,7 +140,7 @@ namespace PandaHR.Api.Controllers
         [HttpGet("/CreatedCV", Name = "CreatedCV")]
         public IActionResult CreatedCV(CVServiceModel cv)
         {
-            return Ok(cv);
+            return Ok(_cvService.GetByIdAsync(cv.Id));
         }
 
         [HttpGet("/VacanciesForCV")]

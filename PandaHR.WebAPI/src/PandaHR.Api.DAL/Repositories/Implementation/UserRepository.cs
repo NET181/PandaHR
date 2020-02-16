@@ -45,7 +45,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
                         Name = u.City.Name
                     },
                     Educations = _mapper.Map<ICollection<Education>, 
-                        ICollection<EducationDTO>>(u.Educations)
+                        ICollection<EducationWithDetailsDTO>>(u.Educations)
                 });
 
             UserFullInfoDTO user = await query.FirstOrDefaultAsync();
@@ -87,6 +87,43 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
         {
             User result = await AddAsync(_mapper.Map<UserCreationDTO, User>(user));
             return _mapper.Map<User, UserDTO>(result);
+        }
+
+        public async Task<UserFullInfoDTO> AddAsync(UserFullInfoDTO user)
+        {
+            var result = await AddAsync(_mapper.Map<UserFullInfoDTO, User>(user));
+            return _mapper.Map<User, UserFullInfoDTO>(result);
+        }
+
+        public async Task<ICollection<Education>> AddEducationsNoExistAsync(
+                ICollection<EducationWithDetailsDTO> educations, 
+                Guid userId)
+        {
+ 
+            IQueryable<EducationWithDetailsDTO> userEducations = _context.Educations.AsQueryable()
+                 .Where(c => c.UserId == userId)
+                 .Select(c => new EducationWithDetailsDTO()
+                 {
+                     Speciality = c.Speciality.Name,
+                     DegreeId = c.DegreeId,
+                     PlaceName = c.PlaceName,
+                     DateEnd = c.DateEnd,
+                     DateStart = c.DateStart
+                 });
+
+            var missedEducations = educations.Except(userEducations);
+            List<Education> eds =
+                _mapper.Map<ICollection<EducationWithDetailsDTO>, ICollection<Education>>(educations).ToList();
+
+            foreach(var education in eds)
+            {
+                education.UserId = userId;
+            }
+
+            await _context.Educations.AddRangeAsync(eds);
+            await _context.SaveChangesAsync();
+
+            return eds;
         }
     }
 }
