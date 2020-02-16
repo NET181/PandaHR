@@ -11,7 +11,7 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.UnitTests
         private const int HARD_SKILLS_SKILL_TYPE = 1;
         private const int LANGUAGE_SKILLS_SKILL_TYPE = 2;
         private const int SOFT_SKILLS_SKILL_TYPE = 3;
-        // мокать всёж
+
         public IReadOnlyList<SkillRequestAlghorythmModel> SkillRequests { get; private set; }
         public SkillAlghorythmModel DotNet { get; private set; }
         public SkillAlghorythmModel ASPNetCore { get; private set; }
@@ -32,7 +32,6 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.UnitTests
 
         private void ConfigSkillSplitter()
         {
-           
             var skillTypeValue = new SkillTypeValuesw()
             {
                 SoftSkillsValue = SOFT_SKILLS_SKILL_TYPE,
@@ -50,42 +49,41 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.UnitTests
             ASPNetCore = new SkillAlghorythmModel()
             {
                 Id = new Guid("12aab402-50c0-424a-aae0-4cf59a3d577b"),
-                SkillType = 1, //HardSkill
+                SkillType = HARD_SKILLS_SKILL_TYPE,
             };
             dotNetSubs.Add(ASPNetCore);
 
             EntityFramework = new SkillAlghorythmModel()
             {
                 Id = new Guid("13aab402-50c0-424a-aae0-4cf59a3d577b"),
-                SkillType = 1, //HardSkill
+                SkillType = HARD_SKILLS_SKILL_TYPE, 
             };
             dotNetSubs.Add(EntityFramework);
 
             DotNet = new SkillAlghorythmModel()
             {
                 Id = new Guid("52aab402-50c0-424a-aae0-4cf59a3d577b"),
-                SkillType = 1, //HardSkill
+                SkillType = HARD_SKILLS_SKILL_TYPE, 
                 SubSkills = dotNetSubs
             };
 
             English = new SkillAlghorythmModel()
             {
                 Id = new Guid("22aab402-50c0-424a-aae0-4cf59a3d577b"),
-                SkillType = 2, //LangSkill
+                SkillType = LANGUAGE_SKILLS_SKILL_TYPE, 
             };
 
             Friendliness = new SkillAlghorythmModel()
             {
                 Id = new Guid("32aab402-50c0-424a-aae0-4cf59a3d577b"),
-                SkillType = 3, //SoftSkill
+                SkillType = SOFT_SKILLS_SKILL_TYPE, 
             };
 
             Oratory = new SkillAlghorythmModel()
             {
                 Id = new Guid("44aab402-50c0-424a-aae0-4cf59a3d577b"),
-                SkillType = 3, //SoftSkill
+                SkillType = SOFT_SKILLS_SKILL_TYPE,
             };
-
         }
 
         private void ConfigRequests()
@@ -94,27 +92,33 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.UnitTests
 
             skillRequests.Add(new SkillRequestAlghorythmModel()
             {
-                Skill = DotNet
+                Skill = DotNet,
+                Weight = 80
             });
             skillRequests.Add(new SkillRequestAlghorythmModel()
             {
-                Skill = Oratory
+                Skill = Oratory,
+                Weight = 35
             });
             skillRequests.Add(new SkillRequestAlghorythmModel()
             {
-                Skill = Friendliness
+                Skill = Friendliness,
+                Weight = 15
             });
             skillRequests.Add(new SkillRequestAlghorythmModel()
             {
-                Skill = English
+                Skill = English,
+                Weight = 80
             });
             skillRequests.Add(new SkillRequestAlghorythmModel()
             {
-                Skill = EntityFramework
+                Skill = EntityFramework,
+                Weight = 75
             });
             skillRequests.Add(new SkillRequestAlghorythmModel()
             {
-                Skill = ASPNetCore
+                Skill = ASPNetCore,
+                Weight = 45
             });
 
             SkillRequests = skillRequests;

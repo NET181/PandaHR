@@ -70,18 +70,18 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
                 var buffer = new List<SkillRequestSkillKnowledge>(splitedSkills.HardSkills.ToList());
                 bool stoped = false;
 
-                for (int index = 0; index < splitedSkills.HardSkills.Count; index++)
+                for (int index = 1; index < splitedSkills.HardSkills.Count; index++)
                 {
                     splitedSkills.MainSkills.Add(new SkillRequestSkillKnowledge()
                     {
-                        SkillRequirement = splitedSkills.HardSkills[index].SkillRequirement
+                        SkillRequirement = splitedSkills.HardSkills[index -1].SkillRequirement
                     });
-                    buffer.Remove(splitedSkills.HardSkills[index]);
+                    buffer.Remove(splitedSkills.HardSkills[index -1]);
 
-                    if (splitedSkills.HardSkills[index].SkillRequirement.Weight
-                        - splitedSkills.HardSkills[index + 1].SkillRequirement.Weight > middleWeight)
+                    if (splitedSkills.HardSkills[index - 1].SkillRequirement.Weight
+                        - splitedSkills.HardSkills[index].SkillRequirement.Weight > middleWeight)
                     {
-                        stoped = true; // -1 x3 ... +1 
+                        stoped = true;
                         break;
                     }
                 }
