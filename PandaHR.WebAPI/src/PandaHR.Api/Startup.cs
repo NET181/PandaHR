@@ -46,8 +46,11 @@ namespace PandaHR.Api
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
                 dataInitializer.Seed();
+            }
+            if (env.IsDevelopment() || env.IsStaging())
+            {
+                app.UseDeveloperExceptionPage();
             }
             app.UseStaticFiles();
 
