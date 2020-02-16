@@ -10,7 +10,6 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
     public class SkillMatcherTests : IClassFixture<AlghorythmTestSeed>
     {
         private readonly SkillsMatcher _skillsMatcher;
-
         private readonly List<SkillKnowledgeAlghorythmModel> _skillKnowledge;
         private readonly SplitedSkillsAlghorythmModel _splitedSkills;
 

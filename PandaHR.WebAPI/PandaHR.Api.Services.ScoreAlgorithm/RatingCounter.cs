@@ -26,15 +26,17 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
         public int CountRating(SplitedSkillsAlghorythmModel splitedSkills, CVAlghorythmModel cv, VacancyAlghorythmModel vacancy
              , int middleWeight)
         {
-            int raiting = 1;
+            int rating = 1;
 
-            raiting += CountOtherSkillScore(splitedSkills.SoftSkills, _softKnowledgeScaleStep);
-            raiting += CountMainSkillScore(splitedSkills.MainSkills);
-            raiting += CountOtherSkillScore(splitedSkills.HardSkills, _hardKnowledgeScaleStep);
-            raiting += CountLanguageSkillScore(splitedSkills, middleWeight);
-            raiting = CountRatingWithQualification(raiting, cv, vacancy);
+            rating += CountOtherSkillScore(splitedSkills.SoftSkills, _softKnowledgeScaleStep);
+            rating += CountMainSkillScore(splitedSkills.MainSkills);
+            rating += CountOtherSkillScore(splitedSkills.HardSkills, _hardKnowledgeScaleStep);
+            rating += CountLanguageSkillScore(splitedSkills, middleWeight);
+            rating = CountRatingWithQualification(rating, cv, vacancy);
 
-            return raiting;
+            rating = RatingToZeroIfLess(rating);
+
+            return rating;
         }
 
         private int CountRatingWithQualification(int raiting, CVAlghorythmModel cv
@@ -61,7 +63,7 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
                 return 0;
             }
 
-            int raiting = 1;
+            int rating = 1;
 
             foreach (var skill in mainSkills)
             {
@@ -69,24 +71,28 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
                 {
                     if (skill.SkillKnowledge.KnowledgeLevel >= skill.SkillRequirement.KnowledgeLevel)
                     {
-                        raiting += skill.SkillRequirement.Weight + skill.SkillRequirement.Weight
+                        rating += skill.SkillRequirement.Weight + skill.SkillRequirement.Weight
                             * (skill.SkillKnowledge.KnowledgeLevel - skill.SkillRequirement.KnowledgeLevel)
                             * _hardKnowledgeScaleStep / PERCENT_DIVIDER;
                     }
                     else if (skill.SkillKnowledge.KnowledgeLevel < skill.SkillRequirement.KnowledgeLevel)
                     {
-                        raiting += skill.SkillRequirement.Weight - skill.SkillRequirement.Weight
+                        rating = CountWithExpirience(rating, skill);
+
+                        rating += skill.SkillRequirement.Weight - skill.SkillRequirement.Weight
                             * (skill.SkillRequirement.KnowledgeLevel - skill.SkillKnowledge.KnowledgeLevel)
                             * _hardKnowledgeScaleStep * _hardKnowledgeScaleStep / PERCENT_DIVIDER;
+
+                        rating = RatingToZeroIfLess(rating);
                     }
                 }
                 else
                 {
-                    raiting -= skill.SkillRequirement.Weight;
+                    rating -= skill.SkillRequirement.Weight;
                 }
             }
 
-            return raiting;
+            return rating;
         }
 
         private int CountLanguageSkillScore(SplitedSkillsAlghorythmModel splitedSkills, int middleWeight)
@@ -96,7 +102,7 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
                 return 0;
             }
 
-            int raiting = 1;
+            int rating = 1;
 
             foreach (var skill in splitedSkills.LangSkills)
             {
@@ -106,20 +112,24 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
                     {
                         if (skill.SkillKnowledge.KnowledgeLevel >= skill.SkillRequirement.KnowledgeLevel)
                         {
-                            raiting += skill.SkillRequirement.Weight + skill.SkillRequirement.Weight
+                            rating += skill.SkillRequirement.Weight + skill.SkillRequirement.Weight
                                 * (skill.SkillKnowledge.KnowledgeLevel - skill.SkillRequirement.KnowledgeLevel)
                                 * _languageKnowledgeScaleStep / PERCENT_DIVIDER;
                         }
                         else if (skill.SkillKnowledge.KnowledgeLevel < skill.SkillRequirement.KnowledgeLevel)
                         {
-                            raiting += skill.SkillRequirement.Weight - skill.SkillRequirement.Weight
+                            rating = CountWithExpirience(rating, skill);
+
+                            rating += skill.SkillRequirement.Weight - skill.SkillRequirement.Weight
                                 * (skill.SkillRequirement.KnowledgeLevel - skill.SkillKnowledge.KnowledgeLevel)
                                 * _languageKnowledgeScaleStep * _languageKnowledgeScaleStep / PERCENT_DIVIDER;
+
+                            rating = RatingToZeroIfLess(rating);
                         }
                     }
                     else
                     {
-                        raiting -= skill.SkillRequirement.Weight;// * 3 / 2;
+                        rating -= skill.SkillRequirement.Weight;
                     }
                 }
 
@@ -129,27 +139,40 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
                     {
                         if (skill.SkillKnowledge.KnowledgeLevel >= skill.SkillRequirement.KnowledgeLevel)
                         {
-                            // add exp
-                            raiting += skill.SkillRequirement.Weight + skill.SkillRequirement.Weight
+                            rating += skill.SkillRequirement.Weight + skill.SkillRequirement.Weight
                                 * (skill.SkillKnowledge.KnowledgeLevel - skill.SkillRequirement.KnowledgeLevel)
                                 * _languageKnowledgeScaleStep / PERCENT_DIVIDER >> 1;
                         }
                         else if (skill.SkillKnowledge.KnowledgeLevel < skill.SkillRequirement.KnowledgeLevel)
                         {
-                            raiting += skill.SkillRequirement.Weight - skill.SkillRequirement.Weight
+                            rating = CountWithExpirience(rating, skill);
+
+                            rating += skill.SkillRequirement.Weight - skill.SkillRequirement.Weight
                                 * (skill.SkillRequirement.KnowledgeLevel - skill.SkillKnowledge.KnowledgeLevel)
                                 * _languageKnowledgeScaleStep * _languageKnowledgeScaleStep / PERCENT_DIVIDER >> 1;
+
+                            rating = RatingToZeroIfLess(rating);
                         }
                     }
                     else
                     {
-                        raiting -= skill.SkillRequirement.Weight >> 1;
+                        rating -= skill.SkillRequirement.Weight >> 1;
                     }
                 }
             }
-            raiting /= splitedSkills.LangSkills.Count;
+            rating /= splitedSkills.LangSkills.Count;
 
-            return raiting;
+            return rating;
+        }
+
+        private int CountWithExpirience(int rating, SkillRequestSkillKnowledge skill)
+        {
+            if (skill.SkillKnowledge.Expirience < skill.SkillRequirement.Expirience)
+            {
+                rating -= skill.SkillRequirement.Expirience / skill.SkillKnowledge.Expirience;
+            }
+
+            return rating;
         }
 
         private int CountOtherSkillScore(List<SkillRequestSkillKnowledge> skills, int scaleStep)
@@ -159,7 +182,7 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
                 return 0;
             }
 
-            int raiting = 1;
+            int rating = 1;
 
             foreach (var skill in skills)
             {
@@ -167,26 +190,40 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
                 {
                     if (skill.SkillKnowledge.KnowledgeLevel >= skill.SkillRequirement.KnowledgeLevel)
                     {
-                        raiting += skill.SkillRequirement.Weight + skill.SkillRequirement.Weight
+                        rating += skill.SkillRequirement.Weight + skill.SkillRequirement.Weight
                             * (skill.SkillKnowledge.KnowledgeLevel - skill.SkillRequirement.KnowledgeLevel)
                             * scaleStep / PERCENT_DIVIDER >> 1;
 
                     }
                     else if (skill.SkillKnowledge.KnowledgeLevel < skill.SkillRequirement.KnowledgeLevel)
                     {
-                        raiting += skill.SkillRequirement.Weight - skill.SkillRequirement.Weight
+                        rating = CountWithExpirience(rating, skill);
+
+                        rating += skill.SkillRequirement.Weight - skill.SkillRequirement.Weight
                             * (skill.SkillRequirement.KnowledgeLevel - skill.SkillKnowledge.KnowledgeLevel)
                             * scaleStep * scaleStep / PERCENT_DIVIDER >> 1;
+
+                        rating = RatingToZeroIfLess(rating);
                     }
                 }
                 else
                 {
-                    raiting -= skill.SkillRequirement.Weight >> 1;
+                    rating -= skill.SkillRequirement.Weight >> 1;
                 }
             }
 
-            return raiting;
+            return rating;
 
+        }
+
+        private int RatingToZeroIfLess(int rating)
+        {
+            if (rating < 0)
+            {
+                rating = 0;
+            }
+
+            return rating;
         }
     }
 }

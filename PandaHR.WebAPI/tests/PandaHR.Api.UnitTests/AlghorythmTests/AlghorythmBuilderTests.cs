@@ -9,12 +9,10 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
 {
     public class AlghorythmBuilderTests : IClassFixture<AlghorythmTestSeed>
     {
-        private AlghorythmTestSeed _testSeed;
-        private ScoreAlghorythmBuilder _alghorythmBuilder;
+        private readonly ScoreAlghorythmBuilder _alghorythmBuilder;
 
         public AlghorythmBuilderTests(AlghorythmTestSeed testSeed)
         {
-            _testSeed = testSeed;
             _alghorythmBuilder = testSeed.AlghorythmBuilder;
         }
 
