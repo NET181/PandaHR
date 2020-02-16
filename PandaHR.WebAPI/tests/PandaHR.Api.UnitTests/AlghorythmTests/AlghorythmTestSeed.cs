@@ -36,6 +36,7 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
         internal SkillSplitter SkillSplitter { get; private set; }
         internal RatingCounter RatingCounter { get; private set; }
         internal ScoreAlghorythmBuilder AlghorythmBuilder { get; private set; }
+        internal ScoreAlghorythm Alghorythm { get; private set; }
 
         public VacancyAlghorythmModel Vacancy { get; set; }
         public CVAlghorythmModel CV { get; set; }
@@ -53,6 +54,26 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
             ConfigKnowledgeScaleStep();
             ConfigRatingCounter();
             ConfigAlghorythmBuilder();
+            ConfigScoreAlghorythm();
+        }
+
+        private void ConfigScoreAlghorythm()
+        {
+            SkillTypeValuesw skillTypeValues = new SkillTypeValuesw()
+            {
+                HardSkillsValue = HARD_SKILLS_SKILL_TYPE,
+                LanguageSkillsValue = LANGUAGE_SKILLS_SKILL_TYPE,
+                SoftSkillsValue = SOFT_SKILLS_SKILL_TYPE
+            };
+            KnowledgeScaleSteps knowledgeScaleSteps = new KnowledgeScaleSteps()
+            {
+                HardKnowledgeScaleStep = HARD_SKILLS_SCALE_STEP,
+                LanguageKnowledgeScaleStep = LANG_SKILLS_SCALE_STEP,
+                QualificationScaleStep = QUALIFICATION_SCALE_STEP,
+                SoftKnowledgeScaleStep = SOFT_SKILLS_SCALE_STEP
+            };
+
+            Alghorythm = AlghorythmBuilder.GetScoreAlghorythm(skillTypeValues, knowledgeScaleSteps);
         }
 
         private void ConfigAlghorythmBuilder()
