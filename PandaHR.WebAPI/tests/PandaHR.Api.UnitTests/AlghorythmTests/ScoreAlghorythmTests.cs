@@ -9,8 +9,8 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests
 {
     public class ScoreAlghorythmTests : IClassFixture<AlghorythmTestSeed>
     {
-        private AlghorythmTestSeed _testSeed;
-        private ScoreAlghorythm _alghorythm;
+        private readonly AlghorythmTestSeed _testSeed;
+        private readonly ScoreAlghorythm _alghorythm;
 
         public ScoreAlghorythmTests(AlghorythmTestSeed testSeed)
         {
@@ -23,7 +23,7 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests
         {
             //Arrange
             int expected = 286;
-            int actual = 0;
+            int actual;
 
             //Act
 

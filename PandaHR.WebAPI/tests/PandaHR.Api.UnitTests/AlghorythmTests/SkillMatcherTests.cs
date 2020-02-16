@@ -9,18 +9,16 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
 {
     public class SkillMatcherTests : IClassFixture<AlghorythmTestSeed>
     {
-        private AlghorythmTestSeed _testSeed;
-        private SkillsMatcher _skillsMatcher;
+        private readonly SkillsMatcher _skillsMatcher;
 
-        private List<SkillKnowledgeAlghorythmModel> _skillKnowledge;
-        private SplitedSkillsAlghorythmModel _splitedSkills;
+        private readonly List<SkillKnowledgeAlghorythmModel> _skillKnowledge;
+        private readonly SplitedSkillsAlghorythmModel _splitedSkills;
 
         public SkillMatcherTests(AlghorythmTestSeed testSeed)
         {
-            _testSeed = testSeed;
-            _skillsMatcher = _testSeed.SkillsMatcher;
-            _skillKnowledge = _testSeed.SkillKnowledge;
-            _splitedSkills = _testSeed.SplitedSkills;
+            _skillsMatcher = testSeed.SkillsMatcher;
+            _skillKnowledge = testSeed.SkillKnowledge;
+            _splitedSkills = testSeed.SplitedSkills;
         }
 
         [Fact]

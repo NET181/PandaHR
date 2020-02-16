@@ -10,8 +10,8 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
 {
     public class SkillSplitterTests : IClassFixture<AlghorythmTestSeed>
     {
-        private AlghorythmTestSeed _testSeed;
-        private SkillSplitter _skillSplitter;
+        private readonly AlghorythmTestSeed _testSeed;
+        private readonly SkillSplitter _skillSplitter;
         
 
         public SkillSplitterTests(AlghorythmTestSeed testSeed)

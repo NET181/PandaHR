@@ -9,20 +9,18 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
 {
     public class RatingCounterTests : IClassFixture<AlghorythmTestSeed>
     {
-        private AlghorythmTestSeed _testSeed;
-        private RatingCounter _ratingCounter;
-        private CVAlghorythmModel _cV;
-        private VacancyAlghorythmModel _vacancy;
-        private SplitedSkillsAlghorythmModel _splitedSkills;
+        private readonly RatingCounter _ratingCounter;
+        private readonly CVAlghorythmModel _cV;
+        private readonly VacancyAlghorythmModel _vacancy;
+        private readonly SplitedSkillsAlghorythmModel _splitedSkills;
 
 
         public RatingCounterTests(AlghorythmTestSeed testSeed)
         {
-            _testSeed = testSeed;
             _ratingCounter = testSeed.RatingCounter;
             _cV = testSeed.CV;
             _vacancy = testSeed.Vacancy;
-            _splitedSkills = _testSeed.SkillsMatcher.MatchSkills(_testSeed.SkillKnowledge, testSeed.SplitedSkills);
+            _splitedSkills = testSeed.SkillsMatcher.MatchSkills(testSeed.SkillKnowledge, testSeed.SplitedSkills);
         }
 
         [Fact]
