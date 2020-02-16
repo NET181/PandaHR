@@ -4,14 +4,21 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PandaHR.Api.UnitTests.AlghorythmTests.UnitTests
+namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
 {
     public class AlghorythmTestSeed
     {
+        private const int HARD_SKILLS_SCALE_STEP = 6;
+        private const int LANG_SKILLS_SCALE_STEP = 6;
+        private const int SOFT_SKILLS_SCALE_STEP = 6;
+        private const int QUALIFICATION_SCALE_STEP = 20;
         private const int HARD_SKILLS_SKILL_TYPE = 1;
         private const int LANGUAGE_SKILLS_SKILL_TYPE = 2;
         private const int SOFT_SKILLS_SKILL_TYPE = 3;
         private const int INTERMEDIATE_QUALIFICATION_VALUE = 3;
+        private const int INTERMEDIATE_KNOWLEDGE_VALUE = 6;
+
+        private KnowledgeScaleSteps _knowledgeScaleSteps;
 
         public List<SkillRequestAlghorythmModel> SkillRequests { get; private set; }
         public List<SkillKnowledgeAlghorythmModel> SkillKnowledge { get; private set; }
@@ -27,6 +34,7 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.UnitTests
 
         internal SkillsMatcher SkillsMatcher { get; private set; }
         internal SkillSplitter SkillSplitter { get; private set; }
+        internal RatingCounter RatingCounter { get; private set; }
 
         public VacancyAlghorythmModel Vacancy { get; set; }
         public CVAlghorythmModel CV { get; set; }
@@ -41,6 +49,24 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.UnitTests
             ConfigVacancy();
             ConfigSkillKnowledge();
             ConfigCV();
+            ConfigKnowledgeScaleStep();
+            ConfigRatingCounter();
+        }
+
+        private void ConfigKnowledgeScaleStep()
+        {
+            _knowledgeScaleSteps = new KnowledgeScaleSteps()
+            {
+                HardKnowledgeScaleStep = HARD_SKILLS_SCALE_STEP,
+                LanguageKnowledgeScaleStep = LANG_SKILLS_SCALE_STEP,
+                QualificationScaleStep = QUALIFICATION_SCALE_STEP,
+                SoftKnowledgeScaleStep = SOFT_SKILLS_SCALE_STEP
+            };
+        }
+
+        private void ConfigRatingCounter()
+        {
+            RatingCounter = new RatingCounter(_knowledgeScaleSteps);
         }
 
         private void ConfigCV()
@@ -59,27 +85,33 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.UnitTests
 
             skillKnowledge.Add(new SkillKnowledgeAlghorythmModel()
             {
-                Skill = DotNet
+                Skill = DotNet,
+                KnowledgeLevel = INTERMEDIATE_KNOWLEDGE_VALUE
             });
             skillKnowledge.Add(new SkillKnowledgeAlghorythmModel()
             {
-                Skill = Oratory
+                Skill = Oratory,
+                KnowledgeLevel = INTERMEDIATE_KNOWLEDGE_VALUE
             });
             skillKnowledge.Add(new SkillKnowledgeAlghorythmModel()
             {
-                Skill = Friendliness
+                Skill = Friendliness,
+                KnowledgeLevel = INTERMEDIATE_KNOWLEDGE_VALUE
             });
             skillKnowledge.Add(new SkillKnowledgeAlghorythmModel()
             {
-                Skill = English
+                Skill = English,
+                KnowledgeLevel = INTERMEDIATE_KNOWLEDGE_VALUE
             });
             skillKnowledge.Add(new SkillKnowledgeAlghorythmModel()
             {
-                Skill = EntityFramework
+                Skill = EntityFramework,
+                KnowledgeLevel = INTERMEDIATE_KNOWLEDGE_VALUE
             });
             skillKnowledge.Add(new SkillKnowledgeAlghorythmModel()
             {
-                Skill = ASPNetCore
+                Skill = ASPNetCore,
+                KnowledgeLevel = INTERMEDIATE_KNOWLEDGE_VALUE
             });
 
             SkillKnowledge = skillKnowledge;
@@ -231,32 +263,38 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.UnitTests
             skillRequests.Add(new SkillRequestAlghorythmModel()
             {
                 Skill = DotNet,
-                Weight = 80
+                Weight = 80,
+                KnowledgeLevel = INTERMEDIATE_KNOWLEDGE_VALUE
             });
             skillRequests.Add(new SkillRequestAlghorythmModel()
             {
                 Skill = Oratory,
-                Weight = 35
+                Weight = 35,
+                KnowledgeLevel = INTERMEDIATE_KNOWLEDGE_VALUE
             });
             skillRequests.Add(new SkillRequestAlghorythmModel()
             {
                 Skill = Friendliness,
-                Weight = 15
+                Weight = 15,
+                KnowledgeLevel = INTERMEDIATE_KNOWLEDGE_VALUE
             });
             skillRequests.Add(new SkillRequestAlghorythmModel()
             {
                 Skill = English,
-                Weight = 80
+                Weight = 80,
+                KnowledgeLevel = INTERMEDIATE_KNOWLEDGE_VALUE
             });
             skillRequests.Add(new SkillRequestAlghorythmModel()
             {
                 Skill = EntityFramework,
-                Weight = 75
+                Weight = 75,
+                KnowledgeLevel = INTERMEDIATE_KNOWLEDGE_VALUE
             });
             skillRequests.Add(new SkillRequestAlghorythmModel()
             {
                 Skill = ASPNetCore,
-                Weight = 45
+                Weight = 45,
+                KnowledgeLevel = INTERMEDIATE_KNOWLEDGE_VALUE
             });
 
             SkillRequests = skillRequests;

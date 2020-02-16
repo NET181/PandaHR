@@ -6,7 +6,7 @@ using PandaHR.Api.Services.ScoreAlgorithm.Models;
 using Xunit;
 using System.Threading.Tasks;
 
-namespace PandaHR.Api.UnitTests.AlghorythmTests.UnitTests
+namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
 {
     public class SkillSplitterTests : IClassFixture<AlghorythmTestSeed>
     {

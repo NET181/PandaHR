@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace PandaHR.Api.UnitTests.AlghorythmTests.UnitTests
+namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
 {
     public class SkillMatcherTests : IClassFixture<AlghorythmTestSeed>
     {
