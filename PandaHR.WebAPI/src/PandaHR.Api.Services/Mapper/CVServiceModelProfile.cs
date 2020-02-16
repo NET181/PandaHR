@@ -9,7 +9,7 @@ namespace PandaHR.Api.Services.Mapper
     {
         public CVServiceModelProfile()
         {
-            CreateMap<CVServiceModel, CVDTO>()
+            CreateMap<CVServiceModel, CVCreationDTO>()
             .ForMember(x => x.Educations, o => o.MapFrom(c => c.Educations))
             .ForMember(x => x.IsActive, o => o.MapFrom(c => c.IsActive))
             .ForMember(x => x.JobExperiences, o => o.MapFrom(c => c.JobExperiences))
@@ -20,9 +20,15 @@ namespace PandaHR.Api.Services.Mapper
             .ForMember(x => x.User, o => o.MapFrom(c => c.User));
 
             CreateMap<CV, CVServiceModel>();
-            CreateMap<CVCreationServiceModel, CVDTO>();
+            CreateMap<CVCreationServiceModel, CVCreationDTO>();
             CreateMap<CVforSearchDTO, CVServiceModel>();
             CreateMap<CVServiceModel, CV>();
+            CreateMap<CVServiceModel, CVCreationServiceModel>();
+            CreateMap<CVDTO, CVServiceModel>()
+                .ForMember(t => t.UserId, o => o.MapFrom(c => c.User.Id))
+                .ForMember(t => t.JobExperiences, o => o.MapFrom(c => c.JobExperiences))
+                .ForMember(t => t.SkillKnowledges, o => o.MapFrom(c => c.SkillKnowledges));
+                
         }
     }
 }

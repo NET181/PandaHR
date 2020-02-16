@@ -9,6 +9,7 @@ namespace PandaHR.Api.DAL.Mapper
         public JobExperienceDTOProfile()
         {
             CreateMap<JobExperienceDTO, JobExperience>();
+            CreateMap<JobExperience, JobExperienceDTO>();
         }
     }
 }

@@ -45,7 +45,7 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task AddAsync(Skill skill)
         {
-            await _uow.Skills.Add(skill);
+            await _uow.Skills.AddAsync(skill);
         }
 
         public async Task UpdateAsync(Skill skill)

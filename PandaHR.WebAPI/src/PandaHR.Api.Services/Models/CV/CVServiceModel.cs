@@ -11,6 +11,10 @@ namespace PandaHR.Api.Services.Models.CV
 {
     public class CVServiceModel
     {
+        public CVServiceModel()
+        {
+            Skills = new HashSet<SkillForSearchDTO>();
+        }
         public Guid Id { get; set; }
         public UserCreationServiceModel User { get; set; }
         public ICollection<EducationWithDetailsServiceModel> Educations { get; set; }

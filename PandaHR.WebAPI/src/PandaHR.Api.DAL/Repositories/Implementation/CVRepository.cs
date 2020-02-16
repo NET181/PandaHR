@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using PandaHR.Api.DAL.DTOs.SkillKnowledge;
 using PandaHR.Api.DAL.EF.Context;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.Repositories.Contracts;
-using System.Collections.ObjectModel;
+using PandaHR.Api.DAL.DTOs.JobExperience;
 
 namespace PandaHR.Api.DAL.Repositories.Implementation
 {
@@ -26,7 +27,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             _context = context;
         }
 
-        public async Task AddAsync(CVDTO cvDto)
+        public async Task<CVDTO> AddAsync(CVCreationDTO cvDto)
         {
             var skillKnowledges = cvDto.SkillKnowledges;
             var skillsId = skillKnowledges.Select(s => s.SkillId);
@@ -47,7 +48,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             var technology = await _context.Technologies.FirstOrDefaultAsync(t => t.Id == technologyId);
             var qualification = await _context.Qualifications.FirstOrDefaultAsync(q => q.Id == qualificationId);
 
-            CV cv = _mapper.Map<CVDTO, CV>(cvDto);
+            CV cv = _mapper.Map<CVCreationDTO, CV>(cvDto);
 
             cv.Qualification = qualification;
             cv.Technology = technology;
@@ -65,6 +66,8 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
 
             await _context.CVs.AddAsync(cv);
             await _context.SaveChangesAsync();
+
+            return _mapper.Map<CV, CVDTO>(cv);
         }
 
         public async Task<CV> GetById(Guid id)
@@ -128,6 +131,69 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             }
             
             return query1;
+        }
+
+        public async Task AddSkillKnowledgeIntoCVAsync(SkillKnowledgeDTO model, Guid CVId)
+        {
+            var cv = await _context.CVs.FindAsync(CVId);
+
+            var skillKnowledgeEntity = _mapper.Map<SkillKnowledgeDTO, SkillKnowledge>(model);
+            cv.SkillKnowledges.Add(skillKnowledgeEntity);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteSkillKnowledgeFromCVAsync(Guid skillKnowledgeId)
+        {
+            var skillKnowledge =  await _context.SkillKnowledges.FindAsync(skillKnowledgeId);
+            _context.SkillKnowledges.Remove(skillKnowledge);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddJobExperienceIntoCVAsync(JobExperienceDTO model, Guid CVId)
+        {
+            var cv = await _context.CVs.FindAsync(CVId);
+
+            var jobExperience = _mapper.Map<JobExperienceDTO, JobExperience>(model);
+            cv.JobExperiences.Add(jobExperience);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteJobExperienceFromCVAsync(Guid JobExperienceId)
+        {
+            var jobExperience = await _context.JobExperiences.FindAsync(JobExperienceId);
+            _context.JobExperiences.Remove(jobExperience);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(CVCreationDTO cv)
+        {
+            var entity = _mapper.Map<CVCreationDTO, CV>(cv);
+            _context.Entry(entity).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task LinkUserToCV(CV cv, User user)
+        {
+            user.CVId = cv.Id;
+            _context.Users.Update(user);
+
+            cv.UserId = user.Id;
+            _context.CVs.Update(cv);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task LinkUserToCV(Guid cvId, Guid userId)
+        {
+            User user = _context.Users.Find(userId);
+            CV cv = _context.CVs.Find(cvId);
+
+            await LinkUserToCV(cv, user);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task AddAsync(JobExperience entity)
         {
-            await _uow.JobExperiences.Add(entity);
+            await _uow.JobExperiences.AddAsync(entity);
         }
 
         public async Task<IEnumerable<JobExperience>> GetAllAsync()
