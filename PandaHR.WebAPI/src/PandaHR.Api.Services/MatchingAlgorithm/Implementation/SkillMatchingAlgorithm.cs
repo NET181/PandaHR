@@ -7,20 +7,20 @@ using System.Text;
 
 namespace PandaHR.Api.Services.MatchingAlgorithm.Implementation
 {
-    public class SkillMatchingAlgorithm : ISkillMatchingAlgorithm
+    public class SkillMatchingAlgorithm<T> : ISkillMatchingAlgorithm<T>
     {
-        public IEnumerable<MatchingAlgorithmResponceModel> GetMatchingModels(
-            ISkillContainer pattern,
-            IEnumerable<ISkillContainer> matchingItems,
+        public IEnumerable<MatchingAlgorithmResponceModel> 
+            GetMatchingModels(
+            IMatchingModel<T> pattern,
+            IEnumerable<IMatchingModel<T>> matchingItems,
             double threshold)
         {
             return matchingItems
                 .AsParallel()
-                .Select(
-                m => new MatchingAlgorithmResponceModel
+                .Select(m => new MatchingAlgorithmResponceModel
                 {
                     Id = m.Id,
-                    Matching = pattern.SkillIds.GetMatching(m.SkillIds)
+                    Matching = pattern.MatchingSet.GetMatching(m.MatchingSet)
                 })
                 .Where(m => m.Matching >= threshold)
                 .OrderByDescending(m => m.Matching);

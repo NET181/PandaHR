@@ -17,9 +17,9 @@ namespace PandaHR.Api.Services.Implementation
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
-        private readonly ISkillMatchingAlgorithm _matchingAlgorithm;
+        private readonly ISkillMatchingAlgorithm<Guid> _matchingAlgorithm;
 
-        public VacancyService(IUnitOfWork uow, IMapper mapper, ISkillMatchingAlgorithm matchingAlgorithm)
+        public VacancyService(IUnitOfWork uow, IMapper mapper, ISkillMatchingAlgorithm<Guid> matchingAlgorithm)
         {
             _uow = uow;
             _mapper = mapper;
@@ -91,12 +91,13 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<IEnumerable<MatchingAlgorithmResponceModel>> GetVacanciesByCV(Guid cvId, double threshold)
         {
-            var vacancies = new List<Vacancy>
-                (await _uow.Vacancies.GetAllAsync(include: s => s
+            var vacancies = await _uow.Vacancies
+                .GetAllAsync(include: s => s
                 .Include(x => x.SkillRequirements)
-                    .ThenInclude(s => s.Skill)));
+                    .ThenInclude(s => s.Skill));
 
-            var CV = await _uow.CVs.GetFirstOrDefaultAsync(predicate: s => s
+            var CV = await _uow.CVs
+                .GetFirstOrDefaultAsync(predicate: s => s
                 .Id == cvId,
                 include: s => s
                 .Include(x => x.SkillKnowledges)

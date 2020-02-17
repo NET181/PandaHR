@@ -5,11 +5,12 @@ using System.Text;
 
 namespace PandaHR.Api.Services.MatchingAlgorithm.Contracts
 {
-    public interface ISkillMatchingAlgorithm
+    public interface ISkillMatchingAlgorithm<T>
     {
-        public IEnumerable<MatchingAlgorithmResponceModel> GetMatchingModels(
-            ISkillContainer pattern,
-            IEnumerable<ISkillContainer> matchingItems, 
+        public IEnumerable<MatchingAlgorithmResponceModel>
+            GetMatchingModels(
+            IMatchingModel<T> pattern,
+            IEnumerable<IMatchingModel<T>> matchingItems, 
             double threshold);
     }
 }

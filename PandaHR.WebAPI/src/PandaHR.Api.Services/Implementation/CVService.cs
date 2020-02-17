@@ -19,10 +19,10 @@ namespace PandaHR.Api.Services.Implementation
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
-        private readonly ISkillMatchingAlgorithm _matchingAlgorithm;
+        private readonly ISkillMatchingAlgorithm<Guid> _matchingAlgorithm;
 
 
-        public CVService(IMapper mapper, IUnitOfWork uow, ISkillMatchingAlgorithm matchingAlgorithm)
+        public CVService(IMapper mapper, IUnitOfWork uow, ISkillMatchingAlgorithm<Guid> matchingAlgorithm)
         {
             _mapper = mapper;
             _uow = uow;

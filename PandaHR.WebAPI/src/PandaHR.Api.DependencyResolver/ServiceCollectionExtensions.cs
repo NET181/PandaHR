@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -78,7 +79,7 @@ namespace PandaHR.Api.DependencyResolver
 
             services.AddScoped<IScoreCounter, ScoreCounter>();
             services.AddScoped<IScoreAlghorythm, ScoreAlghorythm>();
-            services.AddScoped<ISkillMatchingAlgorithm, SkillMatchingAlgorithm>();
+            services.AddScoped<ISkillMatchingAlgorithm<Guid>, SkillMatchingAlgorithm<Guid>>();
 
 
             services.AddSingleton<PandaHR.Api.Common.Contracts.IMapper, PandaHRAutoMapper>();

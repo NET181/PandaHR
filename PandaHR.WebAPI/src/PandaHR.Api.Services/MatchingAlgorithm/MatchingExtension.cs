@@ -7,9 +7,20 @@ namespace PandaHR.Api.Services.MatchingAlgorithm
 {
     public static class MatchingExtension
     {
-        public static int GetMatching<T>(this IEnumerable<T> source, IEnumerable<T> enumerable)
+        public static double GetMatching<T>(
+            this IEnumerable<T> pattern, 
+            IEnumerable<T> sequenceToCompare)
         {
-            return source.Intersect(enumerable).Count() / source.Count();
+            double result = 1;
+
+            if (pattern.Count() != 0)
+            {
+                result = (double)pattern
+                .Intersect(sequenceToCompare)
+                .Count() / pattern.Count();
+            }
+
+            return result;
         }
     }
 }
