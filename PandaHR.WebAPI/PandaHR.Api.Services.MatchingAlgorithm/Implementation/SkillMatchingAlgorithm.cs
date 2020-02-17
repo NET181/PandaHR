@@ -15,6 +15,11 @@ namespace PandaHR.Api.Services.MatchingAlgorithm.Implementation
             IEnumerable<IMatchingModel<T>> matchingItems,
             double threshold)
         {
+            if (pattern == null)
+            {
+                throw new ArgumentNullException(nameof(pattern));
+            }
+
             return matchingItems
                 .AsParallel()
                 .Select(m => new MatchingAlgorithmResponceModel

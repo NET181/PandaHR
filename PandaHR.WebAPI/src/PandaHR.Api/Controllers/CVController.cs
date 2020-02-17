@@ -14,6 +14,7 @@ using FluentValidation.Results;
 using System.Net;
 using System.Collections.Generic;
 using PandaHR.Api.Services.Models.Skill;
+using System.Linq;
 
 namespace PandaHR.Api.Controllers
 {
@@ -33,7 +34,24 @@ namespace PandaHR.Api.Controllers
         [HttpGet("/GetCVsByVacancy")]
         public async Task<IActionResult> GetCVsBySkills(Guid vacancyId, double threshold)
         {
-            return Ok(await _cvService.GetCVsByVacancy(vacancyId, threshold));
+            try
+            {
+                var result = await _cvService.GetCVsByVacancy(vacancyId, threshold);
+
+                if (result.Count() == 0)
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    return Ok(result);
+                }
+            }
+            catch(ArgumentNullException ex)
+            {
+                //log
+                return NotFound(vacancyId);
+            }
         }
 
         [HttpGet("/UserCVsExt")]

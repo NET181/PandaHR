@@ -7,6 +7,7 @@ using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.ScoreAlghorythm;
 using PandaHR.Api.Services.ScoreAlghorythm.Models;
 using PandaHR.Api.Models.IdAndRating;
+using System.Linq;
 
 namespace PandaHR.Api.Controllers
 {
@@ -29,9 +30,25 @@ namespace PandaHR.Api.Controllers
         [HttpGet("GetVacancyByCV")]
         public async Task<IActionResult> GetCVsBySkills(Guid CVId, double threshold)
         {
-            return Ok(await _vacancyService.GetVacanciesByCV(CVId, threshold));
-        }
+            try
+            {
+                var result = await _vacancyService.GetVacanciesByCV(CVId, threshold);
 
+                if (result.Count() == 0)
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    return Ok(result);
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                //log
+                return NotFound(CVId);
+            }
+        }
 
         [HttpGet("searchfor/{id}")]
         public async Task<IActionResult> GetCVsByRaitingForVacancy(Guid id)
