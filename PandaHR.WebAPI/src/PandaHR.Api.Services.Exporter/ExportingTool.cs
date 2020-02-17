@@ -1,10 +1,7 @@
 ﻿using System;
-using System.IO;
-using PandaHR.Api.Services.Exporter.Models;
 using PandaHR.Api.Services.Exporter.Models.Enums;
 using PandaHR.Api.Services.Exporter.Models.ExportModels;
 using PandaHR.Api.Services.Exporter.Models.ExportTypes;
-using TemplateEngine.Docx;
 
 
 namespace PandaHR.Api.Services.Exporter

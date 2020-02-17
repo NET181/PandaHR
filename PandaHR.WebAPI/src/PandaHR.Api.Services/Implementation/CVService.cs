@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.Common.Contracts;
@@ -11,13 +10,10 @@ using PandaHR.Api.DAL.DTOs.CV;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.DAL.DTOs.Vacancy;
-using PandaHR.Api.Services.Exporter.Models;
 using PandaHR.Api.Services.Exporter.Models.ExportModels;
 using PandaHR.Api.Services.Exporter.Models.ExportTypes;
 using PandaHR.Api.Services.Models.CV;
-using PandaHR.Api.Services.SkillMatchingAlgorithm;
 using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
-using PandaHR.Api.Services.Models.Skill;
 
 namespace PandaHR.Api.Services.Implementation
 {
@@ -60,67 +56,12 @@ namespace PandaHR.Api.Services.Implementation
             await _uow.CVs.AddAsync(cv);
         }
 
-        public CustomFile ExportToDocx(string templatePath)
+        public async Task<CustomFile> ExportToDocxAsync(string templatePath, Guid id)
         {
-            CVExportModel cvModel = new CVExportModel()
-            {
-                FullName = "Rudenko Kyrylo",
-                Qualification = "Trainee",
-                Summary = "Best CV in the world",
-                Technologies = new List<TechnologyExportModel>()
-                {
-                    new TechnologyExportModel(){Name = "Backend", Skills = new List<SkillExportModel>()
-                    {
-                        new SkillExportModel(){Name = "C#", KnowledgeLevel = "Beginner"},
-                        new SkillExportModel(){Name = "AspNet", KnowledgeLevel = "Intermediate"},
-                        new SkillExportModel(){Name = "NodeJs", KnowledgeLevel = "Intermediate Low"},
-                        new SkillExportModel(){Name = "EF Core", KnowledgeLevel = "Beginner"},
-                    }},
-                    new TechnologyExportModel(){Name = "FrontEnd", Skills = new List<SkillExportModel>()
-                    {
-                        new SkillExportModel(){Name = "Angular", KnowledgeLevel = "Beginner"},
-                        new SkillExportModel(){Name = "React", KnowledgeLevel = "Intermediate"},
-                        new SkillExportModel(){Name = "JavaScript", KnowledgeLevel = "Intermediate Low"},
-                        new SkillExportModel(){Name = "Vue.js", KnowledgeLevel = "Beginner"},
-                    }},
-                },
-                Educations = new List<EducationExportModel>()
-                {
-                    new EducationExportModel()
-                    {
-                        Place = "DNU",
-                        Degree = "Bachelor",
-                        Speciality = "121 - Software Engineer",
-                        Period = "2012-2016"
-                    },
-                    new EducationExportModel()
-                    {
-                        Place = "DNU",
-                        Degree = "Bachelor",
-                        Speciality = "121 - Software Engineer",
-                        Period = "2012-2016"
-                    }
-                },
-                JobExperiences = new List<JobExperienceExportModel>()
-                {
-                    new JobExperienceExportModel()
-                    {
-                        Company = "SoftServe",
-                        Description = "company",
-                        Period = "2012-2016",
-                        Project = "securityProject"
-                    },
-                    new JobExperienceExportModel()
-                    {
-                        Company = "Apriorit",
-                        Description = "topproject",
-                        Period = "2007-2012",
-                        Project = "PandaHR"
-                    },
-                }
-            };
+            var cvDto = await _uow.CVs.GetCvForExportAsync(id);
+            var cvExportModel = _mapper.Map<CVExportDTO, CVExportModel>(cvDto);
 
-            return ExportingTool.ExportCV(templatePath, cvModel);
+            return ExportingTool.ExportCV(templatePath, cvExportModel);
         }
 
         public async Task<IEnumerable<CVServiceModel>> GetAllAsync()

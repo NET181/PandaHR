@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using PandaHR.Api.Services.Exporter.Models.ExportModels;
 using TemplateEngine.Docx;
 
@@ -12,7 +11,6 @@ namespace PandaHR.Api.Services.Exporter.Models.ExportTypes
         public DocxFile(string fileName) : base(fileName, CONTENT_TYPE)
         {
         }
-
 
         public override CustomFile ProceedCV(string templatePath, CVExportModel cvModel)
         {
