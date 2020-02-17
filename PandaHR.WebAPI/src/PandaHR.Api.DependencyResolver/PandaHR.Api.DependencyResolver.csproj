@@ -18,6 +18,7 @@
     <ProjectReference Include="..\PandaHR.Api.DAL.EF\PandaHR.Api.DAL.EF.csproj" />
     <ProjectReference Include="..\PandaHR.Api.DAL.Models\PandaHR.Api.DAL.Models.csproj" />
     <ProjectReference Include="..\PandaHR.Api.DAL\PandaHR.Api.DAL.csproj" />
+    <ProjectReference Include="..\PandaHR.Api.Services.MatchingAlgorithm\PandaHR.Api.Services.MatchingAlgorithm.csproj" />
     <ProjectReference Include="..\PandaHR.Api.Services\PandaHR.Api.Services.csproj" />
   </ItemGroup>
 
