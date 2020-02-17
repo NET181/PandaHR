@@ -19,10 +19,10 @@ namespace PandaHR.Api.DAL.Mapper
                 .ForMember(dest => dest.Educations, opt => opt.MapFrom(src => src.User.Educations))
                 .ForMember(dest => dest.JobExperiences, opt => opt.MapFrom(src => src.JobExperiences))
                 .ForMember(dest => dest.Technologies, opt => opt.MapFrom(src => src.SkillKnowledges
-                    .GroupBy(sk => sk.Skill.SkillType.Name)
+                    .GroupBy(sk => sk.Skill.SkillType)
                         .Select(sk => new TechnologyExportDTO
                         {
-                            Name = sk.Key,
+                            Name = sk.Key.Name,
                             Skills = sk.Select(skillKnowledge =>
                                            new SkillExportDTO
                                            {
