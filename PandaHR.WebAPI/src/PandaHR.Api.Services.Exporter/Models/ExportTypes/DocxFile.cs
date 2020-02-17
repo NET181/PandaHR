@@ -65,6 +65,7 @@ namespace PandaHR.Api.Services.Exporter.Models.ExportTypes
                     }
                     valuesToFill.Tables.Add(educationTable);
 
+                    outputDocument.SetNoticeAboutErrors(false);
                     outputDocument.FillContent(valuesToFill);
                     outputDocument.SaveChanges();
 
