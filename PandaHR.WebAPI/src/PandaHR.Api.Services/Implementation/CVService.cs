@@ -14,6 +14,7 @@ using PandaHR.Api.Services.Exporter.Models.ExportModels;
 using PandaHR.Api.Services.Exporter.Models.ExportTypes;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
+using PandaHR.Api.Services.Exporter.Models.Enums;
 
 namespace PandaHR.Api.Services.Implementation
 {
@@ -56,12 +57,22 @@ namespace PandaHR.Api.Services.Implementation
             await _uow.CVs.AddAsync(cv);
         }
 
-        public async Task<CustomFile> ExportToDocxAsync(string templatePath, Guid id)
+        public async Task<CustomFile> ExportCVAsync(Guid id, string webRootPath, string fileExtension)
         {
+            if (!Enum.TryParse(fileExtension, true, out ExportType exportType))
+            {
+                throw new FormatException("This export mode is not supported");
+            }
+            if(!_uow.CVs.CvExists(id))
+            {
+                throw new KeyNotFoundException("No CV found with this id");
+            }
+
+            var path = String.Format("{0}/export/CV_ExportTemplate.{1}", webRootPath, exportType);
             var cvDto = await _uow.CVs.GetCvForExportAsync(id);
             var cvExportModel = _mapper.Map<CVExportDTO, CVExportModel>(cvDto);
 
-            return ExportingTool.ExportCV(templatePath, cvExportModel);
+            return ExportingTool.ExportCV(path, cvExportModel, exportType);
         }
 
         public async Task<IEnumerable<CVServiceModel>> GetAllAsync()

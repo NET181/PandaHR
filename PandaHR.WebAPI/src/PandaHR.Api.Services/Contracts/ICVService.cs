@@ -16,6 +16,6 @@ namespace PandaHR.Api.Services.Contracts
         Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? pageSize = 10, int? page = 1);
         Task<IEnumerable<CV>> GetBySkillSet(IEnumerable<Skill> skills, double threshold);
         Task AddAsync(CVCreationServiceModel cvServiceModel);
-        Task<CustomFile> ExportToDocxAsync(string templatePath, Guid id);
+        Task<CustomFile> ExportCVAsync(Guid id, string webRootPath, string fileExtension);
     }
 }

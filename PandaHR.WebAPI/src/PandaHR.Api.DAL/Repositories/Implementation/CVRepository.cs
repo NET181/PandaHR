@@ -155,5 +155,12 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
 
             return _mapper.Map<CV, CVExportDTO>(cvDto);
         }
+
+        public bool CvExists(Guid cvId)
+        {
+            var guid = _context.CVs.Where(cv => cv.Id == cvId).Select(cv=>cv.Id).FirstOrDefault();
+
+            return guid != Guid.Empty;
+        }
     }
 }
