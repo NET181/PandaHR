@@ -25,17 +25,25 @@ namespace PandaHR.Api.Controllers
 
         // GET: api/Qualification
         [HttpGet]
-        public async Task<IEnumerable<QualificationResponseModel>> GetAllQualifications()
+        public async Task<IActionResult> GetAllQualifications()
         {
-            var serviceModels = await _qualificationService.GetAllQualificationsAsync();
+            var serviceModel = await _qualificationService.GetAllQualificationsAsync();
 
-            return _mapper
-               .Map<IEnumerable<QualificationServiceModel>, IEnumerable<QualificationResponseModel>>(serviceModels);
+            var requestModel = _mapper.Map<IEnumerable<QualificationServiceModel>
+                , IEnumerable<QualificationResponseModel>>(serviceModel);
+
+            return Ok(requestModel);
         }
 
+        //POST: api/Qualification
         [HttpPost]
         public async Task<IActionResult> Post(Qualification qualification)
         {
+            if(qualification == null)
+            {
+                return BadRequest();
+            }
+
             await _qualificationService.AddAsync(qualification);
 
             return Ok();
