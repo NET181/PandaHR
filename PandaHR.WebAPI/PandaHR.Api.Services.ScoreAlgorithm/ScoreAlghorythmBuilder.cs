@@ -18,11 +18,11 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
         }
 
         /// <summary>
-        /// exeption throw
+        /// Can throw ArgumentExeption in case of negative validation
         /// </summary>
-        /// <param name="languageKnowledgeScaleStep"></param>
-        /// <param name="qualificationScaleStep"></param>
-        /// <returns></returns>
+        /// <param name="skillTypeValues">Values for SkillType identification. Must be unique</param>
+        /// <param name="knowledgeScaleSteps">Knowledge grab step values. Internal values ​​cannot equal 0</param>
+        /// <returns>Rating calculation algorithm</returns>
         public ScoreAlghorythm GetScoreAlghorythm(SkillTypeValuesw skillTypeValues,
             KnowledgeScaleSteps knowledgeScaleSteps)
         {

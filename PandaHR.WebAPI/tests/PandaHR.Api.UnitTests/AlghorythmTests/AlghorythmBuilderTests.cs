@@ -18,12 +18,12 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
         [InlineData(1, 1, 2)]
         [InlineData(1, 2, 2)]
         [InlineData(2, 1, 2)]
-        public void InvalidSkillTypeThrowExeptionGetScoreAlghorythmTest(int hardSkillValue, int LangSkillValue, int softSkillValue)
+        public void InvalidSkillTypeThrowExeptionGetScoreAlghorythmTest(int hardSkillValue, int langSkillValue, int softSkillValue)
         {
             SkillTypeValuesw skillTypeValues = new SkillTypeValuesw()
             {
                 HardSkillsValue = hardSkillValue,
-                LanguageSkillsValue = LangSkillValue,
+                LanguageSkillsValue = langSkillValue,
                 SoftSkillsValue = softSkillValue
             };
             KnowledgeScaleSteps knowledgeScaleSteps = new KnowledgeScaleSteps()
