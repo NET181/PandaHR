@@ -102,9 +102,11 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpGet("/UserCVsSummary")]
+        public async Task<IActionResult> GetCVsPaged(Guid userId, int pageSize, int page)
+        {
             var item = await _cvService.GetUserCVsAsync(userId, pageSize, page);
 
-            if(item == null)
+            if (item == null)
             {
                 return NotFound();
             }
@@ -159,8 +161,8 @@ namespace PandaHR.Api.Controllers
         // PUT: api/CV
         [HttpPut]
         public async Task<IActionResult> Put(CVCreationRequestModel cv)
-        {         
-            if(cv == null)
+        {
+            if (cv == null)
             {
                 return BadRequest();
             }
@@ -174,8 +176,8 @@ namespace PandaHR.Api.Controllers
         // POST: api/CV
         [HttpPost]
         public async Task<IActionResult> Post(CVCreationRequestModel cv)
-        { 
-            if(cv == null)
+        {
+            if (cv == null)
             {
                 BadRequest();
             }
