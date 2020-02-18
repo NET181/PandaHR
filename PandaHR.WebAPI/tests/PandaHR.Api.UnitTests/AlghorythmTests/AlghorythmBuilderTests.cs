@@ -20,7 +20,7 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
         [InlineData(2, 1, 2)]
         public void InvalidSkillTypeThrowExeptionGetScoreAlghorythmTest(int hardSkillValue, int langSkillValue, int softSkillValue)
         {
-            SkillTypeValuesw skillTypeValues = new SkillTypeValuesw()
+            SkillTypeValues skillTypeValues = new SkillTypeValues()
             {
                 HardSkillsValue = hardSkillValue,
                 LanguageSkillsValue = langSkillValue,
@@ -48,7 +48,7 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
             int languageKnowledgeScaleStep, int qualificationScaleStep, int softKnowledgeScaleStep)
         {
             //Arrange
-            SkillTypeValuesw skillTypeValues = new SkillTypeValuesw()
+            SkillTypeValues skillTypeValues = new SkillTypeValues()
             {
                 HardSkillsValue = 1,
                 LanguageSkillsValue = 2,
@@ -71,7 +71,7 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
         {
             //Arrange
             ScoreAlghorythm alghorythm;
-            SkillTypeValuesw skillTypeValues = new SkillTypeValuesw()
+            SkillTypeValues skillTypeValues = new SkillTypeValues()
             {
                 HardSkillsValue = 1,
                 LanguageSkillsValue = 2,

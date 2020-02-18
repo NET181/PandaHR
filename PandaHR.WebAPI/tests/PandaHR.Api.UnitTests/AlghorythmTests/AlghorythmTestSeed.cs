@@ -58,7 +58,7 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
 
         private void ConfigScoreAlghorythm()
         {
-            SkillTypeValuesw skillTypeValues = new SkillTypeValuesw()
+            SkillTypeValues skillTypeValues = new SkillTypeValues()
             {
                 HardSkillsValue = HARD_SKILLS_SKILL_TYPE,
                 LanguageSkillsValue = LANGUAGE_SKILLS_SKILL_TYPE,
@@ -161,7 +161,7 @@ namespace PandaHR.Api.UnitTests.AlghorythmTests.Tests
 
         private void ConfigSkillSplitter()
         {
-            var skillTypeValue = new SkillTypeValuesw()
+            var skillTypeValue = new SkillTypeValues()
             {
                 SoftSkillsValue = SOFT_SKILLS_SKILL_TYPE,
                 HardSkillsValue = HARD_SKILLS_SKILL_TYPE,

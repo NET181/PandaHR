@@ -7,9 +7,9 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
 {
     internal class SkillSplitter
     {
-        private readonly SkillTypeValuesw _skillTypeValues;
+        private readonly SkillTypeValues _skillTypeValues;
 
-        public SkillSplitter(SkillTypeValuesw skillTypeValues)
+        public SkillSplitter(SkillTypeValues skillTypeValues)
         {
             _skillTypeValues = skillTypeValues;
         }

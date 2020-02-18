@@ -1,6 +1,6 @@
 ﻿namespace PandaHR.Api.Services.ScoreAlgorithm.Models
 {
-    public class SkillTypeValuesw
+    public class SkillTypeValues
     {
         //public SkillTypeValues(int hardSkillsValue, int softSkillsValue, int languageSkillsValue)
         //{

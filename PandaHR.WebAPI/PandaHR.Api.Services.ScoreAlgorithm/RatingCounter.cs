@@ -116,8 +116,6 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
                         }
                         else if (skill.SkillKnowledge.KnowledgeLevel < skill.SkillRequirement.KnowledgeLevel)
                         {
-                            rating = CountWithExpirience(rating, skill);
-
                             rating += skill.SkillRequirement.Weight - skill.SkillRequirement.Weight
                                 * (skill.SkillRequirement.KnowledgeLevel - skill.SkillKnowledge.KnowledgeLevel)
                                 * _languageKnowledgeScaleStep * _languageKnowledgeScaleStep / PERCENT_DIVIDER;

@@ -4,7 +4,7 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
 {
     public interface IScoreAlghorythmBuilder
     {
-        ScoreAlghorythm GetScoreAlghorythm(SkillTypeValuesw skillTypeValues,
+        ScoreAlghorythm GetScoreAlghorythm(SkillTypeValues skillTypeValues,
             KnowledgeScaleSteps knowledgeScaleSteps);
     }
 }

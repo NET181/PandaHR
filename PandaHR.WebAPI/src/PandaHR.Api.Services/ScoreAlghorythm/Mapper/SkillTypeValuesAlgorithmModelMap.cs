@@ -8,10 +8,10 @@ namespace PandaHR.Api.Services.ScoreAlghorythm.Mapper
     {
         public SkillTypeValuesAlgorithmModelMap()
         {
-            CreateMap<SkillTypeValuesAlgorithmModel, SkillTypeValuesw>()
+            CreateMap<SkillTypeValuesAlgorithmModel, SkillTypeValues>()
                 ;
 
-            CreateMap<SkillTypeValuesw, SkillTypeValuesAlgorithmModel>();
+            CreateMap<SkillTypeValues, SkillTypeValuesAlgorithmModel>();
             
         }
     }

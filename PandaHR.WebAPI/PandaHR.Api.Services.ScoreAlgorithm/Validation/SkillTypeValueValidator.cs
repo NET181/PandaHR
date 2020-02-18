@@ -3,7 +3,7 @@ using PandaHR.Api.Services.ScoreAlgorithm.Models;
 
 namespace PandaHR.Api.Services.ScoreAlgorithm.Validation
 {
-    public class SkillTypeValueValidator : AbstractValidator<SkillTypeValuesw>
+    public class SkillTypeValueValidator : AbstractValidator<SkillTypeValues>
     {
         public SkillTypeValueValidator()
         {

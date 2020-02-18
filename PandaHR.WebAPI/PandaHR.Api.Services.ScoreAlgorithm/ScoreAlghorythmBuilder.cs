@@ -23,7 +23,7 @@ namespace PandaHR.Api.Services.ScoreAlgorithm
         /// <param name="skillTypeValues">Values for SkillType identification. Must be unique</param>
         /// <param name="knowledgeScaleSteps">Knowledge grab step values. Internal values ​​cannot equal 0</param>
         /// <returns>Rating calculation algorithm</returns>
-        public ScoreAlghorythm GetScoreAlghorythm(SkillTypeValuesw skillTypeValues,
+        public ScoreAlghorythm GetScoreAlghorythm(SkillTypeValues skillTypeValues,
             KnowledgeScaleSteps knowledgeScaleSteps)
         {
             var splitterValidationResult = _splittedValidator.Validate(skillTypeValues);

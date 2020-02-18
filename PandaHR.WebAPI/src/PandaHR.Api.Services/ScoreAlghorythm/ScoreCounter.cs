@@ -65,7 +65,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             };
 
             _alghorythm = _alghorythmBuilder.GetScoreAlghorythm(
-                _mapper.Map<SkillTypeValuesAlgorithmModel, SkillTypeValuesw>(skillTypeValues),
+                _mapper.Map<SkillTypeValuesAlgorithmModel, SkillTypeValues>(skillTypeValues),
                 _mapper.Map<KnowledgeScaleStepsAlgorithmModel, KnowledgeScaleSteps>(knowledgeScaleSteps));
 
             for (int i = 0; i < cVs.Count; i++)
