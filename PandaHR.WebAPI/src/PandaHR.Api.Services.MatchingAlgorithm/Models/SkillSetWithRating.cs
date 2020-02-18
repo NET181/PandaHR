@@ -5,9 +5,10 @@ using System.Text;
 
 namespace PandaHR.Api.Services.MatchingAlgorithm.Models
 {
-    public class CVMatchingModel : ISkillSetModel<Guid>
+    public class SkillSetWithRating<T> : ISkillSetWithRatingModel<T>
     {
-        public Guid Id { get; set; }
-        public IEnumerable<Guid> Skills { get; set; }
+        public T Id { get; set; }
+        public IEnumerable<T> Skills { get; set; }
+        public double Rating { get; set; }
     }
 }

@@ -7,11 +7,11 @@ namespace PandaHR.Api.Services.MatchingAlgorithm.Contracts
 {
     public interface ISkillMatchingAlgorithm<T>
     {
-        public IEnumerable<MatchingAlgorithmResponceModel>
-            GetMatchingModels(
-            IMatchingModel<T> pattern,
-            IEnumerable<IMatchingModel<T>> matchingItems, 
-            double threshold);
+        public IEnumerable<ISkillSetWithRatingModel<T>> GetMatchingModels(
+            ISkillSetModel<T> pattern,
+            IEnumerable<ISkillSetModel<T>> matchingItems, 
+            double threshold,
+            int take);
     }
 }
 

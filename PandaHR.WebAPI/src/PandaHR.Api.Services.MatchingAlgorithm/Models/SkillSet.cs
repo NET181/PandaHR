@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PandaHR.Api.Services.MatchingAlgorithm.Models
 {
-    public class CVMatchingModel : ISkillSetModel<Guid>
+    public class SkillSet : ISkillSetModel<Guid>
     {
         public Guid Id { get; set; }
         public IEnumerable<Guid> Skills { get; set; }

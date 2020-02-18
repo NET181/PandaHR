@@ -9,11 +9,11 @@ namespace PandaHR.Api.Services.MatchingAlgorithm.Implementation
 {
     public class SkillMatchingAlgorithm<T> : ISkillMatchingAlgorithm<T>
     {
-        public IEnumerable<MatchingAlgorithmResponceModel> 
-            GetMatchingModels(
-            IMatchingModel<T> pattern,
-            IEnumerable<IMatchingModel<T>> matchingItems,
-            double threshold)
+        //todo add xml response that ArgumentNullException is possible
+        public IEnumerable<ISkillSetWithRatingModel<T>> GetMatchingModels(
+                ISkillSetModel<T> pattern,
+                IEnumerable<ISkillSetModel<T>> matchingItems,
+                double threshold, int take)
         {
             if (pattern == null)
             {
@@ -22,13 +22,14 @@ namespace PandaHR.Api.Services.MatchingAlgorithm.Implementation
 
             return matchingItems
                 .AsParallel()
-                .Select(m => new MatchingAlgorithmResponceModel
+                .Select(s => new SkillSetWithRating<T>()
                 {
-                    Id = m.Id,
-                    Matching = pattern.MatchingSet.GetMatching(m.MatchingSet)
+                    Id = s.Id,
+                    Skills = s.Skills,
+                    Rating = s.Skills.Intersect(pattern.Skills).Count() //todo add method or class
                 })
-                .Where(m => m.Matching >= threshold)
-                .OrderByDescending(m => m.Matching);
+                .Take(take)
+                .OrderByDescending(m => m.Rating);
         }
     }
 }

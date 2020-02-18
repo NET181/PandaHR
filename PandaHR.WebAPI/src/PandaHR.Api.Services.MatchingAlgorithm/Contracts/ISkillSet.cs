@@ -4,8 +4,8 @@ using System.Text;
 
 namespace PandaHR.Api.Services.MatchingAlgorithm.Contracts
 {
-    public interface IMatchingModel<T> : IBaseModel
+    public interface ISkillSetModel<Guid> : IBaseModel<Guid>
     {
-        IEnumerable<T> MatchingSet { get; set; }
+        IEnumerable<Guid> Skills { get; set; }
     }
 }

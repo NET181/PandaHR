@@ -19,6 +19,7 @@ namespace PandaHR.Api.Services.Implementation
         private readonly IMapper _mapper;
         private readonly ISkillMatchingAlgorithm<Guid> _matchingAlgorithm;
 
+        public const int PAGE_SIZE = 2;
         public VacancyService(IUnitOfWork uow, IMapper mapper, ISkillMatchingAlgorithm<Guid> matchingAlgorithm)
         {
             _uow = uow;
@@ -89,7 +90,7 @@ namespace PandaHR.Api.Services.Implementation
             return await _uow.Vacancies.GetUserVacancySummaryAsync(userId, pageSize, page);
         }
 
-        public async Task<IEnumerable<MatchingAlgorithmResponceModel>> GetVacanciesByCV(Guid cvId, double threshold)
+        public async Task<IEnumerable<MatchingAlgorithmResponceModel>> GetVacanciesByCV(Guid cvId, double threshold, int page = 1)
         {
             var vacancies = await _uow.Vacancies
                 .GetAllAsync(include: s => s
@@ -106,7 +107,10 @@ namespace PandaHR.Api.Services.Implementation
             var algorithmVacancies = _mapper.Map<IEnumerable<Vacancy>, IEnumerable<VacancyMatchingModel>>(vacancies);
             var algorithmCV = _mapper.Map<CV, CVMatchingModel>(CV);
 
-            return _matchingAlgorithm.GetMatchingModels(algorithmCV, algorithmVacancies, threshold);
+            IEnumerable<SkillSet> skillSetByVacancies = new List<SkillSet>();
+            SkillSet skillSetByCV = new SkillSet();
+
+            var skillSetWithRatings = _matchingAlgorithm.GetMatchingModels(skillSetByCV, skillSetByVacancies, threshold, PAGE_SIZE);
         }
     }
 }
