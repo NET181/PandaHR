@@ -9,7 +9,8 @@ namespace PandaHR.Api.DAL.Mapper
         public EducationDTOProfile()
         {
             CreateMap<EducationDTO, Education>();
-            CreateMap<EducationWithDetailsDTO, Education>();
+            CreateMap<EducationWithDetailsDTO, Education>()
+                .ForPath(e => e.Speciality.Name, s => s.MapFrom(o => o.Speciality));
 
             CreateMap<Education, EducationWithDetailsDTO>();
             CreateMap<Education, EducationBasicInfoDTO>();
