@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PandaHR.Api.UnitTests", "te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PandaHR.Api.DependencyResolver", "src\PandaHR.Api.DependencyResolver\PandaHR.Api.DependencyResolver.csproj", "{F27F17F2-43C8-41C7-8321-E27814C62667}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PandaHR.Api.DAL.MongoDB", "src\PandaHR.Api.DAL.MongoDB\PandaHR.Api.DAL.MongoDB.csproj", "{5387FF23-9144-4338-92C0-2183DC8D7180}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{F27F17F2-43C8-41C7-8321-E27814C62667}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F27F17F2-43C8-41C7-8321-E27814C62667}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F27F17F2-43C8-41C7-8321-E27814C62667}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5387FF23-9144-4338-92C0-2183DC8D7180}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5387FF23-9144-4338-92C0-2183DC8D7180}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5387FF23-9144-4338-92C0-2183DC8D7180}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5387FF23-9144-4338-92C0-2183DC8D7180}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{29BEFB15-42B0-4F46-9D5E-A6AFBF3F7EC1} = {626DA999-2E9B-453C-BB03-60174DDCA6B9}
 		{4C2AF735-F8C9-4CD5-A6B4-94F498DE2F33} = {220846A3-A160-409D-BD21-F639B69800BA}
 		{F27F17F2-43C8-41C7-8321-E27814C62667} = {626DA999-2E9B-453C-BB03-60174DDCA6B9}
+		{5387FF23-9144-4338-92C0-2183DC8D7180} = {626DA999-2E9B-453C-BB03-60174DDCA6B9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19D83BDC-C772-4B44-8060-5CF09528BBDD}

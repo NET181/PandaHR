@@ -32,4 +32,8 @@
     <ProjectReference Include="..\..\src\PandaHR.Api\PandaHR.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="_testFiles\" />
+  </ItemGroup>
+
 </Project>
