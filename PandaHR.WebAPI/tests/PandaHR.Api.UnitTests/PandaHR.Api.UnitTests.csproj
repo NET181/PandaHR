@@ -36,4 +36,10 @@
     <Folder Include="_testFiles\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="_testFiles\HelloWorld.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

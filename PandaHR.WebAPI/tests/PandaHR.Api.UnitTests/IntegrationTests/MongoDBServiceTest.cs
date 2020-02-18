@@ -1,15 +1,14 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
-using PandaHR.Api.Models.Company;
 
 namespace PandaHR.Api.UnitTests.IntegrationTests
 {
-    public class MongoDBServiceTest
+    public class MongoDBServiceTest: IClassFixture<TestingWebAppFactory<Startup>>
     {
         private readonly HttpClient _client;
 
@@ -19,13 +18,27 @@ namespace PandaHR.Api.UnitTests.IntegrationTests
         }
 
         [Theory]
-        [InlineData(@"TestPhotos\", "HelloWorld.docx")]
+        [InlineData(@"_testFiles\", "HelloWorld.docx")]
         public async Task UploadFileAsync(string filePath, string fileName)
         {
             // Arrange
-            string Url = "api/File";
-            // Act
-            var response = await _client.PostAsync(Url, ContentHelper.GetFileContent(filePath, fileName));
+            var request = new
+            {
+                Url = "api/File",
+               // Id = new Guid("b072e561-9258-4502-8b40-c545b121cb0c")
+            };
+           // var url = String.Format($"{request.Url}{request.Id.ToString()}");
+            HttpResponseMessage response;
+            var mpContent = new MultipartFormDataContent();
+
+            using (var file = File.OpenRead(filePath + fileName))
+            using (var content = new StreamContent(file))
+            {
+                mpContent.Add(content, "files", fileName);
+
+                response = await _client.PostAsync(request.Url, mpContent);
+            }
+            
             var value = await response.Content.ReadAsStringAsync();
             // Assert
             response.EnsureSuccessStatusCode();

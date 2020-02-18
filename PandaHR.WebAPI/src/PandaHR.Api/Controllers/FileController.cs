@@ -31,8 +31,9 @@ namespace PandaHR.Api.Controllers
             _appEnvironment = appEnvironment;
         }
 
-        [HttpPost("/File/{id}")]
-        public async Task<IActionResult> AddFile(Guid guid, IFormFile uploadedFile)
+        //[HttpPost("/File/{id}")]
+        [HttpPost("/File")]
+        public async Task<IActionResult> AddFile(/*Guid id, */IFormFile uploadedFile)
         { 
             if (uploadedFile != null)
             {
@@ -41,7 +42,8 @@ namespace PandaHR.Api.Controllers
                 using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
                 {
                     await uploadedFile.CopyToAsync(fileStream);
-                    await _fileService.StoreFile(guid.ToString(), fileStream, uploadedFile.FileName);
+                    //await _fileService.StoreFile(id.ToString(), fileStream, uploadedFile.FileName);
+                    await _fileService.StoreFile(Guid.NewGuid().ToString(), fileStream, uploadedFile.FileName);
                     System.IO.File.Delete(path);
                 }  
             }
