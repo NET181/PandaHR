@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace PandaHR.Api.Services.ScoreAlghorythm.Models
+namespace PandaHR.Api.Services.ScoreAlghorythm
 {
-    public class IdAndRating
+    public class IdAndRatingServiceModel
     {
         public Guid Id { get; set; }
         public int Rating { get; set; }

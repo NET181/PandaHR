@@ -12,6 +12,8 @@ using System.Collections.ObjectModel;
 using PandaHR.Api.Models.SkillKnowledge;
 using PandaHR.Api.Models.JobExperience;
 using PandaHR.Api.Services.Models.JobExperience;
+using System.Collections.Generic;
+using PandaHR.Api.Services.Models.Skill;
 
 namespace PandaHR.Api.Controllers
 {

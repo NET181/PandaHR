@@ -1,4 +1,4 @@
-﻿namespace PandaHR.Api.Services.ScoreAlghorythm.Models
+﻿namespace PandaHR.Api.Services.ScoreAlgorithm.Models
 {
     public class SkillRequestSkillKnowledge
     {

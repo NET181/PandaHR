@@ -12,6 +12,7 @@ using PandaHR.Api.DAL.Repositories.Implementation;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Implementation;
 using PandaHR.Api.Services.ScoreAlghorythm;
+using PandaHR.Api.Services.ScoreAlgorithm;
 using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
 using PandaHR.Api.Services.SkillMatchingAlgorithm.Implementation;
 
@@ -74,7 +75,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ITechnologyService, TechnologyService>();
 
             services.AddScoped<IScoreCounter, ScoreCounter>();
-            services.AddScoped<IScoreAlghorythm, ScoreAlghorythm>();
+            services.AddScoped<IScoreAlghorythmBuilder, ScoreAlghorythmBuilder>();
             services.AddScoped<IMatchingCVsForSkillSetAlgorithm, MatchingCVsForSkillSetAlgorithm>();
             services.AddScoped<IMatchingVacanciesForSkillSetAlgorithm, MatchingVacanciesForSkillSetAlgorithm>();
 

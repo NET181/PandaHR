@@ -14,6 +14,7 @@ using PandaHR.Api.Services.Models.SkillKnowledge;
 using PandaHR.Api.DAL.DTOs.SkillKnowledge;
 using PandaHR.Api.Services.Models.JobExperience;
 using PandaHR.Api.DAL.DTOs.JobExperience;
+using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
 
 namespace PandaHR.Api.Services.Implementation
 {

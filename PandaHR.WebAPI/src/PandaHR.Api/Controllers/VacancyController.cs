@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.ScoreAlghorythm;
-using PandaHR.Api.Services.ScoreAlghorythm.Models;
 using PandaHR.Api.Models.IdAndRating;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Models.Skill;
@@ -62,7 +61,7 @@ namespace PandaHR.Api.Controllers
             {
                 var some = await _scoreCounter.GetCVsByVacancy(id);
 
-                var request = _mapper.Map<IEnumerable<IdAndRating>
+                var request = _mapper.Map<IEnumerable<IdAndRatingServiceModel>
                     , IEnumerable<IdAndRatingResponseModel>>(some);
 
                 return Ok(request);
