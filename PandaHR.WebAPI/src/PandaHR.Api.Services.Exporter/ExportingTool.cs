@@ -8,30 +8,35 @@ namespace PandaHR.Api.Services.Exporter
 {
     public class ExportingTool
     {
-        //private readonly string _templatePath;
+        private readonly CustomFile _file;
 
-        //public Exporter(string templatePath)
-        //{
-        //    _templatePath = templatePath;
-        //}
+        public ExportingTool(string fileName, ExportType exportType)
+        {
+            _file = GetFileForExport(fileName, exportType);
+        }
 
-        public static CustomFile ExportCV(string templatePath, CVExportModel cvModel, ExportType exportType = ExportType.Docx)
+        public CustomFile ExportCV(string templatePath, CVExportModel cvModel)
+        {
+            return _file.ProceedCV(templatePath, cvModel);
+        }
+
+        private CustomFile GetFileForExport(string fileName, ExportType exportType = ExportType.Docx)
         {
             CustomFile file;
             switch (exportType)
             {
                 case ExportType.Docx:
-                {
-                    file = new DocxFile(cvModel.FullName);
-                    break;
-                }
+                    {
+                        file = new DocxFile(fileName);
+                        break;
+                    }
                 default:
-                {
-                    throw new ArgumentNullException();
-                }
+                    {
+                        throw new ArgumentNullException();
+                    }
             }
 
-            return file.ProceedCV(templatePath, cvModel);
+            return file;
         }
     }
 }

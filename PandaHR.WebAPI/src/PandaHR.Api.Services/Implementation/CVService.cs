@@ -68,11 +68,12 @@ namespace PandaHR.Api.Services.Implementation
                 throw new KeyNotFoundException("No CV found with this id");
             }
 
-            var path = String.Format("{0}/export/CV_ExportTemplate.{1}", webRootPath, exportType);
+            var templatePath = String.Format("{0}/export/CV_ExportTemplate.{1}", webRootPath, exportType);
             var cvDto = await _uow.CVs.GetCvForExportAsync(id);
             var cvExportModel = _mapper.Map<CVExportDTO, CVExportModel>(cvDto);
+            ExportingTool exportingTool = new ExportingTool(cvExportModel.FullName, exportType);
 
-            return ExportingTool.ExportCV(path, cvExportModel, exportType);
+            return exportingTool.ExportCV(templatePath, cvExportModel);
         }
 
         public async Task<IEnumerable<CVServiceModel>> GetAllAsync()
