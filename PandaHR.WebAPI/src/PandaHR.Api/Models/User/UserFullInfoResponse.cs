@@ -1,7 +1,8 @@
-﻿using PandaHR.Api.Services.Models.City;
-using PandaHR.Api.Services.Models.Education;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using PandaHR.Api.Services.Models.City;
+using PandaHR.Api.Services.Models.Company;
+using PandaHR.Api.Services.Models.Education;
 
 namespace PandaHR.Api.Models.User
 {
@@ -13,6 +14,7 @@ namespace PandaHR.Api.Models.User
         public string Phone { get; set; }
         public string Email { get; set; }
         public ICollection<EducationWithDetailsServiceModel> Educations { get; set; }
+        public ICollection<CompanyWithDetailsServiceModel> Companies { get; set; }
         public CityWithNameServiceModel City { get; set; }
     }
 }

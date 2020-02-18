@@ -11,6 +11,7 @@ namespace PandaHR.Api.Services.Mapper
             CreateMap<CityWithNameServiceModel, CityDTO>();
 
             CreateMap<CityNameDTO, CityNameServiceModel>();
+
             CreateMap<CityDTO, CityWithNameServiceModel>();
         }
     }

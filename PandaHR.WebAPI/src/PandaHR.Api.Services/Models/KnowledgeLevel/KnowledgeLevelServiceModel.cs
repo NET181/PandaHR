@@ -1,6 +1,6 @@
-﻿using PandaHR.Api.Services.Models.SkillKnowledgeType;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using PandaHR.Api.Services.Models.SkillKnowledgeType;
 
 namespace PandaHR.Api.Services.Models.KnowledgeLevel
 {
@@ -12,7 +12,7 @@ namespace PandaHR.Api.Services.Models.KnowledgeLevel
         }
 
         public Guid Id { get; set; }
-       public string Name { get; set; }
-       public List<SkillKnowledgeTypeServiceModel> SkillKnowledgeTypes { get; set; }
+        public string Name { get; set; }
+        public List<SkillKnowledgeTypeServiceModel> SkillKnowledgeTypes { get; set; }
     }
 }

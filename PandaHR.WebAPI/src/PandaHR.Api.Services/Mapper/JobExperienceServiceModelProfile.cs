@@ -9,9 +9,7 @@ namespace PandaHR.Api.Services.Mapper
         public JobExperienceServiceModelProfile()
         {
             CreateMap<JobExperienceServiceModel, JobExperienceDTO>();
-
             CreateMap<JobExperienceDTO, JobExperienceServiceModel>();
-
             CreateMap<JobExperienceServiceModel, JobExperienceDTO>();
         }
     }

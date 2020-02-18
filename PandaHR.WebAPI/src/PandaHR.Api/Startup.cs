@@ -1,4 +1,5 @@
-using AutoMapper;
+using System.Reflection;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,10 @@ namespace PandaHR.Api
             services.AddCors();
             services.AddMvc(option => option.EnableEndpointRouting = false)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
+                .AddFluentValidation(
+                opt => opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly())
+                );
 
             services.AddOpenApiDocument(document =>
             {
@@ -50,7 +54,6 @@ namespace PandaHR.Api
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
-
 
             app.UseOpenApi();
             app.UseSwaggerUi3(cfg=>

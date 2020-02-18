@@ -23,7 +23,8 @@ namespace PandaHR.Api.Services.Implementation
         {
             var serviceModels = await _uow.Experiences.GetExperienceDTOsAsync();
 
-            return _mapper.Map<ICollection<ExperienceDTO>, ICollection<ExperienceServiceModel>>(serviceModels);
+            return _mapper.Map<ICollection<ExperienceDTO>
+                , ICollection<ExperienceServiceModel>>(serviceModels);
         }
     }
 }

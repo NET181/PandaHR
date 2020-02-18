@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.EF.Context;
 using PandaHR.Api.DAL.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PandaHR.Api.DAL.EF
 {
@@ -349,7 +350,8 @@ namespace PandaHR.Api.DAL.EF
         {
             List<KnowledgeLevel> knowledgeLevels = new List<KnowledgeLevel>()
             {
-                new KnowledgeLevel {Name = "BeginnerLow", IsDeleted = false},
+                new KnowledgeLevel {Id = new Guid("2cb573c8-c593-445a-a1ca-d072fba8b47e"),
+                    Name = "BeginnerLow", IsDeleted = false},
                 new KnowledgeLevel {Name = "Beginner", IsDeleted = false},
                 new KnowledgeLevel {Name = "BeginnerStrong", IsDeleted = false},
                 new KnowledgeLevel {Name = "ElementaryLow", IsDeleted = false},
