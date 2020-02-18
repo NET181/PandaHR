@@ -50,9 +50,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<UserFullInfoServiceModel> GetFullInfoById(Guid id)
         {
-            var userInfo = await _uow.Users.GetFullUserInfo(id);
-
-            var userFullInfo = _mapper.Map<UserFullInfoDTO, UserFullInfoServiceModel>(userInfo);
+            UserFullInfoDTO userInfo = await _uow.Users.GetFullUserInfo(id);
+            UserFullInfoServiceModel userFullInfo = _mapper.Map<UserFullInfoDTO, UserFullInfoServiceModel>(userInfo);
 
             return userFullInfo;
         }

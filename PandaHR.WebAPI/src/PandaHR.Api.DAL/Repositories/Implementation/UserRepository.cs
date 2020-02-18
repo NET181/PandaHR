@@ -48,9 +48,9 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
                         ICollection<EducationDTO>>(u.Educations)
                 });
 
-            var user = await query.FirstOrDefaultAsync();
+            UserFullInfoDTO user = await query.FirstOrDefaultAsync();
 
-            var companies = _context.Users.AsQueryable()
+            Task<List<CompanyWithDetailsDTO>> companies = _context.Users.AsQueryable()
                .Include(u => u.UserCompanies)
                .SelectMany(a => a.UserCompanies)
                .Where(a => a.UserId == id)

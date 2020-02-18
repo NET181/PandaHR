@@ -1,49 +1,32 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.DTOs.CV;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.Services.Models.CV;
+using PandaHR.Api.Services.Models.SkillKnowledge;
+using PandaHR.Api.DAL.DTOs.SkillKnowledge;
+using PandaHR.Api.Services.Models.JobExperience;
+using PandaHR.Api.DAL.DTOs.JobExperience;
 using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
 
 namespace PandaHR.Api.Services.Implementation
 {
-    public class CVService : ICVService, IAsyncService<CVServiceModel>
+    public class CVService : ICVService ,IAsyncService<CVServiceModel>
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
-        private readonly IMatchingCVsForSkillSetAlgorithm _skillSetAlgorithm;
 
-        public CVService(IMapper mapper, IUnitOfWork uow, IMatchingCVsForSkillSetAlgorithm skillSetAlgorithm)
+        public CVService(IMapper mapper, IUnitOfWork uow)
         {
             _mapper = mapper;
             _uow = uow;
-            _skillSetAlgorithm = skillSetAlgorithm;
-        }
-
-        public async Task<IEnumerable<CV>> GetBySkillSet(IEnumerable<Skill> skills, double threshold)
-        {
-            var cvs = await _uow.CVs.GetAllAsync(include: s => s
-                .Include(x => x.SkillKnowledges)
-                    .ThenInclude(s => s.Skill)
-                    .ThenInclude(s => s.SubSkills)
-                .Include(x => x.SkillKnowledges)
-                    .ThenInclude(s => s.Skill)
-                    .ThenInclude(s => s.SkillType)
-                .Include(q => q.Qualification)
-                .Include(x => x.SkillKnowledges)
-                    .ThenInclude(k => k.KnowledgeLevel)
-                    .ThenInclude(t => t.SkillKnowledgeTypes)
-                .Include(e => e.SkillKnowledges)
-                .ThenInclude(e => e.Experience));
-
-            return await _skillSetAlgorithm.GetMatchingBySkillsObjects(cvs, skills, threshold);
         }
 
         public async Task AddAsync(CVCreationServiceModel cvServiceModel)
@@ -70,7 +53,7 @@ namespace PandaHR.Api.Services.Implementation
                 .Include(e => e.SkillKnowledges)
                 .ThenInclude(e => e.Experience)));
 
-            return new List<CVServiceModel>(_mapper.Map<IEnumerable<CV>, IEnumerable<CVServiceModel>>(CVs));
+            return new List<CVServiceModel>(_mapper.Map<IEnumerable<CV>, IEnumerable<CVServiceModel>>(CVs)); 
         }
 
         public async Task<CV> GetByIdAsync(Guid id)
@@ -104,9 +87,11 @@ namespace PandaHR.Api.Services.Implementation
             throw new NotImplementedException();
         }
 
-        public async Task UpdateAsync(CV entity)
+        public async Task UpdateAsync(CVCreationServiceModel model)
         {
-            await _uow.CVs.Update(entity);
+            var cvDTO = _mapper.Map<CVCreationServiceModel, CVDTO>(model);
+
+            await _uow.CVs.UpdateAsync(cvDTO);
         }
 
         public async Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? pageSize = 10, int? page = 1)
@@ -135,6 +120,28 @@ namespace PandaHR.Api.Services.Implementation
         public Task UpdateAsync(CVServiceModel entity)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task AddSkillKnowledgeToCVAsync(SkillKnowledgeServiceModel model, Guid CVId)
+        {
+            var skillKnowledgeDALModel = _mapper.Map<SkillKnowledgeServiceModel, SkillKnowledgeDTO>(model);
+            await _uow.CVs.AddSkillKnowledgeIntoCVAsync(skillKnowledgeDALModel, CVId);
+        }
+
+        public async Task DeleteSkillKnowledgeFromCVAsync(Guid skillKnowledgeId)
+        {
+            await _uow.CVs.DeleteSkillKnowledgeFromCVAsync(skillKnowledgeId);
+        }
+
+        public async Task AddJobExperienceToCVAsync(JobExperienceServiceModel model, Guid CVId)
+        {
+            var jobExperienceDALModel = _mapper.Map<JobExperienceServiceModel, JobExperienceDTO>(model);
+            await _uow.CVs.AddJobExperienceIntoCVAsync(jobExperienceDALModel, CVId);
+        }
+
+        public async Task DeleteJobExperienceFromCVAsync(Guid jobExperienceId)
+        {
+            await _uow.CVs.DeleteJobExperienceFromCVAsync(jobExperienceId);
         }
     }
 }

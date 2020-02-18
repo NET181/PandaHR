@@ -54,10 +54,11 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<ICollection<EducationBasicInfoServiceModel>> GetBasicInfoByAutofillByName(string name)
         {
-            var educations = await _uow.Educations.GetBasicInfoByAutofillByName(name);
+            ICollection<EducationBasicInfoDTO> educations = await _uow.Educations.GetBasicInfoByAutofillByName(name);
 
-            var educationsServiceModel = _mapper.Map<ICollection<EducationBasicInfoDTO>,
-                ICollection<EducationBasicInfoServiceModel>>(educations);
+            ICollection<EducationBasicInfoServiceModel> educationsServiceModel = _mapper
+                .Map<ICollection<EducationBasicInfoDTO>,
+                    ICollection<EducationBasicInfoServiceModel>>(educations);
 
             return educationsServiceModel;
         }

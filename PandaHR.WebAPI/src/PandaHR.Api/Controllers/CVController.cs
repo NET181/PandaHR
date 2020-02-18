@@ -6,6 +6,12 @@ using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Models.CV;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.CV;
+using PandaHR.Api.Services.Models.SkillKnowledge;
+using PandaHR.Api.Services.Models.User;
+using System.Collections.ObjectModel;
+using PandaHR.Api.Models.SkillKnowledge;
+using PandaHR.Api.Models.JobExperience;
+using PandaHR.Api.Services.Models.JobExperience;
 using System.Collections.Generic;
 using PandaHR.Api.Services.Models.Skill;
 
@@ -17,43 +23,81 @@ namespace PandaHR.Api.Controllers
     {
         private IMapper _mapper;
         private readonly ICVService _cvService;
-        private readonly ISkillService _skillService;
 
-        public CVController(IMapper mapper, ICVService cvService, ISkillService skillService)
+        public CVController(IMapper mapper, ICVService cvService)
         {
             _mapper = mapper;
             _cvService = cvService;
-            _skillService = skillService;
-        }
-
-        [HttpGet("{threshold}/{skillNames}")]
-        public async Task<IEnumerable<CV>> GetCVsBySkills(
-       [FromRoute]string[] skillNames, double threshold)
-        {
-            skillNames = skillNames[0].Split(",");
-
-            var findedSkills = new List<SkillNameServiceModel>();
-            var skills = await _skillService.GetSkillNames();
-
-            foreach (var skill in skills)
-            {
-                foreach (var skillName in skillNames)
-                {
-                    if (skill.Name == skillName)
-                    {
-                        findedSkills.Add(skill);
-                    }
-                }
-            }
-            var algorithmSkills = _mapper.Map<IEnumerable<SkillNameServiceModel>, IEnumerable<Skill>>(findedSkills);
-
-            return await _cvService.GetBySkillSet(algorithmSkills, threshold);
         }
 
         [HttpGet("/UserCVsExt")]
         public async Task<IActionResult> GetUserCVs(Guid userId, int page, int pageSize)
         {
             return Ok(await _cvService.GetUserCVsAsync(userId, pageSize, page));
+        }
+
+        [HttpPost("/CV/{id}/AddSkillKnowledge")]
+        public async Task<IActionResult> AddSkillKnowledgeToCV(SkillKnowledgeRequestModel model, Guid id)
+        {
+            var mappedModel = _mapper.Map<SkillKnowledgeRequestModel, SkillKnowledgeServiceModel>(model);
+
+            try
+            {
+                await _cvService.AddSkillKnowledgeToCVAsync(mappedModel, id);
+
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpDelete("/CV/{CVId}/DeleteSkillKnowledge/{SkillKnowledgeId}")]
+        public async Task<IActionResult> DeleteSkillKnowledgeFromCV(Guid SkillKnowledgeId, Guid CVId)
+        {
+            try
+            {
+                await _cvService.DeleteSkillKnowledgeFromCVAsync(SkillKnowledgeId);
+
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPost("/CV/{id}/AddJobExperience")]
+        public async Task<IActionResult> AddJobExperienceToCV(JobExperienceRequestModel model, Guid id)
+        {
+            var mappedModel = _mapper.Map<JobExperienceRequestModel, JobExperienceServiceModel>(model);
+
+            try
+            {
+                await _cvService.AddJobExperienceToCVAsync(mappedModel, id);
+
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpDelete("/CV/{CVId}/DeleteJobExperience/{JobExperienceId}")]
+        public async Task<IActionResult> DeleteJobExperienceFromCV(Guid JobExperienceId, Guid CVId)
+        {
+            try
+            {
+                await _cvService.DeleteJobExperienceFromCVAsync(JobExperienceId);
+
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpGet("/UserCVsSummary")]
@@ -84,11 +128,12 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(CV cv)
+        public async Task<IActionResult> Update(CVCreationRequestModel cv)
         {
             try
             {
-                //  await _cvService.UpdateAsync(cv);
+                var mappedCV = _mapper.Map<CVCreationRequestModel, CVCreationServiceModel>(cv);
+                await _cvService.UpdateAsync(mappedCV);
 
                 return StatusCode(200);
             }
@@ -103,7 +148,7 @@ namespace PandaHR.Api.Controllers
         {
             var cvServiceModel = _mapper.Map<CVCreationRequestModel, CVCreationServiceModel>(cv);
             await _cvService.AddAsync(cvServiceModel);
-                
+
             return Ok();
         }
     }

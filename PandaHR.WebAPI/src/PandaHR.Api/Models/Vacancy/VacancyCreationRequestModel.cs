@@ -1,6 +1,6 @@
-﻿using PandaHR.Api.Services.Models.SkillRequirement;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using PandaHR.Api.Services.Models.SkillRequirement;
 
 namespace PandaHR.Api.Models.Vacancy
 {

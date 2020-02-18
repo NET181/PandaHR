@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Common.Contracts;
@@ -6,7 +7,6 @@ using PandaHR.Api.Models.Degree;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.Degree;
 using PandaHR.Api.DAL.Models.Entities;
-using System;
 
 namespace PandaHR.Api.Controllers
 {
