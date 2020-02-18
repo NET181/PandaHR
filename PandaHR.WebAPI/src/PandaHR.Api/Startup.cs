@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using FluentValidation.AspNetCore;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DependencyResolver;
 
