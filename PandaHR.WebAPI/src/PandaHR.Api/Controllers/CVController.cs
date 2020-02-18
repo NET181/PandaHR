@@ -12,6 +12,8 @@ using PandaHR.Api.Models.SkillKnowledge;
 using PandaHR.Api.Models.JobExperience;
 using PandaHR.Api.Models.CV;
 using PandaHR.Api.Services.Models.JobExperience;
+using System.Collections.Generic;
+using PandaHR.Api.Services.Models.Skill;
 
 namespace PandaHR.Api.Controllers
 {
@@ -55,7 +57,8 @@ namespace PandaHR.Api.Controllers
             return await _cvService.GetBySkillSet(algorithmSkills, threshold);
         }
 
-        [HttpGet("/UserCVsExt")]
+        // GET: api/UserCVsExt/5
+        [HttpGet("/UserCVsExt/{userId}")]
         public async Task<IActionResult> GetUserCVs(Guid userId, int page, int pageSize)
         {
             return Ok(await _cvService.GetUserCVsAsync(userId, pageSize, page));
@@ -126,9 +129,30 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpGet("/UserCVsSummary")]
+        public async Task<IActionResult> GetCVsPaged(Guid userId, int pageSize, int page)
+        {
+            var item = await _cvService.GetUserCVsAsync(userId, pageSize, page);
+
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(item);
+        }
+
+        // GET: api/UserCVsSummary/5
+        [HttpGet("/UserCVsSummary/{userId}")]
         public async Task<IActionResult> GetUserCVsSummary(Guid userId, int page, int pageSize)
         {
-            return Ok(await _cvService.GetUserCVsPreviewAsync(userId, pageSize, page));
+            var item = await _cvService.GetUserCVsPreviewAsync(userId, pageSize, page);
+
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(item);
         }
 
         [HttpGet("/CVSummary", Name = "GetCVSummary")]
@@ -143,46 +167,60 @@ namespace PandaHR.Api.Controllers
             return Ok(_cvService.GetByIdAsync(cv.Id));
         }
 
-        [HttpGet("/VacanciesForCV")]
+        // GET: api/VacanciesForCV/5
+        [HttpGet("/VacanciesForCV/{CVId}")]
         public async Task<IActionResult> GetVacanciesForCV(Guid CVId, int page, int pageSize)
         {
-            return Ok(await _cvService.GetVacanciesForCV(CVId, pageSize, page));
+            var item = await _cvService.GetVacanciesForCV(CVId, pageSize, page);
+
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(item);
         }
 
+        // DELETE: api/CV/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Remove(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            try
-            {
-                // await _cvService.RemoveAsync(id);
+            var item = await _cvService.GetByIdAsync(id);
 
-                return StatusCode(200);
-            }
-            catch
+            if (item == null)
             {
-                return StatusCode(500, "Internal server error");
+                return NotFound();
             }
+
+            await _cvService.RemoveAsync(id);
+
+            return Ok();
         }
 
+        // PUT: api/CV
         [HttpPut]
-        public async Task<IActionResult> Update(CVCreationRequestModel cv)
+        public async Task<IActionResult> Put(CVCreationRequestModel cv)
         {
-            try
+            if (cv == null)
             {
-                var mappedCV = _mapper.Map<CVCreationRequestModel, CVCreationServiceModel>(cv);
-                await _cvService.UpdateAsync(mappedCV);
+                return BadRequest();
+            }
 
-                return StatusCode(200);
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            var cvServiceModel = _mapper.Map<CVCreationRequestModel, CVCreationServiceModel>(cv);
+            await _cvService.UpdateAsync(cvServiceModel);
+
+            return Ok();
         }
 
+        // POST: api/CV
         [HttpPost]
-        public async Task<IActionResult> Add(CVCreationRequestModel cv)
+        public async Task<IActionResult> Post(CVCreationRequestModel cv)
         {
+            if (cv == null)
+            {
+                BadRequest();
+            }
+
             var cvServiceModel = _mapper.Map<CVCreationRequestModel, CVCreationServiceModel>(cv);
             var createdCV = await _cvService.AddAsync(cvServiceModel);
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PandaHR.Api.Services.ScoreAlghorythm.Models
+namespace PandaHR.Api.Services.ScoreAlgorithm.Models
 {
     public class CVAlghorythmModel
     {

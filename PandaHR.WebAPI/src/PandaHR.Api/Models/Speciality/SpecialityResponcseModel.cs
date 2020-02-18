@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace PandaHR.Api.DAL.DTOs.Company
+namespace PandaHR.Api.Models.Speciality
 {
-    public class CompanyWithDetailsDTO
+    public class SpecialityResponcseModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
