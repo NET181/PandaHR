@@ -21,7 +21,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
 
         public async Task<ICollection<QualificationDTO>> GetQualificationDTOsAsync()
         {
-            var dtos = await _context.Experiences.Select(q => new QualificationDTO()
+            var dtos = await _context.Qualifications.Select(q => new QualificationDTO()
             {
                 Id = q.Id,
                 Name = q.Name,

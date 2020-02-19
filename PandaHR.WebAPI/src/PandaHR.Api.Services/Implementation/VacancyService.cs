@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,7 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task AddAsync(Vacancy entity)
         {
-            await _uow.Vacancies.Add(entity);
+            await _uow.Vacancies.AddAsync(entity);
         }
 
         public async Task RemoveAsync(Guid id)
@@ -107,6 +108,16 @@ namespace PandaHR.Api.Services.Implementation
             .Include(q => q.Qualification));
 
             return await _skillSetAlgorithm.GetMatchingBySkillsObjects(vacancies, skills, threshold);
+        }
+
+        public async Task<IEnumerable<VacancySummaryDTO>> GetByCity(Guid cityId, int? pageSize, int? page)
+        {
+            return await _uow.Vacancies.GetVacanciesFiltered(t => t.VacancyCities.Any(c => c.City.Id == cityId), pageSize, page);
+        }
+
+        public async Task<IEnumerable<VacancySummaryDTO>> GetByCompany(Guid companyId, int? pageSize, int? page)
+        {
+            return await _uow.Vacancies.GetVacanciesFiltered(t => t.CompanyId == companyId, pageSize, page);
         }
     }
 }

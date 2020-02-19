@@ -34,7 +34,7 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task AddAsync(City city)
         {
-            await _uow.Cities.Add(city);
+            await _uow.Cities.AddAsync(city);
         }
 
         public async Task UpdateAsync(City city)

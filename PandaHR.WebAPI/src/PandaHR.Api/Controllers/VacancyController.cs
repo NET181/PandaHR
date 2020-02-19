@@ -8,6 +8,8 @@ using PandaHR.Api.Services.ScoreAlghorythm;
 using PandaHR.Api.Models.IdAndRating;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Models.Skill;
+using PandaHR.Api.Models.Vacancy;
+using PandaHR.Api.Services.Models.Vacancy;
 
 namespace PandaHR.Api.Controllers
 {
@@ -78,6 +80,45 @@ namespace PandaHR.Api.Controllers
         public async Task<IActionResult> GetUserCVsSummary(Guid userId, int page, int pageSize)
         {
             return Ok(await _vacancyService.GetVacancyPreviewAsync(userId, pageSize, page));
+        }
+
+        [HttpGet("city/{id}")]
+        public async Task<IActionResult> GetByCity(Guid id, int page = 1, int pageSize = 10)
+        {
+            var vacancies = await _vacancyService.GetByCity(id, pageSize, page);
+           
+            if (vacancies != null)
+            {
+                return Ok(vacancies);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("company/{id}")]
+        public async Task<IActionResult> GetByCompany(Guid id, int page = 1, int pageSize = 10)
+        {
+            var vacancies = await _vacancyService.GetByCompany(id, pageSize, page);
+
+            if (vacancies != null)
+            {
+                return Ok(vacancies);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddVacancy(VacancyCreationRequestModel vacancy)
+        {
+            var vacancyServiceModel = _mapper.Map<VacancyCreationRequestModel, VacancyServiceModel>(vacancy);
+            await _vacancyService.AddAsync(vacancyServiceModel);
+
+            return Ok();
         }
     }
 }

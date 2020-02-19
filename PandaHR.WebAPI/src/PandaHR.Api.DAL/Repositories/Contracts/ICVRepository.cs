@@ -17,7 +17,9 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
         Task DeleteSkillKnowledgeFromCVAsync(Guid skillKnowledgeId);
         Task AddJobExperienceIntoCVAsync(JobExperienceDTO model, Guid CVId);
         Task DeleteJobExperienceFromCVAsync(Guid JobExperienceId);
-        Task AddAsync(CVDTO cv);
-        Task UpdateAsync(CVDTO cv);
+        Task<CVDTO> AddAsync(CVCreationDTO cv);
+        Task UpdateAsync(CVCreationDTO cv);
+        Task LinkUserToCV(CV cv, User user);
+        Task LinkUserToCV(Guid cvId, Guid userId);
     }
 }

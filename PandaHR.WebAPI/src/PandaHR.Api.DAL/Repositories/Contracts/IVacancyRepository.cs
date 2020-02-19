@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PandaHR.Api.DAL.DTOs.Vacancy;
@@ -10,5 +11,6 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
     {
         Task<IEnumerable<VacancySummaryDTO>> GetUserVacancySummaryAsync(Guid userId, int? pageSize = 10, int? page = 1);
         Task AddAsync(VacancyDTO vacancyDto);
+        Task<IEnumerable<VacancySummaryDTO>> GetVacanciesFiltered(Expression<Func<Vacancy, bool>> predicate, int? pageSize = 10, int? page = 1);
     }
 }
