@@ -9,6 +9,7 @@
     <ProjectReference Include="..\PandaHR.Api.Common\PandaHR.Api.Common.csproj" />
     <ProjectReference Include="..\PandaHR.Api.DAL.Models\PandaHR.Api.DAL.Models.csproj" />
     <ProjectReference Include="..\PandaHR.Api.DAL\PandaHR.Api.DAL.csproj" />
+    <ProjectReference Include="..\PandaHR.Api.Services.ScoreAlgorithm\PandaHR.Api.Services.ScoreAlgorithm.csproj" />
   </ItemGroup>
 
 </Project>
