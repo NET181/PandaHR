@@ -123,7 +123,7 @@ namespace PandaHR.Api.Services.Implementation
                 .Include(x => x.SkillRequirements)
                     .ThenInclude(s => s.Skill));
 
-            var algorithmVacancy = _mapper.Map<Vacancy, VacancyMatchingModel>(vacancy);
+            var algorithmVacancy = _mapper.Map<Vacancy, SkillSet>(vacancy);
 
             return _matchingAlgorithm.GetMatchingModels(algorithmVacancy, CVs, threshold, PAGE_SIZE);
         }

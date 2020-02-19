@@ -91,7 +91,7 @@ namespace PandaHR.Api.Services.Implementation
             return await _uow.Vacancies.GetUserVacancySummaryAsync(userId, pageSize, page);
         }
 
-        public async Task<IEnumerable<ISkillSetWithRatingModel<Guid>>> GetVacanciesByCV(Guid cvId, double threshold, int page = 1)
+        public async Task<IEnumerable<ISkillSetWithRatingModel<Guid>>> GetVacanciesByCV(Guid cvId, double threshold)
         {
             var vacancies = (await _uow.Vacancies
                 .GetAllAsync(include: s => s
@@ -112,7 +112,7 @@ namespace PandaHR.Api.Services.Implementation
             
             var algorithmCV = _mapper.Map<CV, SkillSet>(CV);
 
-            var skillSetWithRatings = _matchingAlgorithm.GetMatchingModels(algorithmCV, vacancies, threshold, PAGE_SIZE);
+            return  _matchingAlgorithm.GetMatchingModels(algorithmCV, vacancies, threshold, PAGE_SIZE);
         }
     }
 }
