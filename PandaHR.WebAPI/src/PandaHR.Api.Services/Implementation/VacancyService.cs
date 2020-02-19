@@ -9,6 +9,7 @@ using PandaHR.Api.Services.MatchingAlgorithm.Models;
 using PandaHR.Api.Services.Models.Vacancy;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Implementation
@@ -70,7 +71,7 @@ namespace PandaHR.Api.Services.Implementation
                 .ThenInclude(t => t.SkillKnowledgeTypes)
             .Include(q => q.Qualification));
 
-            return _mapper.Map<Vacancy,VacancyServiceModel>(vacancys);
+            return _mapper.Map<Vacancy, VacancyServiceModel>(vacancys);
         }
 
         public async Task UpdateAsync(Vacancy vacancy)
@@ -90,12 +91,17 @@ namespace PandaHR.Api.Services.Implementation
             return await _uow.Vacancies.GetUserVacancySummaryAsync(userId, pageSize, page);
         }
 
-        public async Task<IEnumerable<MatchingAlgorithmResponceModel>> GetVacanciesByCV(Guid cvId, double threshold, int page = 1)
+        public async Task<IEnumerable<ISkillSetWithRatingModel<Guid>>> GetVacanciesByCV(Guid cvId, double threshold, int page = 1)
         {
-            var vacancies = await _uow.Vacancies
+            var vacancies = (await _uow.Vacancies
                 .GetAllAsync(include: s => s
                 .Include(x => x.SkillRequirements)
-                    .ThenInclude(s => s.Skill));
+                    .ThenInclude(s => s.Skill)))
+                 .Select(s => new SkillSet
+                 {
+                     Id = s.Id,
+                     Skills = s.SkillRequirements.Select(k => k.SkillId)
+                 });
 
             var CV = await _uow.CVs
                 .GetFirstOrDefaultAsync(predicate: s => s
@@ -103,14 +109,10 @@ namespace PandaHR.Api.Services.Implementation
                 include: s => s
                 .Include(x => x.SkillKnowledges)
                     .ThenInclude(s => s.Skill));
+            
+            var algorithmCV = _mapper.Map<CV, SkillSet>(CV);
 
-            var algorithmVacancies = _mapper.Map<IEnumerable<Vacancy>, IEnumerable<VacancyMatchingModel>>(vacancies);
-            var algorithmCV = _mapper.Map<CV, CVMatchingModel>(CV);
-
-            IEnumerable<SkillSet> skillSetByVacancies = new List<SkillSet>();
-            SkillSet skillSetByCV = new SkillSet();
-
-            var skillSetWithRatings = _matchingAlgorithm.GetMatchingModels(skillSetByCV, skillSetByVacancies, threshold, PAGE_SIZE);
+            var skillSetWithRatings = _matchingAlgorithm.GetMatchingModels(algorithmCV, vacancies, threshold, PAGE_SIZE);
         }
     }
 }

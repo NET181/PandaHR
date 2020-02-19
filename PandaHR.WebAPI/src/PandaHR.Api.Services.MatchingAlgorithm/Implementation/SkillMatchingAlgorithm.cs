@@ -20,13 +20,15 @@ namespace PandaHR.Api.Services.MatchingAlgorithm.Implementation
                 throw new ArgumentNullException(nameof(pattern));
             }
 
+            IMatchingGetter<T> matchingGetter = new MatchingGetter<T> { Pattern = pattern };
+
             return matchingItems
                 .AsParallel()
-                .Select(s => new SkillSetWithRating<T>()
+                .Select(s => new SkillSetWithRatingModel<T>()
                 {
                     Id = s.Id,
                     Skills = s.Skills,
-                    Rating = s.Skills.Intersect(pattern.Skills).Count() //todo add method or class
+                    Rating = matchingGetter.GetMatching(s)
                 })
                 .Take(take)
                 .OrderByDescending(m => m.Rating);

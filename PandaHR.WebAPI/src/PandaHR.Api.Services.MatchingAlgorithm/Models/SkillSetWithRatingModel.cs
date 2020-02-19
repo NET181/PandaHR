@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PandaHR.Api.Services.MatchingAlgorithm.Models
 {
-    public class SkillSetWithRating<T> : ISkillSetWithRatingModel<T>
+    public class SkillSetWithRatingModel<T> : ISkillSetWithRatingModel<T>
     {
         public T Id { get; set; }
         public IEnumerable<T> Skills { get; set; }

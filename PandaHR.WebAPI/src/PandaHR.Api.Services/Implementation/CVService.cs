@@ -21,6 +21,7 @@ namespace PandaHR.Api.Services.Implementation
         private readonly IUnitOfWork _uow;
         private readonly ISkillMatchingAlgorithm<Guid> _matchingAlgorithm;
 
+        public const int PAGE_SIZE = 2;
 
         public CVService(IMapper mapper, IUnitOfWork uow, ISkillMatchingAlgorithm<Guid> matchingAlgorithm)
         {
@@ -105,11 +106,16 @@ namespace PandaHR.Api.Services.Implementation
             await _uow.CVs.Add(entity);
         }
 
-        public async Task<IEnumerable<MatchingAlgorithmResponceModel>> GetCVsByVacancy(Guid vacancyId, double threshold)
+        public async Task<IEnumerable<ISkillSetWithRatingModel<Guid>>> GetCVsByVacancy(Guid vacancyId, double threshold)
         {
             var CVs = (await _uow.CVs.GetAllAsync(include: s => s
                  .Include(x => x.SkillKnowledges)
-                     .ThenInclude(s => s.Skill)));
+                     .ThenInclude(s => s.Skill)))
+                 .Select(s => new SkillSet
+                 {
+                     Id = s.Id,
+                     Skills = s.SkillKnowledges.Select(k => k.SkillId)
+                 });
 
             var vacancy = await _uow.Vacancies.GetFirstOrDefaultAsync(predicate: s => s
                 .Id == vacancyId,
@@ -117,10 +123,9 @@ namespace PandaHR.Api.Services.Implementation
                 .Include(x => x.SkillRequirements)
                     .ThenInclude(s => s.Skill));
 
-            var algorithmCVs = _mapper.Map<IEnumerable<CV>, IEnumerable<CVMatchingModel>>(CVs);
             var algorithmVacancy = _mapper.Map<Vacancy, VacancyMatchingModel>(vacancy);
 
-            return _matchingAlgorithm.GetMatchingModels(algorithmVacancy, algorithmCVs, threshold);
+            return _matchingAlgorithm.GetMatchingModels(algorithmVacancy, CVs, threshold, PAGE_SIZE);
         }
 
 

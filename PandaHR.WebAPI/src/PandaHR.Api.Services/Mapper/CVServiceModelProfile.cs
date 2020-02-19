@@ -26,8 +26,8 @@ namespace PandaHR.Api.Services.Mapper
             CreateMap<CVforSearchDTO, CVServiceModel>();
             CreateMap<CVServiceModel, CV>();
 
-            CreateMap<CV, CVMatchingModel>()
-                .ForMember(x => x.MatchingSet, o => o.MapFrom(c => c.SkillKnowledges.Select(s => s.SkillId)));
+            CreateMap<CV, SkillSet>()
+                .ForMember(x => x.Skills, o => o.MapFrom(c => c.SkillKnowledges.Select(s => s.SkillId)));
         }
     }
 }

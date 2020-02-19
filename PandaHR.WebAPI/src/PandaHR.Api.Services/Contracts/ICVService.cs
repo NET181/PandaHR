@@ -6,6 +6,7 @@ using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.Models.Entities;
 using System;
 using PandaHR.Api.Services.MatchingAlgorithm.Models;
+using PandaHR.Api.Services.MatchingAlgorithm.Contracts;
 
 namespace PandaHR.Api.Services.Contracts
 {
@@ -15,6 +16,6 @@ namespace PandaHR.Api.Services.Contracts
         Task<IEnumerable<CVforSearchDTO>> GetUserCVsAsync(Guid userId, int? pageSize = 10, int? page = 1);
         Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? pageSize = 10, int? page = 1);
         Task AddAsync(CVCreationServiceModel cvServiceModel);
-        Task<IEnumerable<MatchingAlgorithmResponceModel>> GetCVsByVacancy(Guid vacancyId, double threshold);
+        Task<IEnumerable<ISkillSetWithRatingModel<Guid>>> GetCVsByVacancy(Guid vacancyId, double threshold);
     }
 }
