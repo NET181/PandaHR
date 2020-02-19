@@ -24,26 +24,12 @@ namespace PandaHR.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddNewtonsoftJson(
-                    opt =>
-                    {
-                        opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                        opt.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All;
-                    }
-            );
+            services.AddControllers().AddNewtonsoftJson();
             services.AddCors();
             services.AddMvc(option => option.EnableEndpointRouting = false)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                .AddNewtonsoftJson(
-                    opt =>
-                    {
-                        opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                        opt.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All;
-                    }
-                )
-                .AddFluentValidation(
-                opt => opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly())
-                );
+                .AddFluentValidation(opt =>
+                    opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
             services.AddOpenApiDocument(document =>
             {
