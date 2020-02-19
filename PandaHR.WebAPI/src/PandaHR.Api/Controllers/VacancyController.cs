@@ -20,9 +20,10 @@ namespace PandaHR.Api.Controllers
         private readonly IMapper _mapper;
         private readonly ISkillService _skillService;
 
-        public VacancyController(IVacancyService vacancyService
-            , IScoreCounter scoreCounter, IMapper mapper
-            , ISkillService skillService)
+        public VacancyController(IVacancyService vacancyService, 
+            IScoreCounter scoreCounter, 
+            IMapper mapper, 
+            ISkillService skillService)
         {
             _vacancyService = vacancyService;
             _scoreCounter = scoreCounter;
