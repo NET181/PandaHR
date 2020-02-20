@@ -24,5 +24,6 @@ namespace PandaHR.Api.DAL
         ISkillTypeRepository SkillTypes { get; }
         IExperienceRepository Experiences { get; }
         ITechnologyRepository Technologies { get; }
+        IVacancyCVFlowRepository VacancyCVFlows { get; }
     }
 }
