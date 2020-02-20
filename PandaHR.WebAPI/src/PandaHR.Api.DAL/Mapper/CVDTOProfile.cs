@@ -11,6 +11,7 @@ namespace PandaHR.Api.DAL.Mapper
     {
         public CVDTOProfile()
         {
+            CreateMap<CVCreationDTO, CV>();
             CreateMap<CVDTO, CV>();
 
             CreateMap<CV, CVExportDTO>()
@@ -30,6 +31,7 @@ namespace PandaHR.Api.DAL.Mapper
                                                KnowledgeLevel = skillKnowledge.KnowledgeLevel.Name
                                            }).ToList()
                         })));
+            CreateMap<CV, CVDTO>();
             CreateMap<CV, CVSummaryDTO>()
                 .ForMember(dest => dest.QualificationName, opt => opt.MapFrom(src => src.Qualification.Name))
                 .ForMember(dest => dest.TechnologyName, opt => opt.MapFrom(src => src.Technology.Name))

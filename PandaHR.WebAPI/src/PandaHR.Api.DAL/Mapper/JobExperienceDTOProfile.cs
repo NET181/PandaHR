@@ -10,6 +10,7 @@ namespace PandaHR.Api.DAL.Mapper
         {
             CreateMap<JobExperienceDTO, JobExperience>();
 
+            CreateMap<JobExperience, JobExperienceDTO>();
             CreateMap<JobExperience, JobExperienceExportDTO>()
                 .ForMember(dest => dest.Period, opt =>
                     opt.MapFrom(src => $"{src.StartDate.ToShortDateString()} - {src.FinishDate.ToShortDateString()}"))

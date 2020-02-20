@@ -23,7 +23,7 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task AddAsync(Education entity)
         {
-            await _uow.Educations.Add(entity);
+            await _uow.Educations.AddAsync(entity);
         }
 
         public async Task RemoveAsync(Guid id)

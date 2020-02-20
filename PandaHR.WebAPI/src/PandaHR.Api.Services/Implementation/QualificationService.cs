@@ -30,7 +30,7 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task AddAsync(Qualification qualification)
         {
-            await _uow.Qualifications.Add(qualification);
+            await _uow.Qualifications.AddAsync(qualification);
         }
 
         public async Task RemoveAsync(Guid id)

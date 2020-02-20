@@ -9,6 +9,7 @@ namespace PandaHR.Api.DAL.Mapper
         public SkillKnowledgeDTOProfile()
         {
             CreateMap<SkillKnowledgeDTO, SkillKnowledge>();
+            CreateMap<SkillKnowledge, SkillKnowledgeDTO>();
         }
     }
 }

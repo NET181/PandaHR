@@ -29,7 +29,7 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task AddAsync(Country country)
         {
-            await _uow.Countries.Add(country);
+            await _uow.Countries.AddAsync(country);
         }
 
         public async Task UpdateAsync(Country coutnry)

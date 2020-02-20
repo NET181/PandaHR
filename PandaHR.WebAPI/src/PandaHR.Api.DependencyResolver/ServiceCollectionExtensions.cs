@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,7 @@ using PandaHR.Api.DAL.Repositories.Implementation;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Implementation;
 using PandaHR.Api.Services.ScoreAlghorythm;
+using PandaHR.Api.Services.ScoreAlgorithm;
 using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
 using PandaHR.Api.Services.SkillMatchingAlgorithm.Implementation;
 
@@ -24,7 +26,10 @@ namespace PandaHR.Api.DependencyResolver
             string connection = configuration["ConnectionString"];
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connection));
+                options.UseSqlServer(connection, builder =>
+                {
+                    builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+                }));
 
             services.AddDefaultIdentity<User>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -36,6 +41,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ISkillRepository, SkillRepository>();
             services.AddScoped<ICVRepository, CVRepository>();
             services.AddScoped<IVacancyRepository, VacancyRepository>();
+            services.AddScoped<IVacancyCityRepository, VacancyCityRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserCompanyRepository, UserCompanyRepository>();
@@ -74,7 +80,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ITechnologyService, TechnologyService>();
 
             services.AddScoped<IScoreCounter, ScoreCounter>();
-            services.AddScoped<IScoreAlghorythm, ScoreAlghorythm>();
+            services.AddScoped<IScoreAlghorythmBuilder, ScoreAlghorythmBuilder>();
             services.AddScoped<IMatchingCVsForSkillSetAlgorithm, MatchingCVsForSkillSetAlgorithm>();
             services.AddScoped<IMatchingVacanciesForSkillSetAlgorithm, MatchingVacanciesForSkillSetAlgorithm>();
 

@@ -30,7 +30,7 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task AddAsync(Degree entity)
         {
-            await _uow.Degrees.Add(entity);
+            await _uow.Degrees.AddAsync(entity);
         }
 
         public async Task RemoveAsync(Guid id)

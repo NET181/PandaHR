@@ -8,7 +8,7 @@ namespace PandaHR.Api.DAL.Models.Entities
         public City()
         {
             CompanyCities = new HashSet<CompanyCity>();
-            Vacancies = new HashSet<Vacancy>();
+            VacancyCities = new HashSet<VacancyCity>();
         }
 
         public bool IsDeleted { get; set; }
@@ -18,6 +18,6 @@ namespace PandaHR.Api.DAL.Models.Entities
         public Country Country { get; set; }
 
         public ICollection<CompanyCity> CompanyCities { get; set; }
-        public ICollection<Vacancy> Vacancies { get; set; }
+        public ICollection<VacancyCity> VacancyCities { get; set; }
     }
 }

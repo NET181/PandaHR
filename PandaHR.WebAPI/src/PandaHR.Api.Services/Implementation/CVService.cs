@@ -7,12 +7,20 @@ using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.Services.Exporter;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.DTOs.CV;
+using PandaHR.Api.DAL.DTOs.Education;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.DAL.DTOs.Vacancy;
-using PandaHR.Api.Services.Exporter.Models.ExportModels;
-using PandaHR.Api.Services.Exporter.Models.ExportTypes;
+using PandaHR.Api.DAL.DTOs.User;
+using PandaHR.Api.DAL.DTOs.SkillKnowledge;
+using PandaHR.Api.DAL.DTOs.JobExperience;
+using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.Education;
+using PandaHR.Api.Services.Models.User;
 using PandaHR.Api.Services.Models.CV;
+using PandaHR.Api.Services.Models.SkillKnowledge;
+using PandaHR.Api.Services.Models.JobExperience;
+using PandaHR.Api.DAL.DTOs.JobExperience;
 using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
 using PandaHR.Api.Services.Exporter.Models.Enums;
 
@@ -50,11 +58,43 @@ namespace PandaHR.Api.Services.Implementation
             return await _skillSetAlgorithm.GetMatchingBySkillsObjects(cvs, skills, threshold);
         }
 
-        public async Task AddAsync(CVCreationServiceModel cvServiceModel)
+        public async Task<CVServiceModel> AddAsync(CVCreationServiceModel cvServiceModel)
         {
-            CVDTO cv = _mapper.Map<CVCreationServiceModel, CVDTO>(cvServiceModel);
+            Guid? userId = cvServiceModel.UserId;
+            var educationsToAdd =
+                _mapper.Map<
+                    ICollection<EducationWithDetailsServiceModel>,
+                    ICollection<EducationWithDetailsDTO>>
+                (cvServiceModel.Educations);
 
-            await _uow.CVs.AddAsync(cv);
+
+            if (userId == null)
+            {
+                UserFullInfoDTO userToAdd =
+                    _mapper.Map<
+                        UserCreationServiceModel,
+                        UserFullInfoDTO>
+                    (cvServiceModel.User);
+                userToAdd.Educations = educationsToAdd;
+
+                var createdUser = await _uow.Users.AddAsync(userToAdd);
+                userId = createdUser.Id;
+                cvServiceModel.UserId = userId;
+            }
+            else // check if user has educations
+            {
+                var addedEducations = await _uow.Users.AddEducationsNoExistAsync(educationsToAdd, (Guid)userId);
+                educationsToAdd = _mapper.Map<ICollection<Education>, ICollection<EducationWithDetailsDTO>>(addedEducations);
+            }
+            
+            CVCreationDTO cv = _mapper.Map<CVCreationServiceModel, CVCreationDTO>(cvServiceModel);
+            CVDTO createdCV = await _uow.CVs.AddAsync(cv);
+            createdCV.Educations = educationsToAdd;
+            await _uow.CVs.LinkUserToCV(createdCV.Id, (Guid)userId);
+
+            CVServiceModel result = _mapper.Map<CVDTO, CVServiceModel>(createdCV);
+           
+            return result;
         }
 
         public async Task<CustomFile> ExportCVAsync(Guid id, string webRootPath, string fileExtension)
@@ -96,11 +136,6 @@ namespace PandaHR.Api.Services.Implementation
             return new List<CVServiceModel>(_mapper.Map<IEnumerable<CV>, IEnumerable<CVServiceModel>>(CVs));
         }
 
-        public async Task<CV> GetByIdAsync(Guid id)
-        {
-            return await _uow.CVs.GetByIdAsync(id);
-        }
-
         public async Task<IEnumerable<CVSummaryDTO>> GetUserCVsPreviewAsync(Guid userId, int? pageSize = 10, int? page = 1)
         {
             return await _uow.CVs.GetUserCVSummaryAsync(userId, pageSize, page);
@@ -127,9 +162,11 @@ namespace PandaHR.Api.Services.Implementation
             throw new NotImplementedException();
         }
 
-        public async Task UpdateAsync(CV entity)
+        public async Task UpdateAsync(CVCreationServiceModel model)
         {
-            await _uow.CVs.Update(entity);
+            var cvDTO = _mapper.Map<CVCreationServiceModel, CVCreationDTO>(model);
+
+            await _uow.CVs.UpdateAsync(cvDTO);
         }
 
         public async Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? pageSize = 10, int? page = 1)
@@ -142,12 +179,12 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task AddAsync(CV entity)
         {
-            await _uow.CVs.Add(entity);
+            await _uow.CVs.AddAsync(entity);
         }
-
-        Task<CVServiceModel> IAsyncService<CVServiceModel>.GetByIdAsync(Guid id)
+        
+        public async Task<CVServiceModel> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<CV, CVServiceModel>(await _uow.CVs.GetByIdAsync(id));
         }
 
         public Task AddAsync(CVServiceModel entity)
@@ -155,9 +192,31 @@ namespace PandaHR.Api.Services.Implementation
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(CVServiceModel entity)
+        public async Task UpdateAsync(CVServiceModel entity)
         {
-            throw new NotImplementedException();
+            await UpdateAsync(_mapper.Map<CVServiceModel, CVCreationServiceModel>(entity));
+        }
+
+        public async Task AddSkillKnowledgeToCVAsync(SkillKnowledgeServiceModel model, Guid CVId)
+        {
+            var skillKnowledgeDALModel = _mapper.Map<SkillKnowledgeServiceModel, SkillKnowledgeDTO>(model);
+            await _uow.CVs.AddSkillKnowledgeIntoCVAsync(skillKnowledgeDALModel, CVId);
+        }
+
+        public async Task DeleteSkillKnowledgeFromCVAsync(Guid skillKnowledgeId)
+        {
+            await _uow.CVs.DeleteSkillKnowledgeFromCVAsync(skillKnowledgeId);
+        }
+
+        public async Task AddJobExperienceToCVAsync(JobExperienceServiceModel model, Guid CVId)
+        {
+            var jobExperienceDALModel = _mapper.Map<JobExperienceServiceModel, JobExperienceDTO>(model);
+            await _uow.CVs.AddJobExperienceIntoCVAsync(jobExperienceDALModel, CVId);
+        }
+
+        public async Task DeleteJobExperienceFromCVAsync(Guid jobExperienceId)
+        {
+            await _uow.CVs.DeleteJobExperienceFromCVAsync(jobExperienceId);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task AddAsync(SkillType entity)
         {
-            await _uow.SkillTypes.Add(entity);
+            await _uow.SkillTypes.AddAsync(entity);
         }
 
         public async Task RemoveAsync(Guid id)

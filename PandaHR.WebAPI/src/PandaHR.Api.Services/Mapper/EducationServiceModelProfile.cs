@@ -15,6 +15,7 @@ namespace PandaHR.Api.Services.Mapper
             CreateMap<EducationExportDTO, EducationExportModel>();
 
             CreateMap<EducationWithDetailsServiceModel, EducationWithDetailsDTO>();
+            CreateMap<EducationWithDetailsServiceModel, EducationDTO>();
         }
     }
 }

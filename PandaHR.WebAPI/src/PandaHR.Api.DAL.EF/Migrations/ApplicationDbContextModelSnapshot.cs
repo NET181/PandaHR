@@ -155,7 +155,6 @@ namespace PandaHR.Api.DAL.EF.Migrations
             modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.CV", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("AddedDate")
@@ -187,8 +186,6 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.HasIndex("QualificationId");
 
                     b.HasIndex("TechnologyId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("CVs");
                 });
@@ -730,7 +727,7 @@ namespace PandaHR.Api.DAL.EF.Migrations
 
                     b.HasIndex("KnowledgeLevelId");
 
-                    b.ToTable("SkillKnowledgeType");
+                    b.ToTable("SkillKnowledgeTypes");
                 });
 
             modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.SkillRequirement", b =>
@@ -922,6 +919,9 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("CVId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("CityId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1023,9 +1023,6 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CityId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("CompanyId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1052,8 +1049,6 @@ namespace PandaHR.Api.DAL.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
-
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("QualificationId");
@@ -1063,6 +1058,88 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Vacancies");
+                });
+
+            modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.VacancyCVFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("VacancyCVFlowId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VacancyCVFlowId");
+
+                    b.ToTable("VacancyCVFiles");
+                });
+
+            modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.VacancyCVFlow", b =>
+                {
+                    b.Property<Guid>("CVId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("VacancyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CancelReason")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("CVId", "VacancyId");
+
+                    b.HasIndex("VacancyId");
+
+                    b.ToTable("VacancyCVFlows");
+                });
+
+            modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.VacancyCity", b =>
+                {
+                    b.Property<Guid>("VacancyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("VacancyId", "CityId");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("VacancyCities");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -1118,6 +1195,12 @@ namespace PandaHR.Api.DAL.EF.Migrations
 
             modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.CV", b =>
                 {
+                    b.HasOne("PandaHR.Api.DAL.Models.Entities.User", "User")
+                        .WithOne("CV")
+                        .HasForeignKey("PandaHR.Api.DAL.Models.Entities.CV", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("PandaHR.Api.DAL.Models.Entities.Qualification", "Qualification")
                         .WithMany("CVs")
                         .HasForeignKey("QualificationId")
@@ -1129,10 +1212,6 @@ namespace PandaHR.Api.DAL.EF.Migrations
                         .HasForeignKey("TechnologyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("PandaHR.Api.DAL.Models.Entities.User", "User")
-                        .WithMany("CVs")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.City", b =>
@@ -1319,10 +1398,6 @@ namespace PandaHR.Api.DAL.EF.Migrations
 
             modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.Vacancy", b =>
                 {
-                    b.HasOne("PandaHR.Api.DAL.Models.Entities.City", "City")
-                        .WithMany("Vacancies")
-                        .HasForeignKey("CityId");
-
                     b.HasOne("PandaHR.Api.DAL.Models.Entities.Company", "Company")
                         .WithMany("Vacancies")
                         .HasForeignKey("CompanyId");
@@ -1342,6 +1417,46 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.HasOne("PandaHR.Api.DAL.Models.Entities.User", "User")
                         .WithMany("Vacancies")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.VacancyCVFile", b =>
+                {
+                    b.HasOne("PandaHR.Api.DAL.Models.Entities.VacancyCVFlow", "VacancyCVFlow")
+                        .WithMany("Files")
+                        .HasForeignKey("VacancyCVFlowId")
+                        .HasPrincipalKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.VacancyCVFlow", b =>
+                {
+                    b.HasOne("PandaHR.Api.DAL.Models.Entities.CV", "CV")
+                        .WithMany("Vacancies")
+                        .HasForeignKey("CVId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("PandaHR.Api.DAL.Models.Entities.Vacancy", "Vacancy")
+                        .WithMany("CVs")
+                        .HasForeignKey("VacancyId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PandaHR.Api.DAL.Models.Entities.VacancyCity", b =>
+                {
+                    b.HasOne("PandaHR.Api.DAL.Models.Entities.City", "City")
+                        .WithMany("VacancyCities")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PandaHR.Api.DAL.Models.Entities.Vacancy", "Vacancy")
+                        .WithMany("VacancyCities")
+                        .HasForeignKey("VacancyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

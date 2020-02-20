@@ -29,7 +29,7 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task AddAsync(KnowledgeLevel entity)
         {
-            await _uow.KnowledgeLevels.Add(entity);
+            await _uow.KnowledgeLevels.AddAsync(entity);
         }
 
         public async Task RemoveAsync(Guid id)

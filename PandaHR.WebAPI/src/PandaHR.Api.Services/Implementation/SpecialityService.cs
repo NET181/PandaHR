@@ -18,7 +18,7 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task AddAsync(Speciality entity)
         {
-            await _uow.Specialities.Add(entity);
+            await _uow.Specialities.AddAsync(entity);
         }
 
         public async Task RemoveAsync(Guid id)
