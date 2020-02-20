@@ -14,15 +14,15 @@ using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.DTOs.User;
 using PandaHR.Api.DAL.DTOs.SkillKnowledge;
 using PandaHR.Api.DAL.DTOs.JobExperience;
-using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.Education;
 using PandaHR.Api.Services.Models.User;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.Models.SkillKnowledge;
 using PandaHR.Api.Services.Models.JobExperience;
-using PandaHR.Api.DAL.DTOs.JobExperience;
 using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
 using PandaHR.Api.Services.Exporter.Models.Enums;
+using PandaHR.Api.Services.Exporter.Models.ExportTypes;
+using PandaHR.Api.Services.Exporter.Models.ExportModels;
 
 namespace PandaHR.Api.Services.Implementation
 {

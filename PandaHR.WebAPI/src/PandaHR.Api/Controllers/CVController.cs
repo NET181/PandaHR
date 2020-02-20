@@ -13,8 +13,6 @@ using PandaHR.Api.Models.SkillKnowledge;
 using PandaHR.Api.Models.JobExperience;
 using PandaHR.Api.Models.CV;
 using PandaHR.Api.Services.Models.JobExperience;
-using System.Collections.Generic;
-using PandaHR.Api.Services.Models.Skill;
 
 namespace PandaHR.Api.Controllers
 {
