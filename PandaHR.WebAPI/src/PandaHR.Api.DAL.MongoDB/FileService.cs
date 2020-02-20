@@ -13,7 +13,7 @@ namespace PandaHR.Api.DAL.MongoDB
     public class FileService : IFileService
     {
         IGridFSBucket gridFS;
-        private readonly IMongoCollection<NoSQLFile> Files;
+        private readonly IMongoCollection<NoSQLFile> _files;
 
         public FileService(IConfiguration configuration)
         {
@@ -28,7 +28,7 @@ namespace PandaHR.Api.DAL.MongoDB
             // получаем доступ к файловому хранилищу
             gridFS = new GridFSBucket(database);
             // обращаемся к коллекции
-            Files = database.GetCollection<NoSQLFile>("Files");
+            _files = database.GetCollection<NoSQLFile>("Files");
         }
         
         public async Task<IEnumerable<NoSQLFile>> GetFiles(string name)
@@ -42,48 +42,62 @@ namespace PandaHR.Api.DAL.MongoDB
                 filter = filter & builder.Regex("Name", new BsonRegularExpression(name));
             }
 
-            return await Files.Find(filter).ToListAsync();
+            return await _files.Find(filter).ToListAsync();
         }
         
         public async Task<NoSQLFile> GetFile(string id)
         {
-            return await Files.Find(new BsonDocument("_id", new ObjectId(id))).FirstOrDefaultAsync();
+            return await _files.Find(new BsonDocument("_id", new ObjectId(id))).FirstOrDefaultAsync();
         }
         
         public async Task Create(NoSQLFile p)
         {
-            await Files.InsertOneAsync(p);
+            await _files.InsertOneAsync(p);
         }
         
         public async Task Update(NoSQLFile p)
         {
-            await Files.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(p.Id)), p);
+            await _files.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(p.Id)), p);
         }
         
         public async Task Remove(string id)
         {
-            await Files.DeleteOneAsync(new BsonDocument("_id", new ObjectId(id)));
+            await _files.DeleteOneAsync(new BsonDocument("_id", new ObjectId(id)));
         }
-        
+
         public async Task<byte[]> GetFileAsBytes(string id)
         {
-            return await gridFS.DownloadAsBytesAsync(new ObjectId(id));
-        }
-        
-        public async Task StoreFile(string id, Stream fileStream, string fileName)
-        {
-            NoSQLFile p = await GetFile(id);
-            if (p.HasFile())
-            {
-                await gridFS.DeleteAsync(new ObjectId(p.FileId));
-            }
+            var file = await _files.Find(new BsonDocument("_id", new ObjectId(id))).FirstOrDefaultAsync();
+            byte[] result = await gridFS.DownloadAsBytesAsync(new ObjectId(id));
+            return result;
             
+        }
+
+        public async Task StoreFile(Guid id, Stream fileStream, string fileName)
+        {
+            NoSQLFile p = new NoSQLFile();
+            //if (p.HasFile())
+            //{
+            //    await gridFS.DeleteAsync(new ObjectId(p.FileId));
+            //}
+
             ObjectId fileId = await gridFS.UploadFromStreamAsync(fileName, fileStream);
-           
-            p.FileId = fileId.ToString();
-            var filter = Builders<NoSQLFile>.Filter.Eq("_id", new ObjectId(p.Id));
-            var update = Builders<NoSQLFile>.Update.Set("FileId", p.FileId);
-            await Files.UpdateOneAsync(filter, update);
+
+            p.Id = fileId.ToString();
+
+            if ((await GetFile(p.Id)) == null)
+            {
+                p.Name = fileName;
+                p.BaseEntityGuid = id;
+                await Create(p);
+            }
+            else
+            {
+                var filter = Builders<NoSQLFile>.Filter.Eq("_id", new ObjectId(p.Id));
+                var update = Builders<NoSQLFile>.Update.Set("Id", p.Id);
+                var result = await _files.UpdateOneAsync(filter, update);
+                var updatedCount = result.MatchedCount;
+            }
         }
     }
 }
