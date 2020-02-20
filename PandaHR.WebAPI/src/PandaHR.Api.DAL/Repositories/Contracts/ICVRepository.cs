@@ -14,9 +14,9 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
         Task<IEnumerable<CVSummaryDTO>> GetUserCVSummaryAsync(Guid userId, int? pageSize = 10, int? page = 1);
         Task<IEnumerable<CVforSearchDTO>> GetCVsAsync(Expression<Func<CV, bool>> predicate, int? pageSize = 10, int? page = 1);
         Task AddSkillKnowledgeIntoCVAsync(SkillKnowledgeDTO model, Guid CVId);
-        Task DeleteSkillKnowledgeFromCVAsync(Guid skillKnowledgeId);
+        Task DeleteSkillKnowledgeFromCVAsync(Guid skillId, Guid CVId);
         Task AddJobExperienceIntoCVAsync(JobExperienceDTO model, Guid CVId);
-        Task DeleteJobExperienceFromCVAsync(Guid JobExperienceId);
+        Task DeleteJobExperienceFromCVAsync(Guid JobExperienceId, Guid CVId);
         Task AddAsync(CVDTO cv);
         Task UpdateAsync(CVDTO cv);
     }

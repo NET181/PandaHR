@@ -150,5 +150,15 @@ namespace PandaHR.Api.UnitTests
 
             return cv;
         }
+
+        [Fact]
+        private async Task DeleteSkillKnowledgeSuccessRequest()
+        {
+            var request = new
+            {
+                Url = "api/CV",
+                Id = new Guid("b072e561-9258-4502-8b40-c545b121cb0c")
+            };
+        }
     }
 }
