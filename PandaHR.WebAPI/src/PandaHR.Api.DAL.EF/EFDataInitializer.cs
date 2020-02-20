@@ -435,7 +435,7 @@ namespace PandaHR.Api.DAL.EF
                                                                 new VacancyCVFile() { Name = "DraftCV2", Path = @"\\pathtofile2"}
                                                     }
                                         },
-                    new VacancyCVFlow() { Id = new Guid("fe9098da-3258-4aac-96dd-88b0b65e2805"), CV = CVs[2], Vacancy = Vacancies[0], Status = VacancyCVStatus.Cancelled, CancelReason = VacancyCVCancelReason.CallLater},
+                    new VacancyCVFlow() { Id = new Guid("fe9098da-3258-4aac-96dd-88b0b65e2805"), CV = CVs[2], Vacancy = Vacancies[0], Status = VacancyCVStatus.Cancelled},
                     new VacancyCVFlow() { Id = new Guid("2888146e-e198-4fa4-bcc5-c6b488b3d812"), CV = CVs[3], Vacancy = Vacancies[0], Status = VacancyCVStatus.CVReadyForClient},
                     
                     new VacancyCVFlow() { Id = new Guid("ad85fc0a-7f11-4d8f-9b3a-2b655658aaaf"), CV = CVs[0], Vacancy = Vacancies[1], Status = VacancyCVStatus.Draft},
