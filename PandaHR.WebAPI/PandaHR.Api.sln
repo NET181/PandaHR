@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PandaHR.Api.DependencyResol
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PandaHR.Api.Services.ScoreAlgorithm", "src\PandaHR.Api.Services.ScoreAlgorithm\PandaHR.Api.Services.ScoreAlgorithm.csproj", "{08F93540-3678-4BBC-A8C9-B59C12F9DF5F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PandaHR.Api.Services.Exporter", "src\PandaHR.Api.Services.Exporter\PandaHR.Api.Services.Exporter.csproj", "{DBF3B58E-947A-409B-8FA8-1590BFC5D814}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{08F93540-3678-4BBC-A8C9-B59C12F9DF5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08F93540-3678-4BBC-A8C9-B59C12F9DF5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08F93540-3678-4BBC-A8C9-B59C12F9DF5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBF3B58E-947A-409B-8FA8-1590BFC5D814}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBF3B58E-947A-409B-8FA8-1590BFC5D814}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBF3B58E-947A-409B-8FA8-1590BFC5D814}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBF3B58E-947A-409B-8FA8-1590BFC5D814}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +87,7 @@ Global
 		{4C2AF735-F8C9-4CD5-A6B4-94F498DE2F33} = {220846A3-A160-409D-BD21-F639B69800BA}
 		{F27F17F2-43C8-41C7-8321-E27814C62667} = {626DA999-2E9B-453C-BB03-60174DDCA6B9}
 		{08F93540-3678-4BBC-A8C9-B59C12F9DF5F} = {626DA999-2E9B-453C-BB03-60174DDCA6B9}
+		{DBF3B58E-947A-409B-8FA8-1590BFC5D814} = {626DA999-2E9B-453C-BB03-60174DDCA6B9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19D83BDC-C772-4B44-8060-5CF09528BBDD}

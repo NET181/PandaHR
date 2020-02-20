@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
@@ -24,18 +25,19 @@ namespace PandaHR.Api.Controllers
         private IMapper _mapper;
         private readonly ICVService _cvService;
         private readonly ISkillService _skillService;
+        private readonly IWebHostEnvironment _env;
 
-        public CVController(IMapper mapper, ICVService cvService, ISkillService skillService)
+        public CVController(IMapper mapper, ICVService cvService, ISkillService skillService, IWebHostEnvironment env)
         {
             _mapper = mapper;
             _cvService = cvService;
             _skillService = skillService;
+            _env = env;
         }
 
         [HttpGet("{threshold}/{skillNames}")]
         public async Task<IEnumerable<CV>> GetCVsBySkills(
-            [FromRoute]string[] skillNames,
-            double threshold)
+       [FromRoute]string[] skillNames, double threshold)
         {
             skillNames = skillNames[0].Split(",");
 
@@ -57,7 +59,21 @@ namespace PandaHR.Api.Controllers
             return await _cvService.GetBySkillSet(algorithmSkills, threshold);
         }
 
-        // GET: api/UserCVsExt/5
+        [HttpGet("{id}/export/{type}")]
+        public async Task<IActionResult> ExportCv(Guid id, string type = "docx")
+        {
+            try
+            {
+                var file = await _cvService.ExportCVAsync(id, _env.WebRootPath, type);
+
+                return File(file.FileContents, file.ContentType, file.FileName);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpGet("/UserCVsExt/{userId}")]
         public async Task<IActionResult> GetUserCVs(Guid userId, int page, int pageSize)
         {
