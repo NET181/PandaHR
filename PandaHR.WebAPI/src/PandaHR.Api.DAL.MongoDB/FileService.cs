@@ -5,38 +5,35 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using MongoDB.Driver.GridFS;
 using PandaHR.Api.DAL.MongoDB.Entities;
 
 namespace PandaHR.Api.DAL.MongoDB
 {
     public class FileService : IFileService
     {
-        IGridFSBucket gridFS;
         private readonly IMongoCollection<NoSQLFile> _files;
 
         public FileService(IConfiguration configuration)
         {
-            // строка подключения
-            //string connectionString = "mongodb://localhost:27017/mobilestore";
             string connectionString = configuration["MongoBDConnectionString"];
             var connection = new MongoUrlBuilder(connectionString);
-            // получаем клиента для взаимодействия с базой данных
+            
+            // get MongoDB client
             MongoClient client = new MongoClient(connectionString);
-            // получаем доступ к самой базе данных
+            
+            // get database access
             IMongoDatabase database = client.GetDatabase(connection.DatabaseName);
-            // получаем доступ к файловому хранилищу
-            gridFS = new GridFSBucket(database);
-            // обращаемся к коллекции
+
+            // get Files collection
             _files = database.GetCollection<NoSQLFile>("Files");
         }
         
         public async Task<IEnumerable<NoSQLFile>> GetFiles(string name)
         {
-            // строитель фильтров
+            // filter builder
             var builder = new FilterDefinitionBuilder<NoSQLFile>();
-            var filter = builder.Empty; // фильтр для выборки всех документов
-            // фильтр по имени
+            var filter = builder.Empty; // get all documents
+            // filter by FileName
             if (!String.IsNullOrWhiteSpace(name))
             {
                 filter = filter & builder.Regex("Name", new BsonRegularExpression(name));
@@ -54,7 +51,19 @@ namespace PandaHR.Api.DAL.MongoDB
         {
             await _files.InsertOneAsync(p);
         }
-        
+
+        public async Task Create(Guid id, Stream fileStream, string fileName)
+        {
+            NoSQLFile p = new NoSQLFile();
+
+            p.Content = new byte[fileStream.Length];
+            await fileStream.ReadAsync(p.Content);
+
+            p.Name = fileName;
+            p.BaseEntityGuid = id;
+            await Create(p);
+        }
+
         public async Task Update(NoSQLFile p)
         {
             await _files.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(p.Id)), p);
@@ -68,36 +77,33 @@ namespace PandaHR.Api.DAL.MongoDB
         public async Task<byte[]> GetFileAsBytes(string id)
         {
             var file = await _files.Find(new BsonDocument("_id", new ObjectId(id))).FirstOrDefaultAsync();
-            byte[] result = await gridFS.DownloadAsBytesAsync(new ObjectId(id));
-            return result;
-            
+            if (file != null)
+            {
+                return file.Content;
+            }
+
+            return new byte[0];
         }
 
-        public async Task StoreFile(Guid id, Stream fileStream, string fileName)
+        #region debug method
+        public async Task StoreDirect()
         {
-            NoSQLFile p = new NoSQLFile();
-            //if (p.HasFile())
-            //{
-            //    await gridFS.DeleteAsync(new ObjectId(p.FileId));
-            //}
-
-            ObjectId fileId = await gridFS.UploadFromStreamAsync(fileName, fileStream);
-
-            p.Id = fileId.ToString();
-
-            if ((await GetFile(p.Id)) == null)
+            string filePath = @"d:\tests\";
+            string fileName = "HelloWorld.docx";
+            
+            using (var fileStream = new FileStream(filePath + fileName, FileMode.Open))
             {
+                NoSQLFile p = new NoSQLFile();
+                p.Content = new byte[fileStream.Length];
+                await fileStream.ReadAsync(p.Content);
+                
+                fileStream.Close();
+
                 p.Name = fileName;
-                p.BaseEntityGuid = id;
+                p.BaseEntityGuid = Guid.NewGuid();
                 await Create(p);
             }
-            else
-            {
-                var filter = Builders<NoSQLFile>.Filter.Eq("_id", new ObjectId(p.Id));
-                var update = Builders<NoSQLFile>.Update.Set("Id", p.Id);
-                var result = await _files.UpdateOneAsync(filter, update);
-                var updatedCount = result.MatchedCount;
-            }
         }
+        #endregion
     }
 }

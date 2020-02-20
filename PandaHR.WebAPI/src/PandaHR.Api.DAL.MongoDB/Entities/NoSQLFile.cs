@@ -13,13 +13,6 @@ namespace PandaHR.Api.DAL.MongoDB.Entities
         DateTime AddedDate { set; get; }
         DateTime ModifiedDate { set; get; }
         public string Name { get; set; }
-        //public byte[] Content { get; set; }
-
-        //public string FileId { get; set; }
-
-        //public bool HasFile()
-        //{
-        //    return !String.IsNullOrWhiteSpace(FileId);
-        //}
+        public byte[] Content { get; set; }
     }
 }

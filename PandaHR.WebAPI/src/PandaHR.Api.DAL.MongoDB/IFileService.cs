@@ -8,7 +8,7 @@ namespace PandaHR.Api.DAL.MongoDB
 {
     public interface IFileService
     {
-        Task StoreFile(Guid id, Stream fileStream, string fileName);
+        Task Create(Guid id, Stream fileStream, string fileName);
         Task Create(NoSQLFile p);
         Task<IEnumerable<NoSQLFile>> GetFiles(string name);
         Task<NoSQLFile> GetFile(string id);

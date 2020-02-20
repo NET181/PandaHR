@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Net.Http.Headers;
-using PandaHR.Api.Utilities;
-using PandaHR.Api.Mapper;
 using PandaHR.Api.DAL.MongoDB;
-using PandaHR.Api.Common.Contracts;
-using Microsoft.AspNetCore.Hosting;
+using PandaHR.Api.DAL.MongoDB.Entities;
+using PandaHR.Api.Extensions;
 
 namespace PandaHR.Api.Controllers
 {
@@ -20,48 +14,42 @@ namespace PandaHR.Api.Controllers
     [ApiController]
     public class FileController : ControllerBase
     {
-        private IMapper _mapper;
         private readonly IFileService _fileService;
-        private IWebHostEnvironment _appEnvironment;
 
-        public FileController(IWebHostEnvironment appEnvironment, IMapper mapper, IFileService fileService)
+        public FileController(IFileService fileService)
         {
-            _mapper = mapper;
             _fileService = fileService;
-            _appEnvironment = appEnvironment;
         }
 
         [HttpPost]
         public async Task<IActionResult> Upload(IFormFile uploadedFile)
-        { 
+        {
             if (uploadedFile != null)
             {
-                using (var memoryStream = new MemoryStream())
-                {
-                    await uploadedFile.CopyToAsync(memoryStream);
+                byte[] content = await uploadedFile.GetBytes();
 
-                    await _fileService.StoreFile(Guid.NewGuid(), memoryStream, uploadedFile.FileName); 
-                }
-                //string path = "/Files/" + uploadedFile.FileName;
+                NoSQLFile p = new NoSQLFile();
+                p.Content = new byte[content.Length];
+                content.CopyTo(p.Content, 0);
+                
+                p.Name = uploadedFile.FileName;
+                p.BaseEntityGuid = Guid.NewGuid();
+                await _fileService.Create(p);
 
-                //using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
-                //{
-                //    await uploadedFile.CopyToAsync(fileStream);
-
-                //    await _fileService.StoreFile(Guid.NewGuid(), fileStream, uploadedFile.FileName);
-
-                //}  
+                return Ok(p.Id);
             }
 
-            return Ok();
+            return BadRequest("File was not transferred!");
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
-            var result = await _fileService.GetFileAsBytes(id);
-            return Ok(result);
+            var file = await _fileService.GetFile(id);
+
+            return File(file.Content, "application/octet-stream", file.Name);
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
