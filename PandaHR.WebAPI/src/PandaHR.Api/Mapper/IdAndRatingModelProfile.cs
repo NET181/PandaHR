@@ -8,7 +8,7 @@ namespace PandaHR.Api.Mapper
     {
         public IdAndRatingModelProfile()
         {
-            CreateMap<IdAndRatingServiceModel, IdAndRatingResponseModel>();
+            CreateMap<AlghorythmResponseServiceModel, AlghorythmResponseModel>();
         }
     }
 }

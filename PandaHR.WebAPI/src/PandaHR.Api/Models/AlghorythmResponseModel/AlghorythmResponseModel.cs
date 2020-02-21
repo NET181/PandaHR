@@ -2,9 +2,10 @@
 
 namespace PandaHR.Api.Models.IdAndRating
 {
-    public class IdAndRatingResponseModel
+    public class AlghorythmResponseModel
     {
         public Guid Id { get; set; }
         public int Rating { get; set; }
+        public string Title { get; set; }
     }
 }

@@ -7,9 +7,9 @@ namespace PandaHR.Api.Services.ScoreAlghorythm.Mapper
     {
         public IdAndRatingModelMap()
         {
-            CreateMap<IdAndRating, IdAndRatingServiceModel>();
+            CreateMap<IdAndRating, AlghorythmResponseServiceModel>();
 
-            CreateMap<IdAndRatingServiceModel, IdAndRating>();
+            CreateMap<AlghorythmResponseServiceModel, IdAndRating>();
         }
     }
 }

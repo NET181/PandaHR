@@ -63,8 +63,8 @@ namespace PandaHR.Api.Controllers
             {
                 var some = await _scoreCounter.GetCVsByVacancy(id);
 
-                var request = _mapper.Map<IEnumerable<IdAndRatingServiceModel>
-                    , IEnumerable<IdAndRatingResponseModel>>(some);
+                var request = _mapper.Map<IEnumerable<AlghorythmResponseServiceModel>
+                    , IEnumerable<AlghorythmResponseModel>>(some);
 
                 return Ok(request);
             }
