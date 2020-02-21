@@ -30,18 +30,34 @@ namespace PandaHR.Api.DAL.MongoDB
         
         public async Task<IEnumerable<NoSQLFile>> GetFiles(string name)
         {
+            return await GetFiles(new Dictionary<string, string>()
+                {  { "Name", name}   }
+            );
+        }
+
+        public async Task<IEnumerable<NoSQLFile>> GetFiles(Guid baseEntityGuid)
+        {
+            return await GetFiles(new Dictionary<string, string>()
+                {  { "BaseEntityGuid", baseEntityGuid.ToString() }   }
+            );
+        }
+
+        public async Task<IEnumerable<NoSQLFile>> GetFiles(Dictionary<string, string> filterCriteria)
+        {
             // filter builder
             var builder = new FilterDefinitionBuilder<NoSQLFile>();
             var filter = builder.Empty; // get all documents
             // filter by FileName
-            if (!String.IsNullOrWhiteSpace(name))
+            foreach (var item in filterCriteria)
             {
-                filter = filter & builder.Regex("Name", new BsonRegularExpression(name));
+                if (!String.IsNullOrWhiteSpace(item.Value))
+                {
+                    filter = filter & builder.Regex(item.Key, new BsonRegularExpression(item.Value));
+                }
             }
-
             return await _files.Find(filter).ToListAsync();
         }
-        
+
         public async Task<NoSQLFile> GetFile(string id)
         {
             return await _files.Find(new BsonDocument("_id", new ObjectId(id))).FirstOrDefaultAsync();
@@ -69,9 +85,9 @@ namespace PandaHR.Api.DAL.MongoDB
             await _files.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(p.Id)), p);
         }
         
-        public async Task Remove(string id)
+        public async Task<DeleteResult> Remove(string id)
         {
-            await _files.DeleteOneAsync(new BsonDocument("_id", new ObjectId(id)));
+            return await _files.DeleteOneAsync(new BsonDocument("_id", new ObjectId(id)));
         }
 
         public async Task<byte[]> GetFileAsBytes(string id)
@@ -83,6 +99,11 @@ namespace PandaHR.Api.DAL.MongoDB
             }
 
             return new byte[0];
+        }
+
+        public async Task<bool> IsDocumentExist(string id)
+        {
+           return await _files.Find(new BsonDocument("_id", new ObjectId(id))).CountDocumentsAsync() > 0;
         }
 
         #region debug method

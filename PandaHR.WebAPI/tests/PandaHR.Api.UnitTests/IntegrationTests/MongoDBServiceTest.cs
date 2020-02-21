@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
+using Newtonsoft.Json;
 
 namespace PandaHR.Api.UnitTests.IntegrationTests
 {
@@ -23,9 +24,8 @@ namespace PandaHR.Api.UnitTests.IntegrationTests
             var request = new
             {
                 Url = "api/File",
-               // Id = new Guid("b072e561-9258-4502-8b40-c545b121cb0c")
+               
             };
-           // var url = String.Format($"{request.Url}{request.Id.ToString()}");
             HttpResponseMessage response;
             var mpContent = new MultipartFormDataContent();
 
@@ -38,6 +38,37 @@ namespace PandaHR.Api.UnitTests.IntegrationTests
             }
             
             var value = await response.Content.ReadAsStringAsync();
+            // Assert
+            response.EnsureSuccessStatusCode();
+        }
+
+        [Theory]
+        [InlineData(@"_testFiles\", "ToDelete.docx")]
+        public async Task DeleteFileAsync(string filePath, string fileName)
+        {
+            // Arrange
+            var request = new
+            {
+                Url = "api/File/Flow/",
+                Id = new Guid("342f6c46-9bd1-4508-b1f7-6a8eed1ac270")
+            };
+            var url = String.Format($"{request.Url}{request.Id.ToString()}");
+            HttpResponseMessage response;
+            var mpContent = new MultipartFormDataContent();
+
+            using (var file = File.OpenRead(filePath + fileName))
+            using (var content = new StreamContent(file))
+            {
+                mpContent.Add(content, "uploadedFile", fileName);
+
+                response = await _client.PostAsync(url, mpContent);
+            }
+
+            var value = await response.Content.ReadAsStringAsync();
+
+            url = String.Format($"api/File/{value}");
+            response = await _client.DeleteAsync(url);
+
             // Assert
             response.EnsureSuccessStatusCode();
         }

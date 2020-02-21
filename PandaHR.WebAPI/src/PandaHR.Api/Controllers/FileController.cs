@@ -24,22 +24,13 @@ namespace PandaHR.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Upload(IFormFile uploadedFile)
         {
-            if (uploadedFile != null)
-            {
-                byte[] content = await uploadedFile.GetBytes();
+            return await CreateFile(uploadedFile);
+        }
 
-                NoSQLFile p = new NoSQLFile();
-                p.Content = new byte[content.Length];
-                content.CopyTo(p.Content, 0);
-                
-                p.Name = uploadedFile.FileName;
-                p.BaseEntityGuid = Guid.NewGuid();
-                await _fileService.Create(p);
-
-                return Ok(p.Id);
-            }
-
-            return BadRequest("File was not transferred!");
+        [HttpPost("Flow/{flowId}")]
+        public async Task<IActionResult> Upload(Guid flowId, IFormFile uploadedFile)
+        {
+            return await CreateFile(uploadedFile, flowId);
         }
 
         [HttpGet("{id}")]
@@ -50,11 +41,44 @@ namespace PandaHR.Api.Controllers
             return File(file.Content, "application/octet-stream", file.Name);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("Flow/{flowId}")]
+        public async Task<IActionResult> GetFlowFiles(Guid baseEntiryGuid)
         {
-            var result = await _fileService.GetFiles(null);
+            var result = await _fileService.GetFiles(baseEntiryGuid);
             return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (await _fileService.IsDocumentExist(id))
+            {
+                await _fileService.Remove(id);
+                return Ok();
+            }
+
+            return NotFound();
+        }
+
+        private async Task<IActionResult> CreateFile(IFormFile uploadedFile, Guid? flowId = null)
+        {
+            Guid _flowId = flowId == null ? new Guid() : (Guid)flowId;
+            if (uploadedFile != null)
+            {
+                byte[] content = await uploadedFile.GetBytes();
+
+                NoSQLFile p = new NoSQLFile();
+                p.Content = new byte[content.Length];
+                content.CopyTo(p.Content, 0);
+
+                p.Name = uploadedFile.FileName;
+                p.BaseEntityGuid = _flowId;
+                await _fileService.Create(p);
+
+                return Ok(p.Id);
+            }
+
+            return BadRequest("File was not transferred!");
         }
     }
 }
