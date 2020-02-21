@@ -52,5 +52,13 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
         {
             return await _context.Set<Vacancy>().FindAsync(Id);
         }
+
+        public async Task UpdateAsync(VacancyDTO dto)
+        {
+            var entity = _mapper.Map<VacancyDTO, Vacancy>(dto);
+            _context.Entry(entity).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

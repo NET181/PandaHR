@@ -9,6 +9,9 @@ using PandaHR.Api.Services.ScoreAlghorythm.Models;
 using PandaHR.Api.Models.IdAndRating;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Models.Skill;
+using PandaHR.Api.Validation.Vacancy;
+using PandaHR.Api.Models.Vacancy;
+using PandaHR.Api.Services.Models.Vacancy;
 
 namespace PandaHR.Api.Controllers
 {
@@ -20,6 +23,7 @@ namespace PandaHR.Api.Controllers
         private readonly IScoreCounter _scoreCounter;
         private readonly IMapper _mapper;
         private readonly ISkillService _skillService;
+        private readonly VacancyValidator _validator;
 
         public VacancyController(IVacancyService vacancyService
             , IScoreCounter scoreCounter, IMapper mapper
@@ -29,6 +33,7 @@ namespace PandaHR.Api.Controllers
             _scoreCounter = scoreCounter;
             _skillService = skillService;
             _mapper = mapper;
+            _validator = new VacancyValidator();
         }
 
         [HttpGet("{threshold}/{skillNames}")]
@@ -78,6 +83,38 @@ namespace PandaHR.Api.Controllers
         public async Task<IActionResult> GetUserCVsSummary(Guid userId, int page, int pageSize)
         {
             return Ok(await _vacancyService.GetVacancyPreviewAsync(userId, pageSize, page));
+        }
+
+        [HttpPost("/AddVacancy")]
+        public async Task<IActionResult> AddVacancy([FromBody]VacancyCreationRequestModel model) 
+        {
+            if (_validator.Validate(model).IsValid)
+            {
+                var mappedModel = _mapper.Map<VacancyCreationRequestModel, VacancyServiceModel>(model);
+                await _vacancyService.AddAsync(mappedModel);
+
+                return Ok(mappedModel);
+            }
+            else
+            {
+                return new BadRequestResult();
+            }
+        }
+
+        [HttpPut("/UpdateCV/{Id}")] 
+        public async Task<IActionResult> UpdateVacancy([FromBody]VacancyCreationRequestModel model, Guid Id)
+        {
+            if (_validator.Validate(model).IsValid)
+            {
+                var mappedModel = _mapper.Map<VacancyCreationRequestModel, VacancyServiceModel>(model);
+                await _vacancyService.UpdateAsync(mappedModel);
+
+                return Ok(mappedModel);
+            }
+            else
+            {
+                return new BadRequestResult();
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ namespace PandaHR.Api.Services.Contracts
     {
         Task<IEnumerable<VacancySummaryDTO>> GetVacancyPreviewAsync(Guid userId, int? pageSize, int? page);
         Task AddAsync(VacancyServiceModel vacancyServiceModel);
+        Task UpdateAsync(VacancyServiceModel vacancyServiceModel);
         Task<VacancyServiceModel> GetByIdWithSkillAsync(Guid id);
         Task<IEnumerable<Vacancy>> GetBySkillSet(IEnumerable<Skill> skills, double threshold);
 
