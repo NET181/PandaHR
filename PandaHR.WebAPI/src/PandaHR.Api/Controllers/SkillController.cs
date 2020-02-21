@@ -28,7 +28,9 @@ namespace PandaHR.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var skills = await _skillService.GetAllAsync();
+            IEnumerable <SkillResponseModel> skills;
+            skills= _mapper.Map<IEnumerable<SkillServiceModel>, IEnumerable<SkillResponseModel>>(
+                await _skillService.GetAllAsync());
 
             if (skills == null)
             {
@@ -106,15 +108,15 @@ namespace PandaHR.Api.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody]Skill skill)
+        public async Task<IActionResult> PostAsync([FromBody]SkillCreationModel skill)
         {
-            await _skillService.AddAsync(skill);
+            await _skillService.AddAsync(_mapper.Map<SkillCreationModel,SkillServiceModel>(skill));
 
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(Guid id, [FromBody]Skill skill)
+        public async Task<IActionResult> PutAsync(Guid id, [FromBody]SkillCreationModel skill)
         {
             var item = await _skillService.GetByIdAsync(id);
 
@@ -123,8 +125,7 @@ namespace PandaHR.Api.Controllers
                 return NotFound();
             }
 
-            skill.Id = id;
-            await _skillService.UpdateAsync(skill);
+            await _skillService.UpdateAsync(_mapper.Map<SkillCreationModel, SkillServiceModel>(skill));
 
             return Ok();
         }

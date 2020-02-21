@@ -33,12 +33,6 @@ namespace PandaHR.Api
             services.AddCors();
             services.AddMvc(option => option.EnableEndpointRouting = false)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                .AddNewtonsoftJson(
-                    opt =>
-                    {
-                        opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    }
-                )
                 .AddFluentValidation(
                 opt => opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly())
                 );
