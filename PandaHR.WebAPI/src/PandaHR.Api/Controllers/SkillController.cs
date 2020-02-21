@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Common.Contracts;
-using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Models.KnowledgeLevel;
 using PandaHR.Api.Models.Skill;
 using PandaHR.Api.Services.Contracts;
