@@ -1,13 +1,9 @@
-﻿using Newtonsoft.Json;
-using PandaHR.Api.DAL.Models.Entities;
+﻿using PandaHR.Api.DAL.Models.Entities;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using PandaHR.Api.Models.Speciality;
 
 namespace PandaHR.Api.UnitTests
 {

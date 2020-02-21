@@ -7,6 +7,7 @@ using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Models.SkillKnowledge;
 using PandaHR.Api.Services.Models.JobExperience;
+using PandaHR.Api.Services.Exporter.Models.ExportTypes;
 
 namespace PandaHR.Api.Services.Contracts
 {
@@ -16,6 +17,7 @@ namespace PandaHR.Api.Services.Contracts
         Task<IEnumerable<CVforSearchDTO>> GetUserCVsAsync(Guid userId, int? pageSize = 10, int? page = 1);
         Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? pageSize = 10, int? page = 1);
         Task<IEnumerable<CV>> GetBySkillSet(IEnumerable<Skill> skills, double threshold);
+        Task<CustomFile> ExportCVAsync(Guid id, string webRootPath, string fileExtension);
         Task AddSkillKnowledgeToCVAsync(SkillKnowledgeServiceModel model, Guid CVId);
         Task DeleteSkillKnowledgeFromCVAsync(Guid skillKnowledgeId);
         Task AddJobExperienceToCVAsync(JobExperienceServiceModel model, Guid CVId);

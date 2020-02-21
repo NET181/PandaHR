@@ -58,6 +58,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ITechnologyRepository, TechnologyRepository>();
+            services.AddScoped<IVacancyCVFlowRepository, VacancyCVFlowRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -78,6 +79,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<IExperienceService, ExperienceService>();
             services.AddScoped<ITechnologyService, TechnologyService>();
+            services.AddScoped<IVacancyCVFlowService, VacancyCVFlowService>();
 
             services.AddScoped<IScoreCounter, ScoreCounter>();
             services.AddScoped<IScoreAlghorythmBuilder, ScoreAlghorythmBuilder>();

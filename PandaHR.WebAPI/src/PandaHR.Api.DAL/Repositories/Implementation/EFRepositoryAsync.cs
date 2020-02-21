@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using PandaHR.Api.DAL.EF.Context;
-using PandaHR.Api.DAL.Models;
 using PandaHR.Api.DAL.Repositories.Contracts;
 
 
