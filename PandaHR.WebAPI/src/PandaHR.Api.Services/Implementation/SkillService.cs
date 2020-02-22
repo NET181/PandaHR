@@ -45,19 +45,31 @@ namespace PandaHR.Api.Services.Implementation
             return _mapper.Map<Skill, SkillServiceModel>(skill);
         }
 
-        public async Task AddAsync(SkillServiceModel skill)
+        public async Task<SkillServiceModel> AddAsync(SkillServiceModel skill)
         {
-            await _uow.Skills.AddAsync(_mapper.Map<SkillServiceModel, Skill>(skill));
+            var res = await AddAsync(_mapper.Map<SkillServiceModel, Skill>(skill));
+
+            return _mapper.Map<Skill, SkillServiceModel>(res);
+        }
+
+        public async Task<Skill> AddAsync(Skill skill)
+        {
+            var res = await _uow.Skills.AddAsync(skill);
+            await _uow.Skills.SaveAsync();
+
+            return res;
         }
 
         public async Task UpdateAsync(SkillServiceModel skill)
         {
-            await _uow.Skills.Update(_mapper.Map<SkillServiceModel, Skill>(skill));
+            _uow.Skills.Update(_mapper.Map<SkillServiceModel, Skill>(skill));
+            await _uow.Skills.SaveAsync();
         }
 
         public async Task RemoveAsync(SkillServiceModel skill)
         {
-            await _uow.Skills.Remove(_mapper.Map<SkillServiceModel, Skill>(skill));
+            _uow.Skills.Remove(_mapper.Map<SkillServiceModel, Skill>(skill));
+            await _uow.Skills.SaveAsync();
         }
 
         public async Task RemoveAsync(Guid id)

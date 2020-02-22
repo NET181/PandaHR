@@ -27,25 +27,30 @@ namespace PandaHR.Api.Services.Implementation
             return await _uow.Countries.GetByIdAsync(countryId);
         }
 
-        public async Task AddAsync(Country country)
+        public async Task<Country> AddAsync(Country country)
         {
-            await _uow.Countries.AddAsync(country);
+            var result = await _uow.Countries.AddAsync(country);
+            await _uow.Countries.SaveAsync();
+
+            return result;
         }
 
         public async Task UpdateAsync(Country coutnry)
         {
-            await _uow.Countries.Update(coutnry);
+            _uow.Countries.Update(coutnry);
+            await _uow.Countries.SaveAsync();
         }
 
         public async Task RemoveAsync(Guid id)
         {
             var country = await _uow.Countries.GetByIdAsync(id);
-            await _uow.Countries.Remove(country);
+            await RemoveAsync(country);
         }
 
         public async Task RemoveAsync(Country country)
         {
-            await _uow.Countries.Remove(country);
+            _uow.Countries.Remove(country);
+            await _uow.Countries.SaveAsync();
         }
     }
 }

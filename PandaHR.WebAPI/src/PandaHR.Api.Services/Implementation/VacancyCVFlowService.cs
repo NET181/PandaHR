@@ -16,9 +16,12 @@ namespace PandaHR.Api.Services.Implementation
             _uow = uow;
         }
 
-        public async Task AddAsync(VacancyCVFlow entity)
+        public async Task<VacancyCVFlow> AddAsync(VacancyCVFlow entity)
         {
-            await _uow.VacancyCVFlows.AddAsync(entity);
+            var res = await _uow.VacancyCVFlows.AddAsync(entity);
+            await _uow.VacancyCVFlows.SaveAsync();
+
+            return res;
         }
 
         public async Task RemoveAsync(Guid id)
@@ -29,7 +32,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task RemoveAsync(VacancyCVFlow entity)
         {
-            await _uow.VacancyCVFlows.Remove(entity);
+            _uow.VacancyCVFlows.Remove(entity);
+            await _uow.VacancyCVFlows.SaveAsync();
         }
 
         public async Task<IEnumerable<VacancyCVFlow>> GetAllAsync()
@@ -44,7 +48,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task UpdateAsync(VacancyCVFlow entity)
         {
-            await _uow.VacancyCVFlows.Update(entity);
+            _uow.VacancyCVFlows.Update(entity);
+            await _uow.VacancyCVFlows.SaveAsync();
         }
     }
 }

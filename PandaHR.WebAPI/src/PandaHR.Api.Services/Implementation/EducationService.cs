@@ -21,9 +21,12 @@ namespace PandaHR.Api.Services.Implementation
             _uow = uow;
         }
 
-        public async Task AddAsync(Education entity)
+        public async Task<Education> AddAsync(Education entity)
         {
-            await _uow.Educations.AddAsync(entity);
+            var res = await _uow.Educations.AddAsync(entity);
+            await _uow.Educations.SaveAsync();
+
+            return res;
         }
 
         public async Task RemoveAsync(Guid id)
@@ -34,7 +37,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task RemoveAsync(Education entity)
         {
-            await _uow.Educations.Remove(entity);
+            _uow.Educations.Remove(entity);
+            await _uow.Educations.SaveAsync();
         }
 
         public async Task<IEnumerable<Education>> GetAllAsync()
@@ -49,7 +53,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task UpdateAsync(Education entity)
         {
-            await _uow.Educations.Update(entity);
+            _uow.Educations.Update(entity);
+            await _uow.Educations.SaveAsync();
         }
 
         public async Task<ICollection<EducationBasicInfoServiceModel>> GetBasicInfoByAutofillByName(string name)

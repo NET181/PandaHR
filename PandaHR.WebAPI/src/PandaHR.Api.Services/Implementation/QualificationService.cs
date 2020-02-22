@@ -28,9 +28,12 @@ namespace PandaHR.Api.Services.Implementation
             return _mapper.Map<ICollection<QualificationDTO>, ICollection<QualificationServiceModel>>(dto);
         }
 
-        public async Task AddAsync(Qualification qualification)
+        public async Task<Qualification> AddAsync(Qualification qualification)
         {
-            await _uow.Qualifications.AddAsync(qualification);
+            var res = await _uow.Qualifications.AddAsync(qualification);
+            await _uow.Qualifications.SaveAsync();
+
+            return res;
         }
 
         public async Task RemoveAsync(Guid id)
@@ -41,7 +44,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task RemoveAsync(Qualification qualification)
         {
-            await _uow.Qualifications.Remove(qualification);
+            _uow.Qualifications.Remove(qualification);
+            await _uow.Qualifications.SaveAsync();
         }
 
         public async Task<IEnumerable<Qualification>> GetAllAsync()
@@ -58,7 +62,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task UpdateAsync(Qualification qualification)
         {
-            await _uow.Qualifications.Update(qualification);
+            _uow.Qualifications.Update(qualification);
+            await _uow.Qualifications.SaveAsync();
         }
     }
 }

@@ -59,12 +59,14 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task RemoveAsync(Company company)
         {
-            await _uow.Companies.Remove(company);
+            _uow.Companies.Remove(company);
+            await _uow.Companies.SaveAsync();
         }
 
         public async Task UpdateAsync(Company company) 
         {
-            await _uow.Companies.Update(company);
+            _uow.Companies.Update(company);
+            await _uow.Companies.SaveAsync();
         }
 
         public async Task<Company> GetByIdAsync(Guid Id)
@@ -72,29 +74,36 @@ namespace PandaHR.Api.Services.Implementation
             return await _uow.Companies.GetFirstOrDefaultAsync(c => c.Id == Id);
         }
 
-        public async Task AddAsync(Company company)
+        public async Task<Company> AddAsync(Company company)
         {
-            await _uow.Companies.AddAsync(company);
+            var result = await _uow.Companies.AddAsync(company);
+            await _uow.Companies.SaveAsync();
+
+            return result;
         }
 
         public async Task RemoveUserFromCompanyAsync(UserCompany userCompany)
         {
-            await _uow.UserCompanies.Remove(userCompany);
+            _uow.UserCompanies.Remove(userCompany);
+            await _uow.Companies.SaveAsync();
         }
 
         public async Task AddUserToCompanyAsync(UserCompany userCompany)
         {
             await _uow.UserCompanies.AddAsync(userCompany);
+            await _uow.UserCompanies.SaveAsync();
         }
 
         public async Task AddCompanyToCityAsync(CompanyCity companyCity)
         {
             await _uow.CompanyCities.AddAsync(companyCity);
+            await _uow.CompanyCities.SaveAsync();
         }
 
         public async Task RemoveCompanyFromCityAsync(CompanyCity companyCity)
         {
-            await _uow.CompanyCities.Remove(companyCity);
+            _uow.CompanyCities.Remove(companyCity);
+            await _uow.CompanyCities.SaveAsync();
         }
 
         public async Task RemoveAsync(Guid id)
