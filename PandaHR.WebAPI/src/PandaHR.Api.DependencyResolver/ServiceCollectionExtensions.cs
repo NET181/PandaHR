@@ -7,6 +7,7 @@ using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.EF;
 using PandaHR.Api.DAL.EF.Context;
+using PandaHR.Api.DAL.MongoDB;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.Repositories.Contracts;
 using PandaHR.Api.DAL.Repositories.Implementation;
@@ -79,6 +80,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<IExperienceService, ExperienceService>();
             services.AddScoped<ITechnologyService, TechnologyService>();
+            services.AddScoped<IFileService, FileService>();
             services.AddScoped<IVacancyCVFlowService, VacancyCVFlowService>();
 
             services.AddScoped<IScoreCounter, ScoreCounter>();
