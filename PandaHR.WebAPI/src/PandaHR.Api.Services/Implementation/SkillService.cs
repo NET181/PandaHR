@@ -13,7 +13,7 @@ using PandaHR.Api.Services.Models.Skill;
 
 namespace PandaHR.Api.Services.Implementation
 {
-    public class SkillService : IAsyncService<Skill>, ISkillService
+    public class SkillService : IAsyncService<SkillServiceModel>, ISkillService
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
@@ -24,7 +24,7 @@ namespace PandaHR.Api.Services.Implementation
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Skill>> GetAllAsync()
+        public async Task<IEnumerable<SkillServiceModel>> GetAllAsync()
         {
             var skills = await _uow.Skills.GetAllAsync(predicate: s => s.RootSkill == null,
                 include: s => s
@@ -35,27 +35,29 @@ namespace PandaHR.Api.Services.Implementation
                         .ThenInclude(s => s.Vacancy)
                     .Include(k => k.SubSkills));
 
-            return skills;
+            return _mapper.Map<IEnumerable<Skill>, IEnumerable<SkillServiceModel>>(skills);
         }
 
-        public async Task<Skill> GetByIdAsync(Guid id)
+        public async Task<SkillServiceModel> GetByIdAsync(Guid id)
         {
-            return await _uow.Skills.GetFirstOrDefaultAsync(d => d.Id == id);
+            var skill = await _uow.Skills.GetFirstOrDefaultAsync(d => d.Id == id);
+
+            return _mapper.Map<Skill, SkillServiceModel>(skill);
         }
 
-        public async Task AddAsync(Skill skill)
+        public async Task AddAsync(SkillServiceModel skill)
         {
-            await _uow.Skills.AddAsync(skill);
+            await _uow.Skills.AddAsync(_mapper.Map<SkillServiceModel, Skill>(skill));
         }
 
-        public async Task UpdateAsync(Skill skill)
+        public async Task UpdateAsync(SkillServiceModel skill)
         {
-            await _uow.Skills.Update(skill);
+            await _uow.Skills.Update(_mapper.Map<SkillServiceModel, Skill>(skill));
         }
 
-        public async Task RemoveAsync(Skill skill)
+        public async Task RemoveAsync(SkillServiceModel skill)
         {
-            await _uow.Skills.Remove(skill);
+            await _uow.Skills.Remove(_mapper.Map<SkillServiceModel, Skill>(skill));
         }
 
         public async Task RemoveAsync(Guid id)

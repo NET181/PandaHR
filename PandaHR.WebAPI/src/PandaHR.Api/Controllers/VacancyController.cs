@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.ScoreAlghorythm;
-using PandaHR.Api.Services.ScoreAlghorythm.Models;
 using PandaHR.Api.Models.IdAndRating;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Models.Skill;
+using PandaHR.Api.Models.Vacancy;
+using PandaHR.Api.Services.Models.Vacancy;
 
 namespace PandaHR.Api.Controllers
 {
@@ -62,8 +63,8 @@ namespace PandaHR.Api.Controllers
             {
                 var some = await _scoreCounter.GetCVsByVacancy(id);
 
-                var request = _mapper.Map<IEnumerable<IdAndRating>
-                    , IEnumerable<IdAndRatingResponseModel>>(some);
+                var request = _mapper.Map<IEnumerable<AlghorythmResponseServiceModel>
+                    , IEnumerable<AlghorythmResponseModel>>(some);
 
                 return Ok(request);
             }
@@ -108,6 +109,15 @@ namespace PandaHR.Api.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddVacancy(VacancyCreationRequestModel vacancy)
+        {
+            var vacancyServiceModel = _mapper.Map<VacancyCreationRequestModel, VacancyServiceModel>(vacancy);
+            await _vacancyService.AddAsync(vacancyServiceModel);
+
+            return Ok();
         }
     }
 }

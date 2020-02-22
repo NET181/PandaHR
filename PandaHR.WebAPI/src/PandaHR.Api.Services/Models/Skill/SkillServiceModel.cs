@@ -10,11 +10,11 @@ namespace PandaHR.Api.Services.Models.Skill
             SubSkills = new List<SkillServiceModel>();
         }
 
+        public string Name { get; set; }
+        public Guid SkillTypeId { get; set; }
         public SkillTypeServiceModel SkillType { get; set; }
         public Guid Id { get; set; }
-        public Guid SkillId { get; set; }
-        public Guid SkillKnowledgeId { get; set; }
-        public Guid ExperienceId { get; set; }
+        public Guid? RootSkillId { get; set; }
         public List<SkillServiceModel> SubSkills { get; set; }
     }
 }

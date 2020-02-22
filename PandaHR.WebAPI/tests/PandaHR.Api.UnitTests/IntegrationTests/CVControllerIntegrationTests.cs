@@ -14,7 +14,6 @@ using PandaHR.Api.Services.Models.Education;
 using PandaHR.Api.Services.Models.SkillKnowledge;
 using PandaHR.Api.Services.Models.User;
 using PandaHR.Api.Services.Models.Qualification;
-using PandaHR.Api.UnitTests.IntegrationTests;
 using PandaHR.Api.UnitTests.Comaparers;
 
 namespace PandaHR.Api.UnitTests

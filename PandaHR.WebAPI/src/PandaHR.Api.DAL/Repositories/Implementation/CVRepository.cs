@@ -195,5 +195,37 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
 
             await LinkUserToCV(cv, user);
         }
+
+        public async Task<CVExportDTO> GetCvForExportAsync(Guid cvId)
+        {
+            var cvDto = await _context.CVs.Where(cv => cv.Id == cvId)
+                .Include(cv => cv.JobExperiences)
+                .Include(cv => cv.Qualification)
+                .Include(cv => cv.User)
+                    .ThenInclude(u => u.Educations)
+                .Include(cv => cv.User)
+                    .ThenInclude(u => u.Educations)
+                        .ThenInclude(e => e.Degree)
+                .Include(cv => cv.User)
+                    .ThenInclude(u => u.Educations)
+                        .ThenInclude(e => e.Speciality)
+                .Include(cv => cv.SkillKnowledges)
+                    .ThenInclude(sk => sk.Skill)
+                .Include(cv => cv.SkillKnowledges)
+                    .ThenInclude(sk => sk.Skill)
+                        .ThenInclude(s => s.SkillType)
+                .Include(cv => cv.SkillKnowledges)
+                    .ThenInclude(sk => sk.KnowledgeLevel)
+                .FirstOrDefaultAsync();
+
+            return _mapper.Map<CV, CVExportDTO>(cvDto);
+        }
+
+        public bool CvExists(Guid cvId)
+        {
+            var guid = _context.CVs.Where(cv => cv.Id == cvId).Select(cv=>cv.Id).FirstOrDefault();
+
+            return guid != Guid.Empty;
+        }
     }
 }

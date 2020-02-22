@@ -14,6 +14,7 @@ using PandaHR.Api.DAL.Repositories.Implementation;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Implementation;
 using PandaHR.Api.Services.ScoreAlghorythm;
+using PandaHR.Api.Services.ScoreAlgorithm;
 using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
 using PandaHR.Api.Services.SkillMatchingAlgorithm.Implementation;
 
@@ -58,6 +59,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ITechnologyRepository, TechnologyRepository>();
+            services.AddScoped<IVacancyCVFlowRepository, VacancyCVFlowRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -79,9 +81,10 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<IExperienceService, ExperienceService>();
             services.AddScoped<ITechnologyService, TechnologyService>();
             services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IVacancyCVFlowService, VacancyCVFlowService>();
 
             services.AddScoped<IScoreCounter, ScoreCounter>();
-            services.AddScoped<IScoreAlghorythm, ScoreAlghorythm>();
+            services.AddScoped<IScoreAlghorythmBuilder, ScoreAlghorythmBuilder>();
             services.AddScoped<IMatchingCVsForSkillSetAlgorithm, MatchingCVsForSkillSetAlgorithm>();
             services.AddScoped<IMatchingVacanciesForSkillSetAlgorithm, MatchingVacanciesForSkillSetAlgorithm>();
 

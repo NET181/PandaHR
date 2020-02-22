@@ -4,21 +4,25 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.Common.Contracts;
+using PandaHR.Api.Services.Exporter;
 using PandaHR.Api.DAL;
-using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.DTOs.CV;
 using PandaHR.Api.DAL.DTOs.Education;
+using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.DTOs.User;
 using PandaHR.Api.DAL.DTOs.SkillKnowledge;
 using PandaHR.Api.DAL.DTOs.JobExperience;
-using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.Education;
 using PandaHR.Api.Services.Models.User;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.Models.SkillKnowledge;
 using PandaHR.Api.Services.Models.JobExperience;
 using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
+using PandaHR.Api.Services.Exporter.Models.Enums;
+using PandaHR.Api.Services.Exporter.Models.ExportTypes;
+using PandaHR.Api.Services.Exporter.Models.ExportModels;
 
 namespace PandaHR.Api.Services.Implementation
 {
@@ -91,6 +95,25 @@ namespace PandaHR.Api.Services.Implementation
             CVServiceModel result = _mapper.Map<CVDTO, CVServiceModel>(createdCV);
            
             return result;
+        }
+
+        public async Task<CustomFile> ExportCVAsync(Guid id, string webRootPath, string fileExtension)
+        {
+            if (!Enum.TryParse(fileExtension, true, out ExportType exportType))
+            {
+                throw new FormatException("This export mode is not supported");
+            }
+            if(!_uow.CVs.CvExists(id))
+            {
+                throw new KeyNotFoundException("No CV found with this id");
+            }
+
+            var templatePath = String.Format("{0}/export/CV_ExportTemplate.{1}", webRootPath, exportType);
+            var cvDto = await _uow.CVs.GetCvForExportAsync(id);
+            var cvExportModel = _mapper.Map<CVExportDTO, CVExportModel>(cvDto);
+            ExportingTool exportingTool = new ExportingTool(cvExportModel.FullName, exportType);
+
+            return exportingTool.ExportCV(templatePath, cvExportModel);
         }
 
         public async Task<IEnumerable<CVServiceModel>> GetAllAsync()

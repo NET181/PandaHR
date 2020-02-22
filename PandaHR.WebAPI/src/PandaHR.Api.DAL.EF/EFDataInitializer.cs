@@ -50,11 +50,11 @@ namespace PandaHR.Api.DAL.EF
 
             var cv = new List<CV>()
             {
-                new CV{ Id = new Guid("a6a7e31d-3db1-45b6-8172-3ad5556f65ce"), TechnologyId = technologyId, Summary = "Im very good", UserId = users[0].Id, QualificationId = qualificationId},
-                new CV{ Id = new Guid("e92dd3cd-e6ef-4bce-8b78-9047d793a21b"), TechnologyId = technologyId, Summary = "Im better than good", UserId = users[1].Id, QualificationId = qualificationId},
-                new CV{ Id = new Guid("fb06c4a3-c641-4222-84ac-f9e49a6a20dd"), TechnologyId = technologyId, Summary = "Im better than better", UserId = users[2].Id, QualificationId = qualificationId},
-                new CV{ Id = new Guid("e2df5eff-3171-472c-9828-367bc5ed92bf"), TechnologyId = technologyId, Summary = "Im the best", UserId = users[3].Id, QualificationId = qualificationId},
-                new CV{ Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9044"), TechnologyId = technologyId, Summary = "Im so clever boy", UserId = users[4].Id, QualificationId = qualificationId},
+                new CV{ Id = new Guid("a6a7e31d-3db1-45b6-8172-3ad5556f65ce"), TechnologyId = technologyId, Summary = "Junior .Net Developer", UserId = users[0].Id, QualificationId = qualificationId},
+                new CV{ Id = new Guid("e92dd3cd-e6ef-4bce-8b78-9047d793a21b"), TechnologyId = technologyId, Summary = "Middle JS Developer", UserId = users[1].Id, QualificationId = qualificationId},
+                new CV{ Id = new Guid("fb06c4a3-c641-4222-84ac-f9e49a6a20dd"), TechnologyId = technologyId, Summary = "Trainee PHP Developer", UserId = users[2].Id, QualificationId = qualificationId},
+                new CV{ Id = new Guid("e2df5eff-3171-472c-9828-367bc5ed92bf"), TechnologyId = technologyId, Summary = "Junior pro TS Developer", UserId = users[3].Id, QualificationId = qualificationId},
+                new CV{ Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9044"), TechnologyId = technologyId, Summary = "Senior Pomidor Developer", UserId = users[4].Id, QualificationId = qualificationId},
             };
 
             for(int i = 0; i < 5; i++)
@@ -435,7 +435,7 @@ namespace PandaHR.Api.DAL.EF
                                                                 new VacancyCVFile() { Name = "DraftCV2", Path = @"\\pathtofile2"}
                                                     }
                                         },
-                    new VacancyCVFlow() { Id = new Guid("fe9098da-3258-4aac-96dd-88b0b65e2805"), CV = CVs[2], Vacancy = Vacancies[0], Status = VacancyCVStatus.Cancelled, CancelReason = VacancyCVCancelReason.CallLater},
+                    new VacancyCVFlow() { Id = new Guid("fe9098da-3258-4aac-96dd-88b0b65e2805"), CV = CVs[2], Vacancy = Vacancies[0], Status = VacancyCVStatus.Cancelled},
                     new VacancyCVFlow() { Id = new Guid("2888146e-e198-4fa4-bcc5-c6b488b3d812"), CV = CVs[3], Vacancy = Vacancies[0], Status = VacancyCVStatus.CVReadyForClient},
                     
                     new VacancyCVFlow() { Id = new Guid("ad85fc0a-7f11-4d8f-9b3a-2b655658aaaf"), CV = CVs[0], Vacancy = Vacancies[1], Status = VacancyCVStatus.Draft},

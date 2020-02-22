@@ -21,5 +21,7 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
         Task UpdateAsync(CVCreationDTO cv);
         Task LinkUserToCV(CV cv, User user);
         Task LinkUserToCV(Guid cvId, Guid userId);
+        Task<CVExportDTO> GetCvForExportAsync(Guid cvId); 
+        bool CvExists(Guid cvId);
     }
 }
