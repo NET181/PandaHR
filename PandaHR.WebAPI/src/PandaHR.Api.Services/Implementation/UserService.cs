@@ -27,7 +27,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<User> AddAsync(User entity)
         {
             var res = await _uow.Users.AddAsync(entity);
-            await _uow.Users.SaveAsync();
+            await _uow.SaveChangesAsync();
 
             return res;
         }
@@ -83,13 +83,13 @@ namespace PandaHR.Api.Services.Implementation
         public async Task RemoveAsync(User user)
         {
             _uow.Users.Remove(user);
-            await _uow.Users.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(User entity)
         {
             _uow.Users.Update(entity);
-            await _uow.Users.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
     }
 }

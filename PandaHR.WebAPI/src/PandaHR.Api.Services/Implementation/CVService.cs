@@ -156,7 +156,7 @@ namespace PandaHR.Api.Services.Implementation
         {
             var toDel = _mapper.Map<CVServiceModel, CV>(entity);
             _uow.CVs.Remove(toDel);
-            await _uow.CVs.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(CVCreationServiceModel model)
@@ -177,7 +177,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<CV> AddAsync(CV entity)
         {
             var res = await _uow.CVs.AddAsync(entity);
-            await _uow.CVs.SaveAsync();
+            await _uow.SaveChangesAsync();
 
             return res;
         }

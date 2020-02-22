@@ -29,7 +29,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<SkillType> AddAsync(SkillType entity)
         {
             var res = await _uow.SkillTypes.AddAsync(entity);
-            await _uow.SkillTypes.SaveAsync();
+            await _uow.SaveChangesAsync();
 
             return res;
         }
@@ -43,7 +43,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task RemoveAsync(SkillType entity)
         {
             _uow.SkillTypes.Remove(entity);
-            await _uow.SkillTypes.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<SkillType> GetByIdAsync(Guid id)
@@ -54,7 +54,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task UpdateAsync(SkillType entity)
         {
             _uow.SkillTypes.Update(entity);
-            await _uow.SkillTypes.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
     }
 }

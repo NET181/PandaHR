@@ -24,7 +24,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<Education> AddAsync(Education entity)
         {
             var res = await _uow.Educations.AddAsync(entity);
-            await _uow.Educations.SaveAsync();
+            await _uow.SaveChangesAsync();
 
             return res;
         }
@@ -38,7 +38,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task RemoveAsync(Education entity)
         {
             _uow.Educations.Remove(entity);
-            await _uow.Educations.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Education>> GetAllAsync()
@@ -54,7 +54,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task UpdateAsync(Education entity)
         {
             _uow.Educations.Update(entity);
-            await _uow.Educations.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<ICollection<EducationBasicInfoServiceModel>> GetBasicInfoByAutofillByName(string name)

@@ -30,7 +30,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<Vacancy> AddAsync(Vacancy entity)
         {
             var res = await _uow.Vacancies.AddAsync(entity);
-            await _uow.Vacancies.SaveAsync();
+            await _uow.SaveChangesAsync();
 
             return res;
         }
@@ -44,7 +44,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task RemoveAsync(Vacancy vacancy)
         {
             _uow.Vacancies.Remove(vacancy);
-            await _uow.Vacancies.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Vacancy>> GetAllAsync()
@@ -80,7 +80,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task UpdateAsync(Vacancy vacancy)
         {
             _uow.Vacancies.Update(vacancy);
-            await _uow.Vacancies.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<VacancyServiceModel> AddAsync(VacancyServiceModel vacancyServiceModel)

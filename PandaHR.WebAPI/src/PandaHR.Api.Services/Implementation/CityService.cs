@@ -35,7 +35,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<City> AddAsync(City city)
         {
             var result = await _uow.Cities.AddAsync(city);
-            await _uow.Cities.SaveAsync();
+            await _uow.SaveChangesAsync();
 
             return result;
         }
@@ -43,7 +43,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task UpdateAsync(City city)
         {
             _uow.Cities.Update(city);
-            await _uow.Cities.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task RemoveAsync(Guid id)
@@ -55,7 +55,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task RemoveAsync(City city)
         {
             _uow.Cities.Remove(city);
-            await _uow.Cities.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<ICollection<CityNameServiceModel>> GetCityNamesByTerm(string term)

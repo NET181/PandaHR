@@ -31,7 +31,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<Degree> AddAsync(Degree entity)
         {
             var result = await _uow.Degrees.AddAsync(entity);
-            await _uow.Degrees.SaveAsync();
+            await _uow.SaveChangesAsync();
 
             return result;
         }
@@ -45,7 +45,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task RemoveAsync(Degree entity)
         {
             _uow.Degrees.Remove(entity);
-            await _uow.Degrees.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Degree>> GetAllAsync()
@@ -61,7 +61,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task UpdateAsync(Degree entity)
         {
             _uow.Degrees.Update(entity);
-            await _uow.Degrees.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
     }
 }

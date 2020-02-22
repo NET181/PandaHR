@@ -19,7 +19,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<SkillRequirement> AddAsync(SkillRequirement skillRequirement)
         {
             var res = await _uow.SkillRequirements.AddAsync(skillRequirement);
-            await _uow.SkillRequirements.SaveAsync();
+            await _uow.SaveChangesAsync();
 
             return res;
         }
@@ -33,7 +33,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task RemoveAsync(SkillRequirement skillRequirement)
         {
             _uow.SkillRequirements.Remove(skillRequirement);
-            await _uow.SkillRequirements.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<SkillRequirement>> GetAllAsync()
@@ -49,7 +49,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task UpdateAsync(SkillRequirement skillRequirement)
         {
             _uow.SkillRequirements.Update(skillRequirement);
-            await _uow.SkillRequirements.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
     }
 }

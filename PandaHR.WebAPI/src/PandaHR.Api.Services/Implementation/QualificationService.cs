@@ -31,7 +31,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<Qualification> AddAsync(Qualification qualification)
         {
             var res = await _uow.Qualifications.AddAsync(qualification);
-            await _uow.Qualifications.SaveAsync();
+            await _uow.SaveChangesAsync();
 
             return res;
         }
@@ -45,7 +45,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task RemoveAsync(Qualification qualification)
         {
             _uow.Qualifications.Remove(qualification);
-            await _uow.Qualifications.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Qualification>> GetAllAsync()
@@ -63,7 +63,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task UpdateAsync(Qualification qualification)
         {
             _uow.Qualifications.Update(qualification);
-            await _uow.Qualifications.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
     }
 }

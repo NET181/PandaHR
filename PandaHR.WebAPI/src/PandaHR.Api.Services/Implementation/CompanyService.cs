@@ -60,13 +60,13 @@ namespace PandaHR.Api.Services.Implementation
         public async Task RemoveAsync(Company company)
         {
             _uow.Companies.Remove(company);
-            await _uow.Companies.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Company company) 
         {
             _uow.Companies.Update(company);
-            await _uow.Companies.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<Company> GetByIdAsync(Guid Id)
@@ -77,7 +77,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<Company> AddAsync(Company company)
         {
             var result = await _uow.Companies.AddAsync(company);
-            await _uow.Companies.SaveAsync();
+            await _uow.SaveChangesAsync();
 
             return result;
         }
@@ -85,25 +85,25 @@ namespace PandaHR.Api.Services.Implementation
         public async Task RemoveUserFromCompanyAsync(UserCompany userCompany)
         {
             _uow.UserCompanies.Remove(userCompany);
-            await _uow.Companies.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task AddUserToCompanyAsync(UserCompany userCompany)
         {
             await _uow.UserCompanies.AddAsync(userCompany);
-            await _uow.UserCompanies.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task AddCompanyToCityAsync(CompanyCity companyCity)
         {
             await _uow.CompanyCities.AddAsync(companyCity);
-            await _uow.CompanyCities.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task RemoveCompanyFromCityAsync(CompanyCity companyCity)
         {
             _uow.CompanyCities.Remove(companyCity);
-            await _uow.CompanyCities.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task RemoveAsync(Guid id)

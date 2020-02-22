@@ -55,7 +55,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<Skill> AddAsync(Skill skill)
         {
             var res = await _uow.Skills.AddAsync(skill);
-            await _uow.Skills.SaveAsync();
+            await _uow.SaveChangesAsync();
 
             return res;
         }
@@ -63,13 +63,13 @@ namespace PandaHR.Api.Services.Implementation
         public async Task UpdateAsync(SkillServiceModel skill)
         {
             _uow.Skills.Update(_mapper.Map<SkillServiceModel, Skill>(skill));
-            await _uow.Skills.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task RemoveAsync(SkillServiceModel skill)
         {
             _uow.Skills.Remove(_mapper.Map<SkillServiceModel, Skill>(skill));
-            await _uow.Skills.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task RemoveAsync(Guid id)

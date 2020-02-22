@@ -19,7 +19,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<Speciality> AddAsync(Speciality entity)
         {
             var res = await _uow.Specialities.AddAsync(entity);
-            await _uow.Specialities.SaveAsync();
+            await _uow.SaveChangesAsync();
 
             return res;
         }
@@ -33,7 +33,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task RemoveAsync(Speciality entity)
         {
             _uow.Specialities.Remove(entity);
-            await _uow.Specialities.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Speciality>> GetAllAsync()
@@ -49,7 +49,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task UpdateAsync(Speciality entity)
         {
             _uow.Specialities.Update(entity);
-            await _uow.Specialities.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
     }
 }

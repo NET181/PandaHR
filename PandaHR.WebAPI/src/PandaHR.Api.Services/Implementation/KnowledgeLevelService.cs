@@ -30,7 +30,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<KnowledgeLevel> AddAsync(KnowledgeLevel entity)
         {
             var res = await _uow.KnowledgeLevels.AddAsync(entity);
-            await _uow.KnowledgeLevels.SaveAsync();
+            await _uow.SaveChangesAsync();
 
             return res;
         }
@@ -44,7 +44,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task RemoveAsync(KnowledgeLevel entity)
         {
             _uow.KnowledgeLevels.Remove(entity);
-            await _uow.KnowledgeLevels.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<KnowledgeLevel> GetByIdAsync(Guid id)
@@ -55,7 +55,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task UpdateAsync(KnowledgeLevel entity)
         {
             _uow.KnowledgeLevels.Update(entity);
-            await _uow.KnowledgeLevels.SaveAsync();
+            await _uow.SaveChangesAsync();
         }
     }
 }
