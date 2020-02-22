@@ -10,9 +10,9 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
     public interface IAsyncRepository<T> where T : class
     {
         Task<T> AddAsync(T entity);
-        Task Update(T entity);
-        Task Remove(T entity);
-
+        void Update(T entity);
+        void Remove(T entity);
+        Task<int> SaveAsync();
         Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null,
                                    Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
                                    Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,

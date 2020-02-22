@@ -28,9 +28,12 @@ namespace PandaHR.Api.Services.Implementation
             return _mapper.Map<ICollection<DegreeDTO>, ICollection<DegreeServiceModel>>(serviceModels);
         }
 
-        public async Task AddAsync(Degree entity)
+        public async Task<Degree> AddAsync(Degree entity)
         {
-            await _uow.Degrees.AddAsync(entity);
+            var result = await _uow.Degrees.AddAsync(entity);
+            await _uow.SaveChangesAsync();
+
+            return result;
         }
 
         public async Task RemoveAsync(Guid id)
@@ -41,7 +44,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task RemoveAsync(Degree entity)
         {
-            await _uow.Degrees.Remove(entity);
+            _uow.Degrees.Remove(entity);
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Degree>> GetAllAsync()
@@ -56,7 +60,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task UpdateAsync(Degree entity)
         {
-            await _uow.Degrees.Update(entity);
+            _uow.Degrees.Update(entity);
+            await _uow.SaveChangesAsync();
         }
     }
 }

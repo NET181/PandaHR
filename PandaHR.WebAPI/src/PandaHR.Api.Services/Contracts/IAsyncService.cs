@@ -8,7 +8,7 @@ namespace PandaHR.Api.Services.Contracts
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetByIdAsync(Guid id);
-        Task AddAsync(T entity);
+        Task<T> AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task RemoveAsync(Guid id);
         Task RemoveAsync(T entity);

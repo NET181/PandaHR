@@ -152,21 +152,18 @@ namespace PandaHR.Api.Services.Implementation
             await RemoveAsync(CV);
         }
 
-        public async Task RemoveAsync(CV entity)
+        public async Task RemoveAsync(CVServiceModel entity)
         {
-            await _uow.CVs.Remove(entity);
-        }
-
-        public Task RemoveAsync(CVServiceModel entity)
-        {
-            throw new NotImplementedException();
+            var toDel = _mapper.Map<CVServiceModel, CV>(entity);
+            _uow.CVs.Remove(toDel);
+            await _uow.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(CVCreationServiceModel model)
         {
             var cvDTO = _mapper.Map<CVCreationServiceModel, CVCreationDTO>(model);
 
-            await _uow.CVs.UpdateAsync(cvDTO);
+            await _uow.CVs.UpdateAsync(cvDTO); // saves CV inside this call
         }
 
         public async Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? pageSize = 10, int? page = 1)
@@ -177,19 +174,24 @@ namespace PandaHR.Api.Services.Implementation
             return _mapper.Map<IEnumerable<Vacancy>, IEnumerable<VacancySummaryDTO>>(result);
         }
 
-        public async Task AddAsync(CV entity)
+        public async Task<CV> AddAsync(CV entity)
         {
-            await _uow.CVs.AddAsync(entity);
+            var res = await _uow.CVs.AddAsync(entity);
+            await _uow.SaveChangesAsync();
+
+            return res;
         }
-        
+
+        public async Task<CVServiceModel> AddAsync(CVServiceModel entity)
+        {
+            var res = await AddAsync(_mapper.Map<CVServiceModel, CV>(entity));
+
+            return _mapper.Map<CV, CVServiceModel>(res);
+        }
+
         public async Task<CVServiceModel> GetByIdAsync(Guid id)
         {
             return _mapper.Map<CV, CVServiceModel>(await _uow.CVs.GetByIdAsync(id));
-        }
-
-        public Task AddAsync(CVServiceModel entity)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task UpdateAsync(CVServiceModel entity)
