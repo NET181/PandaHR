@@ -55,8 +55,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task<VacancyServiceModel> GetByIdWithSkillAsync(Guid id)
         {
-            var vacancys = await _uow.Vacancies.GetFirstOrDefaultAsync(d => d.Id == id
-                , include: i => i
+            var vacancy = await _uow.Vacancies.GetFirstOrDefaultAsync(d => d.Id == id, 
+                include: i => i
                 .Include(x => x.SkillRequirements)
                     .ThenInclude(s => s.Skill)
                     .ThenInclude(t => t.SkillType)
@@ -70,7 +70,7 @@ namespace PandaHR.Api.Services.Implementation
                     .ThenInclude(t => t.SkillKnowledgeTypes)
                 .Include(q => q.Qualification));
 
-            return _mapper.Map<Vacancy,VacancyServiceModel>(vacancys);
+            return _mapper.Map<Vacancy,VacancyServiceModel>(vacancy);
         }
 
         public async Task UpdateAsync(Vacancy vacancy)

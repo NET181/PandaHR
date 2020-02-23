@@ -12,4 +12,8 @@
     <ProjectReference Include="..\PandaHR.Api.Services.ScoreAlgorithm\PandaHR.Api.Services.ScoreAlgorithm.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\VacancyCVFile\" />
+  </ItemGroup>
+
 </Project>

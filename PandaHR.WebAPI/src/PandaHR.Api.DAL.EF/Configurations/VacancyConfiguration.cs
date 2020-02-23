@@ -27,6 +27,10 @@ namespace PandaHR.Api.DAL.EF.Configurations
             builder.HasOne(co => co.Company)
                    .WithMany(v => v.Vacancies)
                    .HasForeignKey(co => co.CompanyId);
+
+            builder.HasMany(u => u.CVs)
+                   .WithOne(cv => cv.Vacancy)
+                   .HasForeignKey(u => u.VacancyId);
         }
     }
 }

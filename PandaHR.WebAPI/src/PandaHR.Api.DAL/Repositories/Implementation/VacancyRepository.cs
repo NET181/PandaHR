@@ -86,7 +86,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
                 result = result.Skip((int)pageSize * ((int)page - 1)).Take((int)pageSize);
             }
 
-            return result;  
+            return result;
         }
     }
 }

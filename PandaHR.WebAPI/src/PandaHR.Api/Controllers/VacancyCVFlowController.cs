@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Models.VacancyCVFlow;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.VacancyCVFlow;
 
 namespace PandaHR.Api.Controllers
 {
@@ -11,10 +14,13 @@ namespace PandaHR.Api.Controllers
     public class VacancyCVFlowController : ControllerBase
     {
         private readonly IVacancyCVFlowService _vacancyCVFlowService;
+        private readonly IMapper _mapper;
 
-        public VacancyCVFlowController(IVacancyCVFlowService vacancyCVFlowService)
+        public VacancyCVFlowController(IVacancyCVFlowService vacancyCVFlowService,
+            IMapper mapper)
         {
             _vacancyCVFlowService = vacancyCVFlowService;
+            _mapper = mapper;
         }
 
         // GET: api/VacancyCVFlow
@@ -44,16 +50,17 @@ namespace PandaHR.Api.Controllers
 
         // POST: api/VacancyCVFlow
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody]VacancyCVFlow value)
+        public async Task<IActionResult> PostAsync([FromBody]VacancyCVFlowCreationRequestModel vacancyCVFlow)
         {
-            if (value == null)
+            if (vacancyCVFlow == null)
             {
                 return BadRequest();
             }
 
-            await _vacancyCVFlowService.AddAsync(value);
+            var flow = _mapper.Map<VacancyCVFlowCreationRequestModel, VacancyCVFlowCreationServiceModel>(vacancyCVFlow);
+            var addedFlow = await _vacancyCVFlowService.AddAsync(flow);
 
-            return CreatedAtRoute("GetVacancyCVFlows", new { id = value.Id }, value);
+            return CreatedAtRoute("GetVacancyCVFlow", new { id = addedFlow.Id }, addedFlow);
         }
 
         // PUT: api/VacancyCVFlow/5

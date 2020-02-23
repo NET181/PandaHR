@@ -27,15 +27,15 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<IEnumerable<Company>> GetAllAsync()
         {
             var companies = await _uow.Companies.GetAllAsync(include: source => source
-            .Include(v=> v.Vacancies)
-            .Include(cc=>cc.CompanyCities)
-                .ThenInclude(c=>c.City)
-                .ThenInclude(c=>c.Country)
-            .Include(uc=>uc.UserCompanies)
-                .ThenInclude(u=>u.User),
-            orderBy: source => source
-            .OrderBy(company => company.Name)
-                .ThenBy(company => company));         
+                .Include(v=> v.Vacancies)
+                .Include(cc=>cc.CompanyCities)
+                    .ThenInclude(c=>c.City)
+                    .ThenInclude(c=>c.Country)
+                .Include(uc=>uc.UserCompanies)
+                    .ThenInclude(u=>u.User),
+                orderBy: source => source
+                .OrderBy(company => company.Name)
+                    .ThenBy(company => company));         
 
             return companies;
         }
@@ -43,16 +43,16 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<IEnumerable<Company>> GetWhereAsync(Expression<Func<Company, bool>> predicate)
         {
             var companies = await _uow.Companies.GetAllAsync(include: source => source
-            .Include(v=> v.Vacancies)
-            .Include(cc=>cc.CompanyCities)
-                .ThenInclude(c=>c.City)
-                .ThenInclude(c=>c.Country)
-            .Include(uc=>uc.UserCompanies)
-                .ThenInclude(u=>u.User),
-            orderBy: source => source
-            .OrderBy(company => company.Name)
-                .ThenBy(company => company),
-            predicate: predicate);
+                .Include(v=> v.Vacancies)
+                .Include(cc=>cc.CompanyCities)
+                    .ThenInclude(c=>c.City)
+                    .ThenInclude(c=>c.Country)
+                .Include(uc=>uc.UserCompanies)
+                    .ThenInclude(u=>u.User),
+                orderBy: source => source
+                .OrderBy(company => company.Name)
+                    .ThenBy(company => company),
+                predicate: predicate);
 
             return companies;
         }
