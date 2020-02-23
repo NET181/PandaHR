@@ -8,10 +8,8 @@ namespace PandaHR.Api.Services.Mapper
     {
         public CompanyServiceModelProfile()
         {
-            CreateMap<CompanyBasicInfoServiceModel, CompanyBasicInfoDTO>();
-            CreateMap<CompanyBasicInfoDTO, CompanyBasicInfoServiceModel>();
+            CreateMap<CompanyNameServiceModel, CompanyNameDTO>();
             CreateMap<CompanyNameDTO, CompanyNameServiceModel>();
-            CreateMap<CompanyWithDetailsDTO, CompanyWithDetailsServiceModel>();
         }
     }
 }

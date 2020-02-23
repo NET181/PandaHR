@@ -72,7 +72,7 @@ namespace PandaHR.Api.Controllers
         {
             var companiesServiceModels = await _userService.GetUserCompanies(id);
             var responseModels = _mapper
-                .Map<ICollection<CompanyNameServiceModel>, ICollection<CompanyNameResponseModel>>(companiesServiceModels);
+                .Map<ICollection<CompanyNameServiceModel>, ICollection<CompanyBasicInfoResponse>>(companiesServiceModels);
             if (responseModels != null)
             {
                 return Ok(responseModels);

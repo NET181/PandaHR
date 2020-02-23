@@ -69,7 +69,7 @@ namespace PandaHR.Api.Controllers
         {
             var companies = await _companyService.GetCompaniesByNameAutoFillByString(name);
 
-            var companiesResponse = _mapper.Map<ICollection<CompanyBasicInfoServiceModel>, 
+            var companiesResponse = _mapper.Map<ICollection<CompanyNameServiceModel>, 
                 ICollection<CompanyBasicInfoResponse>>(companies);
 
             return Ok(companiesResponse);
