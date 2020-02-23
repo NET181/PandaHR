@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Services.Models.Vacancy;
 using PandaHR.Api.Services.Contracts;
 
 namespace PandaHR.Api.Services.Implementation
@@ -50,6 +51,11 @@ namespace PandaHR.Api.Services.Implementation
         {
             _uow.VacancyCVFlows.Update(entity);
             await _uow.SaveChangesAsync();
+        }
+
+        public string GetFlowStatusAsync(Guid CVId, Guid vacancyId)
+        {
+            return _uow.VacancyCVFlows.GetFlowStatusAsync(CVId, vacancyId).ToString();
         }
     }
 }

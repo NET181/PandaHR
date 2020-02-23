@@ -50,11 +50,34 @@ namespace PandaHR.Api.DAL.EF
 
             var cv = new List<CV>()
             {
-                new CV{ Id = new Guid("a6a7e31d-3db1-45b6-8172-3ad5556f65ce"), TechnologyId = technologyId, Summary = "Junior .Net Developer", UserId = users[0].Id, QualificationId = qualificationId},
-                new CV{ Id = new Guid("e92dd3cd-e6ef-4bce-8b78-9047d793a21b"), TechnologyId = technologyId, Summary = "Middle JS Developer", UserId = users[1].Id, QualificationId = qualificationId},
-                new CV{ Id = new Guid("fb06c4a3-c641-4222-84ac-f9e49a6a20dd"), TechnologyId = technologyId, Summary = "Trainee PHP Developer", UserId = users[2].Id, QualificationId = qualificationId},
-                new CV{ Id = new Guid("e2df5eff-3171-472c-9828-367bc5ed92bf"), TechnologyId = technologyId, Summary = "Junior pro TS Developer", UserId = users[3].Id, QualificationId = qualificationId},
-                new CV{ Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9044"), TechnologyId = technologyId, Summary = "Senior Pomidor Developer", UserId = users[4].Id, QualificationId = qualificationId},
+                new CV
+                { 
+                    Id = new Guid("a6a7e31d-3db1-45b6-8172-3ad5556f65ce"), 
+                    TechnologyId = technologyId, Summary = "Junior .Net Developer", 
+                    UserId = users[0].Id, QualificationId = qualificationId
+                },
+                new CV
+                { 
+                    Id = new Guid("e92dd3cd-e6ef-4bce-8b78-9047d793a21b"), 
+                    TechnologyId = technologyId, Summary = "Middle JS Developer", 
+                    UserId = users[1].Id, QualificationId = qualificationId
+                },
+                new CV
+                { 
+                    Id = new Guid("fb06c4a3-c641-4222-84ac-f9e49a6a20dd"), 
+                    TechnologyId = technologyId, Summary = "Trainee PHP Developer", 
+                    UserId = users[2].Id, QualificationId = qualificationId},
+                new CV
+                { 
+                    Id = new Guid("e2df5eff-3171-472c-9828-367bc5ed92bf"), 
+                    TechnologyId = technologyId, Summary = "Junior pro TS Developer", 
+                    UserId = users[3].Id, QualificationId = qualificationId},
+                new CV
+                { 
+                    Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9044"), 
+                    TechnologyId = technologyId, Summary = "Senior Pomidor Developer", 
+                    UserId = users[4].Id, QualificationId = qualificationId
+                },
             };
 
             for(int i = 0; i < 5; i++)
@@ -76,12 +99,27 @@ namespace PandaHR.Api.DAL.EF
 
             var vacancies = new Vacancy[]
             {
-                new Vacancy{ Id = new Guid("623af0cf-21c1-4dc6-8f86-09601e9dba86"), TechnologyId = technologyId, CompanyId = companyId, Description = "Best vacancy ever!",
-                    UserId = userId, QualificationId = qualificationId},
-                new Vacancy{ Id = new Guid("a8c58938-2339-4466-b662-023be9e4e9a5"),TechnologyId = technologyId, CompanyId = companyId, Description = "Even better vacancy than the previous!",
-                    UserId = userId, QualificationId = qualificationId},
-                new Vacancy{ Id = new Guid("aeed7aa1-78fa-427c-b2f8-30bbd08df1b5"), TechnologyId = technologyId, CompanyId = companyId, Description = "Vacancy for .Net developer",
-                    UserId = userId, QualificationId = qualificationId}
+                new Vacancy
+                { 
+                    Id = new Guid("623af0cf-21c1-4dc6-8f86-09601e9dba86"), 
+                    TechnologyId = technologyId, CompanyId = companyId, 
+                    Description = "Best vacancy ever!",
+                    UserId = userId, QualificationId = qualificationId
+                },
+                new Vacancy
+                { 
+                    Id = new Guid("a8c58938-2339-4466-b662-023be9e4e9a5"),
+                    TechnologyId = technologyId, CompanyId = companyId, 
+                    Description = "Even better vacancy than the previous!",
+                    UserId = userId, QualificationId = qualificationId
+                },
+                new Vacancy
+                { 
+                    Id = new Guid("aeed7aa1-78fa-427c-b2f8-30bbd08df1b5"), 
+                    TechnologyId = technologyId, CompanyId = companyId, 
+                    Description = "Vacancy for .Net developer",
+                    UserId = userId, QualificationId = qualificationId
+                }
             };
 
             _context.Vacancies.AddRange(vacancies);
@@ -114,12 +152,18 @@ namespace PandaHR.Api.DAL.EF
 
             var jobExperiences = new JobExperience[]
             {
-                new JobExperience { CVId = cvId, CompanyName = "SoftServe", ProjectName = "Sports Store",
-                Description = "Fully working shop", StartDate = new DateTime(15,12,23),
-                FinishDate = new DateTime(17,5,20) },
-                new JobExperience { CVId = cvId, CompanyName = "Oracle", ProjectName = "Windows Xp developing",
-                Description = "Developing OS system", StartDate = new DateTime(14,12,23),
-                FinishDate = new DateTime(15,5,15) }
+                new JobExperience 
+                { 
+                    CVId = cvId, CompanyName = "SoftServe", ProjectName = "Sports Store",
+                    Description = "Fully working shop", StartDate = new DateTime(15,12,23),
+                    FinishDate = new DateTime(17,5,20) 
+                },
+                new JobExperience 
+                { 
+                    CVId = cvId, CompanyName = "Oracle", ProjectName = "Windows Xp developing",
+                    Description = "Developing OS system", StartDate = new DateTime(14,12,23),
+                    FinishDate = new DateTime(15,5,15)
+                }
             };
 
             _context.JobExperiences.AddRange(jobExperiences);
@@ -135,12 +179,24 @@ namespace PandaHR.Api.DAL.EF
 
             var skillKnowledges = new SkillKnowledge[]
             {
-                new SkillKnowledge { SkillId = skillId[0].Id, KnowledgeLevelId = knowledgeLevelId[0].Id, CVId = cv.Id,
-                ExperienceId = experience[0].Id},
-                new SkillKnowledge { SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[1].Id, CVId = cv.Id,
-                ExperienceId = experience[1].Id},
-                new SkillKnowledge { SkillId = skillId[2].Id, KnowledgeLevelId = knowledgeLevelId[2].Id, CVId = cv.Id,
-                ExperienceId = experience[2].Id}
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[0].Id, KnowledgeLevelId = knowledgeLevelId[0].Id, 
+                    CVId = cv.Id,
+                    ExperienceId = experience[0].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[1].Id, 
+                    KnowledgeLevelId = knowledgeLevelId[1].Id, CVId = cv.Id,
+                    ExperienceId = experience[1].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[2].Id, KnowledgeLevelId = knowledgeLevelId[2].Id, 
+                    CVId = cv.Id,
+                    ExperienceId = experience[2].Id
+                }
             };
             _context.SkillKnowledges.AddRange(skillKnowledges);
             _context.SaveChanges();
@@ -152,11 +208,31 @@ namespace PandaHR.Api.DAL.EF
 
             var users = new User[]
             {
-                new User { Id = new Guid("b072e561-9258-4502-8b40-c545b121cb0c"), FirstName = "Kolya", SecondName = "Limonosov", CityId = cityId},
-                new User { Id = new Guid("396f6c38-92e1-43b2-9fd0-39db398144e8"), FirstName = "Igor", SecondName = "Savlepov", CityId = cityId},
-                new User { Id = new Guid("8f52436e-274b-4944-94bc-8e8e7497c88c"), FirstName = "Petr", SecondName = "Kolok", CityId = cityId},
-                new User { Id = new Guid("d2e34494-2a44-4c0d-a09b-4cc9849e4e97"), FirstName = "Hleb", SecondName = "Kibets", CityId = cityId},
-                new User { Id = new Guid("5e0b7eed-1e24-4166-8f00-a563923d1fc5"), FirstName = "Sofia", SecondName = "Karpova", CityId = cityId}
+                new User 
+                { 
+                    Id = new Guid("b072e561-9258-4502-8b40-c545b121cb0c"), 
+                    FirstName = "Kolya", SecondName = "Limonosov", CityId = cityId
+                },
+                new User 
+                { 
+                    Id = new Guid("396f6c38-92e1-43b2-9fd0-39db398144e8"), 
+                    FirstName = "Igor", SecondName = "Savlepov", CityId = cityId
+                },
+                new User 
+                { 
+                    Id = new Guid("8f52436e-274b-4944-94bc-8e8e7497c88c"), 
+                    FirstName = "Petr", SecondName = "Kolok", CityId = cityId
+                },
+                new User 
+                { 
+                    Id = new Guid("d2e34494-2a44-4c0d-a09b-4cc9849e4e97"), 
+                    FirstName = "Hleb", SecondName = "Kibets", CityId = cityId
+                },
+                new User 
+                { 
+                    Id = new Guid("5e0b7eed-1e24-4166-8f00-a563923d1fc5"), 
+                    FirstName = "Sofia", SecondName = "Karpova", CityId = cityId
+                }
             };
 
             _context.Users.AddRange(users);
@@ -181,7 +257,11 @@ namespace PandaHR.Api.DAL.EF
         {
             var companies = new Company[]
             {
-                new Company{Id = new Guid("53653054-750e-4ed8-a636-db00ee728b15"), Name = "SoftServe", Description = "Very good company"},
+                new Company
+                {
+                    Id = new Guid("53653054-750e-4ed8-a636-db00ee728b15"), 
+                    Name = "SoftServe", Description = "Very good company"
+                },
                 new Company{ Name = "Apriorit", Description = "Not bad company"},
                 new Company{ Name = "SiteCore", Description = "Big company"},
                 new Company{ Name = "NeoLit", Description = "Company from Dnipro"},
@@ -227,14 +307,30 @@ namespace PandaHR.Api.DAL.EF
 
             var skills = new Skill[]
             {
-                new Skill {Id = new Guid("b072e511-9258-4502-8b40-c545b121cb0c"), Name = "Asp.Net Core", IsDeleted = false, RootSkillId = parentSkill.Id,
-                    SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("b072e561-9458-4502-8b40-c545b121cb0c"), Name = "Windows Forms", IsDeleted = false, RootSkillId = parentSkill.Id,
-                    SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("b072e561-9258-4502-8b45-c545b121cb0c"), Name = "WPF", IsDeleted = false, RootSkillId = parentSkill.Id,
-                    SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("b072e561-9258-4502-3b40-c545b121cb0c"), Name = "Web Forms", IsDeleted = false, RootSkillId = parentSkill.Id,
-                    SkillTypeId = skillType[0].Id}
+                new Skill 
+                {
+                    Id = new Guid("b072e511-9258-4502-8b40-c545b121cb0c"), 
+                    Name = "Asp.Net Core", IsDeleted = false, RootSkillId = parentSkill.Id,
+                    SkillTypeId = skillType[0].Id
+                },
+                new Skill 
+                {
+                    Id = new Guid("b072e561-9458-4502-8b40-c545b121cb0c"),
+                    Name = "Windows Forms", IsDeleted = false, RootSkillId = parentSkill.Id,
+                    SkillTypeId = skillType[0].Id
+                },
+                new Skill
+                {
+                    Id = new Guid("b072e561-9258-4502-8b45-c545b121cb0c"), 
+                    Name = "WPF", IsDeleted = false, RootSkillId = parentSkill.Id,
+                    SkillTypeId = skillType[0].Id
+                },
+                new Skill 
+                {
+                    Id = new Guid("b072e561-9258-4502-3b40-c545b121cb0c"), 
+                    Name = "Web Forms", IsDeleted = false, RootSkillId = parentSkill.Id,
+                    SkillTypeId = skillType[0].Id
+                }
             };
 
             _context.Skills.AddRange(skills);
@@ -307,17 +403,30 @@ namespace PandaHR.Api.DAL.EF
 
             var skillRequirements = new SkillRequirement[]
             {
-                new SkillRequirement{Weight = 25, ExperienceId = experience[0].Id, IsDeleted = false,
-                SkillId = skills[0].Id, KnowledgeLevelId = knowledgeLevels[0].Id, VacancyId = vacancies[0].Id},
-
-                new SkillRequirement{Weight = 59, ExperienceId = experience[1].Id, IsDeleted = false,
-                SkillId = skills[0].Id, KnowledgeLevelId = knowledgeLevels[1].Id, VacancyId = vacancies[1].Id},
-
-                new SkillRequirement{Weight = 80, ExperienceId = experience[2].Id, IsDeleted = false,
-                SkillId = skills[1].Id, KnowledgeLevelId = knowledgeLevels[2].Id, VacancyId = vacancies[2].Id},
-
-                new SkillRequirement{Weight = 70, ExperienceId = experience[3].Id, IsDeleted = false,
-                SkillId = skills[2].Id, KnowledgeLevelId = knowledgeLevels[2].Id, VacancyId = vacancies[0].Id}
+                new SkillRequirement
+                {
+                    Weight = 25, ExperienceId = experience[0].Id, IsDeleted = false,
+                    SkillId = skills[0].Id, KnowledgeLevelId = knowledgeLevels[0].Id, 
+                    VacancyId = vacancies[0].Id
+                },
+                new SkillRequirement
+                {
+                    Weight = 59, ExperienceId = experience[1].Id, IsDeleted = false,
+                    SkillId = skills[0].Id, KnowledgeLevelId = knowledgeLevels[1].Id, 
+                    VacancyId = vacancies[1].Id
+                },
+                new SkillRequirement
+                {
+                    Weight = 80, ExperienceId = experience[2].Id, IsDeleted = false,
+                    SkillId = skills[1].Id, KnowledgeLevelId = knowledgeLevels[2].Id, 
+                    VacancyId = vacancies[2].Id
+                },
+                new SkillRequirement
+                {
+                    Weight = 70, ExperienceId = experience[3].Id, IsDeleted = false,
+                    SkillId = skills[2].Id, KnowledgeLevelId = knowledgeLevels[2].Id, 
+                    VacancyId = vacancies[0].Id
+                }
             };
 
             _context.SkillRequirements.AddRange(skillRequirements);
@@ -332,25 +441,37 @@ namespace PandaHR.Api.DAL.EF
 
             var educations = new Education[]
             {
-                new Education{ PlaceName = "DNU", UserId = users[0].Id, SpecialityId = specialities[0].Id,
+                new Education
+                { 
+                    PlaceName = "DNU", UserId = users[0].Id, 
+                    SpecialityId = specialities[0].Id,
                     DegreeId = degrees[0].Id, DateStart = new DateTime(2017,08,1),
-                    DateEnd = new DateTime(2021,08,1),IsDeleted = false},
-
-                new Education{ PlaceName = "KNTU", UserId = users[0].Id, SpecialityId = specialities[1].Id,
+                    DateEnd = new DateTime(2021,08,1),IsDeleted = false
+                },
+                new Education
+                { 
+                    PlaceName = "KNTU", UserId = users[0].Id, SpecialityId = specialities[1].Id,
                     DegreeId = degrees[1].Id, DateStart = new DateTime(2021,08,1),
-                    DateEnd = new DateTime(2022,08,1),IsDeleted = false},
-
-                new Education{ PlaceName = "DIIT", UserId = users[1].Id, SpecialityId = specialities[2].Id,
+                    DateEnd = new DateTime(2022,08,1),IsDeleted = false
+                },
+                new Education
+                { 
+                    PlaceName = "DIIT", UserId = users[1].Id, SpecialityId = specialities[2].Id,
                     DegreeId = degrees[2].Id, DateStart = new DateTime(2019,10,1),
-                    DateEnd = new DateTime(2023,08,1),IsDeleted = false},
-
-                new Education{ PlaceName = "KPI", UserId = users[2].Id, SpecialityId = specialities[0].Id,
+                    DateEnd = new DateTime(2023,08,1),IsDeleted = false
+                },
+                new Education
+                { 
+                    PlaceName = "KPI", UserId = users[2].Id, SpecialityId = specialities[0].Id,
                     DegreeId = degrees[1].Id, DateStart = new DateTime(2016,10,1),
-                    DateEnd = new DateTime(2021,08,1),IsDeleted = false},
-
-                new Education{ PlaceName = "HAI", UserId = users[2].Id, SpecialityId = specialities[1].Id,
+                    DateEnd = new DateTime(2021,08,1),IsDeleted = false
+                },
+                new Education
+                { 
+                    PlaceName = "HAI", UserId = users[2].Id, SpecialityId = specialities[1].Id,
                     DegreeId = degrees[1].Id, DateStart = new DateTime(2017,10,1),
-                    DateEnd = new DateTime(2022,08,1),IsDeleted = false}
+                    DateEnd = new DateTime(2022,08,1),IsDeleted = false
+                }
             };
 
             _context.Educations.AddRange(educations);
@@ -421,25 +542,66 @@ namespace PandaHR.Api.DAL.EF
 
         private void AddFlows()
         {
-            var CVs = _context.CVs.ToArray();
-            var Vacancies = _context.Vacancies.ToArray();
+            #region CVIDs and VacancyIDs hardcoded to get VacancyCVFlowTest.GetStatusTest passed!
+            var CVs = new Guid[]
+                {
+                    new Guid("a6a7e31d-3db1-45b6-8172-3ad5556f65ce"),
+                    new Guid("e92dd3cd-e6ef-4bce-8b78-9047d793a21b"),
+                    new Guid("fb06c4a3-c641-4222-84ac-f9e49a6a20dd"),
+                    new Guid("e2df5eff-3171-472c-9828-367bc5ed92bf"),
+                    new Guid("61736a37-77f8-4c2b-87c1-0278d07f9044")
+                };
+            var Vacancies = new Guid[]
+                {
+                    new Guid("623af0cf-21c1-4dc6-8f86-09601e9dba86"),
+                    new Guid("a8c58938-2339-4466-b662-023be9e4e9a5"),
+                    new Guid("aeed7aa1-78fa-427c-b2f8-30bbd08df1b5")
+                };
+            #endregion
 
             VacancyCVFlow[] flows = new VacancyCVFlow[]
                 {
-                    new VacancyCVFlow() { Id = new Guid("342f6c46-9bd1-4508-b1f7-6a8eed1ac270"), CV = CVs[0], Vacancy = Vacancies[0], Status = VacancyCVStatus.Draft},
-                    new VacancyCVFlow() { 
-                                            Id = new Guid("8c3978e9-bb20-4170-8a7e-20ae97250da3"), CV = CVs[1], Vacancy = Vacancies[0], Status = VacancyCVStatus.CVPreparation,
-                                            Files = new HashSet<VacancyCVFile>() 
-                                                    { 
-                                                                new VacancyCVFile() { Name = "DraftCV", Path = @"\\pathtofile"},
-                                                                new VacancyCVFile() { Name = "DraftCV2", Path = @"\\pathtofile2"}
-                                                    }
-                                        },
-                    new VacancyCVFlow() { Id = new Guid("fe9098da-3258-4aac-96dd-88b0b65e2805"), CV = CVs[2], Vacancy = Vacancies[0], Status = VacancyCVStatus.Cancelled},
-                    new VacancyCVFlow() { Id = new Guid("2888146e-e198-4fa4-bcc5-c6b488b3d812"), CV = CVs[3], Vacancy = Vacancies[0], Status = VacancyCVStatus.CVReadyForClient},
-                    
-                    new VacancyCVFlow() { Id = new Guid("ad85fc0a-7f11-4d8f-9b3a-2b655658aaaf"), CV = CVs[0], Vacancy = Vacancies[1], Status = VacancyCVStatus.Draft},
-                    new VacancyCVFlow() { Id = new Guid("0fecd44f-a898-4c12-b768-b5c6986429ee"), CV = CVs[4], Vacancy = Vacancies[1], Status = VacancyCVStatus.Draft}
+                    new VacancyCVFlow() 
+                    { 
+                        Id = new Guid("342f6c46-9bd1-4508-b1f7-6a8eed1ac270"), 
+                        CVId = CVs[0], VacancyId = Vacancies[0], 
+                        Status = VacancyCVStatus.Draft
+                    },
+                    new VacancyCVFlow() 
+                    { 
+                        Id = new Guid("8c3978e9-bb20-4170-8a7e-20ae97250da3"), 
+                        CVId = CVs[1], VacancyId = Vacancies[0], 
+                        Status = VacancyCVStatus.CVPreparation,
+                        Files = new HashSet<VacancyCVFile>() 
+                        { 
+                            new VacancyCVFile() { Name = "DraftCV", Path = @"\\pathtofile"},
+                            new VacancyCVFile() { Name = "DraftCV2", Path = @"\\pathtofile2"}
+                        }
+                    },
+                    new VacancyCVFlow() 
+                    { 
+                        Id = new Guid("fe9098da-3258-4aac-96dd-88b0b65e2805"), 
+                        CVId = CVs[2], VacancyId = Vacancies[0], 
+                        Status = VacancyCVStatus.Cancelled
+                    },
+                    new VacancyCVFlow() 
+                    { 
+                        Id = new Guid("2888146e-e198-4fa4-bcc5-c6b488b3d812"), 
+                        CVId = CVs[3], VacancyId = Vacancies[0], 
+                        Status = VacancyCVStatus.CVReadyForClient
+                    },
+                    new VacancyCVFlow() 
+                    { 
+                        Id = new Guid("ad85fc0a-7f11-4d8f-9b3a-2b655658aaaf"), 
+                        CVId = CVs[0], VacancyId = Vacancies[1], 
+                        Status = VacancyCVStatus.Draft
+                    },
+                    new VacancyCVFlow() 
+                    { 
+                        Id = new Guid("0fecd44f-a898-4c12-b768-b5c6986429ee"), 
+                        CVId = CVs[4], VacancyId = Vacancies[1], 
+                        Status = VacancyCVStatus.Draft
+                    }
                 };
 
             _context.VacancyCVFlows.AddRange(flows);

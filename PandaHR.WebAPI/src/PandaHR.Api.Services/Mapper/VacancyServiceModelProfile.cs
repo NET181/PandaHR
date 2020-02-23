@@ -1,5 +1,6 @@
 ﻿using PandaHR.Api.Common;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.DAL.Models.Entities.Enums;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.Services.Models.Vacancy;
 
