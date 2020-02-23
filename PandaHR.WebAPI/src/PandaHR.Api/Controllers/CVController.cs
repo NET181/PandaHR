@@ -72,10 +72,10 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-        [HttpGet("/UserCVsExt/{userId}")]
-        public async Task<IActionResult> GetUserCVs(Guid userId, int page, int pageSize)
+        [HttpGet("/UserCVExt/{userId}")]
+        public async Task<IActionResult> GetUserCV(Guid userId)
         {
-            return Ok(await _cvService.GetUserCVsAsync(userId, pageSize, page));
+            return Ok(await _cvService.GetUserCVAsync(userId));
         }
 
         [HttpPost("/CV/{id}/AddSkillKnowledge")]
@@ -142,24 +142,11 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-        [HttpGet("/UserCVsSummary")]
-        public async Task<IActionResult> GetCVsPaged(Guid userId, int pageSize, int page)
-        {
-            var item = await _cvService.GetUserCVsAsync(userId, pageSize, page);
-
-            if (item == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(item);
-        }
-
         // GET: api/UserCVsSummary/5
-        [HttpGet("/UserCVsSummary/{userId}")]
-        public async Task<IActionResult> GetUserCVsSummary(Guid userId, int page, int pageSize)
+        [HttpGet("/UserCVSummary/{userId}")]
+        public async Task<IActionResult> GetUserCVSummary(Guid userId)
         {
-            var item = await _cvService.GetUserCVsPreviewAsync(userId, pageSize, page);
+            var item = await _cvService.GetUserCVPreviewAsync(userId);
 
             if (item == null)
             {
@@ -183,9 +170,9 @@ namespace PandaHR.Api.Controllers
 
         // GET: api/VacanciesForCV/5
         [HttpGet("/VacanciesForCV/{CVId}")]
-        public async Task<IActionResult> GetVacanciesForCV(Guid CVId, int page, int pageSize)
+        public async Task<IActionResult> GetVacanciesForCV(Guid CVId, int page = 1, int pageSize = 10)
         {
-            var item = await _cvService.GetVacanciesForCV(CVId, pageSize, page);
+            var item = await _cvService.GetVacanciesForCV(CVId, page, pageSize);
 
             if (item == null)
             {

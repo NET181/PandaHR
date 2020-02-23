@@ -13,9 +13,9 @@ namespace PandaHR.Api.Services.Contracts
 {
     public interface ICVService : IAsyncService<CVServiceModel>
     {
-        Task<IEnumerable<CVSummaryDTO>> GetUserCVsPreviewAsync(Guid userId, int? pageSize, int? page);
-        Task<IEnumerable<CVforSearchDTO>> GetUserCVsAsync(Guid userId, int? pageSize = 10, int? page = 1);
-        Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? pageSize = 10, int? page = 1);
+        Task<CVSummaryDTO> GetUserCVPreviewAsync(Guid userId);
+        Task<CVforSearchDTO> GetUserCVAsync(Guid userId);
+        Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? page = 1, int? pageSize = 10);
         Task<IEnumerable<CV>> GetBySkillSet(IEnumerable<Skill> skills, double threshold);
         Task<CustomFile> ExportCVAsync(Guid id, string webRootPath, string fileExtension);
         Task AddSkillKnowledgeToCVAsync(SkillKnowledgeServiceModel model, Guid CVId);

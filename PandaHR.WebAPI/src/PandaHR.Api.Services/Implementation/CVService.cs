@@ -9,11 +9,11 @@ using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.DTOs.CV;
 using PandaHR.Api.DAL.DTOs.Education;
 using PandaHR.Api.DAL.Models.Entities;
-using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.DTOs.User;
 using PandaHR.Api.DAL.DTOs.SkillKnowledge;
 using PandaHR.Api.DAL.DTOs.JobExperience;
+using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.Education;
 using PandaHR.Api.Services.Models.User;
 using PandaHR.Api.Services.Models.CV;
@@ -136,14 +136,14 @@ namespace PandaHR.Api.Services.Implementation
             return new List<CVServiceModel>(_mapper.Map<IEnumerable<CV>, IEnumerable<CVServiceModel>>(CVs));
         }
 
-        public async Task<IEnumerable<CVSummaryDTO>> GetUserCVsPreviewAsync(Guid userId, int? pageSize = 10, int? page = 1)
+        public async Task<CVSummaryDTO> GetUserCVPreviewAsync(Guid userId)
         {
-            return await _uow.CVs.GetUserCVSummaryAsync(userId, pageSize, page);
+            return await _uow.CVs.GetUserCVSummaryAsync(userId);
         }
 
-        public async Task<IEnumerable<CVforSearchDTO>> GetUserCVsAsync(Guid userId, int? pageSize = 10, int? page = 1)
+        public async Task<CVforSearchDTO> GetUserCVAsync(Guid userId)
         {
-            return await _uow.CVs.GetCVsAsync(cv => cv.UserId == userId, pageSize, page);
+            return (await _uow.CVs.GetCVsAsync(cv => cv.UserId == userId)).FirstOrDefault();
         }
 
         public async Task RemoveAsync(Guid id)
@@ -166,7 +166,7 @@ namespace PandaHR.Api.Services.Implementation
             await _uow.CVs.UpdateAsync(cvDTO); // saves CV inside this call
         }
 
-        public async Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? pageSize = 10, int? page = 1)
+        public async Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? page = 1, int? pageSize = 10)
         {
             CVforSearchDTO cv = (await _uow.CVs.GetCVsAsync(cv => cv.Id == CVId, pageSize, page)).FirstOrDefault();
             var result = (await _uow.Vacancies.GetAllAsync()).Where(v => MatchVacancyCV.Matches(v, cv) > 0);

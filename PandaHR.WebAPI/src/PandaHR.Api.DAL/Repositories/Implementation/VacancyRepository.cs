@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.DTOs.City;
@@ -26,20 +25,19 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<VacancySummaryDTO>> GetUserVacancySummaryAsync(Guid userId, int? pageSize = 10, int? page = 1)
+        public async Task<IEnumerable<VacancySummaryDTO>> GetUserVacancySummaryAsync(Guid userId, int? page = 1, int? pageSize = 10)
         {
-            IEnumerable<Vacancy> query = await _context.Vacancies.Where(cv => cv.UserId == userId)
+            IQueryable<Vacancy> query = _context.Vacancies.Where(cv => cv.UserId == userId)
                 .Include(c => c.Qualification)
                 .Include(c => c.Technology)
-                .Include(c=>c.Company)
-                .ToListAsync();
+                .Include(c => c.Company);
 
             if (pageSize != null && page != null)
             {
                 query = query.Skip((int)pageSize * ((int)page - 1)).Take((int)pageSize);
             }
 
-            return _mapper.Map<IEnumerable<Vacancy>, IEnumerable<VacancySummaryDTO>>(query);
+            return _mapper.Map<IEnumerable<Vacancy>, IEnumerable<VacancySummaryDTO>>(await query.ToListAsync());
         }
 
         public async Task<VacancyDTO> AddAsync(VacancyDTO vacancyDto)
@@ -47,7 +45,6 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             var vacancy = _mapper.Map<VacancyDTO, Vacancy>(vacancyDto);
                         
             await _context.Vacancies.AddAsync(vacancy);
-            await _context.SaveChangesAsync();
 
             return _mapper.Map<Vacancy, VacancyDTO>(vacancy);
         }
@@ -57,7 +54,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             return await _context.Set<Vacancy>().FindAsync(Id);
         }
 
-        public async Task<IEnumerable<VacancySummaryDTO>> GetVacanciesFiltered(Expression<Func<Vacancy, bool>> predicate, int? pageSize = 10, int? page = 1)
+        public async Task<IEnumerable<VacancySummaryDTO>> GetVacanciesFiltered(Expression<Func<Vacancy, bool>> predicate, int? page = 1, int? pageSize = 10)
         {
             IQueryable<VacancySummaryDTO> query = _context.Vacancies.AsQueryable()
                 .Include(c => c.Qualification)
@@ -81,14 +78,12 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
                                   })
                  });
 
-            IEnumerable <VacancySummaryDTO> result = await query.ToListAsync();
-
             if (pageSize != null && page != null)
             {
-                result = result.Skip((int)pageSize * ((int)page - 1)).Take((int)pageSize);
+                query = query.Skip((int)pageSize * ((int)page - 1)).Take((int)pageSize);
             }
 
-            return result;  
+            return await query.ToListAsync();  
         }
     }
 }

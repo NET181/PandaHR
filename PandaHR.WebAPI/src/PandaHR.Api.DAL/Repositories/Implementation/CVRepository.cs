@@ -76,22 +76,16 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             return CV;
         }
 
-        public async Task<IEnumerable<CVSummaryDTO>> GetUserCVSummaryAsync(Guid userId, int? pageSize = 10, int? page = 1)
+        public async Task<CVSummaryDTO> GetUserCVSummaryAsync(Guid userId)
         {
-            IEnumerable<CV> query = await _context.CVs.Where(cv => cv.UserId == userId)
+            CV query = await _context.CVs.Where(cv => cv.UserId == userId)
                 .Include(c => c.Qualification)
-                .Include(c => c.Technology)
-                .ToListAsync();
+                .Include(c => c.Technology).FirstOrDefaultAsync();
 
-            if (pageSize != null && page != null)
-            {
-                query = query.Skip((int)pageSize * ((int)page - 1)).Take((int)pageSize);
-            }
-
-            return _mapper.Map<IEnumerable<CV>, IEnumerable<CVSummaryDTO>>(query);
+            return _mapper.Map<CV, CVSummaryDTO>(query);
         }
 
-        public async Task<IEnumerable<CVforSearchDTO>> GetCVsAsync(Expression<Func<CV, bool>> predicate,/*Guid userId,*/ int? pageSize = 10, int? page = 1)
+        public async Task<IEnumerable<CVforSearchDTO>> GetCVsAsync(Expression<Func<CV, bool>> predicate, int? page = 1, int? pageSize = 10)
         {
             IEnumerable<CV> query = await _context.CVs.Where(predicate)
                 .Include(c => c.Qualification)
