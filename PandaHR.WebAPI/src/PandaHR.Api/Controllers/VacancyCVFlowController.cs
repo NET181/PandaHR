@@ -100,5 +100,19 @@ namespace PandaHR.Api.Controllers
 
             return NoContent();
         }
+
+        [HttpPatch]
+        public async Task<IActionResult> PatchAsync([FromBody]VacancyCVFlowEditStatusRequestModel vacancyCVFlow)
+        {
+            if (vacancyCVFlow == null)
+            {
+                return BadRequest();
+            }
+
+            var flow = _mapper.Map<VacancyCVFlowEditStatusRequestModel, VacancyCVFlowEditStatusServiceModel>(vacancyCVFlow);
+            await _vacancyCVFlowService.ChangeStatus(flow);
+
+            return Ok();
+        }
     }
 }

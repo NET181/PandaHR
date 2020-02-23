@@ -13,6 +13,8 @@ namespace PandaHR.Api.DAL.Mapper
         {
             CreateMap<VacancyCVFlow, VacancyCVFlowDTOProfile>();
             CreateMap<VacancyCVFlowCreationDTO, VacancyCVFlow>();
+
+            CreateMap<VacancyCVFlowEditStatusDTO, VacancyCVFlow>();
         }
     }
 }

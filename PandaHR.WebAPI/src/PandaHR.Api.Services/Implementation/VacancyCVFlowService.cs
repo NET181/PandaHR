@@ -60,5 +60,11 @@ namespace PandaHR.Api.Services.Implementation
             
             return addedFlow;
         }
+
+        public async Task ChangeStatus(VacancyCVFlowEditStatusServiceModel vacancyCVFlow)
+        {
+            var flow = _mapper.Map<VacancyCVFlowEditStatusServiceModel, VacancyCVFlowEditStatusDTO>(vacancyCVFlow);
+            await _uow.VacancyCVFlows.Patch(flow);
+        }
     }
 }

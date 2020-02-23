@@ -5,10 +5,11 @@ using System.Text;
 
 namespace PandaHR.Api.Services.Models.VacancyCVFlow
 {
-    public class VacancyCVFlowCreationServiceModel
+    public class VacancyCVFlowEditStatusServiceModel
     {
-        public Guid CVId { get; set; }
         public Guid VacancyId { get; set; }
+        public Guid CVId { get; set; }
+        public VacancyCVStatus Status { get; set; }
         public string Notes { get; set; }
     }
 }

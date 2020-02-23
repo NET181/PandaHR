@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.DTOs.VacancyCVFlow;
 using PandaHR.Api.DAL.EF.Context;
@@ -30,6 +31,16 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             await _context.SaveChangesAsync();
 
             return flow;
+        }
+
+        public async Task Patch(VacancyCVFlowEditStatusDTO flow)
+        {
+            //var vacancyCVFlow = _mapper.Map<VacancyCVFlowEditStatusDTO, VacancyCVFlow>(flow);
+            var vacancyCVFlow = await _context.VacancyCVFlows.FindAsync(flow.CVId, flow.VacancyId);
+            vacancyCVFlow.Status = flow.Status;
+            vacancyCVFlow.Notes = flow.Notes;
+            _context.Entry(vacancyCVFlow).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }

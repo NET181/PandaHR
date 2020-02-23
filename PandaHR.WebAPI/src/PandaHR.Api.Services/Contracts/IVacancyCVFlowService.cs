@@ -7,5 +7,6 @@ namespace PandaHR.Api.Services.Contracts
     public interface IVacancyCVFlowService : IAsyncService<VacancyCVFlow>
     {
         Task<VacancyCVFlow> AddAsync(VacancyCVFlowCreationServiceModel vacancyCVFlow);
+        Task ChangeStatus(VacancyCVFlowEditStatusServiceModel vacancyCVFlow);
     }
 }

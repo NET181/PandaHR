@@ -1,15 +1,15 @@
-﻿using PandaHR.Api.DAL.Models.Entities;
-using PandaHR.Api.DAL.Models.Entities.Enums;
+﻿using PandaHR.Api.DAL.Models.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace PandaHR.Api.DAL.DTOs.VacancyCVFlow
 {
-    public class VacancyCVFlowCreationDTO
+    public class VacancyCVFlowEditStatusDTO
     {
-        public Guid CVId { get; set; }
         public Guid VacancyId { get; set; }
+        public Guid CVId { get; set; }
+        public VacancyCVStatus Status { get; set; }
         public string Notes { get; set; }
     }
 }

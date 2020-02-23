@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace PandaHR.Api.Models.VacancyCVFlow
 {
-    public class VacancyCVFlowCreationRequestModel
+    public class VacancyCVFlowEditStatusRequestModel
     {
-        public Guid CVId { get; set; }
         public Guid VacancyId { get; set; }
+        public Guid CVId { get; set; }
+        public VacancyCVStatus Status { get; set; }
         public string Notes { get; set; }
     }
 }

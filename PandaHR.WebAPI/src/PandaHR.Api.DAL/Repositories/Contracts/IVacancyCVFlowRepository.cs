@@ -10,5 +10,6 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
     public interface IVacancyCVFlowRepository : IAsyncRepository<VacancyCVFlow>
     {
         Task<VacancyCVFlow> AddAsync(VacancyCVFlowCreationDTO vacancyCVFlow);
+        Task Patch(VacancyCVFlowEditStatusDTO flow);
     }
 }
