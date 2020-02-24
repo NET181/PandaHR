@@ -13,5 +13,6 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
         Task<VacancyCVFlow> AddAsync(VacancyCVFlowCreationDTO vacancyCVFlow);
         Task Patch(VacancyCVFlowEditStatusDTO flow);
         VacancyCVStatus GetFlowStatusAsync(Guid CVId, Guid vacancyId);
+        Task<IEnumerable<VacancyCVFlowDTO>> GetAllFlowsByVacancyId(Guid vacancyId);
     }
 }

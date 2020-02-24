@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using PandaHR.Api.DAL.DTOs.VacancyCVFlow;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.Common.Contracts;
@@ -55,6 +59,21 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             }
 
             return VacancyCVStatus.NotExists;
+        }
+
+        public async Task<IEnumerable<VacancyCVFlowDTO>> GetAllFlowsByVacancyId(Guid vacancyId)
+        {
+            var flows = await _context.VacancyCVFlows.Where(v =>
+                 v.VacancyId == vacancyId)
+                .Select(c => new VacancyCVFlowDTO()
+                {
+                    CVId = c.CVId,
+                    VacancyId = c.VacancyId,
+                    Status = c.Status,
+                    Notes = c.Notes
+                }).ToListAsync();
+
+            return flows;
         }
     }
 }

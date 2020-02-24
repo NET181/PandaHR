@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Common.Contracts;
@@ -30,6 +31,18 @@ namespace PandaHR.Api.Controllers
             var vacancyCVFlows = await _vacancyCVFlowService.GetAllAsync();
 
             return Ok(vacancyCVFlows);
+        }
+
+        // GET: api/VacancyCVFlow/GetAllFlowsByVacancyId/5
+        [HttpGet("GetAllFlowsByVacancyId/{vacancyId}")]
+        public async Task<IActionResult> GetAllFlowsByVacancyId(Guid vacancyId)
+        {
+            var flowSeviceModel = await _vacancyCVFlowService.GetAllFlowsByVacancyIdAsync(vacancyId);
+
+            var flowResponceModel = _mapper.Map<IEnumerable<VacancyCVFlowServiceModel>,
+                    IEnumerable<VacancyCVFlowResponceModel>>(flowSeviceModel);
+
+            return Ok(flowResponceModel);
         }
 
         // GET: api/VacancyCVFlow/5    
