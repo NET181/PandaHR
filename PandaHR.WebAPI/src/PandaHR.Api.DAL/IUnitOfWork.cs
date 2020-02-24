@@ -1,11 +1,14 @@
-﻿using PandaHR.Api.DAL.Repositories.Contracts;
+﻿using System.Threading.Tasks;
+using PandaHR.Api.DAL.Repositories.Contracts;
 
 namespace PandaHR.Api.DAL
 {
     public interface IUnitOfWork
     {
+        Task SaveChangesAsync();
         ISkillRepository Skills { get; }
         IVacancyRepository Vacancies { get; }
+        IVacancyCityRepository VacancyCities { get; }
         ICVRepository CVs { get; }
         ICompanyRepository Companies { get; }
         IJobExperienceRepository JobExperiences { get; }
@@ -23,5 +26,6 @@ namespace PandaHR.Api.DAL
         ISkillTypeRepository SkillTypes { get; }
         IExperienceRepository Experiences { get; }
         ITechnologyRepository Technologies { get; }
+        IVacancyCVFlowRepository VacancyCVFlows { get; }
     }
 }

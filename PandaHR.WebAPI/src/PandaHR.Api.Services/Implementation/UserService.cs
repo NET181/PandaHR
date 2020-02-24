@@ -24,9 +24,12 @@ namespace PandaHR.Api.Services.Implementation
             _uow = uow;
         }
 
-        public async Task AddAsync(User entity)
+        public async Task<User> AddAsync(User entity)
         {
-            await _uow.Users.Add(entity);
+            var res = await _uow.Users.AddAsync(entity);
+            await _uow.SaveChangesAsync();
+
+            return res;
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()
@@ -37,7 +40,7 @@ namespace PandaHR.Api.Services.Implementation
                 .ThenInclude(d => d.Degree)
             .Include(e => e.Educations)
                 .ThenInclude(d => d.Speciality)
-            .Include(cv => cv.CVs)
+            .Include(cv => cv.CV)
             .Include(v => v.Vacancies));
 
             return users;
@@ -73,18 +76,20 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task RemoveAsync(Guid id)
         {
-            var city = await _uow.Users.GetByIdAsync(id);
-            await _uow.Users.Remove(city);
+            var user = await _uow.Users.GetByIdAsync(id);
+            await RemoveAsync(user);
         }
 
         public async Task RemoveAsync(User user)
         {
-            await _uow.Users.Remove(user);
+            _uow.Users.Remove(user);
+            await _uow.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(User entity)
         {
-            await _uow.Users.Update(entity);
+            _uow.Users.Update(entity);
+            await _uow.SaveChangesAsync();
         }
     }
 }

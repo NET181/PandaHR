@@ -1,4 +1,5 @@
 using System.Reflection;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using FluentValidation.AspNetCore;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DependencyResolver;
 
@@ -24,11 +24,15 @@ namespace PandaHR.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            services.AddControllers().AddNewtonsoftJson(
+                opt =>
+                {
+                    opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                }
+            );
             services.AddCors();
             services.AddMvc(option => option.EnableEndpointRouting = false)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
                 .AddFluentValidation(
                 opt => opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly())
                 );
@@ -46,8 +50,11 @@ namespace PandaHR.Api
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
                 dataInitializer.Seed();
+            }
+            if (env.IsDevelopment() || env.IsStaging())
+            {
+                app.UseDeveloperExceptionPage();
             }
             app.UseStaticFiles();
 
@@ -56,11 +63,11 @@ namespace PandaHR.Api
             app.UseAuthorization();
 
             app.UseOpenApi();
-            app.UseSwaggerUi3(cfg=>
+            app.UseSwaggerUi3(cfg =>
             {
                 cfg.CustomStylesheetPath = "/css/swaggercustom.css";
             });
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

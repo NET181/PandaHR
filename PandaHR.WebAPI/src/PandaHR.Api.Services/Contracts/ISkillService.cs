@@ -7,7 +7,7 @@ using PandaHR.Api.Services.Models.Skill;
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface ISkillService : IAsyncService<Skill>
+    public interface ISkillService : IAsyncService<SkillServiceModel>
     {
         Task<ICollection<SkillNameServiceModel>> GetSkillNames();
         Task<ICollection<SkillNameServiceModel>> GetSkillNamesByTerm(string term);

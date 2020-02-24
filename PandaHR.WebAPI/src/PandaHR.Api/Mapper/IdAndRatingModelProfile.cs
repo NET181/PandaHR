@@ -1,6 +1,6 @@
 ﻿using PandaHR.Api.Common;
 using PandaHR.Api.Models.IdAndRating;
-using PandaHR.Api.Services.ScoreAlghorythm.Models;
+using PandaHR.Api.Services.ScoreAlghorythm;
 
 namespace PandaHR.Api.Mapper
 {
@@ -8,7 +8,7 @@ namespace PandaHR.Api.Mapper
     {
         public IdAndRatingModelProfile()
         {
-            CreateMap<IdAndRating, IdAndRatingResponseModel>();
+            CreateMap<AlghorythmResponseServiceModel, AlghorythmResponseModel>();
         }
     }
 }

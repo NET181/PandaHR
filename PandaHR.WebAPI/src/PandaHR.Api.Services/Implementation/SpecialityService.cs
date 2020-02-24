@@ -16,9 +16,12 @@ namespace PandaHR.Api.Services.Implementation
             _uow = uow;
         }
 
-        public async Task AddAsync(Speciality entity)
+        public async Task<Speciality> AddAsync(Speciality entity)
         {
-            await _uow.Specialities.Add(entity);
+            var res = await _uow.Specialities.AddAsync(entity);
+            await _uow.SaveChangesAsync();
+
+            return res;
         }
 
         public async Task RemoveAsync(Guid id)
@@ -29,7 +32,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task RemoveAsync(Speciality entity)
         {
-            await _uow.Specialities.Remove(entity);
+            _uow.Specialities.Remove(entity);
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Speciality>> GetAllAsync()
@@ -44,7 +48,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task UpdateAsync(Speciality entity)
         {
-            await _uow.Specialities.Update(entity);
+            _uow.Specialities.Update(entity);
+            await _uow.SaveChangesAsync();
         }
     }
 }

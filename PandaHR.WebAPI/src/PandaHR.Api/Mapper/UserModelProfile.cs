@@ -1,5 +1,4 @@
 ﻿using PandaHR.Api.Common;
-using PandaHR.Api.DAL.DTOs.User;
 using PandaHR.Api.Models.User;
 using PandaHR.Api.Services.Models.User;
 

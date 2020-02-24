@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -10,7 +11,6 @@ using PandaHR.Api.DAL.DTOs.SkillKnowledge;
 using PandaHR.Api.DAL.EF.Context;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.Repositories.Contracts;
-using System.Collections.ObjectModel;
 using PandaHR.Api.DAL.DTOs.JobExperience;
 
 namespace PandaHR.Api.DAL.Repositories.Implementation
@@ -27,7 +27,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             _context = context;
         }
 
-        public async Task AddAsync(CVDTO cvDto)
+        public async Task<CVDTO> AddAsync(CVCreationDTO cvDto)
         {
             var skillKnowledges = cvDto.SkillKnowledges;
             var skillsId = skillKnowledges.Select(s => s.SkillId);
@@ -48,7 +48,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             var technology = await _context.Technologies.FirstOrDefaultAsync(t => t.Id == technologyId);
             var qualification = await _context.Qualifications.FirstOrDefaultAsync(q => q.Id == qualificationId);
 
-            CV cv = _mapper.Map<CVDTO, CV>(cvDto);
+            CV cv = _mapper.Map<CVCreationDTO, CV>(cvDto);
 
             cv.Qualification = qualification;
             cv.Technology = technology;
@@ -66,6 +66,8 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
 
             await _context.CVs.AddAsync(cv);
             await _context.SaveChangesAsync();
+
+            return _mapper.Map<CV, CVDTO>(cv);
         }
 
         public async Task<CV> GetById(Guid id)
@@ -74,22 +76,16 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             return CV;
         }
 
-        public async Task<IEnumerable<CVSummaryDTO>> GetUserCVSummaryAsync(Guid userId, int? pageSize = 10, int? page = 1)
+        public async Task<CVSummaryDTO> GetUserCVSummaryAsync(Guid userId)
         {
-            IEnumerable<CV> query = await _context.CVs.Where(cv => cv.UserId == userId)
+            CV query = await _context.CVs.Where(cv => cv.UserId == userId)
                 .Include(c => c.Qualification)
-                .Include(c => c.Technology)
-                .ToListAsync();
+                .Include(c => c.Technology).FirstOrDefaultAsync();
 
-            if (pageSize != null && page != null)
-            {
-                query = query.Skip((int)pageSize * ((int)page - 1)).Take((int)pageSize);
-            }
-
-            return _mapper.Map<IEnumerable<CV>, IEnumerable<CVSummaryDTO>>(query);
+            return _mapper.Map<CV, CVSummaryDTO>(query);
         }
 
-        public async Task<IEnumerable<CVforSearchDTO>> GetCVsAsync(Expression<Func<CV, bool>> predicate,/*Guid userId,*/ int? pageSize = 10, int? page = 1)
+        public async Task<IEnumerable<CVforSearchDTO>> GetCVsAsync(Expression<Func<CV, bool>> predicate, int? page = 1, int? pageSize = 10)
         {
             IEnumerable<CV> query = await _context.CVs.Where(predicate)
                 .Include(c => c.Qualification)
@@ -97,7 +93,6 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
                 .Include(cc => cc.SkillKnowledges)
                     .ThenInclude(c => c.KnowledgeLevel)
                         .ThenInclude(k=>k.SkillKnowledgeTypes)
-                        //.Where(t=>t.UserId ==userId)
                 .Include(cc => cc.SkillKnowledges)
                     .ThenInclude(c => c.Skill)
                         .ThenInclude(s => s.SkillType)
@@ -172,12 +167,63 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(CVDTO cv)
+        public async Task UpdateAsync(CVCreationDTO cv)
         {
-            var entity = _mapper.Map<CVDTO, CV>(cv);
+            var entity = _mapper.Map<CVCreationDTO, CV>(cv);
             _context.Entry(entity).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task LinkUserToCV(CV cv, User user)
+        {
+            user.CVId = cv.Id;
+            _context.Users.Update(user);
+
+            cv.UserId = user.Id;
+            _context.CVs.Update(cv);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task LinkUserToCV(Guid cvId, Guid userId)
+        {
+            User user = _context.Users.Find(userId);
+            CV cv = _context.CVs.Find(cvId);
+
+            await LinkUserToCV(cv, user);
+        }
+
+        public async Task<CVExportDTO> GetCvForExportAsync(Guid cvId)
+        {
+            var cvDto = await _context.CVs.Where(cv => cv.Id == cvId)
+                .Include(cv => cv.JobExperiences)
+                .Include(cv => cv.Qualification)
+                .Include(cv => cv.User)
+                    .ThenInclude(u => u.Educations)
+                .Include(cv => cv.User)
+                    .ThenInclude(u => u.Educations)
+                        .ThenInclude(e => e.Degree)
+                .Include(cv => cv.User)
+                    .ThenInclude(u => u.Educations)
+                        .ThenInclude(e => e.Speciality)
+                .Include(cv => cv.SkillKnowledges)
+                    .ThenInclude(sk => sk.Skill)
+                .Include(cv => cv.SkillKnowledges)
+                    .ThenInclude(sk => sk.Skill)
+                        .ThenInclude(s => s.SkillType)
+                .Include(cv => cv.SkillKnowledges)
+                    .ThenInclude(sk => sk.KnowledgeLevel)
+                .FirstOrDefaultAsync();
+
+            return _mapper.Map<CV, CVExportDTO>(cvDto);
+        }
+
+        public bool CvExists(Guid cvId)
+        {
+            var guid = _context.CVs.Where(cv => cv.Id == cvId).Select(cv=>cv.Id).FirstOrDefault();
+
+            return guid != Guid.Empty;
         }
     }
 }

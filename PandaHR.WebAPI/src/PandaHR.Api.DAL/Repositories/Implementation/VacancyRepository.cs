@@ -53,6 +53,40 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             return await _context.Set<Vacancy>().FindAsync(Id);
         }
 
+        public async Task<IEnumerable<VacancySummaryDTO>> GetVacanciesFiltered(Expression<Func<Vacancy, bool>> predicate, int? page = 1, int? pageSize = 10)
+        {
+            IQueryable<VacancySummaryDTO> query = _context.Vacancies.AsQueryable()
+                .Include(c => c.Qualification)
+                .Include(c => c.Technology)
+                .Include(c => c.Company)
+                .Include(c => c.VacancyCities)
+                    .ThenInclude(ct => ct.City)
+                .Where(predicate)
+                .Select(u => new VacancySummaryDTO()
+                 {
+                     Id = u.Id,
+                     CompanyName = u.Company.Name,
+                     Description = u.Description,
+                     QualificationName = u.Qualification.Name,
+                     TechnologyName = u.Technology.Name,
+                     CityNames = (from s in u.VacancyCities
+                                  select new CityNameDTO()
+                                  {
+                                     Id = s.CityId,
+                                     Name = s.City.Name
+                                  })
+                 });
+
+            if (pageSize != null && page != null)
+            {
+                query = query.Skip((int)pageSize * ((int)page - 1)).Take((int)pageSize);
+            }
+
+            return await query.ToListAsync();  
+        }
+    }
+}
+
         public async Task UpdateAsync(VacancyDTO dto)
         {
             var entity = _mapper.Map<VacancyDTO, Vacancy>(dto);

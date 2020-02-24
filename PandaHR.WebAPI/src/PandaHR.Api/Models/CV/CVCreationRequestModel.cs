@@ -12,6 +12,7 @@ namespace PandaHR.Api.Models.CV
         public string Summary { get; set; }
         public ICollection<SkillKnowledgeServiceModel> SkillKnowledges { get; set; }
         public ICollection<JobExperienceServiceModel> JobExperiences { get; set; }
+        public Guid? UserId { get; set; }
         public UserCreationServiceModel User { get; set; }
         public ICollection<EducationWithDetailsServiceModel> Educations { get; set; }
         public bool IsActive { get; set; } = false;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,8 @@ using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.Vacancy;
-using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
+using PandaHR.Api.Services.MatchingAlgorithm.Contracts;
+using PandaHR.Api.Services.MatchingAlgorithm.Models;
 
 namespace PandaHR.Api.Services.Implementation
 {
@@ -16,19 +18,22 @@ namespace PandaHR.Api.Services.Implementation
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
-        private readonly IMatchingVacanciesForSkillSetAlgorithm _skillSetAlgorithm;
+        private readonly ISkillMatchingAlgorithm<Guid> _matchingAlgorithm;
 
 
-        public VacancyService(IUnitOfWork uow, IMapper mapper, IMatchingVacanciesForSkillSetAlgorithm skillSetAlgorithm)
+        public VacancyService(IUnitOfWork uow, IMapper mapper, ISkillMatchingAlgorithm<Guid> matchingAlgorithm)
         {
             _uow = uow;
             _mapper = mapper;
-            _skillSetAlgorithm = skillSetAlgorithm;
+            _matchingAlgorithm = matchingAlgorithm;
         }
 
-        public async Task AddAsync(Vacancy entity)
+        public async Task<Vacancy> AddAsync(Vacancy entity)
         {
-            await _uow.Vacancies.Add(entity);
+            var res = await _uow.Vacancies.AddAsync(entity);
+            await _uow.SaveChangesAsync();
+
+            return res;
         }
 
         public async Task RemoveAsync(Guid id)
@@ -39,13 +44,14 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task RemoveAsync(Vacancy vacancy)
         {
-            await _uow.Vacancies.Remove(vacancy);
+            _uow.Vacancies.Remove(vacancy);
+            await _uow.SaveChangesAsync();
         }
 
-        //public async Task<IEnumerable<Vacancy>> GetAllAsync()
-        //{
-        //    return await _uow.Vacancies.GetAllAsync();
-        //}
+        public async Task<IEnumerable<Vacancy>> GetAllAsync()
+        {
+            return await _uow.Vacancies.GetAllAsync();
+        }
 
         public async Task<Vacancy> GetByIdAsync(Guid id)
         {
@@ -62,6 +68,7 @@ namespace PandaHR.Api.Services.Implementation
                 .Include(x => x.SkillRequirements)
                     .ThenInclude(s => s.Skill)
                     .ThenInclude(s => s.SubSkills)
+                    .ThenInclude(t => t.SkillType)
                 .Include(x => x.SkillRequirements)
                     .ThenInclude(e => e.Experience)
                 .Include(k => k.SkillRequirements)
@@ -69,46 +76,62 @@ namespace PandaHR.Api.Services.Implementation
                     .ThenInclude(t => t.SkillKnowledgeTypes)
                 .Include(q => q.Qualification));
 
-            return _mapper.Map<Vacancy,VacancyServiceModel>(vacancys);
+            return _mapper.Map<Vacancy, VacancyServiceModel>(vacancys);
+
         }
 
-        public async Task UpdateAsync(VacancyServiceModel vacancyServiceModel)
+        public async Task UpdateAsync(Vacancy vacancy)
         {
-            var dto = _mapper.Map<VacancyServiceModel, VacancyDTO>(vacancyServiceModel);
-
-            await _uow.Vacancies.UpdateAsync(dto);
+            _uow.Vacancies.Update(vacancy);
+            await _uow.SaveChangesAsync();
         }
 
-        public async Task AddAsync(VacancyServiceModel vacancyServiceModel)
+        public async Task<VacancyServiceModel> AddAsync(VacancyServiceModel vacancyServiceModel)
         {
             var vacancyDto = _mapper.Map<VacancyServiceModel, VacancyDTO>(vacancyServiceModel);
 
-            await _uow.Vacancies.AddAsync(vacancyDto);
+            var res = _mapper.Map<VacancyDTO, VacancyServiceModel>(
+                await _uow.Vacancies.AddAsync(vacancyDto));
+            await _uow.SaveChangesAsync();
+
+            return res;
         }
 
-        public async Task<IEnumerable<VacancySummaryDTO>> GetVacancyPreviewAsync(Guid userId, int? pageSize, int? page)
+        public async Task<IEnumerable<VacancySummaryDTO>> GetVacancyPreviewAsync(Guid userId, int? page = 1, int? pageSize = 10)
         {
-            return await _uow.Vacancies.GetUserVacancySummaryAsync(userId, pageSize, page);
+            return await _uow.Vacancies.GetUserVacancySummaryAsync(userId, page, pageSize);
         }
 
-        public async Task<IEnumerable<Vacancy>> GetBySkillSet(IEnumerable<Skill> skills, double threshold)
+        public async Task<IEnumerable<ISkillSetWithRatingModel<Guid>>> GetVacanciesByCV(Guid cvId, int threshold)
         {
-            var vacancies = await _uow.Vacancies.GetAllAsync( 
-                include: i => i
-            .Include(x => x.SkillRequirements)
-                .ThenInclude(s => s.Skill)
-                .ThenInclude(t => t.SkillType)
-            .Include(x => x.SkillRequirements)
-                .ThenInclude(s => s.Skill)
-                .ThenInclude(s => s.SubSkills)
-             .Include(x => x.SkillRequirements)
-                .ThenInclude(e => e.Experience)
-             .Include(k => k.SkillRequirements)
-                .ThenInclude(k => k.KnowledgeLevel)
-                .ThenInclude(t => t.SkillKnowledgeTypes)
-            .Include(q => q.Qualification));
+            var vacancies = (await _uow.Vacancies.GetAllAsync(include: s => s
+                 .Include(x => x.SkillRequirements)
+                     .ThenInclude(s => s.Skill)))
+                 .Select(s => new SkillSetModel
+                 {
+                     Id = s.Id,
+                     Skills = s.SkillRequirements.Select(k => k.SkillId)
+                 });
 
-            return await _skillSetAlgorithm.GetMatchingBySkillsObjects(vacancies, skills, threshold);
+            var CV = await _uow.CVs.GetFirstOrDefaultAsync(predicate: s => s
+                .Id == cvId,
+                include: s => s
+                .Include(x => x.SkillKnowledges)
+                    .ThenInclude(s => s.Skill));
+
+            var algorithmCV = _mapper.Map<CV, SkillSetModel>(CV);
+
+            return _matchingAlgorithm.GetMatchingModels(algorithmCV, vacancies, threshold, 2);
+        }
+
+        public async Task<IEnumerable<VacancySummaryDTO>> GetByCity(Guid cityId, int? page = 1, int? pageSize = 10)
+        {
+            return await _uow.Vacancies.GetVacanciesFiltered(t => t.VacancyCities.Any(c => c.City.Id == cityId), page, pageSize);
+        }
+
+        public async Task<IEnumerable<VacancySummaryDTO>> GetByCompany(Guid companyId, int? page = 1, int? pageSize = 10)
+        {
+            return await _uow.Vacancies.GetVacanciesFiltered(t => t.CompanyId == companyId, page, pageSize);
         }
 
         public async Task<ICollection<Vacancy>> GetAllAsync()
