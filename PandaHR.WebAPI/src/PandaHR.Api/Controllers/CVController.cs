@@ -51,7 +51,6 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-
         [HttpGet("{id}/export/{type}")]
         public async Task<IActionResult> ExportCv(Guid id, string type = "docx")
         {
