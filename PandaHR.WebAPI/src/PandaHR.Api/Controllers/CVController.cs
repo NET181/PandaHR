@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Common.Contracts;
-using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.CV;
-using PandaHR.Api.Services.Models.Skill;
 using PandaHR.Api.Services.Models.SkillKnowledge;
 using PandaHR.Api.Models.SkillKnowledge;
 using PandaHR.Api.Models.JobExperience;
@@ -22,39 +20,35 @@ namespace PandaHR.Api.Controllers
     {
         private IMapper _mapper;
         private readonly ICVService _cvService;
-        private readonly ISkillService _skillService;
         private readonly IWebHostEnvironment _env;
 
-        public CVController(IMapper mapper, ICVService cvService, ISkillService skillService, IWebHostEnvironment env)
+        public CVController(IMapper mapper, ICVService cvService, IWebHostEnvironment env)
         {
             _mapper = mapper;
             _cvService = cvService;
-            _skillService = skillService;
             _env = env;
         }
 
-        [HttpGet("{threshold}/{skillNames}")]
-        public async Task<IEnumerable<CV>> GetCVsBySkills(
-       [FromRoute]string[] skillNames, double threshold)
+        [HttpGet("/GetCVsByVacancy/{vacancyId}/threshold={threshold}")]
+        public async Task<IActionResult> GetCVsByVacancySkillSet(Guid vacancyId, int threshold)
         {
-            skillNames = skillNames[0].Split(",");
-
-            var findedSkills = new List<SkillNameServiceModel>();
-            var skills = await _skillService.GetSkillNames();
-
-            foreach (var skill in skills)
+            try
             {
-                foreach (var skillName in skillNames)
+                var result = await _cvService.GetCVsByVacancy(vacancyId, threshold);
+
+                if (result.Count() == 0)
                 {
-                    if (skill.Name == skillName)
-                    {
-                        findedSkills.Add(skill);
-                    }
+                    return NoContent();
+                }
+                else
+                {
+                    return Ok(result);
                 }
             }
-            var algorithmSkills = _mapper.Map<IEnumerable<SkillNameServiceModel>, IEnumerable<Skill>>(findedSkills);
-
-            return await _cvService.GetBySkillSet(algorithmSkills, threshold);
+            catch (ArgumentNullException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet("{id}/export/{type}")]
