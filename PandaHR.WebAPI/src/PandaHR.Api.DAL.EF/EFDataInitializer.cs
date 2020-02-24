@@ -88,7 +88,7 @@ namespace PandaHR.Api.DAL.EF
         {
             var companyId = _context.Companies.FirstOrDefault().Id;
             var userId = _context.Users.FirstOrDefault().Id;
-            var qualificationId = _context.Qualifications.FirstOrDefault().Id;
+            var qualificationId = _context.Qualifications.ToArray();
             var technologyId = _context.Technologies.FirstOrDefault().Id;
 
             var vacancies = new Vacancy[]
@@ -98,21 +98,21 @@ namespace PandaHR.Api.DAL.EF
                     Id = new Guid("623af0cf-21c1-4dc6-8f86-09601e9dba86"),
                     TechnologyId = technologyId, CompanyId = companyId,
                     Description = "Best vacancy ever!",
-                    UserId = userId, QualificationId = qualificationId
+                    UserId = userId, QualificationId = qualificationId[3].Id
                 },
                 new Vacancy
                 {
                     Id = new Guid("a8c58938-2339-4466-b662-023be9e4e9a5"),
                     TechnologyId = technologyId, CompanyId = companyId,
                     Description = "Even better vacancy than the previous!",
-                    UserId = userId, QualificationId = qualificationId
+                    UserId = userId, QualificationId = qualificationId[3].Id
                 },
                 new Vacancy
                 {
                     Id = new Guid("aeed7aa1-78fa-427c-b2f8-30bbd08df1b5"),
                     TechnologyId = technologyId, CompanyId = companyId,
                     Description = "Vacancy for .Net developer",
-                    UserId = userId, QualificationId = qualificationId
+                    UserId = userId, QualificationId = qualificationId[3].Id
                 }
             };
 
@@ -539,12 +539,6 @@ namespace PandaHR.Api.DAL.EF
                 },
                 new SkillRequirement
                 {
-                    Weight = 59, ExperienceId = experience[1].Id, IsDeleted = false,
-                    SkillId = skills[0].Id, KnowledgeLevelId = knowledgeLevels[1].Id,
-                    VacancyId = vacancies[1].Id
-                },
-                new SkillRequirement
-                {
                     Weight = 80, ExperienceId = experience[2].Id, IsDeleted = false,
                     SkillId = skills[1].Id, KnowledgeLevelId = knowledgeLevels[2].Id,
                     VacancyId = vacancies[2].Id
@@ -554,6 +548,42 @@ namespace PandaHR.Api.DAL.EF
                     Weight = 70, ExperienceId = experience[3].Id, IsDeleted = false,
                     SkillId = skills[2].Id, KnowledgeLevelId = knowledgeLevels[2].Id,
                     VacancyId = vacancies[0].Id
+                },
+                new SkillRequirement
+                {
+                    Weight = 70, ExperienceId = experience[1].Id, IsDeleted = false,
+                    SkillId = skills[0].Id, KnowledgeLevelId = knowledgeLevels[5].Id,
+                    VacancyId = vacancies[1].Id
+                },
+                 new SkillRequirement
+                {
+                    Weight = 30, ExperienceId = experience[1].Id, IsDeleted = false,
+                    SkillId = skills[19].Id, KnowledgeLevelId = knowledgeLevels[5].Id,
+                    VacancyId = vacancies[1].Id
+                },
+                new SkillRequirement
+                {
+                    Weight = 30, ExperienceId = experience[3].Id, IsDeleted = false,
+                    SkillId = skills[1].Id, KnowledgeLevelId = knowledgeLevels[6].Id,
+                    VacancyId = vacancies[1].Id
+                },
+                new SkillRequirement
+                {
+                    Weight = 75, ExperienceId = experience[3].Id, IsDeleted = false,
+                    SkillId = skills[4].Id, KnowledgeLevelId = knowledgeLevels[6].Id,
+                    VacancyId = vacancies[1].Id
+                },
+                new SkillRequirement
+                {
+                    Weight = 50, ExperienceId = experience[3].Id, IsDeleted = false,
+                    SkillId = skills[5].Id, KnowledgeLevelId = knowledgeLevels[7].Id,
+                    VacancyId = vacancies[1].Id
+                },
+                new SkillRequirement
+                {
+                    Weight = 50, ExperienceId = experience[3].Id, IsDeleted = false,
+                    SkillId = skills[3].Id, KnowledgeLevelId = knowledgeLevels[7].Id,
+                    VacancyId = vacancies[1].Id
                 }
             };
 
