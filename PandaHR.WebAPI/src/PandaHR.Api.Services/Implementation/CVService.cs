@@ -24,6 +24,7 @@ using PandaHR.Api.Services.Exporter.Models.ExportTypes;
 using PandaHR.Api.Services.Exporter.Models.ExportModels;
 using PandaHR.Api.Services.MatchingAlgorithm.Contracts;
 using PandaHR.Api.Services.MatchingAlgorithm.Models;
+using PandaHR.Api.Common.Exceptions;
 
 namespace PandaHR.Api.Services.Implementation
 {
@@ -109,7 +110,7 @@ namespace PandaHR.Api.Services.Implementation
             }
             if(!_uow.CVs.CvExists(id))
             {
-                throw new KeyNotFoundException("No CV found with this id");
+                throw new EntityNotFoundException("No CV found with this id");
             }
 
             var templatePath = String.Format("{0}/export/CV_ExportTemplate.{1}", webRootPath, exportType);

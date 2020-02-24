@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DependencyResolver;
+using PandaHR.Api.Filters;
 
 namespace PandaHR.Api
 {
@@ -31,7 +32,11 @@ namespace PandaHR.Api
                 }
             );
             services.AddCors();
-            services.AddMvc(option => option.EnableEndpointRouting = false)
+            services.AddMvc(option =>
+                    {
+                        option.EnableEndpointRouting = false;
+                        option.Filters.Add(typeof(ApiExceptionFilter));
+                    })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddFluentValidation(
                 opt => opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly())

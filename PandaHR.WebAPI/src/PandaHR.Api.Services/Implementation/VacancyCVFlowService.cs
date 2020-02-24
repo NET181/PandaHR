@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
-using PandaHR.Api.Services.Models.Vacancy;
 using PandaHR.Api.Services.Contracts;
 
 namespace PandaHR.Api.Services.Implementation

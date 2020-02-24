@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using PandaHR.Api.DAL.Models.Entities.Enums;
 using PandaHR.Api.DAL.Models.Entities;
 
