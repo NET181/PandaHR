@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Models.VacancyCVFlow;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.VacancyCVFlow;
 
 namespace PandaHR.Api.Controllers
 {
@@ -11,10 +15,13 @@ namespace PandaHR.Api.Controllers
     public class VacancyCVFlowController : ControllerBase
     {
         private readonly IVacancyCVFlowService _vacancyCVFlowService;
+        private readonly IMapper _mapper;
 
-        public VacancyCVFlowController(IVacancyCVFlowService vacancyCVFlowService)
+        public VacancyCVFlowController(IVacancyCVFlowService vacancyCVFlowService,
+            IMapper mapper)
         {
             _vacancyCVFlowService = vacancyCVFlowService;
+            _mapper = mapper;
         }
 
         // GET: api/VacancyCVFlow
@@ -24,6 +31,18 @@ namespace PandaHR.Api.Controllers
             var vacancyCVFlows = await _vacancyCVFlowService.GetAllAsync();
 
             return Ok(vacancyCVFlows);
+        }
+
+        // GET: api/VacancyCVFlow/GetAllFlowsByVacancyId/5
+        [HttpGet("GetAllFlowsByVacancyId/{vacancyId}")]
+        public async Task<IActionResult> GetAllFlowsByVacancyId(Guid vacancyId)
+        {
+            var flowSeviceModel = await _vacancyCVFlowService.GetAllFlowsByVacancyIdAsync(vacancyId);
+
+            var flowResponceModel = _mapper.Map<IEnumerable<VacancyCVFlowServiceModel>,
+                    IEnumerable<VacancyCVFlowResponceModel>>(flowSeviceModel);
+
+            return Ok(flowResponceModel);
         }
 
         // GET: api/VacancyCVFlow/5    
@@ -93,5 +112,7 @@ namespace PandaHR.Api.Controllers
 
             return NoContent();
         }
+
+
     }
 }
