@@ -6,7 +6,6 @@ namespace PandaHR.Api.Services.MatchingAlgorithm.Contracts
 {
     public interface IMatchingGetter<T>
     {
-        ISkillSetModel<T> Pattern { get; set;}
-        double GetMatching(ISkillSetModel<T> skillSet);
+        int GetMatching(ISkillSetModel<T> skillSet);
     }
 }

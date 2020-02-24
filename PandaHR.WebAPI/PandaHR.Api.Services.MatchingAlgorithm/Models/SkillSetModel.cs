@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PandaHR.Api.Services.MatchingAlgorithm.Models
 {
-    public class SkillSet : ISkillSetModel<Guid>
+    public class SkillSetModel : ISkillSetModel<Guid>
     {
         public Guid Id { get; set; }
         public IEnumerable<Guid> Skills { get; set; }

@@ -9,6 +9,6 @@ namespace PandaHR.Api.Services.MatchingAlgorithm.Models
     {
         public T Id { get; set; }
         public IEnumerable<T> Skills { get; set; }
-        public double Rating { get; set; }
+        public int Rating { get; set; }
     }
 }

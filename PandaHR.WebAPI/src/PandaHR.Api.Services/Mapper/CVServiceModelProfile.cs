@@ -31,7 +31,7 @@ namespace PandaHR.Api.Services.Mapper
                 .ForMember(t => t.JobExperiences, o => o.MapFrom(c => c.JobExperiences))
                 .ForMember(t => t.SkillKnowledges, o => o.MapFrom(c => c.SkillKnowledges));
 
-            CreateMap<CV, SkillSet>()
+            CreateMap<CV, SkillSetModel>()
                 .ForMember(x => x.Skills, o => o.MapFrom(
                     c => c.SkillKnowledges.Select(s => s.SkillId)));
 

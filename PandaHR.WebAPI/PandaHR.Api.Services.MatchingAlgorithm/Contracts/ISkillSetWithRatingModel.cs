@@ -6,6 +6,6 @@ namespace PandaHR.Api.Services.MatchingAlgorithm.Contracts
 {
     public interface ISkillSetWithRatingModel<T> : ISkillSetModel<T>
     {
-        public double Rating { get; set; }
+        public int Rating { get; set; }
     }
 }

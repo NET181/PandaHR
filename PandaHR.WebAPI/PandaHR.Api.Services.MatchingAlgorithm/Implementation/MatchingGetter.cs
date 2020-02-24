@@ -8,20 +8,30 @@ namespace PandaHR.Api.Services.MatchingAlgorithm.Implementation
 {
     public class MatchingGetter<T> : IMatchingGetter<T>
     {
-        public ISkillSetModel<T> Pattern { get; set; }
+        private const int PERCENT_DIVIDER = 100;
 
-        public double GetMatching(ISkillSetModel<T> skillSet)
+        private readonly ISkillSetModel<T> _pattern;
+
+        public MatchingGetter(ISkillSetModel<T> pattern)
+        {
+            _pattern = pattern;
+        }
+
+        public int GetMatching(ISkillSetModel<T> skillSet)
         {
             double result = 1;
 
-            if (Pattern.Skills.Count() != 0)
+            if (_pattern.Skills.Count() != 0)
             {
-                result = (double)Pattern.Skills
+                result = (double)_pattern.Skills
                     .Intersect(skillSet.Skills)
-                    .Count() / Pattern.Skills.Count();
+                    .Count() / _pattern.Skills.Count();
             }
 
-            return result;
+            result *= PERCENT_DIVIDER;
+            result = Math.Round(result, MidpointRounding.AwayFromZero);
+
+            return (int)result;
         }
     }
 }

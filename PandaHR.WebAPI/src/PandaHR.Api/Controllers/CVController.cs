@@ -27,7 +27,7 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpGet("/GetCVsByVacancy")]
-        public async Task<IActionResult> GetCVsByVacancySkillSet(Guid vacancyId, double threshold)
+        public async Task<IActionResult> GetCVsByVacancySkillSet(Guid vacancyId, int threshold)
         {
             try
             {

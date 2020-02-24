@@ -36,12 +36,12 @@ namespace PandaHR.Api.Services.Implementation
             _matchingAlgorithm = matchingAlgorithm;
         }
 
-        public async Task<IEnumerable<ISkillSetWithRatingModel<Guid>>> GetCVsByVacancy(Guid vacancyId, double threshold)
+        public async Task<IEnumerable<ISkillSetWithRatingModel<Guid>>> GetCVsByVacancy(Guid vacancyId, int threshold)
         {
             var CVs = (await _uow.CVs.GetAllAsync(include: s => s
                  .Include(x => x.SkillKnowledges)
                      .ThenInclude(s => s.Skill)))
-                 .Select(s => new SkillSet
+                 .Select(s => new SkillSetModel
                  {
                      Id = s.Id,
                      Skills = s.SkillKnowledges.Select(k => k.SkillId)
@@ -53,7 +53,7 @@ namespace PandaHR.Api.Services.Implementation
                 .Include(x => x.SkillRequirements)
                     .ThenInclude(s => s.Skill));
 
-            var algorithmVacancy = _mapper.Map<Vacancy, SkillSet>(vacancy);
+            var algorithmVacancy = _mapper.Map<Vacancy, SkillSetModel>(vacancy);
 
             return _matchingAlgorithm.GetMatchingModels(algorithmVacancy, CVs, threshold, 2);
         }

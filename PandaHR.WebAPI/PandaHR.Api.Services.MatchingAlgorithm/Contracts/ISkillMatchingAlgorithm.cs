@@ -10,7 +10,7 @@ namespace PandaHR.Api.Services.MatchingAlgorithm.Contracts
         public IEnumerable<ISkillSetWithRatingModel<T>> GetMatchingModels(
             ISkillSetModel<T> pattern,
             IEnumerable<ISkillSetModel<T>> matchingItems, 
-            double threshold,
+            int threshold,
             int take);
     }
 }

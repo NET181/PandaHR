@@ -14,7 +14,7 @@ namespace PandaHR.Api.Services.Mapper
             CreateMap<Vacancy, VacancyServiceModel>();
             CreateMap<VacancyServiceModel, VacancyDTO>();
             CreateMap<VacancyDTO, VacancyServiceModel>();
-            CreateMap<Vacancy, SkillSet>()
+            CreateMap<Vacancy, SkillSetModel>()
                 .ForMember(x => x.Skills, o => o.MapFrom(
                     c => c.SkillRequirements.Select(s => s.SkillId)));
         }
