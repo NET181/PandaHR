@@ -9,6 +9,6 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
     public interface ICompanyRepository: IAsyncRepository<Company>
     {
         Task<ICollection<CompanyNameDTO>> GetCompanyNamesByUserId(Guid userId);
-        Task<ICollection<CompanyBasicInfoDTO>> GetCompaniesByNameAutofillByString(string name);
+        Task<ICollection<CompanyNameDTO>> GetCompaniesByNameAutofillByString(string name);
     }
 }

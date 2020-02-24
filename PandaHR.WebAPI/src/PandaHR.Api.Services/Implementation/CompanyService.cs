@@ -112,12 +112,12 @@ namespace PandaHR.Api.Services.Implementation
             await RemoveAsync(companyToRemove);
         }
 
-        public async Task<ICollection<CompanyBasicInfoServiceModel>> GetCompaniesByNameAutoFillByString(string name)
+        public async Task<ICollection<CompanyNameServiceModel>> GetCompaniesByNameAutoFillByString(string name)
         {
             var companiesDto = await _uow.Companies.GetCompaniesByNameAutofillByString(name);
 
-            var companiesServiceModel = _mapper.Map<ICollection<CompanyBasicInfoDTO>,
-                    ICollection<CompanyBasicInfoServiceModel>>(companiesDto);
+            var companiesServiceModel = _mapper.Map<ICollection<CompanyNameDTO>,
+                    ICollection<CompanyNameServiceModel>>(companiesDto);
 
             return companiesServiceModel;
         }

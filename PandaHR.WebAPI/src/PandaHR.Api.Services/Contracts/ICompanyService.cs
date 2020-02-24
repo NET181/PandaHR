@@ -14,6 +14,6 @@ namespace PandaHR.Api.Services.Contracts
         Task AddUserToCompanyAsync(UserCompany userCompany);
         Task AddCompanyToCityAsync(CompanyCity companyCity);
         Task RemoveCompanyFromCityAsync(CompanyCity companyCity);
-        Task<ICollection<CompanyBasicInfoServiceModel>> GetCompaniesByNameAutoFillByString(string name);
+        Task<ICollection<CompanyNameServiceModel>> GetCompaniesByNameAutoFillByString(string name);
     }
 }

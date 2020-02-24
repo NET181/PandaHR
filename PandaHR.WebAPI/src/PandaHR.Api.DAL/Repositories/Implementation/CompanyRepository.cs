@@ -23,13 +23,13 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             _context = context;
         }
 
-        public async Task<ICollection<CompanyBasicInfoDTO>> GetCompaniesByNameAutofillByString(string name)
+        public async Task<ICollection<CompanyNameDTO>> GetCompaniesByNameAutofillByString(string name)
         {
             var test = await _context.Companies.ToListAsync();
 
-            IQueryable<CompanyBasicInfoDTO> query = _context.Companies.AsQueryable()
+            IQueryable<CompanyNameDTO> query = _context.Companies.AsQueryable()
                 .Where(c => Microsoft.EntityFrameworkCore.EF.Functions.Like(c.Name, $"%{name}%"))
-                .Select(c => new CompanyBasicInfoDTO()
+                .Select(c => new CompanyNameDTO()
                 {
                     Id = c.Id,
                     Name = c.Name

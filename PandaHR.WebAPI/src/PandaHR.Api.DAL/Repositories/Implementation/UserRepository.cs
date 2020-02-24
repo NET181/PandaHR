@@ -39,7 +39,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
                     Phone = u.PhoneNumber,
                     FirstName = u.FirstName,
                     SecondName = u.SecondName,
-                    City = new CityDTO()
+                    City = new CityNameDTO()
                     {
                         Id = u.City.Id,
                         Name = u.City.Name
@@ -50,11 +50,11 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
 
             UserFullInfoDTO user = await query.FirstOrDefaultAsync();
 
-            Task<List<CompanyWithDetailsDTO>> companies = _context.Users.AsQueryable()
+            Task<List<CompanyNameDTO>> companies = _context.Users.AsQueryable()
                .Include(u => u.UserCompanies)
                .SelectMany(a => a.UserCompanies)
                .Where(a => a.UserId == id)
-               .Select(c => new CompanyWithDetailsDTO()
+               .Select(c => new CompanyNameDTO()
                {
                    Id = c.CompanyId,
                    Name = c.Company.Name
