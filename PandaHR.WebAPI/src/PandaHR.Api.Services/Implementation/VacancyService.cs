@@ -133,5 +133,11 @@ namespace PandaHR.Api.Services.Implementation
         {
             return await _uow.Vacancies.GetVacanciesFiltered(t => t.CompanyId == companyId, page, pageSize);
         }
+
+        public async Task<ICollection<Vacancy>> GetAllAsync()
+        {
+            var serviceModels = await _uow.Vacancies.GetAllDTOsAsync();
+            return serviceModels;
+        }
     }
 }

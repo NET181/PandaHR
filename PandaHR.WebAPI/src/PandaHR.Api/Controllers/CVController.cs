@@ -89,12 +89,12 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-        [HttpDelete("/CV/{CVId}/DeleteSkillKnowledge/{SkillKnowledgeId}")]
-        public async Task<IActionResult> DeleteSkillKnowledgeFromCV(Guid SkillKnowledgeId, Guid CVId)
+        [HttpDelete("/CV/{CVId}/DeleteSkillKnowledge/{SkillId}")]
+        public async Task<IActionResult> DeleteSkillKnowledgeFromCV(Guid SkillId, Guid CVId)
         {
             try
             {
-                await _cvService.DeleteSkillKnowledgeFromCVAsync(SkillKnowledgeId);
+                await _cvService.DeleteSkillKnowledgeFromCVAsync(SkillId, CVId);
 
                 return Ok();
             }
@@ -126,7 +126,7 @@ namespace PandaHR.Api.Controllers
         {
             try
             {
-                await _cvService.DeleteJobExperienceFromCVAsync(JobExperienceId);
+                await _cvService.DeleteJobExperienceFromCVAsync(JobExperienceId, CVId);
 
                 return Ok();
             }
