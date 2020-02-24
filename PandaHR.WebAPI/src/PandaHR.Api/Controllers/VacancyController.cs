@@ -12,6 +12,7 @@ using PandaHR.Api.Services.Models.Skill;
 using PandaHR.Api.Validation.Vacancy;
 using PandaHR.Api.Models.Vacancy;
 using PandaHR.Api.Services.Models.Vacancy;
+using PandaHR.Api.DAL;
 
 namespace PandaHR.Api.Controllers
 {
@@ -112,6 +113,50 @@ namespace PandaHR.Api.Controllers
                 return Ok(mappedModel);
             }
             else
+            {
+                return new BadRequestResult();
+            }
+        }
+
+        [HttpGet("/Vacancies/{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            try
+            {
+                return Ok(await _vacancyService.GetByIdAsync(id));
+            }
+            catch
+            {
+                return new BadRequestResult();
+            }
+        }
+
+        [HttpGet("/Vacancies")]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                ICollection<VacancyServiceModel> vacancies = await _vacancyService.GetAllAsync();
+
+                var mappedVacancies = _mapper.Map<ICollection<VacancyServiceModel>, ICollection<VacancyCreationRequestModel>>(vacancies);
+
+                return Ok(mappedVacancies);
+            }
+            catch(Exception ex)
+            {
+                //TODO to fix mapping error in repository method
+                return Ok(ex.Message);
+            }
+        }
+
+        [HttpDelete("/Vacancies/{id}/delete")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                return Ok(_vacancyService.RemoveAsync(id));
+            }
+            catch
             {
                 return new BadRequestResult();
             }

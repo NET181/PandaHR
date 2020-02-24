@@ -42,10 +42,10 @@ namespace PandaHR.Api.Services.Implementation
             await _uow.Vacancies.Remove(vacancy);
         }
 
-        public async Task<IEnumerable<Vacancy>> GetAllAsync()
-        {
-            return await _uow.Vacancies.GetAllAsync();
-        }
+        //public async Task<IEnumerable<Vacancy>> GetAllAsync()
+        //{
+        //    return await _uow.Vacancies.GetAllAsync();
+        //}
 
         public async Task<Vacancy> GetByIdAsync(Guid id)
         {
@@ -72,9 +72,11 @@ namespace PandaHR.Api.Services.Implementation
             return _mapper.Map<Vacancy,VacancyServiceModel>(vacancys);
         }
 
-        public async Task UpdateAsync(Vacancy vacancy)
+        public async Task UpdateAsync(VacancyServiceModel vacancyServiceModel)
         {
-            await _uow.Vacancies.Update(vacancy);
+            var dto = _mapper.Map<VacancyServiceModel, VacancyDTO>(vacancyServiceModel);
+
+            await _uow.Vacancies.UpdateAsync(dto);
         }
 
         public async Task AddAsync(VacancyServiceModel vacancyServiceModel)
@@ -107,6 +109,12 @@ namespace PandaHR.Api.Services.Implementation
             .Include(q => q.Qualification));
 
             return await _skillSetAlgorithm.GetMatchingBySkillsObjects(vacancies, skills, threshold);
+        }
+
+        public async Task<ICollection<VacancyServiceModel>> GetAllAsync()
+        {
+            var serviceModels = _mapper.Map<ICollection<VacancyDTO>, ICollection<VacancyServiceModel>>(await _uow.Vacancies.GetAllDTOsAsync());
+            return serviceModels;
         }
     }
 }

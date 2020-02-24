@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PandaHR.Api.Models.Vacancy;
 using PandaHR.Api.Services.Models.Vacancy;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,8 @@ namespace PandaHR.Api.Mapper
     {
         public VacancyModelProfile()
         {
-            CreateMap<VacancyModelProfile, VacancyServiceModel>();
+            CreateMap<VacancyCreationRequestModel, VacancyServiceModel>();
+            CreateMap<VacancyServiceModel, VacancyCreationRequestModel>();
         }
     }
 }

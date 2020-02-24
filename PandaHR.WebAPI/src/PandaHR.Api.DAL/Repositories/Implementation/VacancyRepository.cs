@@ -60,5 +60,22 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task RemoveAsync(Guid id)
+        {
+            var vacancy = await _context.Vacancies.FindAsync(id);
+            _context.Vacancies.Remove(vacancy);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<ICollection<VacancyDTO>> GetAllDTOsAsync()
+        {
+            ICollection<Vacancy> vacancies = await _context.Vacancies.ToListAsync();
+
+            var DTOs = _mapper.Map<ICollection<Vacancy>, ICollection<VacancyDTO>>(vacancies);
+
+            return DTOs;
+        }
     }
 }
