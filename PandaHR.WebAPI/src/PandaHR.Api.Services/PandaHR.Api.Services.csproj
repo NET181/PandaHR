@@ -9,7 +9,12 @@
     <ProjectReference Include="..\PandaHR.Api.DAL.Models\PandaHR.Api.DAL.Models.csproj" />
     <ProjectReference Include="..\PandaHR.Api.DAL\PandaHR.Api.DAL.csproj" />
     <ProjectReference Include="..\PandaHR.Api.Services.Exporter\PandaHR.Api.Services.Exporter.csproj" />
+    <ProjectReference Include="..\PandaHR.Api.Services.MatchingAlgorithm\PandaHR.Api.Services.MatchingAlgorithm.csproj" />
     <ProjectReference Include="..\PandaHR.Api.Services.ScoreAlgorithm\PandaHR.Api.Services.ScoreAlgorithm.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\VacancyCVFile\" />
   </ItemGroup>
 
 </Project>

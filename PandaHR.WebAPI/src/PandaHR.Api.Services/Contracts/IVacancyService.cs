@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.Services.Models.Vacancy;
-using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Services.MatchingAlgorithm.Contracts;
 
 namespace PandaHR.Api.Services.Contracts
 {
@@ -14,7 +14,7 @@ namespace PandaHR.Api.Services.Contracts
         Task<VacancyServiceModel> GetByIdWithSkillAsync(Guid id);
         Task<IEnumerable<VacancySummaryDTO>> GetByCity(Guid cityId, int? page = 1, int? pageSize = 10);
         Task<IEnumerable<VacancySummaryDTO>> GetByCompany(Guid companyId, int? page = 1, int? pageSize = 10);
-        Task<IEnumerable<Vacancy>> GetBySkillSet(IEnumerable<Skill> skills, double threshold);
+        Task<IEnumerable<ISkillSetWithRatingModel<Guid>>> GetVacanciesByCV(Guid cvId, int threshold);
 
     }
 }

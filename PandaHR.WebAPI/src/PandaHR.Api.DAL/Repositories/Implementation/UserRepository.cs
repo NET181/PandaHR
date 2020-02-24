@@ -86,7 +86,6 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
         public async Task<UserDTO> AddAsync(UserCreationDTO user)
         {
             User result = await AddAsync(_mapper.Map<UserCreationDTO, User>(user));
-            await _context.SaveChangesAsync();
 
             return _mapper.Map<User, UserDTO>(result);
         }
@@ -94,7 +93,6 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
         public async Task<UserFullInfoDTO> AddAsync(UserFullInfoDTO user)
         {
             var result = await AddAsync(_mapper.Map<UserFullInfoDTO, User>(user));
-            await _context.SaveChangesAsync();
 
             return _mapper.Map<User, UserFullInfoDTO>(result);
         }
