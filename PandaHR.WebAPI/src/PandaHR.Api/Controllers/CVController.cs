@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.Services.Contracts;
@@ -19,14 +20,16 @@ namespace PandaHR.Api.Controllers
     {
         private IMapper _mapper;
         private readonly ICVService _cvService;
+        private readonly IWebHostEnvironment _env;
 
-        public CVController(IMapper mapper, ICVService cvService)
+        public CVController(IMapper mapper, ICVService cvService, IWebHostEnvironment env)
         {
             _mapper = mapper;
             _cvService = cvService;
+            _env = env;
         }
 
-        [HttpGet("/GetCVsByVacancy")]
+        [HttpGet("/GetCVsByVacancy/{vacancyId}/threshold={threshold}")]
         public async Task<IActionResult> GetCVsByVacancySkillSet(Guid vacancyId, int threshold)
         {
             try
@@ -44,17 +47,30 @@ namespace PandaHR.Api.Controllers
             }
             catch (ArgumentNullException)
             {
-                //log
                 return NotFound();
             }
         }
 
 
-        // GET: api/UserCVsExt/5
-        [HttpGet("/UserCVsExt/{userId}")]
-        public async Task<IActionResult> GetUserCVs(Guid userId, int page, int pageSize)
+        [HttpGet("{id}/export/{type}")]
+        public async Task<IActionResult> ExportCv(Guid id, string type = "docx")
         {
-            return Ok(await _cvService.GetUserCVsAsync(userId, pageSize, page));
+            try
+            {
+                var file = await _cvService.ExportCVAsync(id, _env.WebRootPath, type);
+
+                return File(file.FileContents, file.ContentType, file.FileName);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("/UserCVExt/{userId}")]
+        public async Task<IActionResult> GetUserCV(Guid userId)
+        {
+            return Ok(await _cvService.GetUserCVAsync(userId));
         }
 
         [HttpPost("/CV/{id}/AddSkillKnowledge")]
@@ -121,24 +137,11 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-        [HttpGet("/UserCVsSummary")]
-        public async Task<IActionResult> GetCVsPaged(Guid userId, int pageSize, int page)
-        {
-            var item = await _cvService.GetUserCVsAsync(userId, pageSize, page);
-
-            if (item == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(item);
-        }
-
         // GET: api/UserCVsSummary/5
-        [HttpGet("/UserCVsSummary/{userId}")]
-        public async Task<IActionResult> GetUserCVsSummary(Guid userId, int page, int pageSize)
+        [HttpGet("/UserCVSummary/{userId}")]
+        public async Task<IActionResult> GetUserCVSummary(Guid userId)
         {
-            var item = await _cvService.GetUserCVsPreviewAsync(userId, pageSize, page);
+            var item = await _cvService.GetUserCVPreviewAsync(userId);
 
             if (item == null)
             {
@@ -162,9 +165,9 @@ namespace PandaHR.Api.Controllers
 
         // GET: api/VacanciesForCV/5
         [HttpGet("/VacanciesForCV/{CVId}")]
-        public async Task<IActionResult> GetVacanciesForCV(Guid CVId, int page, int pageSize)
+        public async Task<IActionResult> GetVacanciesForCV(Guid CVId, int page = 1, int pageSize = 10)
         {
-            var item = await _cvService.GetVacanciesForCV(CVId, pageSize, page);
+            var item = await _cvService.GetVacanciesForCV(CVId, page, pageSize);
 
             if (item == null)
             {

@@ -28,9 +28,12 @@ namespace PandaHR.Api.Services.Implementation
             _matchingAlgorithm = matchingAlgorithm;
         }
 
-        public async Task AddAsync(Vacancy entity)
+        public async Task<Vacancy> AddAsync(Vacancy entity)
         {
-            await _uow.Vacancies.AddAsync(entity);
+            var res = await _uow.Vacancies.AddAsync(entity);
+            await _uow.SaveChangesAsync();
+
+            return res;
         }
 
         public async Task RemoveAsync(Guid id)
@@ -41,7 +44,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task RemoveAsync(Vacancy vacancy)
         {
-            await _uow.Vacancies.Remove(vacancy);
+            _uow.Vacancies.Remove(vacancy);
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Vacancy>> GetAllAsync()
@@ -76,19 +80,24 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task UpdateAsync(Vacancy vacancy)
         {
-            await _uow.Vacancies.Update(vacancy);
+            _uow.Vacancies.Update(vacancy);
+            await _uow.SaveChangesAsync();
         }
 
-        public async Task AddAsync(VacancyServiceModel vacancyServiceModel)
+        public async Task<VacancyServiceModel> AddAsync(VacancyServiceModel vacancyServiceModel)
         {
             var vacancyDto = _mapper.Map<VacancyServiceModel, VacancyDTO>(vacancyServiceModel);
 
-            await _uow.Vacancies.AddAsync(vacancyDto);
+            var res = _mapper.Map<VacancyDTO, VacancyServiceModel>(
+                await _uow.Vacancies.AddAsync(vacancyDto));
+            await _uow.SaveChangesAsync();
+
+            return res;
         }
 
-        public async Task<IEnumerable<VacancySummaryDTO>> GetVacancyPreviewAsync(Guid userId, int? pageSize, int? page)
+        public async Task<IEnumerable<VacancySummaryDTO>> GetVacancyPreviewAsync(Guid userId, int? page = 1, int? pageSize = 10)
         {
-            return await _uow.Vacancies.GetUserVacancySummaryAsync(userId, pageSize, page);
+            return await _uow.Vacancies.GetUserVacancySummaryAsync(userId, page, pageSize);
         }
 
         public async Task<IEnumerable<ISkillSetWithRatingModel<Guid>>> GetVacanciesByCV(Guid cvId, int threshold)
@@ -113,15 +122,14 @@ namespace PandaHR.Api.Services.Implementation
             return _matchingAlgorithm.GetMatchingModels(algorithmCV, vacancies, threshold, 2);
         }
 
-
-        public async Task<IEnumerable<VacancySummaryDTO>> GetByCity(Guid cityId, int? pageSize, int? page)
+        public async Task<IEnumerable<VacancySummaryDTO>> GetByCity(Guid cityId, int? page = 1, int? pageSize = 10)
         {
-            return await _uow.Vacancies.GetVacanciesFiltered(t => t.VacancyCities.Any(c => c.City.Id == cityId), pageSize, page);
+            return await _uow.Vacancies.GetVacanciesFiltered(t => t.VacancyCities.Any(c => c.City.Id == cityId), page, pageSize);
         }
 
-        public async Task<IEnumerable<VacancySummaryDTO>> GetByCompany(Guid companyId, int? pageSize, int? page)
+        public async Task<IEnumerable<VacancySummaryDTO>> GetByCompany(Guid companyId, int? page = 1, int? pageSize = 10)
         {
-            return await _uow.Vacancies.GetVacanciesFiltered(t => t.CompanyId == companyId, pageSize, page);
+            return await _uow.Vacancies.GetVacanciesFiltered(t => t.CompanyId == companyId, page, pageSize);
         }
     }
 }

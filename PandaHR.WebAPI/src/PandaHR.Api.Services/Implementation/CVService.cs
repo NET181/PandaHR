@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.Common.Contracts;
+using PandaHR.Api.Services.Exporter;
 using PandaHR.Api.DAL;
-using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.DTOs.CV;
 using PandaHR.Api.DAL.DTOs.Education;
+using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.DTOs.User;
 using PandaHR.Api.DAL.DTOs.SkillKnowledge;
@@ -18,6 +19,9 @@ using PandaHR.Api.Services.Models.User;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.Models.SkillKnowledge;
 using PandaHR.Api.Services.Models.JobExperience;
+using PandaHR.Api.Services.Exporter.Models.Enums;
+using PandaHR.Api.Services.Exporter.Models.ExportTypes;
+using PandaHR.Api.Services.Exporter.Models.ExportModels;
 using PandaHR.Api.Services.MatchingAlgorithm.Contracts;
 using PandaHR.Api.Services.MatchingAlgorithm.Models;
 
@@ -58,7 +62,6 @@ namespace PandaHR.Api.Services.Implementation
             return _matchingAlgorithm.GetMatchingModels(algorithmVacancy, CVs, threshold, 2);
         }
 
-
         public async Task<CVServiceModel> AddAsync(CVCreationServiceModel cvServiceModel)
         {
             Guid? userId = cvServiceModel.UserId;
@@ -98,6 +101,25 @@ namespace PandaHR.Api.Services.Implementation
             return result;
         }
 
+        public async Task<CustomFile> ExportCVAsync(Guid id, string webRootPath, string fileExtension)
+        {
+            if (!Enum.TryParse(fileExtension, true, out ExportType exportType))
+            {
+                throw new FormatException("This export mode is not supported");
+            }
+            if(!_uow.CVs.CvExists(id))
+            {
+                throw new KeyNotFoundException("No CV found with this id");
+            }
+
+            var templatePath = String.Format("{0}/export/CV_ExportTemplate.{1}", webRootPath, exportType);
+            var cvDto = await _uow.CVs.GetCvForExportAsync(id);
+            var cvExportModel = _mapper.Map<CVExportDTO, CVExportModel>(cvDto);
+            ExportingTool exportingTool = new ExportingTool(cvExportModel.FullName, exportType);
+
+            return exportingTool.ExportCV(templatePath, cvExportModel);
+        }
+
         public async Task<IEnumerable<CVServiceModel>> GetAllAsync()
         {
             var CVs = new List<CV>
@@ -118,14 +140,14 @@ namespace PandaHR.Api.Services.Implementation
             return new List<CVServiceModel>(_mapper.Map<IEnumerable<CV>, IEnumerable<CVServiceModel>>(CVs));
         }
 
-        public async Task<IEnumerable<CVSummaryDTO>> GetUserCVsPreviewAsync(Guid userId, int? pageSize = 10, int? page = 1)
+        public async Task<CVSummaryDTO> GetUserCVPreviewAsync(Guid userId)
         {
-            return await _uow.CVs.GetUserCVSummaryAsync(userId, pageSize, page);
+            return await _uow.CVs.GetUserCVSummaryAsync(userId);
         }
 
-        public async Task<IEnumerable<CVforSearchDTO>> GetUserCVsAsync(Guid userId, int? pageSize = 10, int? page = 1)
+        public async Task<CVforSearchDTO> GetUserCVAsync(Guid userId)
         {
-            return await _uow.CVs.GetCVsAsync(cv => cv.UserId == userId, pageSize, page);
+            return (await _uow.CVs.GetCVsAsync(cv => cv.UserId == userId)).FirstOrDefault();
         }
 
         public async Task RemoveAsync(Guid id)
@@ -134,24 +156,21 @@ namespace PandaHR.Api.Services.Implementation
             await RemoveAsync(CV);
         }
 
-        public async Task RemoveAsync(CV entity)
+        public async Task RemoveAsync(CVServiceModel entity)
         {
-            await _uow.CVs.Remove(entity);
-        }
-
-        public Task RemoveAsync(CVServiceModel entity)
-        {
-            throw new NotImplementedException();
+            var toDel = _mapper.Map<CVServiceModel, CV>(entity);
+            _uow.CVs.Remove(toDel);
+            await _uow.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(CVCreationServiceModel model)
         {
             var cvDTO = _mapper.Map<CVCreationServiceModel, CVCreationDTO>(model);
 
-            await _uow.CVs.UpdateAsync(cvDTO);
+            await _uow.CVs.UpdateAsync(cvDTO); // saves CV inside this call
         }
 
-        public async Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? pageSize = 10, int? page = 1)
+        public async Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? page = 1, int? pageSize = 10)
         {
             CVforSearchDTO cv = (await _uow.CVs.GetCVsAsync(cv => cv.Id == CVId, pageSize, page)).FirstOrDefault();
             var result = (await _uow.Vacancies.GetAllAsync()).Where(v => MatchVacancyCV.Matches(v, cv) > 0);
@@ -159,19 +178,24 @@ namespace PandaHR.Api.Services.Implementation
             return _mapper.Map<IEnumerable<Vacancy>, IEnumerable<VacancySummaryDTO>>(result);
         }
 
-        public async Task AddAsync(CV entity)
+        public async Task<CV> AddAsync(CV entity)
         {
-            await _uow.CVs.AddAsync(entity);
+            var res = await _uow.CVs.AddAsync(entity);
+            await _uow.SaveChangesAsync();
+
+            return res;
         }
-        
+
+        public async Task<CVServiceModel> AddAsync(CVServiceModel entity)
+        {
+            var res = await AddAsync(_mapper.Map<CVServiceModel, CV>(entity));
+
+            return _mapper.Map<CV, CVServiceModel>(res);
+        }
+
         public async Task<CVServiceModel> GetByIdAsync(Guid id)
         {
             return _mapper.Map<CV, CVServiceModel>(await _uow.CVs.GetByIdAsync(id));
-        }
-
-        public Task AddAsync(CVServiceModel entity)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task UpdateAsync(CVServiceModel entity)

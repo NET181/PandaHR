@@ -38,7 +38,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
             _qualificationService = qualificationService;
         }
 
-        public async Task<List<IdAndRatingServiceModel>> GetCVsByVacancy(Guid vacancyId)
+        public async Task<IEnumerable<AlghorythmResponseServiceModel>> GetCVsByVacancy(Guid vacancyId)
         {
 
             var vacansy = await GetVacancyFromDBAsync(vacancyId);
@@ -96,8 +96,28 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
                 }
             }
 
-            return new List<IdAndRatingServiceModel>(_mapper.Map<IEnumerable<IdAndRating>
-                , IEnumerable<IdAndRatingServiceModel>>(_alghorythm.GetCVsRating(vacansy, algCVs)));
+            var alghResponse = new List<AlghorythmResponseServiceModel>(_mapper.Map<IEnumerable<IdAndRating>
+                , IEnumerable<AlghorythmResponseServiceModel>>(_alghorythm.GetCVsRating(vacansy, algCVs)));
+
+            return FindCVTitle(cVs, alghResponse);
+        }
+
+        public IEnumerable<AlghorythmResponseServiceModel> FindCVTitle(IEnumerable<CVServiceModel> cVs,
+            IEnumerable<AlghorythmResponseServiceModel> alghorythmResponses)
+        {
+            foreach (var algResponse in alghorythmResponses)
+            {
+                foreach (var cV in cVs)
+                {
+                    if (algResponse.Id == cV.Id)
+                    {
+                        algResponse.Title = cV.Summary;
+                        break;
+                    }
+                }
+            }
+
+            return alghorythmResponses;
         }
 
         private async Task<VacancyAlghorythmModel> GetVacancyFromDBAsync(Guid id)

@@ -76,22 +76,16 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             return CV;
         }
 
-        public async Task<IEnumerable<CVSummaryDTO>> GetUserCVSummaryAsync(Guid userId, int? pageSize = 10, int? page = 1)
+        public async Task<CVSummaryDTO> GetUserCVSummaryAsync(Guid userId)
         {
-            IEnumerable<CV> query = await _context.CVs.Where(cv => cv.UserId == userId)
+            CV query = await _context.CVs.Where(cv => cv.UserId == userId)
                 .Include(c => c.Qualification)
-                .Include(c => c.Technology)
-                .ToListAsync();
+                .Include(c => c.Technology).FirstOrDefaultAsync();
 
-            if (pageSize != null && page != null)
-            {
-                query = query.Skip((int)pageSize * ((int)page - 1)).Take((int)pageSize);
-            }
-
-            return _mapper.Map<IEnumerable<CV>, IEnumerable<CVSummaryDTO>>(query);
+            return _mapper.Map<CV, CVSummaryDTO>(query);
         }
 
-        public async Task<IEnumerable<CVforSearchDTO>> GetCVsAsync(Expression<Func<CV, bool>> predicate,/*Guid userId,*/ int? pageSize = 10, int? page = 1)
+        public async Task<IEnumerable<CVforSearchDTO>> GetCVsAsync(Expression<Func<CV, bool>> predicate, int? page = 1, int? pageSize = 10)
         {
             IEnumerable<CV> query = await _context.CVs.Where(predicate)
                 .Include(c => c.Qualification)
@@ -194,6 +188,38 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             CV cv = _context.CVs.Find(cvId);
 
             await LinkUserToCV(cv, user);
+        }
+
+        public async Task<CVExportDTO> GetCvForExportAsync(Guid cvId)
+        {
+            var cvDto = await _context.CVs.Where(cv => cv.Id == cvId)
+                .Include(cv => cv.JobExperiences)
+                .Include(cv => cv.Qualification)
+                .Include(cv => cv.User)
+                    .ThenInclude(u => u.Educations)
+                .Include(cv => cv.User)
+                    .ThenInclude(u => u.Educations)
+                        .ThenInclude(e => e.Degree)
+                .Include(cv => cv.User)
+                    .ThenInclude(u => u.Educations)
+                        .ThenInclude(e => e.Speciality)
+                .Include(cv => cv.SkillKnowledges)
+                    .ThenInclude(sk => sk.Skill)
+                .Include(cv => cv.SkillKnowledges)
+                    .ThenInclude(sk => sk.Skill)
+                        .ThenInclude(s => s.SkillType)
+                .Include(cv => cv.SkillKnowledges)
+                    .ThenInclude(sk => sk.KnowledgeLevel)
+                .FirstOrDefaultAsync();
+
+            return _mapper.Map<CV, CVExportDTO>(cvDto);
+        }
+
+        public bool CvExists(Guid cvId)
+        {
+            var guid = _context.CVs.Where(cv => cv.Id == cvId).Select(cv=>cv.Id).FirstOrDefault();
+
+            return guid != Guid.Empty;
         }
     }
 }

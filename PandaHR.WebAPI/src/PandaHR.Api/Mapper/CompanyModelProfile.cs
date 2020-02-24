@@ -8,10 +8,9 @@ namespace PandaHR.Api.Mapper
     {
         public CompanyModelProfile()
         {
-            CreateMap<CompanyNameServiceModel, CompanyNameResponseModel>();
-            CreateMap<CompanyBasicInfoServiceModel, CompanyBasicInfoResponse>();
+            CreateMap<CompanyNameServiceModel, CompanyBasicInfoResponse>();
 
-            CreateMap<CompanyBasicInfoResponse, CompanyBasicInfoServiceModel>();
+            CreateMap<CompanyBasicInfoResponse, CompanyNameServiceModel>();
         }
     }
 }

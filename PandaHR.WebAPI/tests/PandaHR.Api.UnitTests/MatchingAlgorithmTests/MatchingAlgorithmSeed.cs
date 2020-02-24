@@ -1,10 +1,9 @@
-﻿using PandaHR.Api.Services.MatchingAlgorithm.Contracts;
-using PandaHR.Api.Services.MatchingAlgorithm.Implementation;
-using PandaHR.Api.Services.MatchingAlgorithm.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using PandaHR.Api.Services.MatchingAlgorithm.Contracts;
+using PandaHR.Api.Services.MatchingAlgorithm.Implementation;
+using PandaHR.Api.Services.MatchingAlgorithm.Models;
 
 namespace PandaHR.Api.UnitTests.MatchingAlgorithmTests
 {

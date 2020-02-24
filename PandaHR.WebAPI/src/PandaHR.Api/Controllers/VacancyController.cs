@@ -28,7 +28,7 @@ namespace PandaHR.Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("GetVacancyByCV")]
+        [HttpGet("/GetVacanciesByCV/{CVId}/threshold={threshold}")]
         public async Task<IActionResult> GetVacanciesByCVSkillSet(Guid CVId, int threshold)
         {
             try
@@ -58,8 +58,8 @@ namespace PandaHR.Api.Controllers
             {
                 var some = await _scoreCounter.GetCVsByVacancy(id);
 
-                var request = _mapper.Map<IEnumerable<IdAndRatingServiceModel>
-                    , IEnumerable<IdAndRatingResponseModel>>(some);
+                var request = _mapper.Map<IEnumerable<AlghorythmResponseServiceModel>
+                    , IEnumerable<AlghorythmResponseModel>>(some);
 
                 return Ok(request);
             }
@@ -71,15 +71,15 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpGet("/getVacancySummary")]
-        public async Task<IActionResult> GetUserCVsSummary(Guid userId, int page, int pageSize)
+        public async Task<IActionResult> GetVacancySummary(Guid userId, int page = 1, int pageSize = 10)
         {
-            return Ok(await _vacancyService.GetVacancyPreviewAsync(userId, pageSize, page));
+            return Ok(await _vacancyService.GetVacancyPreviewAsync(userId, page, pageSize));
         }
 
         [HttpGet("city/{id}")]
         public async Task<IActionResult> GetByCity(Guid id, int page = 1, int pageSize = 10)
         {
-            var vacancies = await _vacancyService.GetByCity(id, pageSize, page);
+            var vacancies = await _vacancyService.GetByCity(id, page, pageSize);
            
             if (vacancies != null)
             {
@@ -94,7 +94,7 @@ namespace PandaHR.Api.Controllers
         [HttpGet("company/{id}")]
         public async Task<IActionResult> GetByCompany(Guid id, int page = 1, int pageSize = 10)
         {
-            var vacancies = await _vacancyService.GetByCompany(id, pageSize, page);
+            var vacancies = await _vacancyService.GetByCompany(id, page, pageSize);
 
             if (vacancies != null)
             {

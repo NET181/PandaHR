@@ -1,9 +1,12 @@
-﻿using PandaHR.Api.DAL.Repositories.Contracts;
+﻿using System.Threading.Tasks;
+using PandaHR.Api.DAL.Repositories.Contracts;
+using PandaHR.Api.DAL.EF.Context;
 
 namespace PandaHR.Api.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {
+        private readonly ApplicationDbContext _context;
         private readonly ICompanyRepository _companyRepository;
         private readonly IUserRepository _userRepository;
         private readonly ISkillRepository _skillRepository;
@@ -24,8 +27,10 @@ namespace PandaHR.Api.DAL
         private readonly ICityRepository _cityRepository;
         private readonly ICountryRepository _countryRepository;
         private readonly ITechnologyRepository _technologyRepository;
+        private readonly IVacancyCVFlowRepository _vacancyCVFlowRepository;
 
         public UnitOfWork(
+            ApplicationDbContext context,
             IVacancyRepository vacancyRepository,
             IVacancyCityRepository vacancyCityRepository,
             ICVRepository cvRepository,
@@ -45,8 +50,10 @@ namespace PandaHR.Api.DAL
             IExperienceRepository experienceRepository,
             ICityRepository cityRepository,
             ICountryRepository countryRepository,
-            ITechnologyRepository technologyRepository)
+            ITechnologyRepository technologyRepository,
+            IVacancyCVFlowRepository vacancyCVFlowRepository)
         {
+            _context = context;
             _skillTypeRepository = skillTypeRepository;
             _skillRepository = skillRepository;
             _companyRepository = companyRepository;
@@ -67,6 +74,12 @@ namespace PandaHR.Api.DAL
             _cityRepository = cityRepository;
             _countryRepository = countryRepository;
             _technologyRepository = technologyRepository;
+            _vacancyCVFlowRepository = vacancyCVFlowRepository;
+        }
+
+        public Task SaveChangesAsync()
+        {
+            return _context.SaveChangesAsync();
         }
 
         public IKnowledgeLevelRepository KnowledgeLevels
@@ -226,6 +239,14 @@ namespace PandaHR.Api.DAL
             get
             {
                 return _vacancyCityRepository;
+            }
+        }
+
+        public IVacancyCVFlowRepository VacancyCVFlows
+        {
+            get
+            {
+                return _vacancyCVFlowRepository;
             }
         }
     }
