@@ -14,7 +14,7 @@ namespace PandaHR.Api.Models.User
         public string Phone { get; set; }
         public string Email { get; set; }
         public ICollection<EducationWithDetailsServiceModel> Educations { get; set; }
-        public ICollection<CompanyWithDetailsServiceModel> Companies { get; set; }
-        public CityWithNameServiceModel City { get; set; }
+        public ICollection<CompanyNameServiceModel> Companies { get; set; }
+        public CityNameServiceModel City { get; set; }
     }
 }

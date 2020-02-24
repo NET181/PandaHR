@@ -34,17 +34,24 @@ namespace PandaHR.Api.DAL.EF.Configurations
                 },
                 new Experience
                 {
-                    Name = "1+ year",
+                    Name = "1-2 year",
                     Value = 3,
                     IsDeleted = false,
-                    Id = new Guid("8b4bc763-1e35-4b07-adc9-e9a7f01dad06")
+                    Id = new Guid("8b4bc763-1e35-4b07-adc9-e9a7f31dad06")
                 },
                 new Experience
                 {
-                    Name = "2+ year",
+                    Name = "2-3 year",
                     Value = 4,
                     IsDeleted = false,
-                    Id = new Guid("fbdf0376-ccd8-44f0-85b0-0609d4f25b0e")
+                    Id = new Guid("fbdf0376-ccd8-44f0-85b0-0609d4f75b0e")
+                },
+                new Experience
+                {
+                    Name = "3+ year",
+                    Value = 4,
+                    IsDeleted = false,
+                    Id = new Guid("fbdf0376-ccd8-44f0-85b0-0609d4f22b0e")
                 });
         }
     }

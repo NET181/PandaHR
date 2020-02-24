@@ -9,20 +9,21 @@ using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.DTOs.CV;
 using PandaHR.Api.DAL.DTOs.Education;
 using PandaHR.Api.DAL.Models.Entities;
-using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.DTOs.User;
 using PandaHR.Api.DAL.DTOs.SkillKnowledge;
 using PandaHR.Api.DAL.DTOs.JobExperience;
+using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.Education;
 using PandaHR.Api.Services.Models.User;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.Models.SkillKnowledge;
 using PandaHR.Api.Services.Models.JobExperience;
-using PandaHR.Api.Services.SkillMatchingAlgorithm.Contracts;
 using PandaHR.Api.Services.Exporter.Models.Enums;
 using PandaHR.Api.Services.Exporter.Models.ExportTypes;
 using PandaHR.Api.Services.Exporter.Models.ExportModels;
+using PandaHR.Api.Services.MatchingAlgorithm.Contracts;
+using PandaHR.Api.Services.MatchingAlgorithm.Models;
 
 namespace PandaHR.Api.Services.Implementation
 {
@@ -30,32 +31,35 @@ namespace PandaHR.Api.Services.Implementation
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
-        private readonly IMatchingCVsForSkillSetAlgorithm _skillSetAlgorithm;
+        private readonly ISkillMatchingAlgorithm<Guid> _matchingAlgorithm;
 
-        public CVService(IMapper mapper, IUnitOfWork uow, IMatchingCVsForSkillSetAlgorithm skillSetAlgorithm)
+        public CVService(IMapper mapper, IUnitOfWork uow, ISkillMatchingAlgorithm<Guid> matchingAlgorithm)
         {
             _mapper = mapper;
             _uow = uow;
-            _skillSetAlgorithm = skillSetAlgorithm;
+            _matchingAlgorithm = matchingAlgorithm;
         }
 
-        public async Task<IEnumerable<CV>> GetBySkillSet(IEnumerable<Skill> skills, double threshold)
+        public async Task<IEnumerable<ISkillSetWithRatingModel<Guid>>> GetCVsByVacancy(Guid vacancyId, int threshold)
         {
-            var cvs = await _uow.CVs.GetAllAsync(include: s => s
-                .Include(x => x.SkillKnowledges)
-                    .ThenInclude(s => s.Skill)
-                    .ThenInclude(s => s.SubSkills)
-                .Include(x => x.SkillKnowledges)
-                    .ThenInclude(s => s.Skill)
-                    .ThenInclude(s => s.SkillType)
-                .Include(q => q.Qualification)
-                .Include(x => x.SkillKnowledges)
-                    .ThenInclude(k => k.KnowledgeLevel)
-                    .ThenInclude(t => t.SkillKnowledgeTypes)
-                .Include(e => e.SkillKnowledges)
-                .ThenInclude(e => e.Experience));
+            var CVs = (await _uow.CVs.GetAllAsync(include: s => s
+                 .Include(x => x.SkillKnowledges)
+                     .ThenInclude(s => s.Skill)))
+                 .Select(s => new SkillSetModel
+                 {
+                     Id = s.Id,
+                     Skills = s.SkillKnowledges.Select(k => k.SkillId)
+                 });
 
-            return await _skillSetAlgorithm.GetMatchingBySkillsObjects(cvs, skills, threshold);
+            var vacancy = await _uow.Vacancies.GetFirstOrDefaultAsync(predicate: s => s
+                .Id == vacancyId,
+                include: s => s
+                .Include(x => x.SkillRequirements)
+                    .ThenInclude(s => s.Skill));
+
+            var algorithmVacancy = _mapper.Map<Vacancy, SkillSetModel>(vacancy);
+
+            return _matchingAlgorithm.GetMatchingModels(algorithmVacancy, CVs, threshold, 2);
         }
 
         public async Task<CVServiceModel> AddAsync(CVCreationServiceModel cvServiceModel)
@@ -123,6 +127,7 @@ namespace PandaHR.Api.Services.Implementation
                 .Include(x => x.SkillKnowledges)
                     .ThenInclude(s => s.Skill)
                     .ThenInclude(s => s.SubSkills)
+                    .ThenInclude(s => s.SkillType)
                 .Include(x => x.SkillKnowledges)
                     .ThenInclude(s => s.Skill)
                     .ThenInclude(s => s.SkillType)
@@ -136,14 +141,14 @@ namespace PandaHR.Api.Services.Implementation
             return new List<CVServiceModel>(_mapper.Map<IEnumerable<CV>, IEnumerable<CVServiceModel>>(CVs));
         }
 
-        public async Task<IEnumerable<CVSummaryDTO>> GetUserCVsPreviewAsync(Guid userId, int? pageSize = 10, int? page = 1)
+        public async Task<CVSummaryDTO> GetUserCVPreviewAsync(Guid userId)
         {
-            return await _uow.CVs.GetUserCVSummaryAsync(userId, pageSize, page);
+            return await _uow.CVs.GetUserCVSummaryAsync(userId);
         }
 
-        public async Task<IEnumerable<CVforSearchDTO>> GetUserCVsAsync(Guid userId, int? pageSize = 10, int? page = 1)
+        public async Task<CVforSearchDTO> GetUserCVAsync(Guid userId)
         {
-            return await _uow.CVs.GetCVsAsync(cv => cv.UserId == userId, pageSize, page);
+            return (await _uow.CVs.GetCVsAsync(cv => cv.UserId == userId)).FirstOrDefault();
         }
 
         public async Task RemoveAsync(Guid id)
@@ -152,24 +157,21 @@ namespace PandaHR.Api.Services.Implementation
             await RemoveAsync(CV);
         }
 
-        public async Task RemoveAsync(CV entity)
+        public async Task RemoveAsync(CVServiceModel entity)
         {
-            await _uow.CVs.Remove(entity);
-        }
-
-        public Task RemoveAsync(CVServiceModel entity)
-        {
-            throw new NotImplementedException();
+            var toDel = _mapper.Map<CVServiceModel, CV>(entity);
+            _uow.CVs.Remove(toDel);
+            await _uow.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(CVCreationServiceModel model)
         {
             var cvDTO = _mapper.Map<CVCreationServiceModel, CVCreationDTO>(model);
 
-            await _uow.CVs.UpdateAsync(cvDTO);
+            await _uow.CVs.UpdateAsync(cvDTO); // saves CV inside this call
         }
 
-        public async Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? pageSize = 10, int? page = 1)
+        public async Task<IEnumerable<VacancySummaryDTO>> GetVacanciesForCV(Guid CVId, int? page = 1, int? pageSize = 10)
         {
             CVforSearchDTO cv = (await _uow.CVs.GetCVsAsync(cv => cv.Id == CVId, pageSize, page)).FirstOrDefault();
             var result = (await _uow.Vacancies.GetAllAsync()).Where(v => MatchVacancyCV.Matches(v, cv) > 0);
@@ -177,19 +179,24 @@ namespace PandaHR.Api.Services.Implementation
             return _mapper.Map<IEnumerable<Vacancy>, IEnumerable<VacancySummaryDTO>>(result);
         }
 
-        public async Task AddAsync(CV entity)
+        public async Task<CV> AddAsync(CV entity)
         {
-            await _uow.CVs.AddAsync(entity);
+            var res = await _uow.CVs.AddAsync(entity);
+            await _uow.SaveChangesAsync();
+
+            return res;
         }
-        
+
+        public async Task<CVServiceModel> AddAsync(CVServiceModel entity)
+        {
+            var res = await AddAsync(_mapper.Map<CVServiceModel, CV>(entity));
+
+            return _mapper.Map<CV, CVServiceModel>(res);
+        }
+
         public async Task<CVServiceModel> GetByIdAsync(Guid id)
         {
             return _mapper.Map<CV, CVServiceModel>(await _uow.CVs.GetByIdAsync(id));
-        }
-
-        public Task AddAsync(CVServiceModel entity)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task UpdateAsync(CVServiceModel entity)

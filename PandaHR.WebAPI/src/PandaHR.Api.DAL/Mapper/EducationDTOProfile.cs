@@ -19,7 +19,7 @@ namespace PandaHR.Api.DAL.Mapper
                 .ForMember(dest => dest.Place, opt => opt.MapFrom(src => src.PlaceName))
                 .ForMember(dest => dest.Speciality, opt => opt.MapFrom(src => src.Speciality.Name));    
             CreateMap<Education, EducationWithDetailsDTO>();
-            CreateMap<Education, EducationBasicInfoDTO>();
+            CreateMap<Education, EducationNameDTO>();
             CreateMap<Education, EducationDTO>();
         }
     }

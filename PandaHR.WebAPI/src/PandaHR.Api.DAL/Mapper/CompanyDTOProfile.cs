@@ -8,11 +8,9 @@ namespace PandaHR.Api.DAL.Mapper
     {
         public CompanyDTOProfile()
         {
-            CreateMap<CompanyBasicInfoDTO, Company>();
+            CreateMap<CompanyNameDTO, Company>();
 
-            CreateMap<Company, CompanyBasicInfoDTO>();
-
-            CreateMap<Company, CompanyWithDetailsDTO>();
+            CreateMap<Company, CompanyNameDTO>();
         }
     }
 }

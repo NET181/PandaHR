@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
@@ -6,8 +7,6 @@ using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.ScoreAlghorythm;
 using PandaHR.Api.Models.IdAndRating;
-using PandaHR.Api.DAL.Models.Entities;
-using PandaHR.Api.Services.Models.Skill;
 using PandaHR.Api.Models.Vacancy;
 using PandaHR.Api.Services.Models.Vacancy;
 
@@ -20,7 +19,6 @@ namespace PandaHR.Api.Controllers
         private readonly IVacancyService _vacancyService;
         private readonly IScoreCounter _scoreCounter;
         private readonly IMapper _mapper;
-        private readonly ISkillService _skillService;
 
         public VacancyController(IVacancyService vacancyService, 
             IScoreCounter scoreCounter, 
@@ -29,32 +27,30 @@ namespace PandaHR.Api.Controllers
         {
             _vacancyService = vacancyService;
             _scoreCounter = scoreCounter;
-            _skillService = skillService;
             _mapper = mapper;
         }
 
-        [HttpGet("{threshold}/{skillNames}")]
-        public async Task<IEnumerable<Vacancy>> GetCVsBySkills(
-            [FromRoute]string[] skillNames, double threshold)
+        [HttpGet("/GetVacanciesByCV/{CVId}/threshold={threshold}")]
+        public async Task<IActionResult> GetVacanciesByCVSkillSet(Guid CVId, int threshold)
         {
-            skillNames = skillNames[0].Split(",");
-
-            var findedSkills = new List<SkillNameServiceModel>();
-            var skills = await _skillService.GetSkillNames();
-
-            foreach (var skill in skills)
+            try
             {
-                foreach (var skillName in skillNames)
+                var result = await _vacancyService.GetVacanciesByCV(CVId, threshold);
+
+                if (result.Count() == 0)
                 {
-                    if (skill.Name == skillName)
-                    {
-                        findedSkills.Add(skill);
-                    }
+                    return NoContent();
+                }
+                else
+                {
+                    return Ok(result);
                 }
             }
-            var algorithmSkills = _mapper.Map<IEnumerable<SkillNameServiceModel>, IEnumerable<Skill>>(findedSkills);
-
-            return await _vacancyService.GetBySkillSet(algorithmSkills, threshold);
+            catch (ArgumentNullException)
+            {
+                //log
+                return NotFound(CVId);
+            }
         }
 
         [HttpGet("searchfor/{id}")]
@@ -64,8 +60,8 @@ namespace PandaHR.Api.Controllers
             {
                 var some = await _scoreCounter.GetCVsByVacancy(id);
 
-                var request = _mapper.Map<IEnumerable<IdAndRatingServiceModel>
-                    , IEnumerable<IdAndRatingResponseModel>>(some);
+                var request = _mapper.Map<IEnumerable<AlghorythmResponseServiceModel>
+                    , IEnumerable<AlghorythmResponseModel>>(some);
 
                 return Ok(request);
             }
@@ -77,15 +73,15 @@ namespace PandaHR.Api.Controllers
         }
 
         [HttpGet("/getVacancySummary")]
-        public async Task<IActionResult> GetUserCVsSummary(Guid userId, int page, int pageSize)
+        public async Task<IActionResult> GetVacancySummary(Guid userId, int page = 1, int pageSize = 10)
         {
-            return Ok(await _vacancyService.GetVacancyPreviewAsync(userId, pageSize, page));
+            return Ok(await _vacancyService.GetVacancyPreviewAsync(userId, page, pageSize));
         }
 
         [HttpGet("city/{id}")]
         public async Task<IActionResult> GetByCity(Guid id, int page = 1, int pageSize = 10)
         {
-            var vacancies = await _vacancyService.GetByCity(id, pageSize, page);
+            var vacancies = await _vacancyService.GetByCity(id, page, pageSize);
            
             if (vacancies != null)
             {
@@ -100,7 +96,7 @@ namespace PandaHR.Api.Controllers
         [HttpGet("company/{id}")]
         public async Task<IActionResult> GetByCompany(Guid id, int page = 1, int pageSize = 10)
         {
-            var vacancies = await _vacancyService.GetByCompany(id, pageSize, page);
+            var vacancies = await _vacancyService.GetByCompany(id, page, pageSize);
 
             if (vacancies != null)
             {

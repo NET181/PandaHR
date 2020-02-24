@@ -48,6 +48,21 @@ namespace PandaHR.Api.Controllers
             }
         }
 
+        [HttpGet("/Status", Name = "GetFlowStatus")]
+        public IActionResult GetFlowStatus(Guid CVId, Guid vacancyId)
+        {
+            var status = _vacancyCVFlowService.GetFlowStatusAsync(CVId, vacancyId);
+
+            if (status != null)
+            {
+                return Ok(status);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         // POST: api/VacancyCVFlow
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody]VacancyCVFlowCreationRequestModel vacancyCVFlow)

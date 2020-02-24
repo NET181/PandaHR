@@ -25,20 +25,14 @@ namespace PandaHR.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson(
-                    opt =>
-                    {
-                        opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    }
+                opt =>
+                {
+                    opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                }
             );
             services.AddCors();
             services.AddMvc(option => option.EnableEndpointRouting = false)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                .AddNewtonsoftJson(
-                    opt =>
-                    {
-                        opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    }
-                )
                 .AddFluentValidation(
                 opt => opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly())
                 );
@@ -69,11 +63,11 @@ namespace PandaHR.Api
             app.UseAuthorization();
 
             app.UseOpenApi();
-            app.UseSwaggerUi3(cfg=>
+            app.UseSwaggerUi3(cfg =>
             {
                 cfg.CustomStylesheetPath = "/css/swaggercustom.css";
             });
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

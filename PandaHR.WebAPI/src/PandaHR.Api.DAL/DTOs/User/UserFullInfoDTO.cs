@@ -14,7 +14,7 @@ namespace PandaHR.Api.DAL.DTOs.User
         public string Phone { get; set; }
         public string Email { get; set; }
         public ICollection<EducationWithDetailsDTO> Educations { get; set; }
-        public ICollection<CompanyWithDetailsDTO> Companies { get; set; }
-        public CityDTO City { get; set; }
+        public ICollection<CompanyNameDTO> Companies { get; set; }
+        public CityNameDTO City { get; set; }
     }
 }

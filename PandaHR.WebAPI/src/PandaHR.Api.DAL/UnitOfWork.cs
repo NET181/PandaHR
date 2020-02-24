@@ -1,9 +1,12 @@
-﻿using PandaHR.Api.DAL.Repositories.Contracts;
+﻿using System.Threading.Tasks;
+using PandaHR.Api.DAL.Repositories.Contracts;
+using PandaHR.Api.DAL.EF.Context;
 
 namespace PandaHR.Api.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {
+        private readonly ApplicationDbContext _context;
         private readonly ICompanyRepository _companyRepository;
         private readonly IUserRepository _userRepository;
         private readonly ISkillRepository _skillRepository;
@@ -27,6 +30,7 @@ namespace PandaHR.Api.DAL
         private readonly IVacancyCVFlowRepository _vacancyCVFlowRepository;
 
         public UnitOfWork(
+            ApplicationDbContext context,
             IVacancyRepository vacancyRepository,
             IVacancyCityRepository vacancyCityRepository,
             ICVRepository cvRepository,
@@ -49,6 +53,7 @@ namespace PandaHR.Api.DAL
             ITechnologyRepository technologyRepository,
             IVacancyCVFlowRepository vacancyCVFlowRepository)
         {
+            _context = context;
             _skillTypeRepository = skillTypeRepository;
             _skillRepository = skillRepository;
             _companyRepository = companyRepository;
@@ -70,6 +75,11 @@ namespace PandaHR.Api.DAL
             _countryRepository = countryRepository;
             _technologyRepository = technologyRepository;
             _vacancyCVFlowRepository = vacancyCVFlowRepository;
+        }
+
+        public Task SaveChangesAsync()
+        {
+            return _context.SaveChangesAsync();
         }
 
         public IKnowledgeLevelRepository KnowledgeLevels
