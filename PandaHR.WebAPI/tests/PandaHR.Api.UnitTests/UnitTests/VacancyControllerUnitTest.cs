@@ -33,7 +33,7 @@ namespace PandaHR.Api.UnitTests.UnitTests
                 .ReturnsAsync(vacanciesPreview);
             VacancyController vacancyController = new VacancyController(mock.Object, null, _mapper, null);
             //act
-            ObjectResult actual = vacancyController.GetUserCVsSummary(
+            ObjectResult actual = vacancyController.GetVacancySummary(
                 new Guid("11111111-1111-1111-1111-111111111110"), 1, 1).Result as ObjectResult;
             var actualVacancies = actual.Value as IEnumerable<VacancySummaryDTO>;
             //assert
