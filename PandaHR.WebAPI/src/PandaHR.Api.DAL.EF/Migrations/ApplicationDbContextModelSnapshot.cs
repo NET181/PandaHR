@@ -1102,9 +1102,6 @@ namespace PandaHR.Api.DAL.EF.Migrations
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CancelReason")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 

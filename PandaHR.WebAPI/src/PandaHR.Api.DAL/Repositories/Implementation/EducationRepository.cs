@@ -19,17 +19,17 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             _context = context;
         }
 
-        public async Task<ICollection<EducationBasicInfoDTO>> GetBasicInfoByAutofillByName(string name)
+        public async Task<ICollection<EducationNameDTO>> GetBasicInfoByAutofillByName(string name)
         {
-            IQueryable<EducationBasicInfoDTO> query = _context.Educations.AsQueryable()
+            IQueryable<EducationNameDTO> query = _context.Educations.AsQueryable()
                 .Where(c => Microsoft.EntityFrameworkCore.EF.Functions.Like(c.PlaceName, $"%{name}%"))
-                .Select(e => new EducationBasicInfoDTO()
+                .Select(e => new EducationNameDTO()
                 {
                     Id = e.Id,
                     PlaceName = e.PlaceName
                 });
 
-            List<EducationBasicInfoDTO> educations = await query.ToListAsync();
+            List<EducationNameDTO> educations = await query.ToListAsync();
 
             return educations;
         }

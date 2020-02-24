@@ -61,18 +61,34 @@ namespace PandaHR.Api.Controllers
             }
         }
 
+        [HttpGet("/Status", Name = "GetFlowStatus")]
+        public IActionResult GetFlowStatus(Guid CVId, Guid vacancyId)
+        {
+            var status = _vacancyCVFlowService.GetFlowStatusAsync(CVId, vacancyId);
+
+            if (status != null)
+            {
+                return Ok(status);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         // POST: api/VacancyCVFlow
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody]VacancyCVFlow value)
+        public async Task<IActionResult> PostAsync([FromBody]VacancyCVFlowCreationRequestModel vacancyCVFlow)
         {
-            if (value == null)
+            if (vacancyCVFlow == null)
             {
                 return BadRequest();
             }
 
-            await _vacancyCVFlowService.AddAsync(value);
+            var flow = _mapper.Map<VacancyCVFlowCreationRequestModel, VacancyCVFlowCreationServiceModel>(vacancyCVFlow);
+            var addedFlow = await _vacancyCVFlowService.AddAsync(flow);
 
-            return CreatedAtRoute("GetVacancyCVFlows", new { id = value.Id }, value);
+            return CreatedAtRoute("GetVacancyCVFlow", new { id = addedFlow.Id }, addedFlow);
         }
 
         // PUT: api/VacancyCVFlow/5
@@ -113,6 +129,18 @@ namespace PandaHR.Api.Controllers
             return NoContent();
         }
 
+        [HttpPatch]
+        public async Task<IActionResult> PatchAsync([FromBody]VacancyCVFlowEditStatusRequestModel vacancyCVFlow)
+        {
+            if (vacancyCVFlow == null)
+            {
+                return BadRequest();
+            }
 
+            var flow = _mapper.Map<VacancyCVFlowEditStatusRequestModel, VacancyCVFlowEditStatusServiceModel>(vacancyCVFlow);
+            await _vacancyCVFlowService.ChangeStatus(flow);
+
+            return Ok();
+        }
     }
 }

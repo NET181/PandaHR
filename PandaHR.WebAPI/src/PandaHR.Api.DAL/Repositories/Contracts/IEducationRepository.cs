@@ -7,6 +7,6 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
 {
     public interface IEducationRepository : IAsyncRepository<Education>
     {
-        Task<ICollection<EducationBasicInfoDTO>> GetBasicInfoByAutofillByName(string name);
+        Task<ICollection<EducationNameDTO>> GetBasicInfoByAutofillByName(string name);
     }
 }

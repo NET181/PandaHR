@@ -5,6 +5,7 @@ using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.DTOs.VacancyCVFlow;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Services.Models.Vacancy;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.VacancyCVFlow;
 
@@ -15,15 +16,19 @@ namespace PandaHR.Api.Services.Implementation
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
 
-        public VacancyCVFlowService(IUnitOfWork uow, IMapper mapper)
+        public VacancyCVFlowService(IUnitOfWork uow,
+            IMapper mapper)
         {
             _uow = uow;
             _mapper = mapper;
         }
 
-        public async Task AddAsync(VacancyCVFlow entity)
+        public async Task<VacancyCVFlow> AddAsync(VacancyCVFlow entity)
         {
-            await _uow.VacancyCVFlows.AddAsync(entity);
+            var res = await _uow.VacancyCVFlows.AddAsync(entity);
+            await _uow.SaveChangesAsync();
+
+            return res;
         }
 
         public async Task RemoveAsync(Guid id)
@@ -34,7 +39,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task RemoveAsync(VacancyCVFlow entity)
         {
-            await _uow.VacancyCVFlows.Remove(entity);
+            _uow.VacancyCVFlows.Remove(entity);
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<VacancyCVFlow>> GetAllAsync()
@@ -49,7 +55,27 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task UpdateAsync(VacancyCVFlow entity)
         {
-            await _uow.VacancyCVFlows.Update(entity);
+            _uow.VacancyCVFlows.Update(entity);
+            await _uow.SaveChangesAsync();
+        }
+
+        public string GetFlowStatusAsync(Guid CVId, Guid vacancyId)
+        {
+            return _uow.VacancyCVFlows.GetFlowStatusAsync(CVId, vacancyId).ToString();
+        }
+
+        public async Task<VacancyCVFlow> AddAsync(VacancyCVFlowCreationServiceModel vacancyCVFlow)
+        {
+            var flow = _mapper.Map<VacancyCVFlowCreationServiceModel, VacancyCVFlowCreationDTO>(vacancyCVFlow);
+            var addedFlow = await _uow.VacancyCVFlows.AddAsync(flow);
+            
+            return addedFlow;
+        }
+
+        public async Task ChangeStatus(VacancyCVFlowEditStatusServiceModel vacancyCVFlow)
+        {
+            var flow = _mapper.Map<VacancyCVFlowEditStatusServiceModel, VacancyCVFlowEditStatusDTO>(vacancyCVFlow);
+            await _uow.VacancyCVFlows.Patch(flow);
         }
 
         public async Task<IEnumerable<VacancyCVFlowServiceModel>> GetAllFlowsByVacancyIdAsync(Guid vacancyId)

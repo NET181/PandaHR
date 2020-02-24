@@ -15,7 +15,6 @@ namespace PandaHR.Api.Services.Mapper
             CreateMap<Skill, SkillNameServiceModel>();
             CreateMap<SkillExportDTO, SkillExportModel>();
 
-            CreateMap<SkillServiceModel, SkillDTO>();
             CreateMap<SkillNameServiceModel, Skill>();
         }
     }

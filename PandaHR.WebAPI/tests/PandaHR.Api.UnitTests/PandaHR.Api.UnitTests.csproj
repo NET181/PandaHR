@@ -33,4 +33,17 @@
     <ProjectReference Include="..\..\src\PandaHR.Api\PandaHR.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="_testFiles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="_testFiles\HelloWorld.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="_testFiles\ToDelete.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

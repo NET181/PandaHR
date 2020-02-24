@@ -7,10 +7,14 @@ using System.Text;
 
 namespace PandaHR.Api.DAL.Mapper
 {
-    public class VacancyCVFlowDTOProfile : AutoMapperProfile
+    public class VacancyCVFlowDTOProfile: AutoMapperProfile
     {
         public VacancyCVFlowDTOProfile()
         {
+            CreateMap<VacancyCVFlow, VacancyCVFlowDTOProfile>();
+            CreateMap<VacancyCVFlowCreationDTO, VacancyCVFlow>();
+
+            CreateMap<VacancyCVFlowEditStatusDTO, VacancyCVFlow>();
             CreateMap<VacancyCVFlow, VacancyCVFlowDTO>();
         }
     }

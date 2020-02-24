@@ -12,6 +12,10 @@ namespace PandaHR.Api.Services.Mapper
     {
         public VacancyCVFlowServiceModelProfile()
         {
+            CreateMap<VacancyCVFlowCreationServiceModel, VacancyCVFlowCreationDTO>();
+            CreateMap<VacancyCVFlowCreationDTO, VacancyCVFlowCreationServiceModel>();
+
+            CreateMap<VacancyCVFlowEditStatusServiceModel, VacancyCVFlowEditStatusDTO>();
             CreateMap<VacancyCVFlowDTO, VacancyCVFlowServiceModel>();
         }
     }
