@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 using PandaHR.Api.DAL.EF.Context;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.DAL.Models.Entities.Enums;
 using PandaHR.Api.DAL.Repositories.Contracts;
 
 namespace PandaHR.Api.DAL.Repositories.Implementation
@@ -15,6 +16,18 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             base(context)
         {
             _context = context;
+        }
+
+        public VacancyCVStatus GetFlowStatusAsync(Guid CVId, Guid vacancyId)
+        {
+            var flow = _context.VacancyCVFlows
+                .Where(t=> t.CVId == CVId && t.VacancyId == vacancyId).FirstOrDefault();
+            if (flow != null)
+            {
+                return flow.Status;
+            }
+
+            return VacancyCVStatus.NotExists;
         }
     }
 }

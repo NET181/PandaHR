@@ -89,13 +89,14 @@ namespace PandaHR.Api.Services.Implementation
 
             var res = _mapper.Map<VacancyDTO, VacancyServiceModel>(
                 await _uow.Vacancies.AddAsync(vacancyDto));
+            await _uow.SaveChangesAsync();
 
             return res;
         }
 
-        public async Task<IEnumerable<VacancySummaryDTO>> GetVacancyPreviewAsync(Guid userId, int? pageSize, int? page)
+        public async Task<IEnumerable<VacancySummaryDTO>> GetVacancyPreviewAsync(Guid userId, int? page = 1, int? pageSize = 10)
         {
-            return await _uow.Vacancies.GetUserVacancySummaryAsync(userId, pageSize, page);
+            return await _uow.Vacancies.GetUserVacancySummaryAsync(userId, page, pageSize);
         }
 
         public async Task<IEnumerable<Vacancy>> GetBySkillSet(IEnumerable<Skill> skills, double threshold)
@@ -118,14 +119,14 @@ namespace PandaHR.Api.Services.Implementation
             return await _skillSetAlgorithm.GetMatchingBySkillsObjects(vacancies, skills, threshold);
         }
 
-        public async Task<IEnumerable<VacancySummaryDTO>> GetByCity(Guid cityId, int? pageSize, int? page)
+        public async Task<IEnumerable<VacancySummaryDTO>> GetByCity(Guid cityId, int? page = 1, int? pageSize = 10)
         {
-            return await _uow.Vacancies.GetVacanciesFiltered(t => t.VacancyCities.Any(c => c.City.Id == cityId), pageSize, page);
+            return await _uow.Vacancies.GetVacanciesFiltered(t => t.VacancyCities.Any(c => c.City.Id == cityId), page, pageSize);
         }
 
-        public async Task<IEnumerable<VacancySummaryDTO>> GetByCompany(Guid companyId, int? pageSize, int? page)
+        public async Task<IEnumerable<VacancySummaryDTO>> GetByCompany(Guid companyId, int? page = 1, int? pageSize = 10)
         {
-            return await _uow.Vacancies.GetVacanciesFiltered(t => t.CompanyId == companyId, pageSize, page);
+            return await _uow.Vacancies.GetVacanciesFiltered(t => t.CompanyId == companyId, page, pageSize);
         }
     }
 }
