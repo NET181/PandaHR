@@ -68,6 +68,7 @@ namespace PandaHR.Api.Services.Implementation
                 .Include(x => x.SkillRequirements)
                     .ThenInclude(s => s.Skill)
                     .ThenInclude(s => s.SubSkills)
+                    .ThenInclude(t => t.SkillType)
                 .Include(x => x.SkillRequirements)
                     .ThenInclude(e => e.Experience)
                 .Include(k => k.SkillRequirements)
@@ -75,7 +76,8 @@ namespace PandaHR.Api.Services.Implementation
                     .ThenInclude(t => t.SkillKnowledgeTypes)
                 .Include(q => q.Qualification));
 
-            return _mapper.Map<Vacancy,VacancyServiceModel>(vacancys);
+            return _mapper.Map<Vacancy, VacancyServiceModel>(vacancys);
+
         }
 
         public async Task UpdateAsync(Vacancy vacancy)

@@ -127,6 +127,7 @@ namespace PandaHR.Api.Services.Implementation
                 .Include(x => x.SkillKnowledges)
                     .ThenInclude(s => s.Skill)
                     .ThenInclude(s => s.SubSkills)
+                    .ThenInclude(s => s.SkillType)
                 .Include(x => x.SkillKnowledges)
                     .ThenInclude(s => s.Skill)
                     .ThenInclude(s => s.SkillType)
