@@ -16,6 +16,6 @@ namespace PandaHR.Api.Services.Contracts
         Task<IEnumerable<Vacancy>> GetBySkillSet(IEnumerable<Skill> skills, double threshold);
         Task RemoveAsync(Guid id);
         Task<Vacancy> GetByIdAsync(Guid id);
-        Task<ICollection<VacancyServiceModel>> GetAllAsync();
+        Task<ICollection<Vacancy>> GetAllAsync();
     }
 }

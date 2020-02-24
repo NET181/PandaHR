@@ -12,6 +12,6 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
         Task AddAsync(VacancyDTO vacancyDto);
         Task UpdateAsync(VacancyDTO dto);
         Task RemoveAsync(Guid id);
-        Task<ICollection<VacancyDTO>> GetAllDTOsAsync();
+        Task<ICollection<Vacancy>> GetAllDTOsAsync();
     }
 }

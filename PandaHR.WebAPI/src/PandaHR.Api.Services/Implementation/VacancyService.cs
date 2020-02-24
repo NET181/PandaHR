@@ -111,9 +111,9 @@ namespace PandaHR.Api.Services.Implementation
             return await _skillSetAlgorithm.GetMatchingBySkillsObjects(vacancies, skills, threshold);
         }
 
-        public async Task<ICollection<VacancyServiceModel>> GetAllAsync()
+        public async Task<ICollection<Vacancy>> GetAllAsync()
         {
-            var serviceModels = _mapper.Map<ICollection<VacancyDTO>, ICollection<VacancyServiceModel>>(await _uow.Vacancies.GetAllDTOsAsync());
+            var serviceModels = await _uow.Vacancies.GetAllDTOsAsync();
             return serviceModels;
         }
     }

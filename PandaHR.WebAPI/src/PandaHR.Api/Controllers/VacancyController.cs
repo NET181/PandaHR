@@ -94,7 +94,7 @@ namespace PandaHR.Api.Controllers
                 var mappedModel = _mapper.Map<VacancyCreationRequestModel, VacancyServiceModel>(model);
                 await _vacancyService.AddAsync(mappedModel);
 
-                return Ok(mappedModel);
+                return Ok(model);
             }
             else
             {
@@ -136,11 +136,11 @@ namespace PandaHR.Api.Controllers
         {
             try
             {
-                ICollection<VacancyServiceModel> vacancies = await _vacancyService.GetAllAsync();
+                ICollection<Vacancy> vacancies = await _vacancyService.GetAllAsync();
 
-                var mappedVacancies = _mapper.Map<ICollection<VacancyServiceModel>, ICollection<VacancyCreationRequestModel>>(vacancies);
+                //var mappedVacancies = _mapper.Map<ICollection<VacancyServiceModel>, ICollection<VacancyCreationRequestModel>>(vacancies);
 
-                return Ok(mappedVacancies);
+                return Ok(vacancies);
             }
             catch(Exception ex)
             {

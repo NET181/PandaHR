@@ -11,7 +11,7 @@ namespace PandaHR.Api.Validation.Vacancy
     {
         public VacancyValidator()
         {
-            RuleFor(v => v.UserId)
+            RuleFor(v => v.UserId)  
                 .NotNull()
                 .WithMessage("Null user id");
             RuleFor(v => v.TechnologyId)
@@ -26,9 +26,9 @@ namespace PandaHR.Api.Validation.Vacancy
             RuleFor(v => v.CityId)
                 .NotNull()
                 .WithMessage("Null city id");
-            RuleFor(v => v.SkillRequirements)
-                .NotNull()
-                .WithMessage("Empty skill requirements");
+            //RuleFor(v => v.SkillRequirements)
+            //    .NotNull()
+            //    .WithMessage("Empty skill requirements");
             RuleFor(v => v.QualificationId)
                 .NotNull()
                 .WithMessage("Null qualification id");
