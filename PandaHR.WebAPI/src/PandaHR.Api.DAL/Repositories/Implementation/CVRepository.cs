@@ -137,9 +137,11 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteSkillKnowledgeFromCVAsync(Guid skillKnowledgeId)
+        public async Task DeleteSkillKnowledgeFromCVAsync(Guid skillId, Guid CVId)
         {
-            var skillKnowledge =  await _context.SkillKnowledges.FindAsync(skillKnowledgeId);
+            var skillKnowledge =  await _context.SkillKnowledges
+                .Where(s => s.SkillId == skillId && s.CVId == CVId)
+                .FirstOrDefaultAsync();
             _context.SkillKnowledges.Remove(skillKnowledge);
 
             await _context.SaveChangesAsync();
@@ -155,9 +157,11 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteJobExperienceFromCVAsync(Guid JobExperienceId)
+        public async Task DeleteJobExperienceFromCVAsync(Guid JobExperienceId, Guid CVId)
         {
-            var jobExperience = await _context.JobExperiences.FindAsync(JobExperienceId);
+            var jobExperience = await _context.JobExperiences
+                .Where(j => j.Id == JobExperienceId && j.CVId == CVId)
+                .FirstOrDefaultAsync();
             _context.JobExperiences.Remove(jobExperience);
 
             await _context.SaveChangesAsync();

@@ -1,14 +1,19 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.ScoreAlghorythm;
+using PandaHR.Api.Services.ScoreAlghorythm.Models;
 using PandaHR.Api.Models.IdAndRating;
+using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Services.Models.Skill;
+using PandaHR.Api.Validation.Vacancy;
 using PandaHR.Api.Models.Vacancy;
 using PandaHR.Api.Services.Models.Vacancy;
+using PandaHR.Api.DAL;
+using System.Linq;
 
 namespace PandaHR.Api.Controllers
 {
@@ -19,15 +24,18 @@ namespace PandaHR.Api.Controllers
         private readonly IVacancyService _vacancyService;
         private readonly IScoreCounter _scoreCounter;
         private readonly IMapper _mapper;
+        private readonly ISkillService _skillService;
+        private readonly VacancyValidator _validator;
 
-        public VacancyController(IVacancyService vacancyService, 
-            IScoreCounter scoreCounter, 
-            IMapper mapper, 
-            ISkillService skillService)
+        public VacancyController(IVacancyService vacancyService
+            , IScoreCounter scoreCounter, IMapper mapper
+            , ISkillService skillService)
         {
             _vacancyService = vacancyService;
             _scoreCounter = scoreCounter;
+            _skillService = skillService;
             _mapper = mapper;
+            _validator = new VacancyValidator();
         }
 
         [HttpGet("/GetVacanciesByCV/{CVId}/threshold={threshold}")]
@@ -108,13 +116,77 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddVacancy(VacancyCreationRequestModel vacancy)
+        [HttpPost("/AddVacancy")]
+        public async Task<IActionResult> AddVacancy([FromBody]VacancyCreationRequestModel model)
         {
-            var vacancyServiceModel = _mapper.Map<VacancyCreationRequestModel, VacancyServiceModel>(vacancy);
-            await _vacancyService.AddAsync(vacancyServiceModel);
+            if (_validator.Validate(model).IsValid)
+            {
+                var mappedModel = _mapper.Map<VacancyCreationRequestModel, VacancyServiceModel>(model);
+                await _vacancyService.AddAsync(mappedModel);
 
-            return Ok();
+                return Ok(model);
+            }
+            else
+            {
+                return new BadRequestResult();
+            }
+        }
+
+        [HttpPut("/UpdateCV/{Id}")]
+        public async Task<IActionResult> UpdateVacancy([FromBody]VacancyCreationRequestModel model, Guid Id)
+        {
+            if (_validator.Validate(model).IsValid)
+            {
+                var mappedModel = _mapper.Map<VacancyCreationRequestModel, VacancyServiceModel>(model);
+                await _vacancyService.UpdateAsync(mappedModel);
+
+                return Ok(mappedModel);
+            }
+            else
+            {
+                return new BadRequestResult();
+            }
+        }
+
+        [HttpGet("/Vacancies/{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            try
+            {
+                return Ok(await _vacancyService.GetByIdAsync(id));
+            }
+            catch
+            {
+                return new BadRequestResult();
+            }
+        }
+
+        [HttpGet("/Vacancies")]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                ICollection<Vacancy> vacancies = await _vacancyService.GetAllAsync();
+
+                return Ok(vacancies);
+            }
+            catch 
+            {
+                return new BadRequestResult();
+            }
+        }
+
+        [HttpDelete("/Vacancies/{id}/delete")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                return Ok(_vacancyService.RemoveAsync(id));
+            }
+            catch
+            {
+                return new BadRequestResult();
+            }
         }
     }
 }

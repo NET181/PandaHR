@@ -7,6 +7,7 @@ using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.CV;
 using PandaHR.Api.Services.Models.Skill;
+using PandaHR.Api.Services.Models.SkillRequirement;
 using PandaHR.Api.Services.Models.Vacancy;
 using PandaHR.Api.Services.ScoreAlghorythm.Models;
 using PandaHR.Api.Services.ScoreAlgorithm;
