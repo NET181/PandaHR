@@ -9,6 +9,8 @@ using PandaHR.Api.DAL.DTOs.Vacancy;
 using PandaHR.Api.DAL.EF.Context;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.Repositories.Contracts;
+using PandaHR.Api.DAL.DTOs.City;
+using System.Linq.Expressions;
 
 namespace PandaHR.Api.DAL.Repositories.Implementation
 {
@@ -40,12 +42,14 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
             return _mapper.Map<IEnumerable<Vacancy>, IEnumerable<VacancySummaryDTO>>(query);
         }
 
-        public async Task AddAsync(VacancyDTO vacancyDto)
+        public async Task<VacancyDTO> AddAsync(VacancyDTO vacancyDto)
         {
             var vacancy = _mapper.Map<VacancyDTO, Vacancy>(vacancyDto);
                         
             await _context.Vacancies.AddAsync(vacancy);
             await _context.SaveChangesAsync();
+
+            return vacancyDto;
         }
 
         public async Task<Vacancy> GetByIdWithSkillRequestAsync(Guid Id)
@@ -84,8 +88,6 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
 
             return await query.ToListAsync();  
         }
-    }
-}
 
         public async Task UpdateAsync(VacancyDTO dto)
         {
@@ -111,3 +113,6 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
         }
     }
 }
+
+        
+

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.Controllers;
@@ -24,10 +25,12 @@ namespace PandaHR.Api.UnitTests.UnitTests
     {
         private readonly Mock<IMapper> _mapper;
         private Mock<ICVService> _service;
+        private Mock<IWebHostEnvironment> _env;
 
         public CVControllerUnitTests()
         {
             _mapper = new Mock<IMapper>();
+            _env = new Mock<IWebHostEnvironment>();
             //_service = new Mock<ICVService>();
         }
 
@@ -48,7 +51,7 @@ namespace PandaHR.Api.UnitTests.UnitTests
 
             //Act
 
-            var controller = new CVController(_mapper.Object, _service.Object);
+            var controller = new CVController(_mapper.Object, _service.Object, _env.Object);
             var result = await controller.AddSkillKnowledgeToCV(requestModel, GetCVId());
 
             var okResult = result as OkResult;
@@ -78,7 +81,7 @@ namespace PandaHR.Api.UnitTests.UnitTests
 
             //Act
 
-            var controller = new CVController(_mapper.Object, _service.Object);
+            var controller = new CVController(_mapper.Object, _service.Object, _env.Object);
             var result = await controller.AddJobExperienceToCV(requestModel, GetCVId());
 
             var okResult = result as OkResult;
@@ -101,7 +104,7 @@ namespace PandaHR.Api.UnitTests.UnitTests
 
             //Act
 
-            var controller = new CVController(_mapper.Object, _service.Object);
+            var controller = new CVController(_mapper.Object, _service.Object, _env.Object);
             var result = await controller.DeleteSkillKnowledgeFromCV(GetSkillId(), GetCVId());
 
             var okResult = result as OkResult;
@@ -123,7 +126,7 @@ namespace PandaHR.Api.UnitTests.UnitTests
 
             //Act
 
-            var controller = new CVController(_mapper.Object, _service.Object);
+            var controller = new CVController(_mapper.Object, _service.Object, _env.Object);
             var result = await controller.DeleteJobExperienceFromCV(GetJobExperienceId(), GetCVId());
 
             var okResult = result as OkResult;

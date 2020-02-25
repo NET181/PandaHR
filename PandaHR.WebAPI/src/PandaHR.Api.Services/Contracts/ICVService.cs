@@ -19,9 +19,9 @@ namespace PandaHR.Api.Services.Contracts
         Task<IEnumerable<ISkillSetWithRatingModel<Guid>>> GetCVsByVacancy(Guid vacancyId, int threshold);
         Task<CustomFile> ExportCVAsync(Guid id, string webRootPath, string fileExtension);
         Task AddSkillKnowledgeToCVAsync(SkillKnowledgeServiceModel model, Guid CVId);
-        Task DeleteSkillKnowledgeFromCVAsync(Guid skillKnowledgeId);
+        Task DeleteSkillKnowledgeFromCVAsync(Guid skillId, Guid CVId);
         Task AddJobExperienceToCVAsync(JobExperienceServiceModel model, Guid CVId);
-        Task DeleteJobExperienceFromCVAsync(Guid jobExperienceId);
+        Task DeleteJobExperienceFromCVAsync(Guid jobExperienceId, Guid CVId);
         Task<CVServiceModel> AddAsync(CVCreationServiceModel cvServiceModel);
         Task UpdateAsync(CVCreationServiceModel model);
     }

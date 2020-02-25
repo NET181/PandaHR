@@ -16,7 +16,6 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
         Task AddSkillKnowledgeIntoCVAsync(SkillKnowledgeDTO model, Guid CVId);
         Task DeleteSkillKnowledgeFromCVAsync(Guid skillId, Guid CVId);
         Task AddJobExperienceIntoCVAsync(JobExperienceDTO model, Guid CVId);
-        Task DeleteJobExperienceFromCVAsync(Guid JobExperienceId);
         Task<CVDTO> AddAsync(CVCreationDTO cv);
         Task UpdateAsync(CVCreationDTO cv);
         Task LinkUserToCV(CV cv, User user);
@@ -24,7 +23,5 @@ namespace PandaHR.Api.DAL.Repositories.Contracts
         Task<CVExportDTO> GetCvForExportAsync(Guid cvId); 
         bool CvExists(Guid cvId);
         Task DeleteJobExperienceFromCVAsync(Guid JobExperienceId, Guid CVId);
-        Task AddAsync(CVDTO cv);
-        Task UpdateAsync(CVDTO cv);
     }
 }

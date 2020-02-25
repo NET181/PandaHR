@@ -13,7 +13,7 @@ namespace PandaHR.Api.DAL.DTOs.SkillRequirement
         public Guid KnowledgeLevelId { get; set; }
         public Guid ExperienceId { get; set; }
         public KnowledgeLevelDTO KnowledgeLevel { get; set; }
-        public SkillFullDTO Skill { get; set; }
+        public SkillNameDTO Skill { get; set; }
         public ExperienceDTO Experience { get; set; }
         public int Weight { get; set; }
     }

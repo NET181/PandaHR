@@ -33,9 +33,8 @@ namespace PandaHR.Api.Controllers
 
                 return Ok(KnowledgeLevels);
             }
-            catch (Exception ex)
+            catch 
             {
-                //_logger.LogError($"Something went wrong inside UpdateOwner action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }

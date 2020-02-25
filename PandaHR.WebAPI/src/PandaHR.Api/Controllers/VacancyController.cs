@@ -13,17 +13,7 @@ using PandaHR.Api.Validation.Vacancy;
 using PandaHR.Api.Models.Vacancy;
 using PandaHR.Api.Services.Models.Vacancy;
 using PandaHR.Api.DAL;
-using System;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using PandaHR.Api.Common.Contracts;
-using PandaHR.Api.Services.Contracts;
-using PandaHR.Api.Services.ScoreAlghorythm;
-using PandaHR.Api.Models.IdAndRating;
-using PandaHR.Api.Models.Vacancy;
-using PandaHR.Api.Services.Models.Vacancy;
 
 namespace PandaHR.Api.Controllers
 {
@@ -178,14 +168,11 @@ namespace PandaHR.Api.Controllers
             {
                 ICollection<Vacancy> vacancies = await _vacancyService.GetAllAsync();
 
-                //var mappedVacancies = _mapper.Map<ICollection<VacancyServiceModel>, ICollection<VacancyCreationRequestModel>>(vacancies);
-
                 return Ok(vacancies);
             }
-            catch (Exception ex)
+            catch 
             {
-                //TODO to fix mapping error in repository method
-                return Ok(ex.Message);
+                return new BadRequestResult();
             }
         }
 
