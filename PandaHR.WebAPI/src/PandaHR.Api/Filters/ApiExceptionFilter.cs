@@ -4,11 +4,19 @@ using Newtonsoft.Json;
 using PandaHR.Api.Common.Exceptions.Enum;
 using System;
 using System.Net;
+using Microsoft.Extensions.Logging;
 
 namespace PandaHR.Api.Filters
 {
     public class ApiExceptionFilter : IExceptionFilter
     {
+        private readonly ILogger<ApiExceptionFilter> _logger;
+
+        public ApiExceptionFilter(ILogger<ApiExceptionFilter> logger)
+        {
+            _logger = logger;
+        }
+
         public void OnException(ExceptionContext context)
         {
             HttpStatusCode? statusCode = ((context?.Exception as WebException)?.Response as HttpWebResponse)?.StatusCode
@@ -33,19 +41,9 @@ namespace PandaHR.Api.Filters
                 });
 
             #region Logging  
-            //if (ConfigurationHelper.GetConfig()[ConfigurationHelper.environment].ToLower() != "dev")  
-            //{  
-            //    LogMessage objLogMessage = new LogMessage()  
-            //    {  
-            //        ApplicationName = ConfigurationHelper.GetConfig()["ApplicationName"].ToString(),  
-            //        ComponentType = (int) ComponentType.Server,  
-            //        ErrorMessage = errorMessage,  
-            //        LogType = (int) LogType.EventViewer,  
-            //        ErrorStackTrace = stackTrace,  
-            //        UserName = Common.GetAccNameDev(context.HttpContext)  
-            //    };  
-            //    LogError(objLogMessage, LogEntryType.Error);  
-            //}  
+            
+            _logger.LogError(context.Exception,"We caught an error");
+
             #endregion Logging
 
             response.ContentLength = result.Length;

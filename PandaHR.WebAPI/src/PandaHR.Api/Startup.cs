@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DependencyResolver;
 using PandaHR.Api.Filters;
+using Serilog;
 
 namespace PandaHR.Api
 {
@@ -61,7 +62,10 @@ namespace PandaHR.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseStaticFiles();
+
+            app.UseSerilogRequestLogging();
 
             app.UseHttpsRedirection();
             app.UseRouting();
