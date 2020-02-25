@@ -20,8 +20,7 @@ namespace PandaHR.Api.UnitTests
 
         [Theory]
         [InlineData("623af0cf-21c1-4dc6-8f86-09601e9dba86")]
-        [InlineData("233af0cf-2451-42cq-8516-t9f01e9d1s86")]
-        public async Task GetAllFlowsByVacancyId_ReturnEmptyBody(Guid vacancyId)
+        public async Task GetAllFlowsByVacancyId_ReturnEmptyBody(string vacancyId)
         {
             int lengthEmptyBody = 2;
 
@@ -31,7 +30,7 @@ namespace PandaHR.Api.UnitTests
                 Id = vacancyId
             };
 
-            var url = String.Format($"{request.Url}{request.Id.ToString()}");
+            var url = String.Format($"{request.Url}{request.Id}");
 
             var response = await _client.GetAsync(url);
             var responseBody = await response.Content.ReadAsStringAsync();
