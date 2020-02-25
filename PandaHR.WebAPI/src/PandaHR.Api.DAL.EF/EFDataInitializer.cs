@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.EF.Context;
@@ -50,28 +50,82 @@ namespace PandaHR.Api.DAL.EF
 
             var cv = new List<CV>()
             {
-                new CV{ Id = new Guid("a6a7e31d-3db1-45b6-8172-3ad5556f65ce"), TechnologyId = technologyId[1].Id,
-                    Summary = "Junior .Net Developer", UserId = users[0].Id, QualificationId = qualificationId[3].Id},
-                new CV{ Id = new Guid("e92dd3cd-e6ef-4bce-8b78-9047d793a21b"), TechnologyId = technologyId[2].Id,
-                    Summary = "Middle JS Developer", UserId = users[1].Id, QualificationId = qualificationId[0].Id},
-                new CV{ Id = new Guid("fb06c4a3-c641-4222-84ac-f9e49a6a20dd"), TechnologyId = technologyId[1].Id,
-                    Summary = "Trainee PHP Developer", UserId = users[2].Id, QualificationId = qualificationId[1].Id},
-                new CV{ Id = new Guid("e2df5eff-3171-472c-9828-367bc5ed92bf"), TechnologyId = technologyId[1].Id,
-                    Summary = "Junior .Net Developer", UserId = users[3].Id, QualificationId = qualificationId[3].Id},
-                new CV{ Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9011"), TechnologyId = technologyId[1].Id,
-                    Summary = "Junior PHP Developer", UserId = users[4].Id, QualificationId = qualificationId[3].Id},
-                new CV{ Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9012"), TechnologyId = technologyId[1].Id,
-                    Summary = "Senior .Net Developer", UserId = users[4].Id, QualificationId = qualificationId[2].Id},
-                new CV{ Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9013"), TechnologyId = technologyId[2].Id,
-                    Summary = "Senior JS Developer", UserId = users[4].Id, QualificationId = qualificationId[2].Id},
-                new CV{ Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9014"), TechnologyId = technologyId[2].Id,
-                    Summary = "Middle JS Developer", UserId = users[4].Id, QualificationId = qualificationId[0].Id},
-                new CV{ Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9015"), TechnologyId = technologyId[1].Id,
-                    Summary = "Middle .Net Developer", UserId = users[4].Id, QualificationId = qualificationId[0].Id},
-                new CV{ Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9016"), TechnologyId = technologyId[1].Id,
-                    Summary = "Senior .Net Developer", UserId = users[4].Id, QualificationId = qualificationId[2].Id},
-                new CV{ Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9017"), TechnologyId = technologyId[2].Id,
-                    Summary = "Junior JS Developer", UserId = users[4].Id, QualificationId = qualificationId[3].Id},
+                new CV
+                { 
+                    Id = new Guid("a6a7e31d-3db1-45b6-8172-3ad5556f65ce"), 
+                    TechnologyId = technologyId[1].Id,
+                    Summary = "Junior .Net Developer", UserId = users[0].Id, 
+                    QualificationId = qualificationId[3].Id
+                },
+                new CV
+                { 
+                    Id = new Guid("e92dd3cd-e6ef-4bce-8b78-9047d793a21b"), 
+                    TechnologyId = technologyId[2].Id,
+                    Summary = "Middle JS Developer", UserId = users[1].Id,
+                    QualificationId = qualificationId[0].Id
+                },
+                new CV
+                { 
+                    Id = new Guid("fb06c4a3-c641-4222-84ac-f9e49a6a20dd"), 
+                    TechnologyId = technologyId[1].Id,
+                    Summary = "Trainee PHP Developer", UserId = users[2].Id, 
+                    QualificationId = qualificationId[1].Id
+                },
+                new CV
+                { 
+                    Id = new Guid("e2df5eff-3171-472c-9828-367bc5ed92bf"), 
+                    TechnologyId = technologyId[1].Id,
+                    Summary = "Junior .Net Developer", UserId = users[3].Id, 
+                    QualificationId = qualificationId[3].Id
+                },
+                new CV
+                { 
+                    Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9011"), 
+                    TechnologyId = technologyId[1].Id,
+                    Summary = "Junior PHP Developer", UserId = users[4].Id, 
+                    QualificationId = qualificationId[3].Id
+                },
+                new CV
+                {
+                    Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9012"), 
+                    TechnologyId = technologyId[1].Id,
+                    Summary = "Senior .Net Developer", UserId = users[4].Id, 
+                    QualificationId = qualificationId[2].Id
+                },
+                new CV
+                { 
+                    Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9013"), 
+                    TechnologyId = technologyId[2].Id,
+                    Summary = "Senior JS Developer", UserId = users[4].Id, 
+                    QualificationId = qualificationId[2].Id},
+                new CV
+                { 
+                    Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9014"), 
+                    TechnologyId = technologyId[2].Id,
+                    Summary = "Middle JS Developer", UserId = users[4].Id, 
+                    QualificationId = qualificationId[0].Id
+                },
+                new CV
+                { 
+                    Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9015"), 
+                    TechnologyId = technologyId[1].Id,
+                    Summary = "Middle .Net Developer", UserId = users[4].Id, 
+                    QualificationId = qualificationId[0].Id
+                },
+                new CV
+                { 
+                    Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9016"), 
+                    TechnologyId = technologyId[1].Id,
+                    Summary = "Senior .Net Developer", UserId = users[4].Id, 
+                    QualificationId = qualificationId[2].Id
+                },
+                new CV
+                { 
+                    Id = new Guid("61736a37-77f8-4c2b-87c1-0278d07f9017"), 
+                    TechnologyId = technologyId[2].Id,
+                    Summary = "Junior JS Developer", UserId = users[4].Id, 
+                    QualificationId = qualificationId[3].Id
+                },
             };
 
             for (int i = 0; i < 11; i++)
@@ -174,106 +228,254 @@ namespace PandaHR.Api.DAL.EF
 
             var skillKnowledges = new SkillKnowledge[]
             {
-                new SkillKnowledge { SkillId = skillId[0].Id, KnowledgeLevelId = knowledgeLevelId[0].Id, CVId = cv[2].Id, //trainee .ner
-                    ExperienceId = experience[0].Id},
-                new SkillKnowledge { SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[1].Id, CVId = cv[2].Id,
-                    ExperienceId = experience[1].Id},
-                new SkillKnowledge { SkillId = skillId[4].Id, KnowledgeLevelId = knowledgeLevelId[2].Id, CVId = cv[2].Id,
-                  ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[0].Id, KnowledgeLevelId = knowledgeLevelId[7].Id, CVId = cv[0].Id, //jun .net
-                   ExperienceId = experience[1].Id},
-                new SkillKnowledge { SkillId = skillId[4].Id, KnowledgeLevelId = knowledgeLevelId[9].Id, CVId = cv[0].Id,
-                 ExperienceId = experience[1].Id},
-                new SkillKnowledge { SkillId = skillId[5].Id, KnowledgeLevelId = knowledgeLevelId[4].Id, CVId = cv[0].Id,
-                    ExperienceId = experience[1].Id},
-                new SkillKnowledge { SkillId = skillId[3].Id, KnowledgeLevelId = knowledgeLevelId[7].Id, CVId = cv[0].Id,
-                    ExperienceId = experience[1].Id},
-                new SkillKnowledge { SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[3].Id, CVId = cv[0].Id,
-                    ExperienceId = experience[0].Id},
-                new SkillKnowledge { SkillId = skillId[19].Id, KnowledgeLevelId = knowledgeLevelId[5].Id, CVId = cv[0].Id,
-                    ExperienceId = experience[1].Id},
-                new SkillKnowledge { SkillId = skillId[0].Id, KnowledgeLevelId = knowledgeLevelId[7].Id, CVId = cv[8].Id, //middle .net
-                    ExperienceId = experience[3].Id},
-                new SkillKnowledge { SkillId = skillId[4].Id, KnowledgeLevelId = knowledgeLevelId[13].Id, CVId = cv[8].Id,
-                   ExperienceId = experience[3].Id},
-                new SkillKnowledge { SkillId = skillId[5].Id, KnowledgeLevelId = knowledgeLevelId[12].Id, CVId = cv[8].Id,
-                   ExperienceId = experience[3].Id},
-                new SkillKnowledge { SkillId = skillId[3].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[8].Id,
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[0].Id, KnowledgeLevelId = knowledgeLevelId[0].Id, CVId = cv[2].Id, //trainee .ner
+                    ExperienceId = experience[0].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[1].Id, CVId = cv[2].Id,
+                    ExperienceId = experience[1].Id
+                },
+                new SkillKnowledge
+                { 
+                    SkillId = skillId[4].Id, KnowledgeLevelId = knowledgeLevelId[2].Id, CVId = cv[2].Id,
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[0].Id, KnowledgeLevelId = knowledgeLevelId[7].Id, CVId = cv[0].Id, //jun .net
+                    ExperienceId = experience[1].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[4].Id, KnowledgeLevelId = knowledgeLevelId[9].Id, CVId = cv[0].Id,
+                    ExperienceId = experience[1].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[5].Id, KnowledgeLevelId = knowledgeLevelId[4].Id, CVId = cv[0].Id,
+                    ExperienceId = experience[1].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[3].Id, KnowledgeLevelId = knowledgeLevelId[7].Id, CVId = cv[0].Id,
+                    ExperienceId = experience[1].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[3].Id, CVId = cv[0].Id,
+                    ExperienceId = experience[0].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[19].Id, KnowledgeLevelId = knowledgeLevelId[5].Id, CVId = cv[0].Id,
+                    ExperienceId = experience[1].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[0].Id, KnowledgeLevelId = knowledgeLevelId[7].Id, CVId = cv[8].Id, //middle .net
+                    ExperienceId = experience[3].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[4].Id, KnowledgeLevelId = knowledgeLevelId[13].Id, CVId = cv[8].Id,
+                    ExperienceId = experience[3].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[5].Id, KnowledgeLevelId = knowledgeLevelId[12].Id, CVId = cv[8].Id,
+                    ExperienceId = experience[3].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[3].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[8].Id,
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge
+                { 
+                    SkillId = skillId[23].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[8].Id,
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[6].Id, CVId = cv[8].Id,
+                    ExperienceId = experience[3].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[19].Id, KnowledgeLevelId = knowledgeLevelId[11].Id, CVId = cv[8].Id,
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[0].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[9].Id, //sr .net
+                    ExperienceId = experience[4].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[4].Id, KnowledgeLevelId = knowledgeLevelId[14].Id, CVId = cv[9].Id,
+                    ExperienceId = experience[4].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[5].Id, KnowledgeLevelId = knowledgeLevelId[16].Id, CVId = cv[9].Id,
+                    ExperienceId = experience[4].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[3].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[9].Id,
+                    ExperienceId = experience[4].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[10].Id, CVId = cv[9].Id,
+                    ExperienceId = experience[4].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[19].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[9].Id,
+                    ExperienceId = experience[4].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[23].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[9].Id,
                     ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[23].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[8].Id,
-                   ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[6].Id, CVId = cv[8].Id,
-                    ExperienceId = experience[3].Id},
-                new SkillKnowledge { SkillId = skillId[19].Id, KnowledgeLevelId = knowledgeLevelId[11].Id, CVId = cv[8].Id,
-                   ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[0].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[9].Id, //sr .net
-                   ExperienceId = experience[4].Id},
-                new SkillKnowledge { SkillId = skillId[4].Id, KnowledgeLevelId = knowledgeLevelId[14].Id, CVId = cv[9].Id,
-                   ExperienceId = experience[4].Id},
-                new SkillKnowledge { SkillId = skillId[5].Id, KnowledgeLevelId = knowledgeLevelId[16].Id, CVId = cv[9].Id,
-                   ExperienceId = experience[4].Id},
-                new SkillKnowledge { SkillId = skillId[3].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[9].Id,
-                   ExperienceId = experience[4].Id},
-                new SkillKnowledge { SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[10].Id, CVId = cv[9].Id,
-                   ExperienceId = experience[4].Id},
-                new SkillKnowledge { SkillId = skillId[19].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[9].Id,
-                   ExperienceId = experience[4].Id},
-                new SkillKnowledge { SkillId = skillId[23].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[9].Id,
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[7].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[9].Id,
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[8].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[9].Id,
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[2].Id, KnowledgeLevelId = knowledgeLevelId[8].Id, CVId = cv[9].Id,
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge
+                { 
+                    SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[6].Id, //sr js
+                    ExperienceId = experience[4].Id
+                },
+                new SkillKnowledge
+                { 
+                    SkillId = skillId[8].Id, KnowledgeLevelId = knowledgeLevelId[14].Id, CVId = cv[6].Id,
+                    ExperienceId = experience[4].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[9].Id, KnowledgeLevelId = knowledgeLevelId[16].Id, CVId = cv[6].Id,
+                    ExperienceId = experience[4].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[18].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[6].Id,
+                    ExperienceId = experience[4].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[19].Id, KnowledgeLevelId = knowledgeLevelId[10].Id, CVId = cv[6].Id,
+                    ExperienceId = experience[4].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[10].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[6].Id,
+                    ExperienceId = experience[4].Id
+                },
+                new SkillKnowledge
+                { 
+                    SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[10].Id, CVId = cv[1].Id, //mid js
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[8].Id, KnowledgeLevelId = knowledgeLevelId[9].Id, CVId = cv[1].Id,
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[9].Id, KnowledgeLevelId = knowledgeLevelId[10].Id, CVId = cv[1].Id,
                     ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[7].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[9].Id,
-                    ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[8].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[9].Id,
-                    ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[2].Id, KnowledgeLevelId = knowledgeLevelId[8].Id, CVId = cv[9].Id,
-                    ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[6].Id, //sr js
-                    ExperienceId = experience[4].Id},
-                new SkillKnowledge { SkillId = skillId[8].Id, KnowledgeLevelId = knowledgeLevelId[14].Id, CVId = cv[6].Id,
-                    ExperienceId = experience[4].Id},
-                new SkillKnowledge { SkillId = skillId[9].Id, KnowledgeLevelId = knowledgeLevelId[16].Id, CVId = cv[6].Id,
-                   ExperienceId = experience[4].Id},
-                new SkillKnowledge { SkillId = skillId[18].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[6].Id,
-                   ExperienceId = experience[4].Id},
-                new SkillKnowledge { SkillId = skillId[19].Id, KnowledgeLevelId = knowledgeLevelId[10].Id, CVId = cv[6].Id,
-                   ExperienceId = experience[4].Id},
-                new SkillKnowledge { SkillId = skillId[10].Id, KnowledgeLevelId = knowledgeLevelId[15].Id, CVId = cv[6].Id,
-                    ExperienceId = experience[4].Id},
-                new SkillKnowledge { SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[10].Id, CVId = cv[1].Id, //mid js
-                    ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[8].Id, KnowledgeLevelId = knowledgeLevelId[9].Id, CVId = cv[1].Id,
-                    ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[9].Id, KnowledgeLevelId = knowledgeLevelId[10].Id, CVId = cv[1].Id,
-                    ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[18].Id, KnowledgeLevelId = knowledgeLevelId[9].Id, CVId = cv[1].Id,
-                    ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[19].Id, KnowledgeLevelId = knowledgeLevelId[10].Id, CVId = cv[1].Id,
-                    ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[10].Id, KnowledgeLevelId = knowledgeLevelId[8].Id, CVId = cv[1].Id,
-                    ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[8].Id, CVId = cv[7].Id, //mid js2
-                    ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[8].Id, KnowledgeLevelId = knowledgeLevelId[11].Id, CVId = cv[7].Id,
-                    ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[9].Id, KnowledgeLevelId = knowledgeLevelId[12].Id, CVId = cv[7].Id,
-                    ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[18].Id, KnowledgeLevelId = knowledgeLevelId[10].Id, CVId = cv[7].Id,
-                    ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[19].Id, KnowledgeLevelId = knowledgeLevelId[7].Id, CVId = cv[7].Id,
-                    ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[10].Id, KnowledgeLevelId = knowledgeLevelId[5].Id, CVId = cv[7].Id,
-                    ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[3].Id, CVId = cv[10].Id, //jun js
-                   ExperienceId = experience[2].Id},
-                new SkillKnowledge { SkillId = skillId[8].Id, KnowledgeLevelId = knowledgeLevelId[4].Id, CVId = cv[10].Id,
-                    ExperienceId = experience[0].Id},
-                new SkillKnowledge { SkillId = skillId[9].Id, KnowledgeLevelId = knowledgeLevelId[6].Id, CVId = cv[10].Id,
-                    ExperienceId = experience[0].Id},
-                new SkillKnowledge { SkillId = skillId[18].Id, KnowledgeLevelId = knowledgeLevelId[5].Id, CVId = cv[10].Id,
-                    ExperienceId = experience[1].Id},
-                new SkillKnowledge { SkillId = skillId[19].Id, KnowledgeLevelId = knowledgeLevelId[3].Id, CVId = cv[10].Id,
-                    ExperienceId = experience[0].Id},
-                new SkillKnowledge { SkillId = skillId[10].Id, KnowledgeLevelId = knowledgeLevelId[7].Id, CVId = cv[10].Id,
-                    ExperienceId = experience[0].Id},
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[18].Id, KnowledgeLevelId = knowledgeLevelId[9].Id, CVId = cv[1].Id,
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge
+                { 
+                    SkillId = skillId[19].Id, KnowledgeLevelId = knowledgeLevelId[10].Id, CVId = cv[1].Id,
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[10].Id, KnowledgeLevelId = knowledgeLevelId[8].Id, CVId = cv[1].Id,
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[8].Id, CVId = cv[7].Id, //mid js2
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[8].Id, KnowledgeLevelId = knowledgeLevelId[11].Id, CVId = cv[7].Id,
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[9].Id, KnowledgeLevelId = knowledgeLevelId[12].Id, CVId = cv[7].Id,
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[18].Id, KnowledgeLevelId = knowledgeLevelId[10].Id, CVId = cv[7].Id,
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[19].Id, KnowledgeLevelId = knowledgeLevelId[7].Id, CVId = cv[7].Id,
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge
+                { 
+                    SkillId = skillId[10].Id, KnowledgeLevelId = knowledgeLevelId[5].Id, CVId = cv[7].Id,
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[1].Id, KnowledgeLevelId = knowledgeLevelId[3].Id, CVId = cv[10].Id, //jun js
+                    ExperienceId = experience[2].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[8].Id, KnowledgeLevelId = knowledgeLevelId[4].Id, CVId = cv[10].Id,
+                    ExperienceId = experience[0].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[9].Id, KnowledgeLevelId = knowledgeLevelId[6].Id, CVId = cv[10].Id,
+                    ExperienceId = experience[0].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[18].Id, KnowledgeLevelId = knowledgeLevelId[5].Id, CVId = cv[10].Id,
+                    ExperienceId = experience[1].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[19].Id, KnowledgeLevelId = knowledgeLevelId[3].Id, CVId = cv[10].Id,
+                    ExperienceId = experience[0].Id
+                },
+                new SkillKnowledge 
+                { 
+                    SkillId = skillId[10].Id, KnowledgeLevelId = knowledgeLevelId[7].Id, CVId = cv[10].Id,
+                    ExperienceId = experience[0].Id
+                },
             };
 
             _context.SkillKnowledges.AddRange(skillKnowledges);
@@ -417,47 +619,68 @@ namespace PandaHR.Api.DAL.EF
 
             var skills = new Skill[]
             {
-                new Skill {Id = new Guid("34c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "Asp.Net Core", IsDeleted = false,
+                new Skill {Id = new Guid("34c9f63d-17f7-47f9-a928-8273be0a7aac"), 
+                    Name = "Asp.Net Core", IsDeleted = false,
                     RootSkillId = SharpParentSkill.Id, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("31c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "EF", IsDeleted = false,
+                new Skill {Id = new Guid("31c9f63d-17f7-47f9-a928-8273be0a7aac"), 
+                    Name = "EF", IsDeleted = false,
                     RootSkillId = SharpParentSkill.Id, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("32c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "WPF", IsDeleted = false,
+                new Skill {Id = new Guid("32c9f63d-17f7-47f9-a928-8273be0a7aac"), 
+                    Name = "WPF", IsDeleted = false,
                     RootSkillId = SharpParentSkill.Id, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("35c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "Web Forms", IsDeleted = false,
+                new Skill {Id = new Guid("35c9f63d-17f7-47f9-a928-8273be0a7aac"),
+                    Name = "Web Forms", IsDeleted = false,
                     RootSkillId = SharpParentSkill.Id, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("36c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "React", IsDeleted = false,
+                new Skill {Id = new Guid("36c9f63d-17f7-47f9-a928-8273be0a7aac"),
+                    Name = "React", IsDeleted = false,
                     RootSkillId = JSParentSkill.Id, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("37c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "Vue", IsDeleted = false,
+                new Skill {Id = new Guid("37c9f63d-17f7-47f9-a928-8273be0a7aac"),
+                    Name = "Vue", IsDeleted = false,
                     RootSkillId = JSParentSkill.Id, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("38c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "Angular", IsDeleted = false,
+                new Skill {Id = new Guid("38c9f63d-17f7-47f9-a928-8273be0a7aac"),
+                    Name = "Angular", IsDeleted = false,
                     RootSkillId = JSParentSkill.Id, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("39c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "Ember", IsDeleted = false,
+                new Skill {Id = new Guid("39c9f63d-17f7-47f9-a928-8273be0a7aac"),
+                    Name = "Ember", IsDeleted = false,
                     RootSkillId = JSParentSkill.Id, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("41c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "Backbone. js", IsDeleted = false,
+                new Skill {Id = new Guid("41c9f63d-17f7-47f9-a928-8273be0a7aac"), 
+                    Name = "Backbone. js", IsDeleted = false,
                     RootSkillId = JSParentSkill.Id, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("42c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "Laravel", IsDeleted = false,
+                new Skill {Id = new Guid("42c9f63d-17f7-47f9-a928-8273be0a7aac"),
+                    Name = "Laravel", IsDeleted = false,
                     RootSkillId = PHPParentSkill.Id, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("43c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "CodeIgniter", IsDeleted = false,
+                new Skill {Id = new Guid("43c9f63d-17f7-47f9-a928-8273be0a7aac"), 
+                    Name = "CodeIgniter", IsDeleted = false,
                     RootSkillId = PHPParentSkill.Id, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("44c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "Symfony", IsDeleted = false,
+                new Skill {Id = new Guid("44c9f63d-17f7-47f9-a928-8273be0a7aac"), 
+                    Name = "Symfony", IsDeleted = false,
                     RootSkillId = PHPParentSkill.Id, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("45c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "Zend", IsDeleted = false,
+                new Skill {Id = new Guid("45c9f63d-17f7-47f9-a928-8273be0a7aac"), 
+                    Name = "Zend", IsDeleted = false,
                     RootSkillId = PHPParentSkill.Id, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("46c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "Yii", IsDeleted = false,
+                new Skill {Id = new Guid("46c9f63d-17f7-47f9-a928-8273be0a7aac"),
+                    Name = "Yii", IsDeleted = false,
                     RootSkillId = PHPParentSkill.Id, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("47c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "CakePHP", IsDeleted = false,
+                new Skill {Id = new Guid("47c9f63d-17f7-47f9-a928-8273be0a7aac"), 
+                    Name = "CakePHP", IsDeleted = false,
                     RootSkillId = PHPParentSkill.Id, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("48c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "CSS", IsDeleted = false,
+                new Skill {Id = new Guid("48c9f63d-17f7-47f9-a928-8273be0a7aac"), 
+                    Name = "CSS", IsDeleted = false,
                     RootSkillId = null, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("51c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "HTML", IsDeleted = false,
+                new Skill {Id = new Guid("51c9f63d-17f7-47f9-a928-8273be0a7aac"),
+                    Name = "HTML", IsDeleted = false,
                     RootSkillId = null, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("52c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "MySQL", IsDeleted = false,
+                new Skill {Id = new Guid("52c9f63d-17f7-47f9-a928-8273be0a7aac"),
+                    Name = "MySQL", IsDeleted = false,
                     RootSkillId = SQLParentSkill.Id, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("53c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "WordPress", IsDeleted = false,
+                new Skill {Id = new Guid("53c9f63d-17f7-47f9-a928-8273be0a7aac"),
+                    Name = "WordPress", IsDeleted = false,
                     RootSkillId = null, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("54c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "Bootstrap", IsDeleted = false,
+                new Skill {Id = new Guid("54c9f63d-17f7-47f9-a928-8273be0a7aac"), 
+                    Name = "Bootstrap", IsDeleted = false,
                     RootSkillId = null, SkillTypeId = skillType[0].Id},
-                new Skill {Id = new Guid("55c9f63d-17f7-47f9-a928-8273be0a7aac"), Name = "MongoDB", IsDeleted = false,
+                new Skill {Id = new Guid("55c9f63d-17f7-47f9-a928-8273be0a7aac"), 
+                    Name = "MongoDB", IsDeleted = false,
                     RootSkillId = null, SkillTypeId = skillType[0].Id}
             };
 
@@ -700,10 +923,8 @@ namespace PandaHR.Api.DAL.EF
 
         private void AddFlows()
         {
-            #region CVIDs and VacancyIDs hardcoded to get VacancyCVFlowTest.GetStatusTest passed!
             var cVs = _context.CVs.ToArray();
             var vacancies = _context.Vacancies.ToArray();
-            #endregion
 
             VacancyCVFlow[] flows = new VacancyCVFlow[]
                 {

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
@@ -215,7 +215,7 @@ namespace PandaHR.Api.UnitTests
                     {
                         ExperienceId = new Guid("561d468e-a93b-4e6b-a576-52b3d7bbf32a"),
                         KnowledgeLevelId = new Guid("2cb573c8-c593-445a-a1ca-d072fba8b47e"),
-                        SkillId = new Guid("b072e561-9258-4512-8b40-c545b121cb0c")
+                        SkillId = new Guid("980a6b85-b828-4553-92bb-410531539036")
                     }
                 }
             };
@@ -270,7 +270,7 @@ namespace PandaHR.Api.UnitTests
                     {
                         ExperienceId = new Guid("561d468e-a93b-4e6b-a576-52b3d7bbf32a"),
                         KnowledgeLevelId = new Guid("2cb573c8-c593-445a-a1ca-d072fba8b47e"),
-                        SkillId = new Guid("b072e561-9258-4512-8b40-c545b121cb0c")
+                        SkillId = new Guid("980a6b85-b828-4553-92bb-410531539036")
                     }
                 }
             };
