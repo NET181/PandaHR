@@ -11,5 +11,6 @@ namespace PandaHR.Api.DAL.DTOs.VacancyCVFlow
         public Guid CVId { get; set; }
         public Guid VacancyId { get; set; }
         public string Notes { get; set; }
+        public VacancyCVStatus Status { get; set; }
     }
 }
