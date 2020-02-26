@@ -54,16 +54,9 @@ namespace PandaHR.Api.Controllers
         [HttpGet("{id}/export/{type}")]
         public async Task<IActionResult> ExportCv(Guid id, string type = "docx")
         {
-            try
-            {
-                var file = await _cvService.ExportCVAsync(id, _env.WebRootPath, type);
+            var file = await _cvService.ExportCVAsync(id, _env.WebRootPath, type);
 
-                return File(file.FileContents, file.ContentType, file.FileName);
-            }
-            catch
-            {
-                return BadRequest();
-            }
+            return File(file.FileContents, file.ContentType, file.FileName);
         }
 
         [HttpGet("/UserCVExt/{userId}")]

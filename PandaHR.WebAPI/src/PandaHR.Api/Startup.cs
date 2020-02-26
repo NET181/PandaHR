@@ -9,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DependencyResolver;
+using PandaHR.Api.Filters;
+using Serilog;
 
 namespace PandaHR.Api
 {
@@ -31,7 +33,11 @@ namespace PandaHR.Api
                 }
             );
             services.AddCors();
-            services.AddMvc(option => option.EnableEndpointRouting = false)
+            services.AddMvc(option =>
+                    {
+                        option.EnableEndpointRouting = false;
+                        option.Filters.Add(typeof(ApiExceptionFilter));
+                    })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddFluentValidation(
                 opt => opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly())
@@ -56,7 +62,10 @@ namespace PandaHR.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseStaticFiles();
+
+            app.UseSerilogRequestLogging();
 
             app.UseHttpsRedirection();
             app.UseRouting();
