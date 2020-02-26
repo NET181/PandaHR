@@ -13,4 +13,8 @@
     <ProjectReference Include="..\PandaHR.Api.DAL.Models\PandaHR.Api.DAL.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\VacancyCVFiile\" />
+  </ItemGroup>
+
 </Project>

@@ -12,6 +12,7 @@ namespace PandaHR.Api.Services.Mapper
             CreateMap<Vacancy, VacancyServiceModel>();
             CreateMap<VacancyServiceModel, VacancyDTO>();
             CreateMap<VacancyDTO, VacancyServiceModel>();
+            CreateMap<VacancyGetDTO, VacancyServiceModel>();
         }
     }
 }

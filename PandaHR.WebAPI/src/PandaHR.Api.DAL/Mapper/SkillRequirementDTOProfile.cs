@@ -11,6 +11,8 @@ namespace PandaHR.Api.DAL.Mapper
             CreateMap<SkillRequirement, SkillRequirementDTO>();
 
             CreateMap<SkillRequirementDTO, SkillRequirement>();
+
+            CreateMap<SkillRequirementGetDTO, SkillRequirement>();
         }
     }
 }

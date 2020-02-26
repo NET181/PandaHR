@@ -128,6 +128,7 @@ namespace PandaHR.Api.Services.Implementation
                 .Include(x => x.SkillKnowledges)
                     .ThenInclude(s => s.Skill)
                     .ThenInclude(s => s.SubSkills)
+                    .ThenInclude(s => s.SkillType)
                 .Include(x => x.SkillKnowledges)
                     .ThenInclude(s => s.Skill)
                     .ThenInclude(s => s.SkillType)
@@ -210,9 +211,9 @@ namespace PandaHR.Api.Services.Implementation
             await _uow.CVs.AddSkillKnowledgeIntoCVAsync(skillKnowledgeDALModel, CVId);
         }
 
-        public async Task DeleteSkillKnowledgeFromCVAsync(Guid skillKnowledgeId)
+        public async Task DeleteSkillKnowledgeFromCVAsync(Guid skillId, Guid CVId)
         {
-            await _uow.CVs.DeleteSkillKnowledgeFromCVAsync(skillKnowledgeId);
+            await _uow.CVs.DeleteSkillKnowledgeFromCVAsync(skillId, CVId);
         }
 
         public async Task AddJobExperienceToCVAsync(JobExperienceServiceModel model, Guid CVId)
@@ -221,9 +222,9 @@ namespace PandaHR.Api.Services.Implementation
             await _uow.CVs.AddJobExperienceIntoCVAsync(jobExperienceDALModel, CVId);
         }
 
-        public async Task DeleteJobExperienceFromCVAsync(Guid jobExperienceId)
+        public async Task DeleteJobExperienceFromCVAsync(Guid jobExperienceId, Guid CVId)
         {
-            await _uow.CVs.DeleteJobExperienceFromCVAsync(jobExperienceId);
+            await _uow.CVs.DeleteJobExperienceFromCVAsync(jobExperienceId, CVId);
         }
     }
 }
