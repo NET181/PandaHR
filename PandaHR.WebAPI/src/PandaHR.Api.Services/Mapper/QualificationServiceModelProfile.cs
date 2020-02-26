@@ -10,6 +10,7 @@ namespace PandaHR.Api.Services.Mapper
         public QualificationServiceModelProfile()
         {
             CreateMap<QualificationDTO, QualificationServiceModel>();
+            CreateMap<QualificationServiceModel, QualificationDTO>();
             CreateMap<Qualification, QualificationServiceModel>();
         }
     }

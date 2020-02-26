@@ -57,7 +57,7 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetCreatedSkill")]
         public async Task<IActionResult> Get(Guid id)
         {
             var skill = await _skillService.GetByIdAsync(id);
@@ -109,9 +109,9 @@ namespace PandaHR.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody]SkillCreationModel skill)
         {
-            await _skillService.AddAsync(_mapper.Map<SkillCreationModel,SkillServiceModel>(skill));
+            SkillServiceModel addedSkill = await _skillService.AddAsync(_mapper.Map<SkillCreationModel, SkillServiceModel>(skill));
 
-            return Ok();
+            return CreatedAtRoute("GetCreatedSkill", new { id = addedSkill.Id }, addedSkill);
         }
 
         [HttpPut("{id}")]

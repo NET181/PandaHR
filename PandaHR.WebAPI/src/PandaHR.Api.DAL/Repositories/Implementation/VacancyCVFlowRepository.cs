@@ -29,6 +29,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
         public async Task<VacancyCVFlow> AddAsync(VacancyCVFlowCreationDTO vacancyCVFlow)
         {
             VacancyCVFlow flow = _mapper.Map<VacancyCVFlowCreationDTO, VacancyCVFlow>(vacancyCVFlow);
+            flow.Id = Guid.NewGuid();
             await _context.VacancyCVFlows.AddAsync(flow);
             await _context.SaveChangesAsync();
 

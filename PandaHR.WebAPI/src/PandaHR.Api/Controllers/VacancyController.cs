@@ -119,17 +119,10 @@ namespace PandaHR.Api.Controllers
         [HttpPost("/AddVacancy")]
         public async Task<IActionResult> AddVacancy([FromBody]VacancyCreationRequestModel model)
         {
-            if (_validator.Validate(model).IsValid)
-            {
-                var mappedModel = _mapper.Map<VacancyCreationRequestModel, VacancyServiceModel>(model);
-                await _vacancyService.AddAsync(mappedModel);
+            var mappedModel = _mapper.Map<VacancyCreationRequestModel, VacancyServiceModel>(model);
+            var vacancy = await _vacancyService.AddAsync(mappedModel);
 
-                return Ok(model);
-            }
-            else
-            {
-                return new BadRequestResult();
-            }
+            return CreatedAtRoute("CreatedVacancy", new { id = vacancy.Id }, vacancy);
         }
 
         [HttpPut("/UpdateCV/{Id}")]
@@ -148,17 +141,10 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-        [HttpGet("/Vacancies/{id}")]
+        [HttpGet("/Vacancies/{id}", Name = "CreatedVacancy")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            try
-            {
-                return Ok(await _vacancyService.GetByIdAsync(id));
-            }
-            catch
-            {
-                return new BadRequestResult();
-            }
+            return Ok(await _vacancyService.GetByIdAsync(id));
         }
 
         [HttpGet("/Vacancies")]

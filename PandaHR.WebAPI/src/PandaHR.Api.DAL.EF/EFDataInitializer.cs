@@ -39,7 +39,7 @@ namespace PandaHR.Api.DAL.EF
             AddSkillRequirements();
             AddTechnologySkills();
             AddSkillKnowledgeTypes();
-            //AddFlows();
+            AddFlows();
         }
 
         private void AddCV()
