@@ -58,7 +58,6 @@ namespace PandaHR.Api.UnitTests
             };
             // Act
             var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
-            var value = await response.Content.ReadAsStringAsync();
             // Assert
             response.EnsureSuccessStatusCode();
         }
