@@ -6,6 +6,32 @@ using PandaHR.Api.Services.Contracts;
 
 namespace PandaHR.Api.Controllers
 {
+           /// <summary>
+/// The <c>CountryController</c> class.
+/// Contains action methods for <c>Country</c>.
+/// <list type="bullet">
+/// <item>
+/// <term>Get</term>
+/// <description>Get all countries</description>
+/// </item>
+/// <item>
+/// <term>Get</term>
+/// <description>Get country by ID</description>
+/// </item>
+/// <item>
+/// <term>Post</term>
+/// <description>Create new country</description>
+/// </item>
+/// <item>
+/// <term>Put</term>
+/// <description>Update existing country</description>
+/// </item>
+/// <item>
+/// <term>Delete</term>
+/// <description>Remove existing country</description>
+/// </item>
+/// </list>
+/// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class CountryController : ControllerBase
@@ -18,6 +44,12 @@ namespace PandaHR.Api.Controllers
         }
 
         // GET: api/Country
+        /// <summary>
+        /// Get all countries.
+        /// </summary>
+        /// <returns>
+        /// The set of all countries.
+        /// </returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -25,6 +57,13 @@ namespace PandaHR.Api.Controllers
         }
 
         // GET: api/Country/5
+        /// <summary>
+        /// Get country by <paramref name="id"/>.
+        /// </summary>
+        /// <returns>
+        /// Coumtry having given ID or NotFound status if no countries with such ID.
+        /// </returns>
+        /// <param name="id">GUID.</param>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
@@ -40,6 +79,13 @@ namespace PandaHR.Api.Controllers
         }
 
         // POST: api/Country
+        /// <summary>
+        /// Create new country from <paramref name="value"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code.
+        /// </returns>
+        /// <param name="value">Request body.</param>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]Country value)
         {
@@ -47,7 +93,15 @@ namespace PandaHR.Api.Controllers
             return Ok();
         }
 
-        // PUT: api/Country/5
+        /// PUT: api/Country/5
+        /// <summary>
+        /// Update country by <paramref name="id"/> from <paramref name="value"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code.
+        /// </returns>
+        /// <param name="id">GUID.</param>
+        /// <param name="value">Request body.</param>
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody]Country value)
         {
@@ -57,6 +111,13 @@ namespace PandaHR.Api.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
+        /// <summary>
+        /// Remove country by <paramref name="id"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code.
+        /// </returns>
+        /// <param name="id">ID.</param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

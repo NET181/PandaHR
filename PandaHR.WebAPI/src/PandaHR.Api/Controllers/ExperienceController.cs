@@ -8,6 +8,16 @@ using PandaHR.Api.Services.Models.Experience;
 
 namespace PandaHR.Api.Controllers
 {
+ /// <summary>
+/// The <c>ExperienceController</c> class.
+/// Contains action methods for <c>Experience</c>.
+/// <list type="bullet">
+/// <item>
+/// <term>Get</term>
+/// <description>Get all experiences</description>
+/// </item>
+/// </list>
+/// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ExperienceController : ControllerBase
@@ -23,6 +33,12 @@ namespace PandaHR.Api.Controllers
 
 
         // GET: api/Experience
+         /// <summary>
+        /// Get all experinces.
+        /// </summary>
+        /// <returns>
+        /// The set of all experiences.
+        /// </returns>
         [HttpGet]
         public async Task<IEnumerable<ExperienceResponseModel>> Get()
         {
