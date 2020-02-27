@@ -5,14 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.ScoreAlghorythm;
-using PandaHR.Api.Services.ScoreAlghorythm.Models;
 using PandaHR.Api.Models.IdAndRating;
 using PandaHR.Api.DAL.Models.Entities;
-using PandaHR.Api.Services.Models.Skill;
 using PandaHR.Api.Validation.Vacancy;
 using PandaHR.Api.Models.Vacancy;
 using PandaHR.Api.Services.Models.Vacancy;
-using PandaHR.Api.DAL;
 using System.Linq;
 
 namespace PandaHR.Api.Controllers

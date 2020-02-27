@@ -10,6 +10,28 @@ using PandaHR.Api.DAL.Models.Entities;
 
 namespace PandaHR.Api.Controllers
 {
+/// <summary>
+/// The <c>QualificationController</c> class.
+/// Contains action methods for <c>Quilification</c>.
+/// <list type="bullet">
+/// <item>
+/// <term>GetAllQualifications</term>
+/// <description>Get all qualifications</description>
+/// </item>
+/// <item>
+/// <term>Post</term>
+/// <description>Create new qualification</description>
+/// </item>
+/// <item>
+/// <term>Put</term>
+/// <description>Update existing qualification</description>
+/// </item>
+/// <item>
+/// <term>Delete</term>
+/// <description>Remove existing qualification</description>
+/// </item>
+/// </list>
+/// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class QualificationController : ControllerBase
@@ -24,6 +46,12 @@ namespace PandaHR.Api.Controllers
         }
 
         // GET: api/Qualification
+         /// <summary>
+        /// Get all qualifications.
+        /// </summary>
+        /// <returns>
+        /// The set of all qualifications.
+        /// </returns>
         [HttpGet]
         public async Task<IActionResult> GetAllQualifications()
         {
@@ -36,6 +64,13 @@ namespace PandaHR.Api.Controllers
         }
 
         //POST: api/Qualification
+        /// <summary>
+        /// Create new qualification from <paramref name="qualification"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code.
+        /// </returns>
+        /// <param name="qualification">Request body.</param>
         [HttpPost]
         public async Task<IActionResult> Post(Qualification qualification)
         {
@@ -49,6 +84,14 @@ namespace PandaHR.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Update qualification by <paramref name="id"/> from <paramref name="qualification"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code.
+        /// </returns>
+        /// <param name="id">ID.</param>
+        /// <param name="qualification">Request body.</param>
         [HttpPut]
         public async Task<IActionResult> Put(Guid id, Qualification qualification)
         {
@@ -57,6 +100,13 @@ namespace PandaHR.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Remove qualification by <paramref name="id"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code.
+        /// </returns>
+        /// <param name="id">GUID.</param>
         [HttpDelete]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -66,3 +116,4 @@ namespace PandaHR.Api.Controllers
         }
     }
 }
+

@@ -9,7 +9,37 @@ using PandaHR.Api.Models.City;
 using PandaHR.Api.Services.Models.City;
 
 namespace PandaHR.Api.Controllers
-{
+{ 
+/// <summary>
+/// The <c>CityController</c> class.
+/// Contains action methods for <c>City</c>.
+/// <list type="bullet">
+/// <item>
+/// <term>Get</term>
+/// <description>Get all cities</description>
+/// </item>
+/// <item>
+/// <term>Get</term>
+/// <description>Get city by ID</description>
+/// </item>
+/// <item>
+/// <term>GetCitiesByTermToSearchAsync</term>
+/// <description>Get city by term using autofill</description>
+/// </item>
+/// <item>
+/// <term>Post</term>
+/// <description>Create new city</description>
+/// </item>
+/// <item>
+/// <term>Put</term>
+/// <description>Update existing city</description>
+/// </item>
+/// <item>
+/// <term>Delete</term>
+/// <description>Remove existing city</description>
+/// </item>
+/// </list>
+/// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class CityController : ControllerBase
@@ -24,6 +54,12 @@ namespace PandaHR.Api.Controllers
         }
 
         // GET: api/Country
+        /// <summary>
+        /// Get all cities.
+        /// </summary>
+        /// <returns>
+        /// The set of all cities.
+        /// </returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -31,6 +67,13 @@ namespace PandaHR.Api.Controllers
         }
 
         // GET: api/Country/5
+         /// <summary>
+        /// Get city by <paramref name="id"/>.
+        /// </summary>
+        /// <returns>
+        /// City by ID or NotFound status if no cities with such ID.
+        /// </returns>
+        /// <param name="id">ID.</param>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
@@ -45,6 +88,13 @@ namespace PandaHR.Api.Controllers
             }
         }
 
+         /// <summary>
+        /// Get cities by string <paramref name="term"/> using autofill.
+        /// </summary>
+        /// <returns>
+        /// Cities set with names due to term using autofill or NotFound status cities set is null.
+        /// </returns>
+        /// <param name="term">String for autofill.</param>
         [HttpGet("autofill/{term}")]
         public async Task<IActionResult> GetSkillsByTermToSearchAsync(string term)
         {
@@ -64,6 +114,13 @@ namespace PandaHR.Api.Controllers
 
 
         // POST: api/Country
+        /// <summary>
+        /// Create new city from <paramref name="value"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code.
+        /// </returns>
+        /// <param name="value">Request body.</param>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]City value)
         {
@@ -72,6 +129,14 @@ namespace PandaHR.Api.Controllers
         }
 
         // PUT: api/Country/5
+        /// <summary>
+        /// Update city by <paramref name="id"/> from <paramref name="value"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code.
+        /// </returns>
+        /// <param name="id">ID.</param>
+        /// <param name="value">Request body.</param>
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody]City value)
         {
@@ -81,6 +146,13 @@ namespace PandaHR.Api.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
+        /// <summary>
+        /// Remove city by <paramref name="id"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code.
+        /// </returns>
+        /// <param name="id">ID.</param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
