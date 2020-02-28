@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,10 +7,16 @@ using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.EF;
 using PandaHR.Api.DAL.EF.Context;
+using PandaHR.Api.DAL.MongoDB;
+using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.Repositories.Contracts;
 using PandaHR.Api.DAL.Repositories.Implementation;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Implementation;
+using PandaHR.Api.Services.ScoreAlghorythm;
+using PandaHR.Api.Services.ScoreAlgorithm;
+using PandaHR.Api.Services.MatchingAlgorithm.Contracts;
+using PandaHR.Api.Services.MatchingAlgorithm.Implementation;
 
 namespace PandaHR.Api.DependencyResolver
 {
@@ -20,7 +27,13 @@ namespace PandaHR.Api.DependencyResolver
             string connection = configuration["ConnectionString"];
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connection));
+                options.UseSqlServer(connection, builder =>
+                {
+                    builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+                }));
+
+            services.AddDefaultIdentity<User>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IDataInitializer, EFDataInitializer>();
 
@@ -29,6 +42,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ISkillRepository, SkillRepository>();
             services.AddScoped<ICVRepository, CVRepository>();
             services.AddScoped<IVacancyRepository, VacancyRepository>();
+            services.AddScoped<IVacancyCityRepository, VacancyCityRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserCompanyRepository, UserCompanyRepository>();
@@ -44,6 +58,8 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<IExperienceRepository, ExperienceRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<ITechnologyRepository, TechnologyRepository>();
+            services.AddScoped<IVacancyCVFlowRepository, VacancyCVFlowRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -62,8 +78,17 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ISkillTypeService, SkillTypeService>();
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ICityService, CityService>();
+            services.AddScoped<IExperienceService, ExperienceService>();
+            services.AddScoped<ITechnologyService, TechnologyService>();
+            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IVacancyCVFlowService, VacancyCVFlowService>();
 
-            services.AddScoped<IMapper, PandaHRAutoMapper>();
+            services.AddScoped<IScoreCounter, ScoreCounter>();
+            services.AddScoped<IScoreAlghorythmBuilder, ScoreAlghorythmBuilder>();
+            services.AddScoped(typeof(ISkillMatchingAlgorithm<>), typeof(SkillMatchingAlgorithm<>));
+
+
+
             services.AddSingleton<IMapper, PandaHRAutoMapper>();
         }
     }

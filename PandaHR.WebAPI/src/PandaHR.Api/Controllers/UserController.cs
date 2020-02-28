@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.Models.Company;
+using PandaHR.Api.Models.User;
 using PandaHR.Api.Services.Contracts;
+using PandaHR.Api.Services.Models.Company;
+using PandaHR.Api.Services.Models.User;
 
 namespace PandaHR.Api.Controllers
 {
@@ -11,11 +16,30 @@ namespace PandaHR.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService)
+        public UserController(IMapper mapper, IUserService userService)
         {
+            _mapper = mapper;
             _userService = userService;
+        }
+
+        [HttpGet]
+        [Route("/full/{id}")]
+        public async Task<ActionResult<UserFullInfoResponse>> GetFullInfoById(Guid id)
+        {
+            UserFullInfoServiceModel user = await _userService.GetFullInfoById(id);
+            UserFullInfoResponse userResponse = _mapper.Map<UserFullInfoServiceModel, UserFullInfoResponse>(user);
+            
+            if(userResponse != null)
+            {
+                return Ok(userResponse);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet]
@@ -29,10 +53,29 @@ namespace PandaHR.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            User user = await _userService.GetByIdAsync(id);
-            if (user != null)
+            UserServiceModel userServiceModel = await _userService.GetUserInfo(id);
+            UserResponseModel userResponseModel = _mapper.Map<UserServiceModel, UserResponseModel>(userServiceModel);
+
+            if (userResponseModel != null)
             {
-                return Ok(user);
+                return Ok(userResponseModel);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        // GET: api/User/5/companies
+        [HttpGet("{id}/companies")]
+        public async Task<IActionResult> GetUserCompaniesById(Guid id)
+        {
+            var companiesServiceModels = await _userService.GetUserCompanies(id);
+            var responseModels = _mapper
+                .Map<ICollection<CompanyNameServiceModel>, ICollection<CompanyBasicInfoResponse>>(companiesServiceModels);
+            if (responseModels != null)
+            {
+                return Ok(responseModels);
             }
             else
             {

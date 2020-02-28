@@ -27,7 +27,7 @@ namespace PandaHR.Api.Controllers
         }
 
         // GET: api/Speciality/5    
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetSpeciality")]
         public async Task<IActionResult> Get(Guid id)
         {
             var speciality = await _specialityService.GetByIdAsync(id);
@@ -46,15 +46,32 @@ namespace PandaHR.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody]Speciality value)
         {
+            if(value == null)
+            {
+                return BadRequest();
+            }
+
             await _specialityService.AddAsync(value);
 
-            return Ok();
+            return CreatedAtRoute("GetSpeciality", new { id = value.Id }, value);
         }
 
         // PUT: api/Speciality/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(Guid id, [FromBody]Speciality value)
         {
+            var item = _specialityService.GetByIdAsync(id);
+
+            if(item == null)
+            {
+                return NotFound();
+            }
+
+            if(value == null)
+            {
+                return BadRequest();
+            }
+
             value.Id = id;
             await _specialityService.UpdateAsync(value);
 
@@ -65,9 +82,16 @@ namespace PandaHR.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
+            var item = _specialityService.GetByIdAsync(id);
+
+            if (item == null)
+            {
+                return NotFound();
+            }
+
             await _specialityService.RemoveAsync(id);
 
-            return Ok();
+            return NoContent();
         }
     }
 }

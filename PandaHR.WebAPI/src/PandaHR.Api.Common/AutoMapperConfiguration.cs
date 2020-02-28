@@ -9,9 +9,10 @@ namespace PandaHR.Api.Common
     {
         public static IMapper Configure()
         {
-            var profiles = AppDomain.CurrentDomain.GetAssemblies()
-              .SelectMany(s => s.GetTypes())
-              .Where(a => typeof(AutoMapperProfile).IsAssignableFrom(a));
+            var domain = AppDomain.CurrentDomain;
+            var assemblies = domain.GetAssemblies().Where(a => a.FullName.StartsWith("Panda"));
+            var profiles = assemblies.SelectMany(s => s.GetTypes())
+                .Where(a => typeof(AutoMapperProfile).IsAssignableFrom(a));
 
             var mapperConfiguration = new MapperConfiguration(a => profiles.ForEach(a.AddProfile));
 

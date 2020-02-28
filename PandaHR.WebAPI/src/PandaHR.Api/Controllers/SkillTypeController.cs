@@ -1,11 +1,36 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
-using System;
-using System.Threading.Tasks;
 
 namespace PandaHR.Api.Controllers
-{
+{/// <summary>
+/// The <c>SkillTypeController</c> class.
+/// Contains action methods for <c>SkillType</c>.
+/// <list type="bullet">
+/// <item>
+/// <term>GetAllAsync</term>
+/// <description>Get all skill types</description>
+/// </item>
+/// <item>
+/// <term>GetByIdAsync</term>
+/// <description>Get skill type by ID</description>
+/// </item>
+/// <item>
+/// <term>Post</term>
+/// <description>Create new skill type</description>
+/// </item>
+/// <item>
+/// <term>UpdateAsync</term>
+/// <description>Update existing skill type</description>
+/// </item>
+/// <item>
+/// <term>RemoveAsync</term>
+/// <description>Remove existing skill type</description>
+/// </item>
+/// </list>
+/// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class SkillTypeController : Controller
@@ -18,6 +43,12 @@ namespace PandaHR.Api.Controllers
         }
 
         // GET: api/SkillType
+        /// <summary>
+        /// Get all skill types.
+        /// </summary>
+        /// <returns>
+        /// The set of all skill types.
+        /// </returns>
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
@@ -40,7 +71,14 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-        // GET: api/SkillType/5    
+        // GET: api/SkillType/5
+        /// <summary>
+        /// Get skill type by <paramref name="id"/>.
+        /// </summary>
+        /// <returns>
+        /// Skill type by ID or NotFound status if no skill types with such ID.
+        /// </returns>
+        /// <param name="id">ID.</param>    
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
@@ -65,6 +103,14 @@ namespace PandaHR.Api.Controllers
         }
 
         // PUT: api/SkillType/5
+        /// <summary>
+        /// Update skill type from <paramref name="skillType"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status.
+        /// </returns>
+        /// <param name="skillType">Request body.</param>
+        /// <param name="id">ID.</param>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(Guid id, SkillType skillType)
         {
@@ -82,6 +128,13 @@ namespace PandaHR.Api.Controllers
         }
 
         // POST: api/SkillType
+         /// <summary>
+        /// Create new company from <paramref name="skillType"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code.
+        /// </returns>
+        /// <param name="skillType">Request body.</param>
         [HttpPost]
         public async Task<IActionResult> AddAsync(SkillType skillType)
         {
@@ -98,6 +151,13 @@ namespace PandaHR.Api.Controllers
         }
 
         // DELETE: api/SkillType/5
+        /// <summary>
+        /// Remove skill type from <paramref name="skillType"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code.
+        /// </returns>
+        /// <param name="skillType">Request body.</param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveAsync(SkillType skillType)
         {

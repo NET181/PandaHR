@@ -15,9 +15,12 @@ namespace PandaHR.Api.Services.Implementation
             _uow = uow;
         }
 
-        public async Task AddAsync(JobExperience entity)
+        public async Task<JobExperience> AddAsync(JobExperience entity)
         {
-            await _uow.JobExperiences.Add(entity);
+            var res = await _uow.JobExperiences.AddAsync(entity);
+            await _uow.SaveChangesAsync();
+
+            return res;
         }
 
         public async Task<IEnumerable<JobExperience>> GetAllAsync()
@@ -38,12 +41,14 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task RemoveAsync(JobExperience entity)
         {
-            await _uow.JobExperiences.Remove(entity);
+            _uow.JobExperiences.Remove(entity);
+            await _uow.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(JobExperience entity)
         {
-            await _uow.JobExperiences.Update(entity);
+            _uow.JobExperiences.Update(entity);
+            await _uow.SaveChangesAsync();
         }
     }
 }

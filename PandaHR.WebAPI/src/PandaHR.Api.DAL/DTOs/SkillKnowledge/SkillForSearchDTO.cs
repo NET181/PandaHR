@@ -1,0 +1,9 @@
+﻿namespace PandaHR.Api.DAL.DTOs.SkillKnowledge
+{
+    public class SkillForSearchDTO
+    {
+        public string SkillName { get; set; }
+        public string KnowledgeLevelName { get; set; }
+        public int KnowledgeValueValue { get; set; }
+    }
+}

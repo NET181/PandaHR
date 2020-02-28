@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace PandaHR.Api.Services.Implementation
 {
@@ -27,9 +27,12 @@ namespace PandaHR.Api.Services.Implementation
             return knowledgeLevels;
         }
 
-        public async Task AddAsync(KnowledgeLevel entity)
+        public async Task<KnowledgeLevel> AddAsync(KnowledgeLevel entity)
         {
-            await _uow.KnowledgeLevels.Add(entity);
+            var res = await _uow.KnowledgeLevels.AddAsync(entity);
+            await _uow.SaveChangesAsync();
+
+            return res;
         }
 
         public async Task RemoveAsync(Guid id)
@@ -40,7 +43,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task RemoveAsync(KnowledgeLevel entity)
         {
-            await _uow.KnowledgeLevels.Remove(entity);
+            _uow.KnowledgeLevels.Remove(entity);
+            await _uow.SaveChangesAsync();
         }
 
         public async Task<KnowledgeLevel> GetByIdAsync(Guid id)
@@ -50,7 +54,8 @@ namespace PandaHR.Api.Services.Implementation
 
         public async Task UpdateAsync(KnowledgeLevel entity)
         {
-            await _uow.KnowledgeLevels.Update(entity);
+            _uow.KnowledgeLevels.Update(entity);
+            await _uow.SaveChangesAsync();
         }
     }
 }

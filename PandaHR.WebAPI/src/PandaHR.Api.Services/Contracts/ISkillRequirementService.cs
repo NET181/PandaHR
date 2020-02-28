@@ -2,7 +2,7 @@
 
 namespace PandaHR.Api.Services.Contracts
 {
-    public interface ISkillRequirementService : IAsyncService<SkillRequirement>
+    public interface ISkillRequirementService : IAsyncCrudService<SkillRequirement>
     {
     }
 }
