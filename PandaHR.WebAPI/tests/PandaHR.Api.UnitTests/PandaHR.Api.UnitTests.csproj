@@ -7,9 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoFixture" Version="4.11.0" />
-    <PackageReference Include="FakeItEasy" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
+    <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
       <PrivateAssets>all</PrivateAssets>
@@ -19,6 +21,29 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\PandaHR.Api.Common\PandaHR.Api.Common.csproj" />
+    <ProjectReference Include="..\..\src\PandaHR.Api.DAL.EF\PandaHR.Api.DAL.EF.csproj" />
+    <ProjectReference Include="..\..\src\PandaHR.Api.DAL.Models\PandaHR.Api.DAL.Models.csproj" />
+    <ProjectReference Include="..\..\src\PandaHR.Api.DAL\PandaHR.Api.DAL.csproj" />
+    <ProjectReference Include="..\..\src\PandaHR.Api.DependencyResolver\PandaHR.Api.DependencyResolver.csproj" />
+    <ProjectReference Include="..\..\src\PandaHR.Api.Services\PandaHR.Api.Services.csproj" />
+    <ProjectReference Include="..\..\src\PandaHR.Api\PandaHR.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="_testFiles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="_testFiles\HelloWorld.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="_testFiles\ToDelete.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PandaHR.Api.DAL.Models.Entities
 {
-    class SkillType
+    public class SkillType : BaseEntity, ISoftDeletable
     {
+        public SkillType()
+        {
+            Skills = new HashSet<Skill>();
+            SkillKnowledgeTypes = new HashSet<SkillKnowledgeType>();
+        }
+
+        public string Name { get; set; }
+        public bool IsDeleted { get; set; }
+        public int Value { get; set; }
+
+        public ICollection<Skill> Skills { get; set; }
+        public ICollection<SkillKnowledgeType> SkillKnowledgeTypes {get;set;}
     }
 }

@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PandaHR.Api.DAL.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Reflection;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
+using PandaHR.Api.DAL.Models;
 
 namespace PandaHR.Api.DAL.EF.Context
 {
