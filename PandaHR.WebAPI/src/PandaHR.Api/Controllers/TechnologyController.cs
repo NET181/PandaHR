@@ -9,6 +9,16 @@ using PandaHR.Api.Services.Models.Technology;
 
 namespace PandaHR.Api.Controllers
 {
+    /// <summary>
+/// The <c>TechnologyController</c> class.
+/// Contains action methods for <c>Technology</c>.
+/// <list type="bullet">
+/// <item>
+/// <term>GetTechnologyNames</term>
+/// <description>Get all technology names</description>
+/// </item>
+/// </list>
+/// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class TechnologyController : ControllerBase
@@ -23,6 +33,12 @@ namespace PandaHR.Api.Controllers
         }
 
         //GET: api/techologies/names
+        /// <summary>
+        /// Get all technology names.
+        /// </summary>
+        /// <returns>
+        /// The set of all technology names or NotFound status if there is no technology names.
+        /// </returns>
         [HttpGet("names")]
         public async Task<IActionResult> GetTechnologyNames()
         {

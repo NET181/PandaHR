@@ -5,6 +5,7 @@ using PandaHR.Api.Common.Contracts;
 using PandaHR.Api.DAL;
 using PandaHR.Api.DAL.DTOs.VacancyCVFlow;
 using PandaHR.Api.DAL.Models.Entities;
+using PandaHR.Api.DAL.Models.Entities.Enums;
 using PandaHR.Api.Services.Models.Vacancy;
 using PandaHR.Api.Services.Contracts;
 using PandaHR.Api.Services.Models.VacancyCVFlow;
@@ -67,6 +68,7 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<VacancyCVFlow> AddAsync(VacancyCVFlowCreationServiceModel vacancyCVFlow)
         {
             var flow = _mapper.Map<VacancyCVFlowCreationServiceModel, VacancyCVFlowCreationDTO>(vacancyCVFlow);
+            flow.Status = VacancyCVStatus.Draft;
             var addedFlow = await _uow.VacancyCVFlows.AddAsync(flow);
             
             return addedFlow;

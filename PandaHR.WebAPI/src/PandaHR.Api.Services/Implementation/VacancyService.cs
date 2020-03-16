@@ -48,10 +48,7 @@ namespace PandaHR.Api.Services.Implementation
             await _uow.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Vacancy>> GetAllAsync()
-        {
-            return await _uow.Vacancies.GetAllAsync();
-        }
+        
 
         public async Task<Vacancy> GetByIdAsync(Guid id)
         {
@@ -80,9 +77,10 @@ namespace PandaHR.Api.Services.Implementation
 
         }
 
-        public async Task UpdateAsync(Vacancy vacancy)
+        public async Task UpdateAsync(VacancyServiceModel vacancyServiceModel)
         {
-            _uow.Vacancies.Update(vacancy);
+            var dto = _mapper.Map<VacancyServiceModel, Vacancy>(vacancyServiceModel);
+            _uow.Vacancies.Update(dto);
             await _uow.SaveChangesAsync();
         }
 
@@ -132,6 +130,17 @@ namespace PandaHR.Api.Services.Implementation
         public async Task<IEnumerable<VacancySummaryDTO>> GetByCompany(Guid companyId, int? page = 1, int? pageSize = 10)
         {
             return await _uow.Vacancies.GetVacanciesFiltered(t => t.CompanyId == companyId, page, pageSize);
+        }
+
+        public async Task<ICollection<Vacancy>> GetAllAsync()
+        {
+            var serviceModels = await _uow.Vacancies.GetAllDTOsAsync();
+            return serviceModels;
+        }
+
+        public Task<IEnumerable<Vacancy>> GetBySkillSet(IEnumerable<Skill> skills, double threshold)
+        {
+            throw new NotImplementedException();
         }
     }
 }

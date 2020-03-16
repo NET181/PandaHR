@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.Services.Models.VacancyCVFlow;
-using System.Threading.Tasks;
 using PandaHR.Api.Services.Models.Vacancy;
-using PandaHR.Api.Services.Models.VacancyCVFlow;
 
 namespace PandaHR.Api.Services.Contracts
 {

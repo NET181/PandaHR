@@ -28,7 +28,7 @@ namespace PandaHR.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var vacancyCVFlows = await _vacancyCVFlowService.GetAllAsync();
+            IEnumerable<VacancyCVFlow> vacancyCVFlows = await _vacancyCVFlowService.GetAllAsync();
 
             return Ok(vacancyCVFlows);
         }
@@ -37,9 +37,9 @@ namespace PandaHR.Api.Controllers
         [HttpGet("GetAllFlowsByVacancyId/{vacancyId}")]
         public async Task<IActionResult> GetAllFlowsByVacancyId(Guid vacancyId)
         {
-            var flowSeviceModel = await _vacancyCVFlowService.GetAllFlowsByVacancyIdAsync(vacancyId);
+            IEnumerable<VacancyCVFlowServiceModel> flowSeviceModel = await _vacancyCVFlowService.GetAllFlowsByVacancyIdAsync(vacancyId);
 
-            var flowResponceModel = _mapper.Map<IEnumerable<VacancyCVFlowServiceModel>,
+            IEnumerable<VacancyCVFlowResponceModel> flowResponceModel = _mapper.Map<IEnumerable<VacancyCVFlowServiceModel>,
                     IEnumerable<VacancyCVFlowResponceModel>>(flowSeviceModel);
 
             return Ok(flowResponceModel);
@@ -49,7 +49,7 @@ namespace PandaHR.Api.Controllers
         [HttpGet("{id}", Name = "GetVacancyCVFlow")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var vacancyCVFlow = await _vacancyCVFlowService.GetByIdAsync(id);
+            VacancyCVFlow vacancyCVFlow = await _vacancyCVFlowService.GetByIdAsync(id);
 
             if (vacancyCVFlow != null)
             {
@@ -64,7 +64,7 @@ namespace PandaHR.Api.Controllers
         [HttpGet("/Status", Name = "GetFlowStatus")]
         public IActionResult GetFlowStatus(Guid CVId, Guid vacancyId)
         {
-            var status = _vacancyCVFlowService.GetFlowStatusAsync(CVId, vacancyId);
+            string status = _vacancyCVFlowService.GetFlowStatusAsync(CVId, vacancyId);
 
             if (status != null)
             {
@@ -85,8 +85,8 @@ namespace PandaHR.Api.Controllers
                 return BadRequest();
             }
 
-            var flow = _mapper.Map<VacancyCVFlowCreationRequestModel, VacancyCVFlowCreationServiceModel>(vacancyCVFlow);
-            var addedFlow = await _vacancyCVFlowService.AddAsync(flow);
+            VacancyCVFlowCreationServiceModel flow = _mapper.Map<VacancyCVFlowCreationRequestModel, VacancyCVFlowCreationServiceModel>(vacancyCVFlow);
+            VacancyCVFlow addedFlow = await _vacancyCVFlowService.AddAsync(flow);
 
             return CreatedAtRoute("GetVacancyCVFlow", new { id = addedFlow.Id }, addedFlow);
         }
@@ -95,7 +95,7 @@ namespace PandaHR.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(Guid id, [FromBody]VacancyCVFlow value)
         {
-            var item = _vacancyCVFlowService.GetByIdAsync(id);
+            VacancyCVFlow item = await _vacancyCVFlowService.GetByIdAsync(id);
 
             if (item == null)
             {
@@ -117,7 +117,7 @@ namespace PandaHR.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var item = _vacancyCVFlowService.GetByIdAsync(id);
+            VacancyCVFlow item = await _vacancyCVFlowService.GetByIdAsync(id);
 
             if (item == null)
             {
@@ -137,10 +137,10 @@ namespace PandaHR.Api.Controllers
                 return BadRequest();
             }
 
-            var flow = _mapper.Map<VacancyCVFlowEditStatusRequestModel, VacancyCVFlowEditStatusServiceModel>(vacancyCVFlow);
+            VacancyCVFlowEditStatusServiceModel flow = _mapper.Map<VacancyCVFlowEditStatusRequestModel, VacancyCVFlowEditStatusServiceModel>(vacancyCVFlow);
             await _vacancyCVFlowService.ChangeStatus(flow);
 
             return Ok();
-        }
+        }   
     }
 }

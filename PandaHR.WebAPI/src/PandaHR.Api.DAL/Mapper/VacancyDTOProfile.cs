@@ -15,6 +15,8 @@ namespace PandaHR.Api.DAL.Mapper
                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
 
             CreateMap<VacancyDTO, Vacancy>();
+            CreateMap<Vacancy, VacancyDTO>();
+            CreateMap<Vacancy, VacancyGetDTO>();
         }
     }
 }

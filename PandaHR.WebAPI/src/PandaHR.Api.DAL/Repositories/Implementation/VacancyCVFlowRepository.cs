@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.DAL.DTOs.VacancyCVFlow;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using PandaHR.Api.Common.Contracts;
-using PandaHR.Api.DAL.DTOs.VacancyCVFlow;
 using PandaHR.Api.DAL.EF.Context;
 using PandaHR.Api.DAL.Models.Entities;
 using PandaHR.Api.DAL.Models.Entities.Enums;
@@ -33,6 +29,7 @@ namespace PandaHR.Api.DAL.Repositories.Implementation
         public async Task<VacancyCVFlow> AddAsync(VacancyCVFlowCreationDTO vacancyCVFlow)
         {
             VacancyCVFlow flow = _mapper.Map<VacancyCVFlowCreationDTO, VacancyCVFlow>(vacancyCVFlow);
+            flow.Id = Guid.NewGuid();
             await _context.VacancyCVFlows.AddAsync(flow);
             await _context.SaveChangesAsync();
 

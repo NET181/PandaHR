@@ -5,7 +5,7 @@ using PandaHR.Api.Models.VacancyCVFlow;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace PandaHR.Api.UnitTests.IntegrationTests
@@ -17,6 +17,59 @@ namespace PandaHR.Api.UnitTests.IntegrationTests
         public VacancyCVFlowControllerIntegrationTests(TestingWebAppFactory<Startup> factory)
         {
             _client = factory.CreateClient();
+        }
+
+        [Fact]
+        public async void VacancyCVFlow_Status()
+        {
+            VacancyCVFlowCreationRequestModel vacancyCVFlow = new VacancyCVFlowCreationRequestModel()
+            {
+                CVId = new Guid("a6a7e31d-3db1-45b6-8172-3ad5556f65c1"),
+                Notes = "test",
+                VacancyId = new Guid("623af0cf-21c1-4dc6-8f86-09601e9dba87")
+            };
+
+            // Arrange
+            var postRequest = new
+            {
+                Url = "api/VacancyCVFlow",
+                Body = vacancyCVFlow
+            };
+            var statusRequest = new
+            {
+                Url = "Status",
+                cv = vacancyCVFlow.CVId,
+                vacancy = vacancyCVFlow.VacancyId,
+                expectedStatus = VacancyCVStatus.NotExists.ToString()
+            };
+
+            #region NotExists
+            string url = String.Format("{0}?CVId={1}&vacancyId={2}", statusRequest.Url, statusRequest.cv, statusRequest.vacancy);
+            var response = await _client.GetAsync(url);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            // Assert
+            Assert.Equal(statusRequest.expectedStatus, responseBody);
+            #endregion
+
+            #region post record
+            // Act
+            response = await _client.PostAsync(postRequest.Url, ContentHelper.GetStringContent(postRequest.Body));
+            var value = await response.Content.ReadAsStringAsync();
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var beforeFlow = JsonConvert.DeserializeObject<VacancyCVFlow>(stringResponse);
+            // Assert
+            response.EnsureSuccessStatusCode();
+            #endregion
+
+            #region check Draft status
+            url = String.Format("{0}?CVId={1}&vacancyId={2}", statusRequest.Url, statusRequest.cv, statusRequest.vacancy);
+            response = await _client.GetAsync(url);
+            responseBody = await response.Content.ReadAsStringAsync();
+
+            // Assert
+            Assert.Equal(VacancyCVStatus.Draft.ToString(), responseBody);
+            #endregion
         }
 
         [Fact]

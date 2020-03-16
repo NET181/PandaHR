@@ -10,6 +10,32 @@ using PandaHR.Api.DAL.Models.Entities;
 
 namespace PandaHR.Api.Controllers
 {
+    /// <summary>
+/// The <c>DegreeController</c> class.
+/// Contains action methods for <c>Degree</c>.
+/// <list type="bullet">
+/// <item>
+/// <term>GetDegreesAsync</term>
+/// <description>Get all degrees</description>
+/// </item>
+/// <item>
+/// <term>Get</term>
+/// <description>Get degree by ID</description>
+/// </item>
+/// <item>
+/// <term>Post</term>
+/// <description>Create new degree</description>
+/// </item>
+/// <item>
+/// <term>Put</term>
+/// <description>Update existing degree</description>
+/// </item>
+/// <item>
+/// <term>Delete</term>
+/// <description>Remove existing degree</description>
+/// </item>
+/// </list>
+/// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class DegreeController : ControllerBase
@@ -24,6 +50,12 @@ namespace PandaHR.Api.Controllers
         }
 
         // GET: api/degree
+        /// <summary>
+        /// Get all degrees.
+        /// </summary>
+        /// <returns>
+        /// The set of all degrees.
+        /// </returns>
         [HttpGet]
         public async Task<IActionResult> GetDegreesAsync()
         {
@@ -43,7 +75,14 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-        // GET: api/Degree/5    
+        // GET: api/Degree/5 
+        /// <summary>
+        /// Get degree by <paramref name="id"/>.
+        /// </summary>
+        /// <returns>
+        /// Degree having given ID or NotFound status if no degrees with such ID.
+        /// </returns>
+        /// <param name="id">ID.</param>   
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
@@ -60,6 +99,13 @@ namespace PandaHR.Api.Controllers
         }
 
         // POST: api/Degree
+        /// <summary>
+        /// Create new degree from <paramref name="value"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code.
+        /// </returns>
+        /// <param name="value">Request body.</param>
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody]Degree value)
         {
@@ -69,6 +115,14 @@ namespace PandaHR.Api.Controllers
         }
 
         // PUT: api/Degree/5
+        /// <summary>
+        /// Update degree by <paramref name="id"/> from <paramref name="value"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code.
+        /// </returns>
+        /// <param name="id">ID.</param>
+        /// <param name="value">Request body.</param>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(Guid id, [FromBody]Degree value)
         {
@@ -79,6 +133,13 @@ namespace PandaHR.Api.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
+        /// <summary>
+        /// Remove degree by <paramref name="id"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code.
+        /// </returns>
+        /// <param name="id">ID.</param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

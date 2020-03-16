@@ -11,6 +11,44 @@ using PandaHR.Api.Services.Models.Skill;
 
 namespace PandaHR.Api.Controllers
 {
+/// <summary>
+/// The <c>SkillController</c> class.
+/// Contains action methods for <c>Skill</c>.
+/// <list type="bullet">
+/// <item>
+/// <term>Get</term>
+/// <description>Get all skills</description>
+/// </item>
+/// <item>
+/// <term>Get</term>
+/// <description>Get skill by ID</description>
+/// </item>
+/// <item>
+/// <term>GetSkillsByTermToSearchAsync</term>
+/// <description>Get skill by term using autofill</description>
+/// </item>
+/// <item>
+/// <term>PostAsync</term>
+/// <description>Create new skill</description>
+/// </item>
+/// <item>
+/// <term>PutAsync</term>
+/// <description>Update existing skill</description>
+/// </item>
+/// <item>
+/// <term>Delete</term>
+/// <description>Remove existing skill</description>
+/// </item>
+/// <item>
+/// <term>GetSkillNames</term>
+/// <description>Get all skill names</description>
+/// </item>
+/// <item>
+/// <term>GetKnowledgeLevelsBySkillId</term>
+/// <description>Get skill knowledges by skill ID</description>
+/// </item>
+/// </list>
+/// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class SkillController : Controller
@@ -24,6 +62,12 @@ namespace PandaHR.Api.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Get all skills.
+        /// </summary>
+        /// <returns>
+        /// The set of all skills or NotFound status if there is no skills.
+        /// </returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -40,6 +84,12 @@ namespace PandaHR.Api.Controllers
         }
 
         // GET: api/skills/names
+        /// <summary>
+        /// Get all skill names.
+        /// </summary>
+        /// <returns>
+        /// The set of all skill names or NotFound status if there is no skill names.
+        /// </returns>
         [HttpGet("names")]
         public async Task<IActionResult> GetSkillNames()
         {
@@ -57,6 +107,13 @@ namespace PandaHR.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Get skill by <paramref name="id"/>.
+        /// </summary>
+        /// <returns>
+        /// Skill having given ID or NotFound status if no skills with such ID.
+        /// </returns>
+        /// <param name="id">ID.</param>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
@@ -70,7 +127,13 @@ namespace PandaHR.Api.Controllers
             return Ok(skill);
         }
 
-
+         /// <summary>
+        /// Get knowledge levels for skill with <paramref name="id"/>.
+        /// </summary>
+        /// <returns>
+        /// Set of skill knowledges or NotFound status if skill have not it.
+        /// </returns>
+        /// <param name="id">ID.</param>
         [HttpGet("{id}/knowledgelevels")]
         public async Task<IActionResult> GetKnowledgeLevelsBySkillId(Guid id)
         {
@@ -88,6 +151,13 @@ namespace PandaHR.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Get skills by string <paramref name="term"/> using autofill.
+        /// </summary>
+        /// <returns>
+        /// Skills set with names due to term using autofill or NotFound status skills set is null.
+        /// </returns>
+        /// <param name="term">String for autofill.</param>
         [HttpGet("autofill/{term}")]
         public async Task<IActionResult> GetSkillsByTermToSearchAsync(string term)
         {
@@ -105,7 +175,13 @@ namespace PandaHR.Api.Controllers
             }
         }
 
-
+         /// <summary>
+        /// Create new skill from <paramref name="skill"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code.
+        /// </returns>
+        /// <param name="skill">Request body.</param>
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody]SkillCreationModel skill)
         {
@@ -114,6 +190,14 @@ namespace PandaHR.Api.Controllers
             return Ok();
         }
 
+         /// <summary>
+        /// Update skill by <paramref name="id"/> from <paramref name="skill"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code if successfully updated or NotFound status if there is no skills with such id.
+        /// </returns>
+        /// <param name="id">ID.</param>
+        /// <param name="skill">Request body.</param>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(Guid id, [FromBody]SkillCreationModel skill)
         {
@@ -129,6 +213,13 @@ namespace PandaHR.Api.Controllers
             return Ok();
         }
 
+         /// <summary>
+        /// Remove skill by <paramref name="id"/>.
+        /// </summary>
+        /// <returns>
+        /// Ok status code if successfully deleted or NotFound status if there is no skills with such id.
+        /// </returns>
+        /// <param name="id">GUID.</param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
