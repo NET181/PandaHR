@@ -39,7 +39,7 @@ namespace PandaHR.Api.DependencyResolver
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EFRepositoryAsync<>));
 
-            services.AddScoped<ISkillRepository, SkillRepository>();
+            services.AddScoped<ISkillRepository, SkillRepository>(); //коммент 
             services.AddScoped<ICVRepository, CVRepository>();
             services.AddScoped<IVacancyRepository, VacancyRepository>();
             services.AddScoped<IVacancyCityRepository, VacancyCityRepository>();
@@ -61,6 +61,7 @@ namespace PandaHR.Api.DependencyResolver
             services.AddScoped<ITechnologyRepository, TechnologyRepository>();
             services.AddScoped<IVacancyCVFlowRepository, VacancyCVFlowRepository>();
 
+            
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<ISkillService, SkillService>();
@@ -90,6 +91,11 @@ namespace PandaHR.Api.DependencyResolver
 
 
             services.AddSingleton<IMapper, PandaHRAutoMapper>();
+        }
+
+        public static int Method()
+        {
+            return 0;
         }
     }
 }
