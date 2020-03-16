@@ -42,6 +42,8 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
         public async Task<IEnumerable<AlghorythmResponseServiceModel>> GetCVsByVacancy(Guid vacancyId)
         {
 
+            string asdasd = " sadasd;";
+
             var vacansy = await GetVacancyFromDBAsync(vacancyId);
 
             var qualifications = new List<Qualification>(await _qualificationService.GetAllAsync());
