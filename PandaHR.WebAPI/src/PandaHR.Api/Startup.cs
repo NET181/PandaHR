@@ -35,7 +35,7 @@ namespace PandaHR.Api
             services.AddCors();
             services.AddMvc(option =>
                     {
-                        option.EnableEndpointRouting = false;
+                        option.EnableEndpointRouting = true;
                         option.Filters.Add(typeof(ApiExceptionFilter));
                     })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)

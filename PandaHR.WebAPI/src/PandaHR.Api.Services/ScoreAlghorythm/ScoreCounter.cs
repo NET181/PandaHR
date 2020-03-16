@@ -42,7 +42,7 @@ namespace PandaHR.Api.Services.ScoreAlghorythm
         public async Task<IEnumerable<AlghorythmResponseServiceModel>> GetCVsByVacancy(Guid vacancyId)
         {
 
-            int a = 5;
+            string asdasd = " sadasd;";
 
             var vacansy = await GetVacancyFromDBAsync(vacancyId);
 
